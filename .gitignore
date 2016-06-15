@@ -1,4 +1,4 @@
 .DS_Store
 .sublime-project
 .sublime-workspace
-out
+node_modules
