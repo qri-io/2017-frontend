@@ -1,2 +1,2 @@
-# Web Console
-### react & redux app for qri.io
+# Web
+### react & redux webapp for qri.io
