@@ -1,6 +1,6 @@
 import ace from 'brace';
 import React, { Component, PropTypes } from 'react';
-import isEqual from 'lodash.isequal';
+import { isEqual } from 'lodash';
 
 const editorOptions = [
   'minLines',
@@ -13,7 +13,7 @@ const editorOptions = [
   'enableSnippets '
 ];
 
-export default class ReactAce extends Component {
+export default class Editor extends Component {
   constructor(props) {
     super(props);
     [
@@ -195,7 +195,7 @@ export default class ReactAce extends Component {
   }
 }
 
-ReactAce.propTypes = {
+Editor.propTypes = {
   mode: PropTypes.string,
   theme: PropTypes.string,
   name: PropTypes.string,
@@ -235,7 +235,7 @@ ReactAce.propTypes = {
   commands: PropTypes.array,
 };
 
-ReactAce.defaultProps = {
+Editor.defaultProps = {
   name: 'brace-editor',
   mode: '',
   theme: '',

@@ -1,0 +1,21 @@
+
+// background colors
+$cold-slate: #272727;
+$warm-slate: #2A2E2E;
+$dark-blue-slate: #2A3439;
+$med-blue-slate: #40515D;
+$light-blue-slate: #A1B2BC;
+
+// accent colors
+$yellow: #E6DB74;
+$green: #49C797;
+$teal: #49C3C7;
+$purple: #B04BD8;
+$orange: #E2542E;
+$tope: #DFE2CE;
+
+
+body {
+	background: $dark-blue-slate;
+	color: $light-blue-slate;
+}

@@ -1,3 +1,5 @@
+'use strict';
+
 var path = require('path');
 var webpack = require('webpack');
 
@@ -27,7 +29,14 @@ module.exports = {
       test: /\.jsx?$/,
       loaders: ['babel'],
       exclude: /node_modules/
+    },
+    {
+      test: /\.scss$/,
+      loaders: ["style", "css", "sass"]
     }]
+  },
+  sassLoader: {
+    includePaths: [path.resolve(__dirname, "src","sass")]
   }
 };
 
