@@ -3,28 +3,33 @@ import { camelizeKeys } from 'humps'
 import 'isomorphic-fetch'
 
 // Extracts the next page URL from Github API response.
-function getNextPageUrl(response) {
-  const link = response.headers.get('link')
-  if (!link) {
-    return null
-  }
+// function getNextPageUrl(response) {
+//   const link = response.headers.get('link')
+//   if (!link) {
+//     return null
+//   }
 
-  const nextLink = link.split(',').find(s => s.indexOf('rel="next"') > -1)
-  if (!nextLink) {
-    return null
-  }
+//   const nextLink = link.split(',').find(s => s.indexOf('rel="next"') > -1)
+//   if (!nextLink) {
+//     return null
+//   }
 
-  return nextLink.split(';')[0].slice(1, -1)
-}
+//   return nextLink.split(';')[0].slice(1, -1)
+// }
 
-const API_ROOT = 'https://api.github.com/'
+// const API_ROOT = 'https://api.github.com/'
+
+const API_ROOT = 'https://localhost:3000'
 
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
-function callApi(endpoint, schema) {
+function callApi(method, endpoint, schema, data={}) {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint
 
-  return fetch(fullUrl)
+  return fetch(fullUrl, {
+    method : method,
+    body : JSON.stringify(data)
+  })
     .then(response =>
       response.json().then(json => ({ json, response }))
     ).then(({ json, response }) => {
@@ -55,24 +60,33 @@ function callApi(endpoint, schema) {
 // leading to a frozen UI as it wouldn't find "someuser" in the entities.
 // That's why we're forcing lower cases down there.
 
-const userSchema = new Schema('users', {
-  idAttribute: user => user.login.toLowerCase()
-})
+const userSchema = new Schema('users');
+const organizationSchema = new Schema('organizations');
+const datasetSchema = new Schema('datasets');
+const querySchema = new Schema('query');
+const resultSchema = new Shema('results', {
+  idAttribute : (result) => "result"
+});
 
-const repoSchema = new Schema('repos', {
-  idAttribute: repo => repo.fullName.toLowerCase()
-})
+organizationSchema.define({
+  datasets : datasetSchema
+});
 
-repoSchema.define({
+datasetSchema.define({
   owner: userSchema
-})
+});
 
 // Schemas for Github API responses.
 export const Schemas = {
   USER: userSchema,
   USER_ARRAY: arrayOf(userSchema),
-  REPO: repoSchema,
-  REPO_ARRAY: arrayOf(repoSchema)
+  ORGANIZATION: organizationSchema,
+  ORGANIZATION_ARRAY: arrayOf(organizationSchema),
+  DATASET : datasetSchema,
+  DATASET_ARRAY : arrayOf(datasetSchema),
+  QUERY : querySchema,
+  QUERY_ARRAY: arrayOf(querySchema),
+  RESULT : resultSchema
 }
 
 // Action key that carries API call info interpreted by this Redux middleware.
@@ -87,7 +101,7 @@ export default store => next => action => {
   }
 
   let { endpoint } = callAPI
-  const { schema, types } = callAPI
+  const { schema, types, data, method="GET" } = callAPI
 
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getState())
@@ -99,6 +113,7 @@ export default store => next => action => {
   if (!schema) {
     throw new Error('Specify one of the exported Schemas.')
   }
+
   if (!Array.isArray(types) || types.length !== 3) {
     throw new Error('Expected an array of three action types.')
   }
@@ -115,7 +130,7 @@ export default store => next => action => {
   const [ requestType, successType, failureType ] = types
   next(actionWith({ type: requestType }))
 
-  return callApi(endpoint, schema).then(
+  return callApi(method, endpoint, schema, data).then(
     response => next(actionWith({
       response,
       type: successType
