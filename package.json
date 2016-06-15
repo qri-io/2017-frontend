@@ -1,0 +1,19 @@
+{
+  "name": "web_console",
+  "private" : true,
+  "version": "0.0.1",
+  "description": "react & redux single page webapp for qri.io",
+  "main": "server.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/qri-io/webconsole"
+  },
+  "author": "Brendan O'Brien",
+  "license": "ISC"
+}
