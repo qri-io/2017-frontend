@@ -5,6 +5,6 @@ import Console from './containers/Console'
 
 export default (
 	<Route path="/" component={App}>
-		<IndexRoute component={Console} />
+		<IndexRoute component={Console}  />
 	</Route>
 );

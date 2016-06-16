@@ -19,7 +19,7 @@ import 'isomorphic-fetch'
 
 // const API_ROOT = 'https://api.github.com/'
 
-const API_ROOT = 'https://localhost:3000'
+const API_ROOT = 'http://localhost:3000'
 
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
@@ -28,6 +28,10 @@ function callApi(method, endpoint, schema, data={}) {
 
   return fetch(fullUrl, {
     method : method,
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
     body : JSON.stringify(data)
   })
     .then(response =>
@@ -38,11 +42,11 @@ function callApi(method, endpoint, schema, data={}) {
       }
 
       const camelizedJson = camelizeKeys(json)
-      const nextPageUrl = getNextPageUrl(response)
+      // const nextPageUrl = getNextPageUrl(response)
 
       return Object.assign({},
-        normalize(camelizedJson, schema),
-        { nextPageUrl }
+        normalize(camelizedJson, schema)
+        // { nextPageUrl }
       )
     })
 }
@@ -64,7 +68,7 @@ const userSchema = new Schema('users');
 const organizationSchema = new Schema('organizations');
 const datasetSchema = new Schema('datasets');
 const querySchema = new Schema('query');
-const resultSchema = new Shema('results', {
+const resultSchema = new Schema('results', {
   idAttribute : (result) => "result"
 });
 
@@ -102,6 +106,8 @@ export default store => next => action => {
 
   let { endpoint } = callAPI
   const { schema, types, data, method="GET" } = callAPI
+
+  console.log(callAPI);
 
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getState())

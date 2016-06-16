@@ -13,18 +13,20 @@ export default class ResultsTable extends Component {
 	}
 
 	render() {
-		const { table, data } = this.props;
+		if (!this.props.data) { return null; }
+		const { schema, data } = this.props.data;
+
 		return (
 			<div>
 				<h3>Results</h3>
 				<div class="table-responsive">
 					<table class="table table-hover query-results">
-					<thead><tr>{table.columns.map((col) => (<th>{col.name}</th>))}</tr></thead>
-					{data.map((row) => {
-						return (
-							<tr>row.map((cell, i) => <td class={table.columns[i].type}>row</td>)</tr>
-						);
-					})}
+						<thead><tr>{schema.map((col) => <th>{col.name}</th>)}</tr></thead>
+						{data.map((row) => {
+							return (
+								<tr>{row.map((cell, i) => <td class={schema[i].type}>{cell}</td>)}</tr>
+							);
+						})}
 					</table>
 				</div>
 			</div>
@@ -33,11 +35,5 @@ export default class ResultsTable extends Component {
 }
 
 ResultsTable.propTypes = {
-	table : React.PropTypes.Object.isRequired,
-	data : React.PropTypes.Array.isRequired,
-}
-
-ResultsTable.defaultProps = {
-	table : [],
-	data : [[]]
+	data : React.PropTypes.object
 }

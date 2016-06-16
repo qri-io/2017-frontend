@@ -2,6 +2,9 @@ import ace from 'brace';
 import React, { Component, PropTypes } from 'react';
 import { isEqual } from 'lodash';
 
+import 'brace/mode/pgsql';
+import 'brace/theme/monokai';
+
 const editorOptions = [
   'minLines',
   'maxLines',
@@ -182,14 +185,11 @@ export default class Editor extends Component {
   }
 
   render() {
-    const { name, className, width, height } = this.props;
+    const { name, className="editor", width, height } = this.props;
     const divStyle = { width, height };
     return (
-      <div
-        id={name}
-        className={className}
-        style={divStyle}
-      >
+      <div className="editor-wrap">
+        <div id={name} className={className} style={divStyle}></div>
       </div>
     );
   }
@@ -237,10 +237,11 @@ Editor.propTypes = {
 
 Editor.defaultProps = {
   name: 'brace-editor',
+  className : 'editor',
   mode: '',
-  theme: '',
-  height: '500px',
-  width: '500px',
+  theme: 'monokai',
+  height: '',
+  width: '',
   value: '',
   fontSize: 12,
   showGutter: true,
