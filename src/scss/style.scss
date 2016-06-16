@@ -1,0 +1,50 @@
+
+@import "variables";
+@import "mixins";
+
+@import "normalize";
+@import "print";
+
+@import "reboot";
+@import "type";
+@import "tables";
+@import "forms";
+@import "buttons";
+@import "grid";
+
+@import "components";
+
+body {
+  background: $dark-blue-slate;
+  color: $light-blue-slate;
+}
+
+#content-wrapper {
+  min-height: 90%;
+}
+
+.logotype {
+  background: url('/svg/logotype.svg') center left no-repeat;
+  display: block;
+  overflow: hidden;
+  width: 100px;
+  height: 70px;
+  text-indent: -5000px;
+}
+
+.logotype.large {
+  margin: 150px auto 15px auto;
+}
+
+.tagline {
+  text-align: center;
+  color: #999999;
+}
+
+a {
+  transition: color 0.5s;
+}
+
+a:hover {
+  color: #9FFFF0;
+}

@@ -107,8 +107,6 @@ export default store => next => action => {
   let { endpoint } = callAPI
   const { schema, types, data, method="GET" } = callAPI
 
-  console.log(callAPI);
-
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getState())
   }

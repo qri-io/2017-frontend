@@ -1,10 +1,10 @@
 import React from 'react'
 
+// TODO
 export default class ContextPicker extends React.Component {
 	render() {
 		return (
 			<div className="contextPicker">
-				<p>context picker</p>
 			</div>
 		);
 	}

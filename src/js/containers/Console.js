@@ -34,15 +34,14 @@ class Console extends Component {
 	render() {
 		const { runQuery, results, query } = this.props
 		return (
-			<div id="console">
-				<div>
-					<h3>Query</h3>
-					<h3>History</h3>
+			<div id="console" className="container">
+				<div className="col-md-12">
 					<QueryEditor value={query} onRun={this.handleRunQuery} onChange={this.handleEditorChange} />
 				</div>
 				<div>
 					<h3>Results</h3>
 					<h3>Schemas</h3>
+					<h3>Datasets</h3>
 					<ResultsTable data={results} />
 					<SchemaList />
 				</div>

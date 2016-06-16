@@ -1,30 +1,22 @@
 import React, { Component, PropTypes } from 'react'
+import DownloadResultsButton from './DownloadResultsButton'
 
+// TODO - plumb query into results table to support download links
 export default class ResultsTable extends Component {
-	renderButtons() {
-		return (
-			<div>
-				<button class="btn btn-default" data-id="{{>id }}" data-page-num="{{>(page - 1) }}" data-query="{{>query}}" data-page-size="{{>pageSize}}" onclick="runButtonQuery(this)">Prev Page</button>
-				<button class="btn btn-default" data-id="{{>id }}" data-page-num="{{>(page + 1) }}" data-query="{{>query}}" data-page-size="{{>pageSize}}" onclick="runButtonQuery(this)">Next Page</button>
-				<a href="javascript:window.location=\'/query?format=csv&download=true&dataset-id={{:~param(id)}}&query={{:~param(query)}}\'"><button class="btn btn-default">.csv</button></a>
-				<a href="javascript:window.location=\'/query?format=json&download=true&dataset-id={{:~param(id)}}&query={{:~param(query)}}\'"><button class="btn btn-default">.json</button></a>
-			</div>
-		);
-	}
-
 	render() {
 		if (!this.props.data) { return null; }
 		const { schema, data } = this.props.data;
 
 		return (
-			<div>
+			<div className="resultsTable">
 				<h3>Results</h3>
-				<div class="table-responsive">
-					<table class="table table-hover query-results">
-						<thead><tr>{schema.map((col) => <th>{col.name}</th>)}</tr></thead>
-						{data.map((row) => {
+				<DownloadResultsButton datasetId="" query="" />
+				<div className="table-responsive">
+					<table className="table table-hover query-results">
+						<thead><tr>{schema.map((col, i) => <th key={i}>{col.name}</th>)}</tr></thead>
+						{data.map((row, i) => {
 							return (
-								<tr>{row.map((cell, i) => <td class={schema[i].type}>{cell}</td>)}</tr>
+								<tr key={i}>{row.map((cell, j) => <td className={schema[j].type} key={`${i}.${j}`}>{cell}</td>)}</tr>
 							);
 						})}
 					</table>
@@ -36,4 +28,7 @@ export default class ResultsTable extends Component {
 
 ResultsTable.propTypes = {
 	data : React.PropTypes.object
+}
+
+ResultsTable.defaultProps = {
 }

@@ -16,7 +16,7 @@ const editorOptions = [
   'enableSnippets '
 ];
 
-export default class Editor extends Component {
+export default class CodeEditor extends Component {
   constructor(props) {
     super(props);
     [
@@ -188,14 +188,14 @@ export default class Editor extends Component {
     const { name, className="editor", width, height } = this.props;
     const divStyle = { width, height };
     return (
-      <div className="editor-wrap">
+      <div className="codeEditor wrap">
         <div id={name} className={className} style={divStyle}></div>
       </div>
     );
   }
 }
 
-Editor.propTypes = {
+CodeEditor.propTypes = {
   mode: PropTypes.string,
   theme: PropTypes.string,
   name: PropTypes.string,
@@ -235,7 +235,7 @@ Editor.propTypes = {
   commands: PropTypes.array,
 };
 
-Editor.defaultProps = {
+CodeEditor.defaultProps = {
   name: 'brace-editor',
   className : 'editor',
   mode: '',

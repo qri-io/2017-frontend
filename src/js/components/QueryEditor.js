@@ -1,5 +1,5 @@
 import React from 'react'
-import Editor from './Editor'
+import CodeEditor from './CodeEditor'
 import ContextPicker from './ContextPicker'
 
 export default class QueryEditor extends React.Component {
@@ -8,8 +8,8 @@ export default class QueryEditor extends React.Component {
 		return (
 			<div class="queryEditor">
 				<ContextPicker />
-				<Editor value={value} onChange={onChange} mode='pgsql' />
-				<button onClick={onRun}>RUN DAT QUERY</button>
+				<CodeEditor value={value} onChange={onChange} mode='pgsql' />
+				<button className="btn btn-default" onClick={onRun}>RUN DAT QUERY</button>
 			</div>
 		);
 	}

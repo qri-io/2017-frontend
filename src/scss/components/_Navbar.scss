@@ -1,0 +1,22 @@
+#navbar {
+  padding: 10px 0;
+  background: #2A2E2E;
+}
+
+#navbar #logotype {
+  max-width: 100px;
+  display: block;
+}
+
+#navbar #logotype img {
+  width: 80%;
+}
+
+#navbar .menu {
+  text-align: right;
+  padding-top: 5px;
+}
+
+#navbar .menu a {
+  margin-right: 10px;
+}
