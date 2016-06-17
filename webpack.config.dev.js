@@ -3,6 +3,17 @@
 var path = require('path');
 var webpack = require('webpack');
 
+var ENV = {
+  __BUILD__ : {
+    PRODUCTION : false,
+    DEVELOP : true,
+
+    BASE_URL : JSON.stringify("http:/localhost:4000"),
+    API_URL : JSON.stringify("http://localhost:3000"),
+    STATIC_ASSETS_URL : JSON.stringify("http://localhost:3000"),
+  }
+};
+
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: [
@@ -20,6 +31,7 @@ module.exports = {
   //   }
   // },
   plugins: [
+    new webpack.DefinePlugin(ENV),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
@@ -39,19 +51,3 @@ module.exports = {
     includePaths: [path.resolve(__dirname, "src","scss")]
   }
 };
-
-// var webpack = require('webpack');
-// module.exports = {
-//   module: {
-//     loaders: [
-//       { test: /\.jsx?$/, loaders: ['babel-loader'], exclude: /node_modules/ }
-//     ]
-//   },
-//   output: {
-//     library: 'ReactAce',
-//     libraryTarget: 'umd'
-//   },
-//   resolve: {
-//     extensions: ['', '.js']
-//   }
-// };
