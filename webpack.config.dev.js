@@ -9,7 +9,7 @@ var ENV = {
     DEVELOP : true,
 
     BASE_URL : JSON.stringify("http:/localhost:4000"),
-    API_URL : JSON.stringify("http://localhost:3000"),
+    API_URL : JSON.stringify("http://localhost:3000/api"),
     STATIC_ASSETS_URL : JSON.stringify("http://localhost:3000"),
   }
 };

@@ -23,8 +23,23 @@ const API_ROOT = __BUILD__.API_URL
 
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
-function callApi(method, endpoint, schema, data={}) {
-  const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint
+function callApi(method, endpoint, schema, data) {
+  let fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint
+  let body
+
+  // add query params to GET requests listed on data
+  if (data && method == "GET") {
+    let addedFirst = false
+    Object.keys(data).forEach((key, i) => {
+      const val = encodeURIComponent(data[key])
+      if (val != "") {
+        fullUrl += (addedFirst) ? `&${key}=${val}` : `?${key}=${val}`
+        addedFirst = true
+      }
+    })
+  } else if (data) {
+    body = JSON.stringify(data)
+  }
 
   return fetch(fullUrl, {
     method : method,
@@ -32,7 +47,7 @@ function callApi(method, endpoint, schema, data={}) {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body : JSON.stringify(data)
+    body
   })
     .then(response =>
       response.json().then(json => ({ json, response }))
@@ -45,7 +60,7 @@ function callApi(method, endpoint, schema, data={}) {
       // const nextPageUrl = getNextPageUrl(response)
 
       return Object.assign({},
-        normalize(camelizedJson, schema)
+        normalize(camelizedJson.data, schema)
         // { nextPageUrl }
       )
     })
@@ -136,8 +151,8 @@ export default store => next => action => {
 
   return callApi(method, endpoint, schema, data).then(
     response => next(actionWith({
-      response,
-      type: successType
+      type: successType,
+      response
     })),
     error => next(actionWith({
       type: failureType,
