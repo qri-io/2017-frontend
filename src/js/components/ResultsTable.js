@@ -14,11 +14,13 @@ export default class ResultsTable extends Component {
 				<div className="table-responsive">
 					<table className="table table-hover query-results">
 						<thead><tr>{schema.map((col, i) => <th key={i}>{col.name}</th>)}</tr></thead>
-						{data.map((row, i) => {
-							return (
-								<tr key={i}>{row.map((cell, j) => <td className={schema[j].type} key={`${i}.${j}`}>{cell}</td>)}</tr>
-							);
-						})}
+						<tbody>
+							{data.map((row, i) => {
+								return (
+									<tr key={i}>{row.map((cell, j) => <td className={schema[j].type} key={`${i}.${j}`}>{cell}</td>)}</tr>
+								);
+							})}
+						</tbody>
 					</table>
 				</div>
 			</div>

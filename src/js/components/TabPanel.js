@@ -6,6 +6,10 @@ function panelTrigger(i, fn) {
 	}
 }
 
+function headerClassName(i,index) {
+	return (i == index) ? "current tab" : "tab";
+}
+
 export default class TabPanel extends React.Component {
 	render() {
 		const { index, labels=[], onClickPanel } = this.props;
@@ -13,7 +17,7 @@ export default class TabPanel extends React.Component {
 		return (
 			<div className="tabPanel">
 				<header>
-					{labels.map((label,i) => <span className="tab" key={i} onClick={panelTrigger(i, this.props.onSelectPanel)}>{label}</span>)}
+					{labels.map((label,i) => <span className={headerClassName(i, index)} key={i} onClick={panelTrigger(i, this.props.onSelectPanel)}>{label}</span>)}
 				</header>
 				<section>
 					{component}

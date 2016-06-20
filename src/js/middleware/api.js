@@ -57,10 +57,12 @@ function callApi(method, endpoint, schema, data) {
       }
 
       const camelizedJson = camelizeKeys(json)
+      // TODO - remove this uglyness
+      const data = (schema._key == resultSchema._key) ? camelizedJson : camelizedJson.data
       // const nextPageUrl = getNextPageUrl(response)
 
       return Object.assign({},
-        normalize(camelizedJson.data, schema)
+        normalize(data, schema)
         // { nextPageUrl }
       )
     })
@@ -82,6 +84,7 @@ function callApi(method, endpoint, schema, data) {
 const userSchema = new Schema('users');
 const organizationSchema = new Schema('organizations');
 const datasetSchema = new Schema('datasets');
+// const schemaSchema = new Schema('schemas');
 const querySchema = new Schema('query');
 const resultSchema = new Schema('results', {
   idAttribute : (result) => "result"

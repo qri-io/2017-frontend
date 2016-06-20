@@ -35,7 +35,7 @@ export function fetchDataset(id, requiredFields) {
 	return {
 		[CALL_API] : {
 			types : [ DATASET_REQUEST, DATASET_SUCCESS, DATASET_FAILURE ],
-			endpoint : `/datasets/${id}'`,
+			endpoint : `/datasets/${id}`,
 			schema : Schemas.DATASET,
 			id : id,
 		}
@@ -44,11 +44,40 @@ export function fetchDataset(id, requiredFields) {
 
 export function loadDataset(id, requiredFields) {
 	return (dispatch, getState) => {
-    const dataset = getState().entities.users[login]
-    if (user && requiredFields.every(key => user.hasOwnProperty(key))) {
-      return null
+    const dataset = getState().entities.datasets[id]
+    if (dataset.schema != null) {
+    	return null
     }
+    // if (dataset && requiredFields.every(key => dataset.hasOwnProperty(key))) {
+    //   return null
+    // }
 
     return dispatch(fetchDataset(id, requiredFields))
+  }
+}
+
+export const DATASET_SCHEMA_REQUEST = 'DATASET_SCHEMA_REQUEST'
+export const DATASET_SCHEMA_SUCCESS = 'DATASET_SCHEMA_SUCCESS'
+export const DATASET_SCHEMA_FAILURE = 'DATASET_SCHEMA_FAILURE'
+
+export function fetchDatasetSchema(id) {
+	return {
+		[CALL_API] : {
+			types : [ DATASET_SCHEMA_REQUEST, DATASET_SCHEMA_SUCCESS, DATASET_SCHEMA_FAILURE ],
+			endpoint : `/datasets/${id}/schema'`,
+			schema : Schemas.DATASET,
+			id : id,
+		}
+	}
+}
+
+export function loadDatasetSchema(id) {
+	return (dispatch, getState) => {
+    const dataset = getState().entities.datasets[id];
+    if (dataset.hasOwnProperty(schema)) {
+    	return null
+    }
+
+    return dispatch(fetchDatasetSchema(id))
   }
 }

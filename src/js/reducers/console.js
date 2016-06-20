@@ -5,7 +5,7 @@ const initialState = {
 	context : "",
 	query : "",
 	topPanelIndex : 0,
-	bottomPanelIndex: 0
+	bottomPanelIndex: 2
 }
 
 export default function consoleReducer (state=initialState, action) {

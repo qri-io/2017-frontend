@@ -1,11 +1,17 @@
 import React from 'react'
 
+function selectFunc(fn, data, i) {
+	return () => {
+		fn(i, data)
+	}
+}
+
 export default class List extends React.Component {
 	render() {
-		const { data, component, onSelectItem } = this.props
+		const { data, onSelectItem } = this.props
 		return (
 			<div className="list">
-				{data.map((data, i) => <component data={data} key={i} index={i} onSelect={onSelectItem} />)}
+				{data.map((data, i) => <this.props.component data={data} key={i} index={i} onSelect={selectFunc(onSelectItem, data, i)} />)}
 			</div>
 		);
 	}
