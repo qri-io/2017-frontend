@@ -2,8 +2,9 @@ import ace from 'brace';
 import React, { Component, PropTypes } from 'react';
 import { isEqual } from 'lodash';
 
-import 'brace/mode/pgsql';
-import 'brace/theme/monokai';
+import 'brace/ext/language_tools';
+import '../ace/mode/pgsql';
+import '../ace/theme/monokai';
 
 const editorOptions = [
   'minLines',
@@ -11,8 +12,8 @@ const editorOptions = [
   'readOnly',
   'highlightActiveLine',
   'tabSize',
-  'enableBasicAutocompletion',
-  'enableLiveAutocompletion',
+  // 'enableBasicAutocompletion',
+  // 'enableLiveAutocompletion',
   'enableSnippets '
 ];
 
@@ -76,6 +77,7 @@ export default class CodeEditor extends Component {
     this.editor.session.on('changeScrollTop', this.onScroll);
     this.handleOptions(this.props);
 
+
     for (let i = 0; i < editorOptions.length; i++) {
       const option = editorOptions[i];
       this.editor.setOption(option, this.props[option]);
@@ -86,6 +88,7 @@ export default class CodeEditor extends Component {
         this.editor.commands.addCommand(command);
       });
     }
+    
 
     if (keyboardHandler) {
       this.editor.setKeyboardHandler('ace/keyboard/' + keyboardHandler);
@@ -94,6 +97,15 @@ export default class CodeEditor extends Component {
     if (onLoad) {
       onLoad(this.editor);
     }
+
+    if (Array.isArray(this.props.completers)) {
+      this.props.completers.forEach((compl) => {
+        console.log(this.editor);
+        this.editor.completers.push(compl);
+      })
+    }
+
+    console.log(this.editor);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -233,6 +245,7 @@ CodeEditor.propTypes = {
     PropTypes.array,
   ]),
   commands: PropTypes.array,
+  completers : PropTypes.array
 };
 
 CodeEditor.defaultProps = {

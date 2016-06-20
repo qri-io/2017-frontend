@@ -2,13 +2,15 @@ import React from 'react'
 import CodeEditor from './CodeEditor'
 import ContextPicker from './ContextPicker'
 
+import { datasetCompleter } from '../ace/completer/datasets'
+
 export default class QueryEditor extends React.Component {
 	render() {
 		const { onRun, onChange, value } = this.props
 		return (
 			<div class="queryEditor">
 				<ContextPicker />
-				<CodeEditor value={value} onChange={onChange} mode='pgsql' />
+				<CodeEditor value={value} onChange={onChange} mode='pgsql' completers={[datasetCompleter]} setOptions={{ enableBasicAutocompletion: true, enableLiveAutocompletion : true }} />
 				<button className="btn btn-default" onClick={onRun}>Run</button>
 			</div>
 		);
