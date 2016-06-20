@@ -10,7 +10,7 @@ export default class ResultsTable extends Component {
 		return (
 			<div className="resultsTable">
 				<h3>Results</h3>
-				<DownloadResultsButton datasetId="" query="" />
+				<DownloadResultsButton datasetId="" query={this.props.query} />
 				<div className="table-responsive">
 					<table className="table table-hover query-results">
 						<thead><tr>{schema.map((col, i) => <th key={i}>{col.name}</th>)}</tr></thead>
@@ -29,7 +29,8 @@ export default class ResultsTable extends Component {
 }
 
 ResultsTable.propTypes = {
-	data : React.PropTypes.object
+	data : React.PropTypes.object,
+	query : React.PropTypes.string.isRequired
 }
 
 ResultsTable.defaultProps = {

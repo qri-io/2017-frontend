@@ -2,6 +2,7 @@ import * as ActionTypes from '../actions'
 import merge from 'lodash/merge'
 // import paginate from './paginate'
 import { routerReducer as routing } from 'react-router-redux'
+import userReducer from './user'
 import consoleReducer from './console'
 import { combineReducers } from 'redux'
 
@@ -60,6 +61,7 @@ const rootReducer = combineReducers({
   // pagination,
   errorMessage,
   console: consoleReducer,
+  user: userReducer,
   routing
 })
 

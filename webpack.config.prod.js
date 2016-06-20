@@ -9,7 +9,7 @@ var ENV = {
     DEVELOP : false,
 
     BASE_URL : JSON.stringify("http://www.qri.io"),
-    API_URL : JSON.stringify("http://www.qri.io/api"),
+    API_URL : JSON.stringify("http://www.qri.io"),
     STATIC_ASSETS_URL : JSON.stringify("http://cdn.qri.io"),
   }
 };

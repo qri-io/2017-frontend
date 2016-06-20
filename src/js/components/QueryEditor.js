@@ -16,8 +16,10 @@ export default class QueryEditor extends React.Component {
 }
 
 QueryEditor.propTypes = {
-	context : React.PropTypes.object,
 	value : React.PropTypes.string,
+	context : React.PropTypes.object,
+	datasets : React.PropTypes.array,
+	
 	onRun : React.PropTypes.func.isRequired,
 	onChange : React.PropTypes.func.isRequired,
 }

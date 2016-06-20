@@ -1,5 +1,6 @@
 import { CALL_API, Schemas } from '../middleware/api'
 import { setBottomPanel } from './console'
+import { addHistoryEntry } from './user'
 
 export const QUERY_SET = 'QUERY_SET'
 
@@ -19,6 +20,7 @@ export const QUERY_FAILURE = 'QUERY_FAILURE'
 export function runQuery(query) {
   return (dispatch, getState) => {
     dispatch(setBottomPanel(0));
+    dispatch(addHistoryEntry(query));
     dispatch({
       [CALL_API]: {
         types: [ QUERY_REQUEST, QUERY_SUCCESS, QUERY_FAILURE ],

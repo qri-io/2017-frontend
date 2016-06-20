@@ -8,9 +8,9 @@ function selectFunc(fn, data, i) {
 
 export default class List extends React.Component {
 	render() {
-		const { data, onSelectItem } = this.props
+		const { data, onSelectItem, className } = this.props
 		return (
-			<div className="list">
+			<div className={className}>
 				{data.map((data, i) => <this.props.component data={data} key={i} index={i} onSelect={selectFunc(onSelectItem, data, i)} />)}
 			</div>
 		);
@@ -24,5 +24,6 @@ List.propTypes = {
 }
 
 List.defaultProps = {
-	data : []
+	data : [],
+	className : "list"
 }

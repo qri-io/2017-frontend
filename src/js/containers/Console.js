@@ -10,6 +10,7 @@ import QueryEditor from '../components/QueryEditor'
 import ResultsTable from '../components/ResultsTable'
 import List from '../components/List'
 import DatasetItem from '../components/DatasetItem'
+import QueryHistoryItem from '../components/QueryHistoryItem'
 
 function loadData(props) {
 	props.loadDatasets("", 1, 100)
@@ -23,7 +24,8 @@ class Console extends Component {
 			'handleEditorChange',
 			'handleSetTopPanel',
 			'handleSetBottomPanel',
-			'handleSelectDataset'
+			'handleSelectDataset',
+			'handleSelectHistoryEntry'
 		].forEach(m => this[m] = this[m].bind(this))
 
 		this.debouncedSetQuery = debounce(props.setQuery, 200)
@@ -62,17 +64,23 @@ class Console extends Component {
 		this.props.loadDataset(dataset.id, ['schema']);
 	}
 
+	handleSelectHistoryEntry(i, query) {
+		this.props.setTopPanel(0);
+		this.props.setQuery(query.query);
+	}
+
 	render() {
-		const { runQuery, datasets, results, query, topPanelIndex, bottomPanelIndex } = this.props
+		const { runQuery, datasets, results, query, topPanelIndex, bottomPanelIndex, queryHistory } = this.props
 		return (
 			<div id="console" className="container">
 				<div className="col-md-12">
 					<TabPanel 
 						index={topPanelIndex}
 						onSelectPanel={this.handleSetTopPanel}
-						labels={['Query']}
+						labels={['Query', 'History']}
 						components={[
 							<QueryEditor value={query} onRun={this.handleRunQuery} onChange={this.handleEditorChange} />,
+							<List className="queryHistory list" data={queryHistory} component={QueryHistoryItem} onSelectItem={this.handleSelectHistoryEntry} />,
 						]} />
 				</div>
 				<div className="col-md-12">
@@ -81,7 +89,7 @@ class Console extends Component {
 						labels={['Results', 'Schemas', 'Explorer']}
 						onSelectPanel={this.handleSetBottomPanel}
 						components={[
-							<ResultsTable data={results} />,
+							<ResultsTable data={results} query={query} />,
 							<div><h4>Query Schema</h4></div>,
 							<List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectDataset} />
 						]} />
@@ -92,8 +100,9 @@ class Console extends Component {
 }
 
 Console.propTypes = {
-	datsets : React.PropTypes.array,
+	dataset : React.PropTypes.array,
 	results : React.PropTypes.object,
+	queryHistory : React.PropTypes.array,
 	topPanelIndex : React.PropTypes.number.isRequired,
 	bottomPanelIndex : React.PropTypes.number.isRequired,
 
@@ -112,6 +121,7 @@ function mapStateToProps(state, ownProps) {
 	return Object.assign({}, {
 		results : state.entities.results.result,
 		datasets : Object.keys(state.entities.datasets).map(key => state.entities.datasets[key]),
+		queryHistory : state.user.history,
 	}, state.console, ownProps)
 }
 
@@ -121,5 +131,5 @@ export default connect(mapStateToProps, {
 	setTopPanel, 
 	setBottomPanel, 
 	loadDatasets,
-	loadDataset,
+	loadDataset
 })(Console)

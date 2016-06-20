@@ -28,3 +28,12 @@ export function loadUser(login, requiredFields = []) {
     return dispatch(fetchUser(login))
   }
 }
+
+export const USER_ADD_HISTORY_ENTRY = 'USER_ADD_HISTORY_ENTRY'
+
+export function addHistoryEntry(query) {
+  return {
+    type : USER_ADD_HISTORY_ENTRY,
+    value : query
+  } 
+}
