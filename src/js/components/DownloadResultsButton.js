@@ -16,7 +16,7 @@ export default class DownloadResultsButton extends React.Component {
 function downloadHref(id, query, format) {
 	id = encodeURIComponent(id)
 	query = encodeURIComponent(query)
-	console.log(query);
+	
 	if (!id) {
 		return `javascript:window.location=\'${__BUILD__.API_URL}/query?format=${format}&download=true&query=${query}\'`
 	} 

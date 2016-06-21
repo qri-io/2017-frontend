@@ -24,7 +24,7 @@ export function runQuery(query) {
     dispatch({
       [CALL_API]: {
         types: [ QUERY_REQUEST, QUERY_SUCCESS, QUERY_FAILURE ],
-        endpoint: `/query`,
+        endpoint: `/select`,
         method: 'POST',
         data : query,
         schema: Schemas.RESULT

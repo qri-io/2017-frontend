@@ -100,12 +100,9 @@ export default class CodeEditor extends Component {
 
     if (Array.isArray(this.props.completers)) {
       this.props.completers.forEach((compl) => {
-        console.log(this.editor);
         this.editor.completers.push(compl);
       })
     }
-
-    console.log(this.editor);
   }
 
   componentWillReceiveProps(nextProps) {

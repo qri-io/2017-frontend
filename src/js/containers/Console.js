@@ -41,8 +41,10 @@ class Console extends Component {
 
 	handleRunQuery(e) {
 		this.props.runQuery({
-			// dataset : { id : "1217fefe-d5a1-4dfa-8a1e-83fc27305f5f" },
-			query : this.props.query,
+			query : {
+				namespace: this.props.namespace,
+				statement : this.props.query
+			},
 			page : 1, 
 			pageSize : 50
 		});
@@ -100,6 +102,7 @@ class Console extends Component {
 }
 
 Console.propTypes = {
+	namespace : React.PropTypes.string,
 	dataset : React.PropTypes.array,
 	results : React.PropTypes.object,
 	queryHistory : React.PropTypes.array,
@@ -115,6 +118,7 @@ Console.propTypes = {
 }
 
 Console.defaultProps = {
+	namespace : ""
 }
 
 function mapStateToProps(state, ownProps) {

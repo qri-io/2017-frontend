@@ -9,7 +9,9 @@ export const datasetCompleter = {
 		// callback(null, wordList.map(function(ea) {
 				// return {name: ea.word, value: ea.word, score: ea.score, meta: "rhyme"}
 		// }));
-		console.log(session, pos, prefix);
+		if (window.debug) {
+			console.log(session, pos, prefix);
+		}
 
 		callback(null, window.datasets.map(function(ds) {
 			return { name : ds.slug, value : ds.slug, score : 1, meta : "dataset" };

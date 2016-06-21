@@ -157,9 +157,17 @@ export default store => next => action => {
       type: successType,
       response
     })),
-    error => next(actionWith({
-      type: failureType,
-      error: error.message || 'Something bad happened'
-    }))
+    error => {
+      var msg = 'Something Bad Happened' 
+      if (error.meta) {
+        if (error.meta.error) {
+          msg = error.meta.error
+        }
+      }
+      return next(actionWith({
+        type: failureType,
+        error: msg
+      }))
+    }
   )
 }
