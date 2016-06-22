@@ -8,7 +8,12 @@ var port = process.env.PORT || 4000;
 
 var compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
-app.use(webpackHotMiddleware(compiler));
+app.use(webpackHotMiddleware(compiler, { path : '/__qri_io' }));
+
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  return next();
+});
 
 app.get("/", function(req, res) {
   res.sendFile(__dirname + '/index.html');

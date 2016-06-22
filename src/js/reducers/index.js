@@ -2,11 +2,13 @@ import * as ActionTypes from '../actions'
 import merge from 'lodash/merge'
 // import paginate from './paginate'
 import { routerReducer as routing } from 'react-router-redux'
+import sessionReducer from './session'
 import userReducer from './user'
 import consoleReducer from './console'
 import { combineReducers } from 'redux'
 
 const initialState = {
+  session : {},
   users : {},
   queries : {},
   organizations : {},
@@ -25,11 +27,11 @@ function entities(state = initialState, action) {
 
 // Updates error message to notify about the failed fetches.
 function errorMessage(state = null, action) {
-  const { type, error } = action
+  const { type, error, silentError } = action
 
   if (type === ActionTypes.RESET_ERROR_MESSAGE) {
     return null
-  } else if (error) {
+  } else if (error && !silentError) {
     return action.error
   }
 
@@ -60,6 +62,7 @@ const rootReducer = combineReducers({
   entities,
   // pagination,
   errorMessage,
+  session : sessionReducer,
   console: consoleReducer,
   user: userReducer,
   routing

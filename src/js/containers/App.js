@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import { resetErrorMessage } from '../actions'
+import { loadSessionUser } from '../actions/session'
+import { selectSessionUser } from '../selectors/session'
 
 import Navbar from '../components/Navbar'
 
@@ -10,6 +12,10 @@ class App extends Component {
     super(props)
     this.handleChange = this.handleChange.bind(this)
     this.handleDismissClick = this.handleDismissClick.bind(this)
+  }
+
+  componentWillMount() {
+    this.props.loadSessionUser()
   }
 
   handleDismissClick(e) {
@@ -28,22 +34,22 @@ class App extends Component {
     }
 
     return (
-      <p style={{ backgroundColor: '#e99', padding: 10 }}>
+      <div className="alert alert-warning" role="alert">
         <b>{errorMessage}</b>
         {' '}
         (<a href="#"
             onClick={this.handleDismissClick}>
           Dismiss
         </a>)
-      </p>
+      </div>
     )
   }
 
   render() {
-    const { children, inputValue } = this.props
+    const { children, inputValue, user } = this.props
     return (
       <div>
-        <Navbar />
+        <Navbar user={user} />
         {this.renderErrorMessage()}
         {children}
       </div>
@@ -54,19 +60,24 @@ class App extends Component {
 App.propTypes = {
   // Injected by React Redux
   errorMessage: PropTypes.string,
-  resetErrorMessage: PropTypes.func.isRequired,
   inputValue: PropTypes.string.isRequired,
   // Injected by React Router
-  children: PropTypes.node
+  children: PropTypes.node,
+  user : PropTypes.object,
+
+  resetErrorMessage: PropTypes.func.isRequired,
+  loadSessionUser: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state, ownProps) {
   return {
     errorMessage: state.errorMessage,
-    inputValue: ownProps.location.pathname.substring(1)
+    inputValue: ownProps.location.pathname.substring(1),
+    user : selectSessionUser(state)
   }
 }
 
 export default connect(mapStateToProps, {
-  resetErrorMessage
+  resetErrorMessage,
+  loadSessionUser
 })(App)

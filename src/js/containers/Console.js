@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { debounce } from 'lodash'
-import { setQuery, runQuery } from '../actions/query'
+
+import { setQuery, runQuery, loadQueryPage } from '../actions/query'
 import { setTopPanel, setBottomPanel } from '../actions/console'
 import { loadDatasets, loadDataset } from '../actions/dataset'
 
@@ -11,9 +12,11 @@ import ResultsTable from '../components/ResultsTable'
 import List from '../components/List'
 import DatasetItem from '../components/DatasetItem'
 import QueryHistoryItem from '../components/QueryHistoryItem'
+import QueryItem from '../components/QueryItem'
 
 function loadData(props) {
 	props.loadDatasets("", 1, 100)
+	props.loadQueryPage(1,50)
 }
 
 class Console extends Component {
@@ -25,7 +28,8 @@ class Console extends Component {
 			'handleSetTopPanel',
 			'handleSetBottomPanel',
 			'handleSelectDataset',
-			'handleSelectHistoryEntry'
+			'handleSelectHistoryEntry',
+			'handleQuerySelect'
 		].forEach(m => this[m] = this[m].bind(this))
 
 		this.debouncedSetQuery = debounce(props.setQuery, 200)
@@ -71,15 +75,20 @@ class Console extends Component {
 		this.props.setQuery(query.query);
 	}
 
+	handleQuerySelect(i, query) {
+		this.props.setTopPanel(0);
+		this.props.setQuery(query.statement);
+	}
+
 	render() {
-		const { runQuery, datasets, results, query, topPanelIndex, bottomPanelIndex, queryHistory } = this.props
+		const { runQuery, queries, datasets, results, query, topPanelIndex, bottomPanelIndex, queryHistory } = this.props
 		return (
 			<div id="console" className="container">
 				<div className="col-md-12">
 					<TabPanel 
 						index={topPanelIndex}
 						onSelectPanel={this.handleSetTopPanel}
-						labels={['Query', 'History']}
+						labels={['Editor', 'History']}
 						components={[
 							<QueryEditor value={query} onRun={this.handleRunQuery} onChange={this.handleEditorChange} />,
 							<List className="queryHistory list" data={queryHistory} component={QueryHistoryItem} onSelectItem={this.handleSelectHistoryEntry} />,
@@ -88,12 +97,12 @@ class Console extends Component {
 				<div className="col-md-12">
 					<TabPanel
 						index={bottomPanelIndex}
-						labels={['Results', 'Schemas', 'Explorer']}
+						labels={['Results', 'Datasets', 'Queries']}
 						onSelectPanel={this.handleSetBottomPanel}
 						components={[
 							<ResultsTable data={results} query={query} />,
-							<div><h4>Query Schema</h4></div>,
-							<List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectDataset} />
+							<List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectDataset} />,
+							<List className="queryItem list" data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} />
 						]} />
 				</div>
 			</div>
@@ -104,6 +113,8 @@ class Console extends Component {
 Console.propTypes = {
 	namespace : React.PropTypes.string,
 	dataset : React.PropTypes.array,
+	queries : React.PropTypes.array,
+	datasets : React.PropTypes.array,
 	results : React.PropTypes.object,
 	queryHistory : React.PropTypes.array,
 	topPanelIndex : React.PropTypes.number.isRequired,
@@ -124,6 +135,7 @@ Console.defaultProps = {
 function mapStateToProps(state, ownProps) {
 	return Object.assign({}, {
 		results : state.entities.results.result,
+		queries : Object.keys(state.entities.queries).map(key => state.entities.queries[key]),
 		datasets : Object.keys(state.entities.datasets).map(key => state.entities.datasets[key]),
 		queryHistory : state.user.history,
 	}, state.console, ownProps)
@@ -131,9 +143,12 @@ function mapStateToProps(state, ownProps) {
 
 export default connect(mapStateToProps, { 
 	setQuery, 
-	runQuery, 
+	runQuery,
+	loadQueryPage,
+
 	setTopPanel, 
 	setBottomPanel, 
+
 	loadDatasets,
 	loadDataset
 })(Console)

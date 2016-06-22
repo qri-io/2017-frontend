@@ -47,6 +47,7 @@ function callApi(method, endpoint, schema, data) {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
+    credentials: 'include',
     body
   })
     .then(response =>
@@ -81,11 +82,12 @@ function callApi(method, endpoint, schema, data) {
 // leading to a frozen UI as it wouldn't find "someuser" in the entities.
 // That's why we're forcing lower cases down there.
 
+const sessionUserSchema = new Schema('session');
 const userSchema = new Schema('users');
 const organizationSchema = new Schema('organizations');
 const datasetSchema = new Schema('datasets');
 // const schemaSchema = new Schema('schemas');
-const querySchema = new Schema('query');
+const querySchema = new Schema('queries');
 const resultSchema = new Schema('results', {
   idAttribute : (result) => "result"
 });
@@ -100,6 +102,7 @@ datasetSchema.define({
 
 // Schemas for Github API responses.
 export const Schemas = {
+  SESSION_USER : sessionUserSchema,
   USER: userSchema,
   USER_ARRAY: arrayOf(userSchema),
   ORGANIZATION: organizationSchema,
@@ -123,7 +126,7 @@ export default store => next => action => {
   }
 
   let { endpoint } = callAPI
-  const { schema, types, data, method="GET" } = callAPI
+  const { schema, types, data, method="GET", silentError=false } = callAPI
 
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getState())
@@ -165,8 +168,9 @@ export default store => next => action => {
         }
       }
       return next(actionWith({
-        type: failureType,
-        error: msg
+        type: failureType, 
+        error: msg,
+        silentError
       }))
     }
   )

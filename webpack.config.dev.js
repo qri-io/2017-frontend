@@ -17,13 +17,14 @@ var ENV = {
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: [
-    'webpack-hot-middleware/client',
+    'webpack-hot-middleware/client?path=//localhost:4000/__qri_io',
     './src/js/index'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    // path: path.join(__dirname, 'dist'),
+    path : __dirname,
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: '//localhost:4000/static/'
   },
   // resolve: {
   //   alias: {
