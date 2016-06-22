@@ -19,6 +19,14 @@ export const QUERY_FAILURE = 'QUERY_FAILURE'
 // Relies on the custom API middleware defined in ../middleware/api.js.
 export function runQuery(query) {
   return (dispatch, getState) => {
+
+    analytics.track("Submitted Query", {
+      statement : query.query,
+      namespace : '',
+      page : query.page,
+      pageSize : query.pageSize
+    });
+
     dispatch(setBottomPanel(0));
     dispatch(addHistoryEntry(query));
     return dispatch({

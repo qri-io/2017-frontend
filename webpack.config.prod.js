@@ -11,6 +11,7 @@ var ENV = {
     BASE_URL : JSON.stringify("http://www.qri.io"),
     API_URL : JSON.stringify("http://www.qri.io"),
     STATIC_ASSETS_URL : JSON.stringify("http://cdn.qri.io"),
+    SEGMENT_KEY : JSON.stringify("b4iAxJT8ISitRFQ6qZGS9w7RTnaOpvju"),
   }
 };
 
