@@ -51,9 +51,16 @@ export default class ResultsChart extends React.Component {
 		}
 
 		const { width, height } = chartDimensions(device.size);
+
+		if (options.xIndex == undefined || options.yIndex == undefined)  {
+			return (
+				<div className="resultsChart">
+					<ChartOptionsPicker schema={results.schema} options={options} onChange={onOptionsChange} />
+				</div>
+			)
+		}
+		
 		const data = transformResults(results.schema, results.data, options.xIndex, options.yIndex)
-
-
 
 		return (
 			<div className="resultsChart">

@@ -3,16 +3,17 @@
 var path = require('path');
 var webpack = require('webpack');
 
+// for local tesing of compressed files
 var ENV = {
   __BUILD__ : {
-    PRODUCTION : JSON.stringify(true),
-    DEVELOP : JSON.stringify(false),
-    STAGING : JSON.stringify(false),
+    PRODUCTION : false,
+    DEVELOP : false,
+    STAGING : true,
 
-    BASE_URL : JSON.stringify("http://www.qri.io"),
-    API_URL : JSON.stringify("http://www.qri.io"),
+    BASE_URL : JSON.stringify("http://localhost:3000"),
+    API_URL : JSON.stringify("http://localhost:3000"),
     STATIC_ASSETS_URL : JSON.stringify("http://cdn.qri.io"),
-    SEGMENT_KEY : JSON.stringify("b4iAxJT8ISitRFQ6qZGS9w7RTnaOpvju")
+    SEGMENT_KEY : JSON.stringify("test"),
   }
 };
 
@@ -34,8 +35,8 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     publicPath : "http://cdn.qri.io/js/",
-    filename: '[name].min.js',
-    chunkFilename: "[name].chunk.min.js"
+    filename: '[name].staging.js',
+    chunkFilename: "[name].chunk.js"
   },
   plugins: [
     // new webpack.optimize.OccurenceOrderPlugin(),

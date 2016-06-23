@@ -5,13 +5,14 @@ var webpack = require('webpack');
 
 var ENV = {
   __BUILD__ : {
-    PRODUCTION : false,
-    DEVELOP : true,
+    PRODUCTION : JSON.stringify(false),
+    DEVELOP : JSON.stringify(true),
+    STAGING : JSON.stringify(false),
 
     BASE_URL : JSON.stringify("http:/localhost:4000"),
     API_URL : JSON.stringify("http://localhost:3000"),
     STATIC_ASSETS_URL : JSON.stringify("http://localhost:3000"),
-    SEGMENT_KEY : "not_a_key",
+    SEGMENT_KEY : JSON.stringify("not_a_key"),
   }
 };
 

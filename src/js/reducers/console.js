@@ -10,8 +10,8 @@ const initialState = {
 	chartOptions : {
 		type : 'line',
 		title : 'results',
-		xIndex : 0,
-		yIndex : 0,
+		xIndex : undefined,
+		yIndex : undefined,
 	}
 }
 
