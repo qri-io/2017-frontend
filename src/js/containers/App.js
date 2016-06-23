@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import { resetErrorMessage } from '../actions'
 import { loadSessionUser } from '../actions/session'
+import { resizeDevice } from '../actions/device'
 import { selectSessionUser } from '../selectors/session'
+import { debounce } from 'lodash'
 
 import Navbar from '../components/Navbar'
 
@@ -16,6 +18,19 @@ class App extends Component {
 
   componentWillMount() {
     this.props.loadSessionUser()
+
+    this._oldResize = window.onresize
+    // debounce device resizing to not be a jerk on resize
+    window.onresize = debounce((e) => {
+      this.props.resizeDevice(window.innerWidth, window.innerHeight)
+    }, 200)
+
+    // intial call to make things not crazy
+    this.props.resizeDevice(window.innerWidth, window.innerHeight)
+  }
+
+  componentWillUnmount() {
+    window.onresize = this._oldResize
   }
 
   handleDismissClick(e) {
@@ -79,5 +94,6 @@ function mapStateToProps(state, ownProps) {
 
 export default connect(mapStateToProps, {
   resetErrorMessage,
-  loadSessionUser
+  loadSessionUser,
+  resizeDevice
 })(App)

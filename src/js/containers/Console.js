@@ -88,7 +88,7 @@ class Console extends Component {
 	}
 
 	render() {
-		const { runQuery, queries, datasets, results, query, topPanelIndex, bottomPanelIndex, queryHistory, chartOptions } = this.props
+		const { runQuery, queries, datasets, results, query, topPanelIndex, bottomPanelIndex, queryHistory, chartOptions, device } = this.props
 		return (
 			<div id="console" className="container">
 				<div className="col-md-12">
@@ -108,7 +108,7 @@ class Console extends Component {
 						onSelectPanel={this.handleSetBottomPanel}
 						components={[
 							<ResultsTable data={results} query={query} />,
-							<ResultsChart results={results} options={chartOptions} onOptionsChange={this.handleSetChartOptions} />,
+							<ResultsChart results={results} options={chartOptions} onOptionsChange={this.handleSetChartOptions} device={device} />,
 							<List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectDataset} />,
 							<List className="queryItem list" data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} />
 						]} />
@@ -127,6 +127,7 @@ Console.propTypes = {
 	queryHistory : React.PropTypes.array,
 	topPanelIndex : React.PropTypes.number.isRequired,
 	bottomPanelIndex : React.PropTypes.number.isRequired,
+	device : React.PropTypes.object.isRequired,
 
 	setQuery : React.PropTypes.func.isRequired,
 	runQuery : React.PropTypes.func.isRequired,
@@ -146,6 +147,7 @@ function mapStateToProps(state, ownProps) {
 		queries : Object.keys(state.entities.queries).map(key => state.entities.queries[key]),
 		datasets : Object.keys(state.entities.datasets).map(key => state.entities.datasets[key]),
 		queryHistory : state.user.history,
+		device : state.device
 	}, state.console, ownProps)
 }
 

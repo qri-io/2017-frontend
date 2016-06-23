@@ -3,6 +3,7 @@ import merge from 'lodash/merge'
 // import paginate from './paginate'
 import { routerReducer as routing } from 'react-router-redux'
 import sessionReducer from './session'
+import deviceReducer from './device'
 import userReducer from './user'
 import consoleReducer from './console'
 import { combineReducers } from 'redux'
@@ -65,6 +66,7 @@ const rootReducer = combineReducers({
   session : sessionReducer,
   console: consoleReducer,
   user: userReducer,
+  device : deviceReducer,
   routing
 })
 
