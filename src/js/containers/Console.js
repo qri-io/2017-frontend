@@ -3,16 +3,18 @@ import { connect } from 'react-redux'
 import { debounce } from 'lodash'
 
 import { setQuery, runQuery, loadQueryPage } from '../actions/query'
-import { setTopPanel, setBottomPanel } from '../actions/console'
+import { setTopPanel, setBottomPanel, setChartOptions } from '../actions/console'
 import { loadDatasets, loadDataset } from '../actions/dataset'
 
 import TabPanel from '../components/TabPanel'
 import QueryEditor from '../components/QueryEditor'
 import ResultsTable from '../components/ResultsTable'
+import ResultsChart from '../components/ResultsChart'
 import List from '../components/List'
 import DatasetItem from '../components/DatasetItem'
 import QueryHistoryItem from '../components/QueryHistoryItem'
 import QueryItem from '../components/QueryItem'
+
 
 function loadData(props) {
 	props.loadDatasets("", 1, 100)
@@ -27,6 +29,7 @@ class Console extends Component {
 			'handleEditorChange',
 			'handleSetTopPanel',
 			'handleSetBottomPanel',
+			'handleSetChartOptions',
 			'handleSelectDataset',
 			'handleSelectHistoryEntry',
 			'handleQuerySelect'
@@ -66,6 +69,10 @@ class Console extends Component {
 		this.props.setBottomPanel(index);
 	}
 
+	handleSetChartOptions(options) {
+		this.props.setChartOptions(options);
+	}
+
 	handleSelectDataset(i, dataset) {
 		this.props.loadDataset(dataset.id, ['schema']);
 	}
@@ -81,7 +88,7 @@ class Console extends Component {
 	}
 
 	render() {
-		const { runQuery, queries, datasets, results, query, topPanelIndex, bottomPanelIndex, queryHistory } = this.props
+		const { runQuery, queries, datasets, results, query, topPanelIndex, bottomPanelIndex, queryHistory, chartOptions } = this.props
 		return (
 			<div id="console" className="container">
 				<div className="col-md-12">
@@ -97,10 +104,11 @@ class Console extends Component {
 				<div className="col-md-12">
 					<TabPanel
 						index={bottomPanelIndex}
-						labels={['Results', 'Datasets', 'Queries']}
+						labels={['Results', 'Chart', 'Datasets', 'Queries']}
 						onSelectPanel={this.handleSetBottomPanel}
 						components={[
 							<ResultsTable data={results} query={query} />,
+							<ResultsChart results={results} options={chartOptions} onOptionsChange={this.handleSetChartOptions} />,
 							<List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectDataset} />,
 							<List className="queryItem list" data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} />
 						]} />
@@ -147,7 +155,8 @@ export default connect(mapStateToProps, {
 	loadQueryPage,
 
 	setTopPanel, 
-	setBottomPanel, 
+	setBottomPanel,
+	setChartOptions, 
 
 	loadDatasets,
 	loadDataset

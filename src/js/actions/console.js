@@ -17,3 +17,12 @@ export function setBottomPanel(index) {
 		value : index
 	}
 }
+
+export const CONSOLE_SET_CHART_OPTIONS = 'CONSOLE_SET_CHART_OPTIONS'
+
+export function setChartOptions(options) {
+	return {
+		type : CONSOLE_SET_CHART_OPTIONS,
+		value : options
+	}
+}
