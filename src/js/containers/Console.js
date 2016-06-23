@@ -79,7 +79,7 @@ class Console extends Component {
 
 	handleSelectHistoryEntry(i, query) {
 		this.props.setTopPanel(0);
-		this.props.setQuery(query.query);
+		this.props.setQuery(query.query.statement);
 	}
 
 	handleQuerySelect(i, query) {
@@ -146,7 +146,7 @@ function mapStateToProps(state, ownProps) {
 		results : state.entities.results.result,
 		queries : Object.keys(state.entities.queries).map(key => state.entities.queries[key]),
 		datasets : Object.keys(state.entities.datasets).map(key => state.entities.datasets[key]),
-		queryHistory : state.user.history,
+		queryHistory : state.session.history,
 		device : state.device
 	}, state.console, ownProps)
 }

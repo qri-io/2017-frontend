@@ -44,3 +44,12 @@ export function loginUser(username, password) {
     }
   }
 }
+
+export const SESSION_ADD_HISTORY_ENTRY = 'SESSION_ADD_HISTORY_ENTRY'
+
+export function addHistoryEntry(query) {
+  return {
+    type : SESSION_ADD_HISTORY_ENTRY,
+    value : query
+  } 
+}

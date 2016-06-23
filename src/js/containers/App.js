@@ -25,7 +25,7 @@ class App extends Component {
       this.props.resizeDevice(window.innerWidth, window.innerHeight)
     }, 200)
 
-    // intial call to make things not crazy
+    // initial call to make things not crazy
     this.props.resizeDevice(window.innerWidth, window.innerHeight)
   }
 

@@ -1,6 +1,6 @@
 import { CALL_API, Schemas } from '../middleware/api'
 import { setBottomPanel } from './console'
-import { addHistoryEntry } from './user'
+import { addHistoryEntry } from './session'
 
 export const QUERY_SET = 'QUERY_SET'
 
