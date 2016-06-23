@@ -4,7 +4,7 @@ import { isEqual } from 'lodash';
 
 import 'brace/ext/language_tools';
 import '../ace/mode/pgsql';
-import '../ace/theme/monokai';
+import '../ace/theme/qri';
 
 const editorOptions = [
   'minLines',
@@ -249,11 +249,11 @@ CodeEditor.defaultProps = {
   name: 'brace-editor',
   className : 'editor',
   mode: '',
-  theme: 'monokai',
+  theme: 'qri',
   height: '',
   width: '',
   value: '',
-  fontSize: 12,
+  fontSize: 15,
   showGutter: true,
   onChange: null,
   onPaste: null,

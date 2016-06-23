@@ -9,9 +9,12 @@ export default class Navbar extends Component {
 				<div className="container">
 					<div className="row">
 						<a id="logotype" className="col-md-1" href={__BUILD__.BASE_URL}>
-							<img src="https://s3.amazonaws.com/static.qri.io/svg/logotype.svg" />
+							<img src="https://s3.amazonaws.com/static.qri.io/svg/qri.svg" />
 						</a>
-						<div className="menu col-md-6 offset-md-4">
+						<div className="col-md-4 offset-md-3">
+							<small className="alpha caps">SO MUCH A WORK IN PROGRESS. GOOD LUCK.</small>
+						</div>
+						<div className="menu col-md-4">
 							<a href="/explore">Explore</a>
 							<Link to="/console">Console</Link>
 							{ 

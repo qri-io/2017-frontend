@@ -9,8 +9,6 @@ export default class ResultsTable extends Component {
 
 		return (
 			<div className="resultsTable">
-				<h3>Results</h3>
-				<DownloadResultsButton datasetId="" query={this.props.query} />
 				<div className="table-responsive">
 					<table className="table table-hover query-results">
 						<thead><tr>{schema.map((col, i) => <th key={i}>{col.name}</th>)}</tr></thead>

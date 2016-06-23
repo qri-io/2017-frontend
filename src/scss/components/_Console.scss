@@ -3,4 +3,14 @@
 		height: 200px;
 		overflow-y: auto;
 	}
+
+	.top {
+		padding-bottom: 20px;
+	}
+	
+	.bottom {
+		background: $other-dark-blue-slate;
+		padding-top: 20px;
+		padding-bottom: 80px;
+	}
 }

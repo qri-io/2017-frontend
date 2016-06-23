@@ -90,28 +90,34 @@ class Console extends Component {
 	render() {
 		const { runQuery, queries, datasets, results, query, topPanelIndex, bottomPanelIndex, queryHistory, chartOptions, device } = this.props
 		return (
-			<div id="console" className="container">
-				<div className="col-md-12">
-					<TabPanel 
-						index={topPanelIndex}
-						onSelectPanel={this.handleSetTopPanel}
-						labels={['Editor', 'History']}
-						components={[
-							<QueryEditor value={query} onRun={this.handleRunQuery} onChange={this.handleEditorChange} />,
-							<List className="queryHistory list" data={queryHistory} component={QueryHistoryItem} onSelectItem={this.handleSelectHistoryEntry} />,
-						]} />
+			<div id="console">
+				<div className="top container">
+					<div className="col-md-12">
+						<TabPanel 
+							index={topPanelIndex}
+							onSelectPanel={this.handleSetTopPanel}
+							labels={['Editor', 'History']}
+							components={[
+								<QueryEditor value={query} onRun={this.handleRunQuery} onChange={this.handleEditorChange} />,
+								<List className="queryHistory list" data={queryHistory} component={QueryHistoryItem} onSelectItem={this.handleSelectHistoryEntry} />,
+							]} />
+					</div>
 				</div>
-				<div className="col-md-12">
-					<TabPanel
-						index={bottomPanelIndex}
-						labels={['Results', 'Chart', 'Datasets', 'Queries']}
-						onSelectPanel={this.handleSetBottomPanel}
-						components={[
-							<ResultsTable data={results} query={query} />,
-							<ResultsChart results={results} options={chartOptions} onOptionsChange={this.handleSetChartOptions} device={device} />,
-							<List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectDataset} />,
-							<List className="queryItem list" data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} />
-						]} />
+				<div className="bottom">
+					<div className="container">
+						<div className="col-md-12">
+							<TabPanel
+								index={bottomPanelIndex}
+								labels={['Results', 'Chart', 'Datasets', 'Queries']}
+								onSelectPanel={this.handleSetBottomPanel}
+								components={[
+									<ResultsTable data={results} query={query} />,
+									<ResultsChart results={results} options={chartOptions} onOptionsChange={this.handleSetChartOptions} device={device} />,
+									<List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectDataset} />,
+									<List className="queryItem list" data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} />
+								]} />
+						</div>
+					</div>
 				</div>
 			</div>
 		)

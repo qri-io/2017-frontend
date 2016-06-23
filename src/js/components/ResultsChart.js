@@ -64,7 +64,8 @@ export default class ResultsChart extends React.Component {
 					width={width}
 					height={height}
 					margins={margins}
-					axesColor="#A1B2BC" />
+					axesColor="#A1B2BC"
+					fill="#FFFFFF" />
 	    </div>
 		);
 	}

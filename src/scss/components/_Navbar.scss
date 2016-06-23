@@ -1,6 +1,6 @@
 #navbar {
-  padding: 10px 0;
-  background: #2A2E2E;
+  padding: 15px 0;
+  background: $other-dark-blue-slate;
 
 	#logotype {
 	  max-width: 100px;
@@ -9,11 +9,18 @@
 		  width: 80%;
 		}
 	}
+
+	.alpha {
+		text-align: center;
+		letter-spacing: 1px;
+	  color: $light-blue-slate;
+	}
+	
 	.menu {
 	  text-align: right;
-	  padding-top: 5px;
 		a {
 		  margin-right: 10px;
+			color: $tope;
 		}
 	}
 }
