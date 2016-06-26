@@ -17,7 +17,7 @@ export default class TabPanel extends React.Component {
 		return (
 			<div className="tabPanel">
 				<header>
-					{labels.map((label,i) => <span className={headerClassName(i, index)} key={i} onClick={panelTrigger(i, this.props.onSelectPanel)}>{label}</span>)}
+					{labels.map((label,i) => <a className={headerClassName(i, index)} key={i} onClick={panelTrigger(i, this.props.onSelectPanel)}>{label}</a>)}
 				</header>
 				<section>
 					{component}

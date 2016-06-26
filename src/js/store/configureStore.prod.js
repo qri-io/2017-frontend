@@ -4,12 +4,10 @@ import api from '../middleware/api'
 import globalDatasets from '../middleware/globalDatasets'
 import rootReducer from '../reducers'
 
-import createLogger from 'redux-logger'
-
 export default function configureStore(preloadedState) {
   return createStore(
     rootReducer,
     preloadedState,
-  	applyMiddleware(thunk, api, globalDatasets, createLogger())
+  	applyMiddleware(thunk, api, globalDatasets)
   )
 }

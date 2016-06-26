@@ -25,9 +25,8 @@ function exitOneFail() {
   });
 }
 
-console.log(ENV);
-
 module.exports = {
+  devtool : 'cheap-module-source-map',
   entry: {
     'app' : './src/js/index.js'
   },
@@ -38,11 +37,11 @@ module.exports = {
     chunkFilename: "[name].chunk.min.js"
   },
   plugins: [
-    // new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin(ENV),
     new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': JSON.stringify('production') } }),
     exitOneFail,
-    // new webpack.optimize.UglifyJsPlugin({minimize: true}),
+    new webpack.optimize.UglifyJsPlugin({minimize: true}),
   ],
   module: {
     loaders: [{

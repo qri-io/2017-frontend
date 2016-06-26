@@ -21,7 +21,7 @@ color: #F8F8F0\
 background-color: #2A3439\
 }\
 .ace-qri .ace_marker-layer .ace_selection {\
-background: #2A3439\
+background: #40515D\
 }\
 .ace-qri.ace_multiselect .ace_selection.ace_start {\
 box-shadow: 0 0 3px 0px #272822;\

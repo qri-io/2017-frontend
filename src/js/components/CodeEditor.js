@@ -253,7 +253,7 @@ CodeEditor.defaultProps = {
   height: '',
   width: '',
   value: '',
-  fontSize: 15,
+  fontSize: 14,
   showGutter: true,
   onChange: null,
   onPaste: null,
