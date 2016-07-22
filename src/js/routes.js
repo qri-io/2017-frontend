@@ -1,15 +1,50 @@
 import React from 'react'
-import { Route, IndexRoute } from 'react-router'
-
 import App from './containers/App'
-import Console from './containers/Console'
-import Login from './containers/Login'
-import ChartTest from './containers/ChartTest'
 
-export default (
-	<Route path="/" component={App}>
-		<IndexRoute component={Console}  />
-		<Route path="/console" component={Console} />
-		<Route path="/login" component={Login} />
-	</Route>
-);
+function errorLoading(err) {
+	console.error('Dynamic page loading failed', err);
+}
+
+function loadRoute(cb) {
+	return (module) => cb(null, module.default);
+}
+
+export default {
+	path : "/",
+	component: App,
+	getIndexRoute(location, cb) {
+		System.import('./containers/Datasets').then(loadRoute(cb)).catch(errorLoading)
+	},
+	childRoutes: [
+		{
+			path: '/datasets',
+			getComponent(location, cb) {
+				System.import('./containers/Datasets').then(loadRoute(cb)).catch(errorLoading)
+			},
+		},
+		{
+			path: '/console',
+			getComponent(location, cb) {
+			  System.import('./containers/Console').then(loadRoute(cb)).catch(errorLoading);
+			}
+		},
+		{
+			path: '/login',
+			getComponent(location, cb) {
+			 System.import('./containers/Login').then(loadRoute(cb)).catch(errorLoading);
+			}
+		},
+		{
+			path: '/:handle',
+			getComponent(location, cb) {
+				System.import('./containers/User').then(loadRoute(cb)).catch(errorLoading);
+			}
+		},
+		{
+			path: '/:handle/:slug',
+			getComponent(location, cb) {
+				System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);
+			}
+		}
+ ]
+};

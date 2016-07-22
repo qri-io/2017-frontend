@@ -12,7 +12,7 @@ export default class Navbar extends Component {
 							<img src="https://s3.amazonaws.com/static.qri.io/svg/qri.svg" />
 						</a>
 						<div className="col-md-4 offset-md-3">
-							<small className="alpha caps">SO MUCH A WORK IN PROGRESS. GOOD LUCK.</small>
+							<small className="alpha caps">VERY MUCH A WORK IN PROGRESS.</small>
 						</div>
 						<div className="menu col-md-4">
 							<a href="/explore">Explore</a>

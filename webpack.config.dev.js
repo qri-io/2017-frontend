@@ -9,7 +9,7 @@ var ENV = {
     DEVELOP : JSON.stringify(true),
     STAGING : JSON.stringify(false),
 
-    BASE_URL : JSON.stringify("http:/localhost:4000"),
+    BASE_URL : JSON.stringify("http://localhost:3000"),
     API_URL : JSON.stringify("http://localhost:3000"),
     STATIC_ASSETS_URL : JSON.stringify("http://localhost:3000"),
     SEGMENT_KEY : JSON.stringify("not_a_key"),
@@ -35,7 +35,7 @@ module.exports = {
   // },
   plugins: [
     new webpack.DefinePlugin(ENV),
-    new webpack.optimize.OccurenceOrderPlugin(),
+    // new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],

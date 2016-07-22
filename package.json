@@ -39,15 +39,15 @@
     "sass": "^0.5.0",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.1",
+    "webpack": "^2.1.0-beta.19",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.10.0"
   },
   "scripts": {
-    "start": "node server.js",
+    "develop": "node server.js",
     "test": "mocha test --compilers js:babel/register",
-    "build": "NODE_ENV=production webpack --progress --colors --config webpack.config.prod",
-    "build:staging": "webpack --progress --colors --config webpack.config.staging"
+    "build": "NODE_ENV=production webpack --progress --config webpack.config.prod",
+    "build:staging": "webpack --progress --config webpack.config.staging"
   },
   "repository": {
     "type": "git",

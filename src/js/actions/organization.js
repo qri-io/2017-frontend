@@ -31,7 +31,7 @@ export const ORGANIZATION_REQUEST = 'ORGANIZATION_REQUEST'
 export const ORGANIZATION_SUCCESS = 'ORGANIZATION_SUCCESS'
 export const ORGANIZATION_FAILURE = 'ORGANIZATION_FAILURE'
 
-function fetchDataset(id, requiredFields) {
+function fetchDataset(id, requiredFields=[]) {
   return {
     CALL_API : {
       types : [ ORGANIZATION_REQUEST, ORGANIZATION_SUCCESS, ORGANIZATION_FAILURE ],
@@ -42,7 +42,7 @@ function fetchDataset(id, requiredFields) {
   }
 }
 
-function loadDataset(id, requiredFields) {
+function loadDataset(id, requiredFields=[]) {
   return (dispatch, getState) => {
     const dataset = getState().entities.users[login]
     if (user && requiredFields.every(key => user.hasOwnProperty(key))) {

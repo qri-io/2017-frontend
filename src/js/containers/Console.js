@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { debounce } from 'lodash'
 
@@ -21,7 +21,7 @@ function loadData(props) {
 	props.loadQueryPage(1,50)
 }
 
-class Console extends Component {
+class Console extends React.Component {
 	constructor(props) {
 		super(props);
 		[

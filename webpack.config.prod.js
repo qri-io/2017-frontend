@@ -28,7 +28,8 @@ function exitOneFail() {
 module.exports = {
   devtool : 'cheap-module-source-map',
   entry: {
-    'app' : './src/js/index.js'
+    'app' : './src/js/index.js',
+    'vendor' : [ 'react', 'react-dom' ]
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -37,7 +38,7 @@ module.exports = {
     chunkFilename: "[name].chunk.min.js"
   },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
+    // new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin(ENV),
     new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': JSON.stringify('production') } }),
     exitOneFail,
