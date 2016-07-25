@@ -13,7 +13,8 @@ const initialState = {
   queries : {},
   organizations : {},
   datasets : {},
-  results : {},
+  changes : {},
+  results : {}
 }
 
 // Updates an entity cache in response to any action with response.entities.

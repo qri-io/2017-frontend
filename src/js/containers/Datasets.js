@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 class Datasets extends React.Component {
 	render() {
-		const { username } = this.props;
+		const { handle } = this.props;
 		
 		return (
 			<div className="container">

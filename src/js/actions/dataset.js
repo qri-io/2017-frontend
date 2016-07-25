@@ -105,3 +105,25 @@ export function loadDatasetSchema(id) {
     return dispatch(fetchDatasetSchema(id))
   }
 }
+
+export const DATASET_CHANGES_REQUEST = 'DATASET_CHANGES_REQUEST';
+export const DATASET_CHANGES_SUCCESS = 'DATASET_CHANGES_SUCCESS';
+export const DATASET_CHANGES_FAIL = 'DATASET_CHANGES_FAIL';
+
+export function fetchDatasetChanges(datasetId, page=1, pageSize=50) {
+	return {
+		[CALL_API] : {
+			types : [ DATASET_CHANGES_REQUEST, DATASET_CHANGES_SUCCESS, DATASET_CHANGES_FAIL ],
+			endpoint : `/datasets/${datasetId}/changes?page=${page}&pageSize=${pageSize}`,
+			schema : Schemas.CHANGE_ARRAY,
+			page,
+			pageSize
+		}
+	}
+}
+
+export function loadDatasetChanges(datasetId, page=1, pageSize=50) {
+	return (dispatch, getState) => {
+		return fetchDatasetChanges(datasetId, page, pageSize);
+	}
+}

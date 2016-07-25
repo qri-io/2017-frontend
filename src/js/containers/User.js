@@ -35,12 +35,12 @@ class User extends React.Component {
 		return (
 			<div className="user container">
 				<h1>User Profile</h1>
-				<h3>{ user.username }</h3>
+				<h3>{ user.handle }</h3>
 				<h3>Datasets:</h3>
 				{user.datasets.map((ds, i) => {
 					return (
 						<div class="dataset" key={i}>
-							<Link to={`/${ ds.ownerUsername }/${ ds.slug }`}><h4>{ ds.name }</h4></Link>
+							<Link to={`/${ ds.ownerHandle }/${ ds.slug }`}><h4>{ ds.name }</h4></Link>
 							<p>{ ds.description }</p>
 						</div>
 					);

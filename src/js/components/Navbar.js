@@ -19,7 +19,7 @@ export default class Navbar extends Component {
 							<Link to="/console">Console</Link>
 							{ 
 								user ? 
-									<Link to={`/${user.username}`}>{user.username}</Link> : 
+									<Link to={`/${user.handle}`}>{user.handle}</Link> : 
 									<Link to="/login">Login</Link>
 							}
 						</div>

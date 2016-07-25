@@ -25,7 +25,7 @@ class Login extends React.Component {
 
 	handleLoginSubmit(e) {
 		e.preventDefault()
-		this.props.loginUser(this._username.value, this._password.value)
+		this.props.loginUser(this._handle.value, this._password.value)
 	}
 
 	render() {
@@ -33,7 +33,7 @@ class Login extends React.Component {
 			<div id="login">
 				<div className="container">
 					<form onSubmit={this.handleLoginSubmit}>
-						<input type="text" name="username" ref={(c) => this._username = c} />
+						<input type="text" name="handle" ref={(c) => this._handle = c} />
 						<input type="password" name="password" ref={(c) => this._password = c} />
 						<input className="btn btn-standard" type="submit" value="submit" />
 					</form>

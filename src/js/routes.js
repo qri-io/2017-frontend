@@ -45,6 +45,12 @@ export default {
 			getComponent(location, cb) {
 				System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);
 			}
+		},
+		{
+			path: '/:handle/:slug/changes/:number',
+			getComponent(location, cb) {
+				System.import('./containers/Change').then(loadRoute(cb)).catch(errorLoading);
+			}
 		}
  ]
 };

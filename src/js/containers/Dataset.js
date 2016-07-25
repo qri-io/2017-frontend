@@ -42,7 +42,7 @@ class Dataset extends React.Component {
 					<div class="col-md-12">
 						<header class="page-header col-md-12">
 							<h4>
-								<a href={`/${dataset.ownerUsername}`}>{ dataset.ownerUsername }</a>
+								<a href={`/${dataset.ownerHandle}`}>{ dataset.ownerHandle }</a>
 								<span class="slash">/</span>
 								<a href={ dataset.path }>{ dataset.slug }</a>
 							</h4>

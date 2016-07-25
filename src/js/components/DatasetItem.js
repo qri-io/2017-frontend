@@ -6,7 +6,7 @@ export default class DatasetItem extends React.Component {
 		const { data, onSelect } = this.props
 		return (
 			<div className="datasetItem" onClick={onSelect}>
-				<Link className="namespace" to={`/${data.ownerUsername}/${data.slug}`}>{data.ownerUsername}.{data.slug}</Link>
+				<Link className="namespace" to={`/${data.ownerHandle}/${data.slug}`}>{data.ownerHandle}.{data.slug}</Link>
 				<p>{data.name}</p>
 				<ul>
 					{data.schema ? data.schema.map((table, i) => <li key={i}>{table.name}</li>) : null}

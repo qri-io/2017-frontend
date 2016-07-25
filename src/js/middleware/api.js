@@ -91,7 +91,7 @@ const querySchema = new Schema('queries');
 const resultSchema = new Schema('results', {
   idAttribute : (result) => "result"
 });
-const changeRequestSchema = new Schema('changeRequests');
+const changeSchema = new Schema('changes');
 
 organizationSchema.define({
   datasets : datasetSchema
@@ -113,8 +113,8 @@ export const Schemas = {
   QUERY : querySchema,
   QUERY_ARRAY: arrayOf(querySchema),
   RESULT : resultSchema,
-  CHANGE_REQUEST : changeRequestSchema,
-  CHANGE_REQUEST_ARRAY : arrayOf(changeRequestSchema)
+  CHANGE : changeSchema,
+  CHANGE_ARRAY : arrayOf(changeSchema)
 }
 
 // Action key that carries API call info interpreted by this Redux middleware.
