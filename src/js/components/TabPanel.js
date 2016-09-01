@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 
 function panelTrigger(i, fn) {
 	return function () {
@@ -28,8 +28,8 @@ export default class TabPanel extends React.Component {
 }
 
 TabPanel.propTypes = {
-	labels : React.PropTypes.array.isRequired,
-	components : React.PropTypes.array.isRequired,
-	index : React.PropTypes.number.isRequired,
-	onSelectPanel : React.PropTypes.func.isRequired,
+	labels : PropTypes.array.isRequired,
+	components : PropTypes.array.isRequired,
+	index : PropTypes.number.isRequired,
+	onSelectPanel : PropTypes.func.isRequired,
 }

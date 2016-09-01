@@ -5,9 +5,11 @@ import { DATASETS_SUCCESS } from '../actions/dataset'
 // autocompleter
 export default store => next => action => {
   if (action.type == DATASETS_SUCCESS) {
-  	const datasets = action.response.entities.datasets
-  	// TODO - sync / reduce already existing datasets
-    window.datasets = Object.keys(datasets).map(key => datasets[key])
+  	if (action.response.entities.datasets) {
+	  	const datasets = action.response.entities.datasets
+	  	// TODO - sync / reduce already existing datasets
+	    window.datasets = Object.keys(datasets).map(key => datasets[key])
+	  }
   }
 
   return next(action);

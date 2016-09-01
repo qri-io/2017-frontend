@@ -1,10 +1,10 @@
-import Schemas from '../middleware/api';
-
-import { selectChangeByNumber } from '../selectors/change';
+import Schemas from '../schemas'
+import { selectChangeByNumber } from '../selectors/change'
+import { updateModel, newModel } from './models'
 
 export const CHANGE_CREATE = 'CHANGE_CREATE';
 
-export function newChangeRequest (dataset) {
+export function newChange (dataset) {
 	return {
 		type : CHANGE_CREATE,
 		dataset : dataset
@@ -14,10 +14,7 @@ export function newChangeRequest (dataset) {
 export const CHANGE_UPDATE = 'CHANGE_UPDATE';
 
 export function updateChange(change) {
-	return {
-		type : CHANGE_UPDATE,
-		change : change
-	}
+	return updateModel(Schemas.CHANGE, change)
 }
 
 export const CHANGE_FETCH_REQUEST = 'CHANGE_FETCH_REQUEST';

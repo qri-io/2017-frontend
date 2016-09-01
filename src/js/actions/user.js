@@ -1,4 +1,5 @@
-import { CALL_API, Schemas } from '../middleware/api'
+import { CALL_API } from '../middleware/api'
+import Schemas from '../schemas'
 import { selectUserByHandle } from '../selectors/user'
 
 export const USER_REQUEST = 'USER_REQUEST'

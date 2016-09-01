@@ -1,5 +1,7 @@
-import { CALL_API, Schemas } from '../middleware/api'
+import { CALL_API } from '../middleware/api'
+import Schemas from '../schemas'
 import { selectDatasetBySlug } from '../selectors/dataset'
+import { newModel, updateModel, clearNewModel } from './models'
 
 export const DATASETS_REQUEST = 'DATASETS_REQUEST'
 export const DATASETS_SUCCESS = 'DATASETS_SUCCESS'
@@ -57,6 +59,44 @@ export function loadDataset(id, requiredFields=[]) {
   }
 }
 
+export function createDataset(dataset) {
+	return updateModel(Schemas.DATASET, dataset)
+}
+
+export function updateDataset(dataset) {
+	return updateModel(Schemas.DATASET, dataset)
+}
+
+export const DATASET_SAVE_REQUEST = 'DATASET_SAVE_REQUEST'
+export const DATASET_SAVE_SUCCESS = 'DATASET_SAVE_SUCCESS'
+export const DATASET_SAVE_FAILURE = 'DATASET_SAVE_FAILURE'
+
+export function saveDataset(dataset) {
+	return {
+		[CALL_API] : {
+			types : [ DATASET_SAVE_REQUEST, DATASET_SAVE_SUCCESS, DATASET_SAVE_FAILURE ],
+			endpoint : dataset.id ? `/datasets/${dataset.id}` : `/datasets`,
+			method : dataset.id ? "PUT" : "POST",
+			data : dataset
+		}
+	}
+}
+
+export const DATASET_DELETE_REQUEST = 'DATASET_DELETE_REQUEST'
+export const DATASET_DELETE_SUCCESS = 'DATASET_DELETE_SUCCESS'
+export const DATASET_DELETE_FAILURE = 'DATASET_DELETE_FAILURE'
+
+export function deleteDataset(datasetId) {
+	return {
+		[CALL_API] : {
+			types : [ DATASET_DELETE_REQUEST, DATASET_DELETE_SUCCESS, DATASET_DELETE_FAILURE ],
+			endpoint : `/datasets/${dataset.id}`,
+			method : "DELETE",
+			id : datasetId
+		}
+	}
+}
+
 export function fetchDatasetBySlug(handle, slug, requiredFields=[]) {
 	return {
 		[CALL_API] : {
@@ -104,6 +144,28 @@ export function loadDatasetSchema(id) {
 
     return dispatch(fetchDatasetSchema(id))
   }
+}
+
+export const DATASET_MIGRATIONS_REQUEST = 'DATASET_MIGRATIONS_REQUEST';
+export const DATASET_MIGRATIONS_SUCCESS = 'DATASET_MIGRATIONS_SUCCESS';
+export const DATASET_MIGRATIONS_FAIL = 'DATASET_MIGRATIONS_FAIL';
+
+export function fetchDatasetChanges(datasetId, page=1, pageSize=50) {
+	return {
+		[CALL_API] : {
+			types : [ DATASET_MIGRATIONS_REQUEST, DATASET_MIGRATIONS_SUCCESS, DATASET_MIGRATIONS_FAIL ],
+			endpoint : `/datasets/${datasetId}/migrations?page=${page}&pageSize=${pageSize}`,
+			schema : Schemas.MIGRATION_ARRAY,
+			page,
+			pageSize
+		}
+	}
+}
+
+export function loadDatasetChanges(datasetId, page=1, pageSize=50) {
+	return (dispatch, getState) => {
+		return fetchDatasetChanges(datasetId, page, pageSize);
+	}
 }
 
 export const DATASET_CHANGES_REQUEST = 'DATASET_CHANGES_REQUEST';

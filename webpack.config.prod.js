@@ -11,7 +11,7 @@ var ENV = {
 
     BASE_URL : JSON.stringify("http://www.qri.io"),
     API_URL : JSON.stringify("http://www.qri.io"),
-    STATIC_ASSETS_URL : JSON.stringify("http://cdn.qri.io"),
+    STATIC_ASSETS_URL : JSON.stringify("http://static.qri.io"),
     SEGMENT_KEY : JSON.stringify("b4iAxJT8ISitRFQ6qZGS9w7RTnaOpvju")
   }
 };
@@ -33,7 +33,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    publicPath : "http://cdn.qri.io/js/",
+    publicPath : "http://static.qri.io/js/",
     filename: '[name].min.js',
     chunkFilename: "[name].chunk.min.js"
   },

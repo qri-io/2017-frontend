@@ -1,4 +1,5 @@
-import { CALL_API, Schemas } from '../middleware/api'
+import { CALL_API } from '../middleware/api'
+import Schemas from '../schemas'
 
 export const SESSION_USER_REQUEST = 'SESSION_USER_REQUEST'
 export const SESSION_USER_SUCCESS = 'SESSION_USER_SUCCESS'

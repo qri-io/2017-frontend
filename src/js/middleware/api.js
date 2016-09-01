@@ -1,4 +1,4 @@
-import { Schema, arrayOf, normalize } from 'normalizr'
+import { normalize } from 'normalizr'
 import { camelizeKeys } from 'humps'
 import 'isomorphic-fetch'
 
@@ -69,53 +69,6 @@ function callApi(method, endpoint, schema, data) {
     })
 }
 
-// We use this Normalizr schemas to transform API responses from a nested form
-// to a flat form where repos and users are placed in `entities`, and nested
-// JSON objects are replaced with their IDs. This is very convenient for
-// consumption by reducers, because we can easily build a normalized tree
-// and keep it updated as we fetch more data.
-
-// Read more about Normalizr: https://github.com/paularmstrong/normalizr
-
-// GitHub's API may return results with uppercase letters while the query
-// doesn't contain any. For example, "someuser" could result in "SomeUser"
-// leading to a frozen UI as it wouldn't find "someuser" in the entities.
-// That's why we're forcing lower cases down there.
-
-const sessionUserSchema = new Schema('session');
-const userSchema = new Schema('users');
-const organizationSchema = new Schema('organizations');
-const datasetSchema = new Schema('datasets');
-// const schemaSchema = new Schema('schemas');
-const querySchema = new Schema('queries');
-const resultSchema = new Schema('results', {
-  idAttribute : (result) => "result"
-});
-const changeSchema = new Schema('changes');
-
-organizationSchema.define({
-  datasets : datasetSchema
-});
-
-datasetSchema.define({
-  owner: userSchema
-});
-
-// Schemas for Github API responses.
-export const Schemas = {
-  SESSION_USER : sessionUserSchema,
-  USER: userSchema,
-  USER_ARRAY: arrayOf(userSchema),
-  ORGANIZATION: organizationSchema,
-  ORGANIZATION_ARRAY: arrayOf(organizationSchema),
-  DATASET : datasetSchema,
-  DATASET_ARRAY : arrayOf(datasetSchema),
-  QUERY : querySchema,
-  QUERY_ARRAY: arrayOf(querySchema),
-  RESULT : resultSchema,
-  CHANGE : changeSchema,
-  CHANGE_ARRAY : arrayOf(changeSchema)
-}
 
 // Action key that carries API call info interpreted by this Redux middleware.
 export const CALL_API = Symbol('Call API')
@@ -156,8 +109,10 @@ export default store => next => action => {
   }
 
   const [ requestType, successType, failureType ] = types
-  next(actionWith({ type: requestType }))
 
+  // fire an action indicating a request has been made
+  next(actionWith({ type: requestType }));
+  // make the request
   return callApi(method, endpoint, schema, data).then(
     response => next(actionWith({
       type: successType,

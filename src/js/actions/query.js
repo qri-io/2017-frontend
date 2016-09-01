@@ -1,4 +1,5 @@
-import { CALL_API, Schemas } from '../middleware/api'
+import { CALL_API } from '../middleware/api'
+import Schemas from '../schemas'
 import { setBottomPanel } from './console'
 import { addHistoryEntry } from './session'
 

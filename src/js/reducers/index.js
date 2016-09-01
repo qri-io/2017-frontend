@@ -10,10 +10,12 @@ import { combineReducers } from 'redux'
 const initialState = {
   session : {},
   users : {},
-  queries : {},
-  organizations : {},
+
   datasets : {},
   changes : {},
+  migrations : {},
+  
+  queries : {},
   results : {}
 }
 

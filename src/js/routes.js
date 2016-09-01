@@ -23,6 +23,12 @@ export default {
 			},
 		},
 		{
+			path: '/datasets/new',
+			getComponent(location, cb) {
+				System.import('./containers/NewDataset').then(loadRoute(cb)).catch(errorLoading)
+			}
+		},
+		{
 			path: '/console',
 			getComponent(location, cb) {
 			  System.import('./containers/Console').then(loadRoute(cb)).catch(errorLoading);
@@ -46,11 +52,31 @@ export default {
 				System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);
 			}
 		},
+
+		{
+			path: '/:handle/:slug/changes/new',
+			getComponent(location, cb) {
+				System.import('./containers/NewChange').then(loadRoute(cb)).catch(errorLoading);
+			}
+		},
 		{
 			path: '/:handle/:slug/changes/:number',
 			getComponent(location, cb) {
 				System.import('./containers/Change').then(loadRoute(cb)).catch(errorLoading);
 			}
-		}
+		},
+		
+		{
+			path: '/:handle/:slug/migrations/new',
+			getComponent(location, cb) {
+				System.import('./containers/NewMigration').then(loadRoute(cb)).catch(errorLoading);
+			}
+		},
+		{
+			path: '/:handle/:slug/migrations/:number',
+			getComponent(location, cb) {
+				System.import('./containers/Migration').then(loadRoute(cb)).catch(errorLoading);
+			}
+		},
  ]
 };
