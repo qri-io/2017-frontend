@@ -8,8 +8,9 @@ import configureStore from './store/configureStore'
 
 require('../scss/style.scss')
 
-const store = configureStore()
+const store = configureStore(window.data)
 const history = syncHistoryWithStore(browserHistory, store)
+
 
 render(
   <Root store={store} history={history} />,

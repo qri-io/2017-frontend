@@ -2,19 +2,14 @@ import Schemas from '../schemas'
 import { selectChangeByNumber } from '../selectors/change'
 import { updateModel, newModel } from './models'
 
-export const CHANGE_CREATE = 'CHANGE_CREATE';
-
-export function newChange (dataset) {
-	return {
-		type : CHANGE_CREATE,
-		dataset : dataset
-	}
+const CHANGE_NEW = 'CHANGE_NEW';
+export function newChange (attributes={}) {
+	return newModel(Schemas.CHANGE, CHANGE_NEW, attributes);
 }
 
-export const CHANGE_UPDATE = 'CHANGE_UPDATE';
-
+const CHANGE_UPDATE = 'CHANGE_UPDATE';
 export function updateChange(change) {
-	return updateModel(Schemas.CHANGE, change)
+	return updateModel(Schemas.CHANGE, CHANGE_UPDATE, change);
 }
 
 export const CHANGE_FETCH_REQUEST = 'CHANGE_FETCH_REQUEST';

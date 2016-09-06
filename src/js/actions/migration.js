@@ -1,24 +1,17 @@
 import { CALL_API } from '../middleware/api'
-import Schema from '../schemas'
+import { newModel, updateModel } from '../middleware/models'
+import Schemas from '../schemas'
 
-
-export const MIGRATION_CREATE = 'MIGRATION_CREATE';
-
-export function newMigrationRequest (dataset) {
-	return {
-		type : MIGRATION_CREATE,
-		dataset : dataset
-	}
+const MIGRATION_NEW = 'MIGRATION_NEW';
+export function newMigration (attributes={}) {
+	return newModel(Schemas.MIGRATION, MIGRATION_NEW, attributes);
 }
 
-export const MIGRATION_UPDATE = 'MIGRATION_UPDATE';
-
+const MIGRATION_UPDATE = 'MIGRATION_UPDATE';
 export function updateMigration(migration) {
-	return {
-		type : MIGRATION_UPDATE,
-		migration : migration
-	}
+	return updateMigration(Schemas.MIGRATION, MIGRATION_UPDATE, migration);
 }
+
 
 export const MIGRATION_FETCH_REQUEST = 'MIGRATION_FETCH_REQUEST';
 export const MIGRATION_FETCH_SUCCESS = 'MIGRATION_FETCH_SUCCESS';

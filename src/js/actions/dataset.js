@@ -3,6 +3,22 @@ import Schemas from '../schemas'
 import { selectDatasetBySlug } from '../selectors/dataset'
 import { newModel, updateModel, clearNewModel } from './models'
 
+const DATASET_NEW = 'DATASET_NEW';
+export function newDataset(attributes={}) {
+	attributes = Object.assign({
+		name : "",
+		handle : "",
+		source_url : "",
+		description : ""
+	}, attributes)
+	return newModel(Schemas.DATASET, DATASET_NEW, attributes)
+}
+
+const DATASET_UPDATE = 'DATASET_UPDATE';
+export function updateDataset(dataset) {
+	return updateModel(Schemas.DATASET, DATASET_UPDATE, dataset)
+}
+
 export const DATASETS_REQUEST = 'DATASETS_REQUEST'
 export const DATASETS_SUCCESS = 'DATASETS_SUCCESS'
 export const DATASETS_FAILURE = 'DATASETS_FAILURE'
@@ -59,25 +75,38 @@ export function loadDataset(id, requiredFields=[]) {
   }
 }
 
-export function createDataset(dataset) {
-	return updateModel(Schemas.DATASET, dataset)
-}
-
-export function updateDataset(dataset) {
-	return updateModel(Schemas.DATASET, dataset)
-}
-
 export const DATASET_SAVE_REQUEST = 'DATASET_SAVE_REQUEST'
 export const DATASET_SAVE_SUCCESS = 'DATASET_SAVE_SUCCESS'
 export const DATASET_SAVE_FAILURE = 'DATASET_SAVE_FAILURE'
 
 export function saveDataset(dataset) {
+	if (dataset.id == "new") {
+		return createDataset(dataset)
+	} else {
+		return {
+			[CALL_API] : {
+				types : [ DATASET_SAVE_REQUEST, DATASET_SAVE_SUCCESS, DATASET_SAVE_FAILURE ],
+				endpoint : `/datasets/${dataset.id}`,
+				method : "PUT",
+				schema : Schemas.DATASET,
+				data : dataset
+			}
+		}
+	}
+}
+
+export const DATASET_CREATE_REQUEST = "DATASET_CREATE_REQUEST"
+export const DATASET_CREATE_SUCCESS = "DATASET_CREATE_SUCCESS"
+export const DATASET_CREATE_FAILURE = "DATASET_CREATE_FAILURE"
+
+function createDataset(dataset) {
 	return {
 		[CALL_API] : {
-			types : [ DATASET_SAVE_REQUEST, DATASET_SAVE_SUCCESS, DATASET_SAVE_FAILURE ],
-			endpoint : dataset.id ? `/datasets/${dataset.id}` : `/datasets`,
-			method : dataset.id ? "PUT" : "POST",
-			data : dataset
+			types : [ DATASET_CREATE_REQUEST, DATASET_CREATE_SUCCESS, DATASET_CREATE_FAILURE ],
+			endpoint : "/datasets",
+			method : "POST",
+			schema : Schemas.DATASET,
+			data : Object.assign({}, dataset, { id : undefined, address : `${dataset.address}.${dataset.handle}` })
 		}
 	}
 }

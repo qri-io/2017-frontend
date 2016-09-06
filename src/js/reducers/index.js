@@ -20,12 +20,23 @@ const initialState = {
 }
 
 // Updates an entity cache in response to any action with response.entities.
+// see api middleware
 function entities(state = initialState, action) {
   if (action.response && action.response.entities) {
     return merge({}, state, action.response.entities)
   }
 
   return state
+}
+
+// updates an entity cache in response to any actuion with response.models.
+// see models middleware
+function models(state = initialState, action) {
+  if (action.models && action.models.entities) {
+    return merge({}, state, action.models.entities)
+  }
+
+  return state;
 }
 
 // Updates error message to notify about the failed fetches.
@@ -63,6 +74,7 @@ function errorMessage(state = null, action) {
 
 const rootReducer = combineReducers({
   entities,
+  models,
   // pagination,
   errorMessage,
   session : sessionReducer,

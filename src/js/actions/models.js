@@ -1,31 +1,44 @@
-import { MODEL_ACTION, CREATE_MODEL, UPDATE_MODEL, CLEAR_NEW_MODEL } from '../middleware/models';
+import { MODEL_ACTION, NEW_MODEL, UPDATE_MODEL, EDIT_MODEL, CLEAR_NEW_MODEL } from '../middleware/models';
 
 
-export function createModel(schema, model={}) {
+export function newModel(schema, type, attributes={}) {
 	return {
 		[MODEL_ACTION] : {
-			type : CREATE_MODEL,
+			method : NEW_MODEL,
+			type,
 			schema,
-			model
+			attributes
 		}
 	}
 }
 
-export function clearNewModel(schema) {
+export function clearNewModel(schema, type) {
 	return {
 		[MODEL_ACTION] : {
-			type : CLEAR_NEW_MODEL,
+			method : CLEAR_NEW_MODEL,
+			type,
 			schema
 		}
 	}
 }
 
-export function updateModel(schema, model={}) {
+export function updateModel(schema, type, attributes) {
 	return {
 		[MODEL_ACTION] : {
-			type : UPDATE_MODEL,
+			method : UPDATE_MODEL,
+			type,
 			schema,
-			model
+			attributes,
+		}
+	}
+}
+
+export function editModel(schema, type, id) {
+	return {
+		[MODEL_ACTION] : {
+			method : EDIT_MODEL,
+			type,
+			id
 		}
 	}
 }

@@ -1,5 +1,6 @@
 import { normalize } from 'normalizr'
 import { camelizeKeys } from 'humps'
+import Schemas from '../schemas'
 import 'isomorphic-fetch'
 
 // Extracts the next page URL from Github API response.
@@ -16,8 +17,6 @@ import 'isomorphic-fetch'
 
 //   return nextLink.split(';')[0].slice(1, -1)
 // }
-
-// const API_ROOT = 'https://api.github.com/'
 
 const API_ROOT = `${__BUILD__.API_URL}/api`
 
@@ -58,8 +57,8 @@ function callApi(method, endpoint, schema, data) {
       }
 
       const camelizedJson = camelizeKeys(json)
-      // TODO - remove this uglyness
-      const data = (schema._key == resultSchema._key) ? camelizedJson : camelizedJson.data
+      // TODO - remove this uglyness, checks to see if the schema matches the resultSchema
+      const data = (schema._key == Schemas.RESULT._key) ? camelizedJson : camelizedJson.data
       // const nextPageUrl = getNextPageUrl(response)
 
       return Object.assign({},
@@ -120,10 +119,8 @@ export default store => next => action => {
     })),
     error => {
       var msg = 'Something Bad Happened' 
-      if (error.meta) {
-        if (error.meta.error) {
-          msg = error.meta.error
-        }
+      if (error.meta || err.meta.err) {
+        msg = error.meta.err
       }
       return next(actionWith({
         type: failureType, 

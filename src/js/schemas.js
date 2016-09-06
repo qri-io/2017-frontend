@@ -22,6 +22,24 @@ datasetSchema.define({
   owner: userSchema
 });
 
+datasetSchema.new = function (attrs) {
+  return Object.assign({
+    "name" : "new dataset",
+  }, attrs, { id : "new" });
+}
+
+migrationSchema.new = function (attrs) {
+  return Object.assign({}, attrs, { id : "new" });
+}
+
+changeSchema.new = function (attrs) {
+  return Object.assign({}, attrs, { id : "new" });
+}
+
+querySchema.new = function (attrs) {
+  return Object.assign({}, attrs, { id : "new" });
+}
+
 // Schemas for Github API responses.
 const Schemas = {
   SESSION_USER : sessionUserSchema,
