@@ -1,21 +1,28 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import { loadMigrationByNumber } from '../actions/migration'
+import { loadDatasetByAddress } from '../actions/dataset'
+import { newMigration, updateMigration, saveMigration } from '../actions/migration'
 import { selectMigrationByNumber } from '../selectors/migration'
 
+import SessionRequired from '../components/SessionRequired'
+import ValidInput from '../components/ValidInput'
+import ValidTextarea from '../components/ValidTextarea'
 import SchemaTable from '../components/SchemaTable'
 
 class NewMigration extends React.Component {
 	constructor(props) {
 		super(props);
-		// [
-		// 	'handleRunQuery',
-		// ].forEach(m => this[m] = this[m].bind(this))
+		[
+			'handleChange',
+		].forEach(m => this[m] = this[m].bind(this))
 	}
 
   componentWillMount() {
-    this.props.loadMigrationByNumber(this.props.handle, this.props.slug)
+  	// fire off a load dataset request to make sure we have the dataset
+  	this.props.loadDatasetByAddress(this.props.address)
+    // this.props.loadMigrationByNumber(this.props.address, this.props.number)
+    this.props.newMigration({ address : this.props.address });
   }
 
 	componentWillReceiveProps(nextProps) {
@@ -25,10 +32,16 @@ class NewMigration extends React.Component {
 		}
 	}
 
+	handleChange(name, value, e) {
+		const migration = Object.assign({}, this.props.migration);
+		migration[name] = value;
+		this.props.updateMigration(migration)
+	}
+
 	render() {
-		const { handle, slug, dataset } = this.props
+		const { dataset, migration } = this.props
 		
-		if (!dataset) {
+		if (!migration) {
 			return (
 				<div className="dataset container">
 					<p>No Migration</p>
@@ -42,14 +55,7 @@ class NewMigration extends React.Component {
 					<div class="col-md-12">
 						<form className="newMigration">
 							<h3>New Migration</h3>
-							<label for="handle">handle</label>
-							<input name="handle" type="text" />
-							<label for="handle">name</label>
-							<input name="name" type="text" />
-							<label for="source_url">name</label>
-							<input name="source_url" type="text" />
-							<label for="handle">description</label>
-							<textarea name="description"></textarea>
+							<ValidTextarea label="SQL" name="sql" onChange={this.handleChange} />
 							<button className="btn btn-large submit"></button>
 						</form>
 						<section class="col-md-12">
@@ -64,11 +70,16 @@ class NewMigration extends React.Component {
 }
 
 NewMigration.propTypes = {
-	handle : PropTypes.string.isRequired,
-	slug : PropTypes.string.isRequired,
+	address : PropTypes.string.isRequired,
+	// the migration model
+	migration : PropTypes.object,
 	dataset : PropTypes.object,
+	user : PropTypes.object,
 
-	loadMigrationByNumber : PropTypes.func.isRequired,
+	loadDatasetByAddress : PropTypes.func.isRequired,
+	newMigration : PropTypes.func.isRequired,
+	updateMigration : PropTypes.func.isRequired,
+	saveMigration : PropTypes.func.isRequired,
 }
 
 NewMigration.defaultProps = {
@@ -76,11 +87,14 @@ NewMigration.defaultProps = {
 }
 
 function mapStateToProps(state, ownProps) {
-	return Object.assign({}, {
-		dataset : selectMigrationByNumber(state, ownProps.params.handle, ownProps.params.slug)
-	}, ownProps.params, ownProps)
+	const address = [ownProps.params.user, ownProps.params.dataset].join(".")
+	return Object.assign({
+		dataset : selectDatasetByAddress(state, address),
+		migration : selectMigrationByNumber(state, address, ownProps.params.number)
+	}, ownProps)
 }
 
 export default connect(mapStateToProps, { 
-	loadMigrationByNumber 
+	loadDatasetByAddress,
+	newMigration,
 })(NewMigration)

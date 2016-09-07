@@ -1,6 +1,6 @@
 import { CALL_API } from '../middleware/api'
 import Schemas from '../schemas'
-import { selectDatasetBySlug } from '../selectors/dataset'
+import { selectDatasetByAddress } from '../selectors/dataset'
 import { newModel, updateModel, clearNewModel } from './models'
 
 const DATASET_NEW = 'DATASET_NEW';
@@ -126,26 +126,25 @@ export function deleteDataset(datasetId) {
 	}
 }
 
-export function fetchDatasetBySlug(handle, slug, requiredFields=[]) {
+export function fetchDatasetByAddress(address, requiredFields=[]) {
 	return {
 		[CALL_API] : {
 			types : [ DATASET_REQUEST, DATASET_SUCCESS, DATASET_FAILURE ],
-			endpoint : `/datasets?handle=${handle}&slug=${slug}`,
+			endpoint : `/datasets?address=${address}`,
 			schema : Schemas.DATASET,
-			handle,
-			slug
+			address
 		}
 	}
 }
 
-export function loadDatasetBySlug(handle, slug, requiredFields=[]) {
+export function loadDatasetByAddress(address, requiredFields=[]) {
 	return (dispatch, getState) => {
-		const dataset = selectDatasetBySlug(getState(), handle, slug)
+		const dataset = selectDatasetByAddress(getState(), address)
 		if (dataset && requiredFields.every(key => dataset.hasOwnProperty(key))) {
 			return null
 		}
 
-		return dispatch(fetchDatasetBySlug(handle, slug, requiredFields))
+		return dispatch(fetchDatasetByAddress(address, requiredFields))
 	}
 }
 

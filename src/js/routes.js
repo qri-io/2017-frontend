@@ -41,39 +41,39 @@ export default {
 			}
 		},
 		{
-			path: '/:handle',
+			path: '/:user',
 			getComponent(location, cb) {
 				System.import('./containers/User').then(loadRoute(cb)).catch(errorLoading);
 			}
 		},
 		{
-			path: '/:handle/:slug',
+			path: '/:user/:dataset',
 			getComponent(location, cb) {
 				System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);
 			}
 		},
 
 		{
-			path: '/:handle/:slug/changes/new',
+			path: '/:user/:dataset/changes/new',
 			getComponent(location, cb) {
 				System.import('./containers/NewChange').then(loadRoute(cb)).catch(errorLoading);
 			}
 		},
 		{
-			path: '/:handle/:slug/changes/:number',
+			path: '/:user/:dataset/changes/:number',
 			getComponent(location, cb) {
 				System.import('./containers/Change').then(loadRoute(cb)).catch(errorLoading);
 			}
 		},
 		
 		{
-			path: '/:handle/:slug/migrations/new',
+			path: '/:user/:dataset/migrations/new',
 			getComponent(location, cb) {
 				System.import('./containers/NewMigration').then(loadRoute(cb)).catch(errorLoading);
 			}
 		},
 		{
-			path: '/:handle/:slug/migrations/:number',
+			path: '/:user/:dataset/migrations/:number',
 			getComponent(location, cb) {
 				System.import('./containers/Migration').then(loadRoute(cb)).catch(errorLoading);
 			}

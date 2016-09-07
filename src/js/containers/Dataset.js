@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import { loadDatasetBySlug } from '../actions/dataset'
-import { selectDatasetBySlug } from '../selectors/dataset'
+import { loadDatasetByAddress } from '../actions/dataset'
+import { selectDatasetByAddress } from '../selectors/dataset'
 
 import SchemaTable from '../components/SchemaTable'
 
@@ -15,18 +15,17 @@ class Dataset extends React.Component {
 	}
 
   componentWillMount() {
-    this.props.loadDatasetBySlug(this.props.handle, this.props.slug)
+    this.props.loadDatasetByAddress(this.props.address)
   }
 
 	componentWillReceiveProps(nextProps) {
-		const { handle, slug } = this.props
-		if (nextProps.handle != handle || nextProps.slug != slug) {
-	    this.props.loadDatasetBySlug(nextProps.handle, nextProps.slug)
+		if (nextProps.address != this.props.address) {
+	    this.props.loadDatasetByAddress(nextProps.address)
 		}
 	}
 
 	render() {
-		const { handle, slug, dataset } = this.props
+		const { address, dataset } = this.props
 		
 		if (!dataset) {
 			return (
@@ -42,9 +41,7 @@ class Dataset extends React.Component {
 					<div class="col-md-12">
 						<header class="page-header col-md-12">
 							<h4>
-								<a href={`/${dataset.ownerHandle}`}>{ dataset.ownerHandle }</a>
-								<span class="slash">/</span>
-								<a href={ dataset.path }>{ dataset.slug }</a>
+								<a href={ "/" + dataset.address }>{ dataset.address }</a>
 							</h4>
 							<h1>{ dataset.name }</h1>
 							<p>
@@ -71,11 +68,13 @@ class Dataset extends React.Component {
 }
 
 Dataset.propTypes = {
-	handle : PropTypes.string.isRequired,
-	slug : PropTypes.string.isRequired,
+	// username.dataset address for this dataset, should
+	// be derived from url params
+	address : PropTypes.string.isRequired,
+	// the dataset model to display
 	dataset : PropTypes.object,
-
-	loadDatasetBySlug : PropTypes.func.isRequired,
+	// action to load a dataset from passed-in address
+	loadDatasetByAddress : PropTypes.func.isRequired
 }
 
 Dataset.defaultProps = {
@@ -84,11 +83,13 @@ Dataset.defaultProps = {
 
 
 function mapStateToProps(state, ownProps) {
-	return Object.assign({}, {
-		dataset : selectDatasetBySlug(state, ownProps.params.handle, ownProps.params.slug)
-	}, ownProps.params, ownProps)
+	const address = [ownProps.params.user, ownProps.params.dataset].join(".")
+	return Object.assign({
+		address,
+		dataset : selectDatasetByAddress(state, address)
+	}, ownProps)
 }
 
 export default connect(mapStateToProps, { 
-	loadDatasetBySlug 
+	loadDatasetByAddress 
 })(Dataset)
