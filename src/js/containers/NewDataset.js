@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 import { newDataset, updateDataset, saveDataset } from '../actions/dataset'
-import { selectDatasetBySlug } from '../selectors/dataset'
+import { selectLocalDatasetById } from '../selectors/dataset'
 import { selectSessionUser } from '../selectors/session'
 import validateDataset from '../validators/dataset'
 
@@ -33,11 +33,11 @@ class NewDataset extends React.Component {
 	}
 
 	handleSubmit(e) {
-		const { dataset, errors, saveDataset } = this.props;
+		const { dataset, validation, saveDataset } = this.props;
 		
 		e.preventDefault();
 
-		if (!errors.isValid) {
+		if (!validation.isValid) {
 			if (!this.state.showErrors) {
 				this.setState({ showErrors : true });
 			}
@@ -48,7 +48,7 @@ class NewDataset extends React.Component {
 	}
 
 	render() {
-		const { handle, slug, user, dataset, errors } = this.props;
+		const { handle, slug, user, dataset, validation } = this.props;
 		const { showErrors } = this.state;
 
 		if (!user) {
@@ -69,15 +69,15 @@ class NewDataset extends React.Component {
 					<div className="col-md-12">
 						<form className="newDataset">
 							<h3>New Dataset</h3>
-							<ValidInput label="Handle" name="handle" value={dataset.handle} showError={showErrors} error={errors.handle} onChange={this.handleChange} />
-							<ValidInput label="Name" name="name" value={dataset.name} showError={showErrors} error={errors.name} onChange={this.handleChange}  />
-							<ValidInput label="External Url" name="source_url" value={dataset.source_url} showError={showErrors} error={errors.source_url} onChange={this.handleChange}  />
-							<ValidTextarea  label="Description" name="description" value={dataset.description} showError={showErrors} error={errors.description} onChange={this.handleChange} />
-							<button className="btn btn-large submit" disabled={(!errors.isValid && showErrors)} onClick={this.handleSubmit}>Create Dataset</button>
+							<ValidInput label="Handle" name="handle" value={dataset.handle} showError={showErrors} error={validation.handle} onChange={this.handleChange} />
+							<ValidInput label="Name" name="name" value={dataset.name} showError={showErrors} error={validation.name} onChange={this.handleChange}  />
+							<ValidInput label="External Url" name="source_url" value={dataset.source_url} showError={showErrors} error={validation.source_url} onChange={this.handleChange}  />
+							<ValidTextarea  label="Description" name="description" value={dataset.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />
+							<button className="btn btn-large submit" disabled={(!validation.isValid && showErrors)} onClick={this.handleSubmit}>Create Dataset</button>
 						</form>
 						<section class="col-md-12">
 							<hr />
-							{ dataset.schema ? <SchemaTable schema={dataset.schema} /> : <p>This dataset currently has no schema</p> }
+							{ dataset.schema ? <SchemaTable schema={dataset.schema} /> : undefined }
 						</section>
 					</div>
 				</div>
@@ -91,6 +91,8 @@ NewDataset.propTypes = {
 	user : PropTypes.object,
 	// the dataset to manipulate
 	dataset : PropTypes.object,
+	// validation information for the dataset model
+	validation : PropTypes.object,
 
 	// action to create a new dataset, called on mount
 	newDataset : PropTypes.func.isRequired,
@@ -105,11 +107,11 @@ NewDataset.defaultProps = {
 }
 
 function mapStateToProps(state, ownProps) {
-	const dataset = state.models.datasets.new
+	const dataset = selectLocalDatasetById(state, "new")
 	return Object.assign({}, {
 		dataset,
 		user : selectSessionUser(state),
-		errors : validateDataset(dataset),
+		validation : validateDataset(dataset),
 	}, ownProps.params, ownProps)
 }
 

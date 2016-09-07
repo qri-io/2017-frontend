@@ -1,5 +1,4 @@
 import { normalize } from 'normalizr'
-import { camelizeKeys } from 'humps'
 import Schemas from '../schemas'
 import 'isomorphic-fetch'
 
@@ -55,11 +54,18 @@ function callApi(method, endpoint, schema, data) {
       if (!response.ok) {
         return Promise.reject(json)
       }
-
-      const camelizedJson = camelizeKeys(json)
-      // TODO - remove this uglyness, checks to see if the schema matches the resultSchema
-      const data = (schema._key == Schemas.RESULT._key) ? camelizedJson : camelizedJson.data
+      // TODO - remove this uglyness, checks to see if the schema matches the resultSchema & desctructures if so
+      // should have the server put result data in the data param
+      const data = (schema._key != Schemas.RESULT.getKey()) ? json.data : json
       // const nextPageUrl = getNextPageUrl(response)
+
+      // deletes return null in the data parm, so we need to make that not a bad thing.
+      // if (method.toUpperCase() == "DELETE" && json.meta.code == 200) {
+      //   const remove = normalize(data, schema)
+      //   return  {
+      //     remove : remove.entities
+      //   }
+      // }
 
       return Object.assign({},
         normalize(data, schema)
@@ -119,7 +125,7 @@ export default store => next => action => {
     })),
     error => {
       var msg = 'Something Bad Happened' 
-      if (error.meta || err.meta.err) {
+      if (error.meta || error.meta.err) {
         msg = error.meta.err
       }
       return next(actionWith({

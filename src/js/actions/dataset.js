@@ -1,7 +1,10 @@
+import { push } from 'react-router-redux'
+
 import { CALL_API } from '../middleware/api'
 import Schemas from '../schemas'
-import { selectDatasetByAddress } from '../selectors/dataset'
-import { newModel, updateModel, clearNewModel } from './models'
+import { selectDatasetByAddress, selectDatasetById } from '../selectors/dataset'
+import { newLocalModel, updateLocalModel, editModel, clearLocalModel } from './locals'
+import { setMessage, resetMessage, removeModel } from './index'
 
 const DATASET_NEW = 'DATASET_NEW';
 export function newDataset(attributes={}) {
@@ -10,13 +13,13 @@ export function newDataset(attributes={}) {
 		handle : "",
 		source_url : "",
 		description : ""
-	}, attributes)
-	return newModel(Schemas.DATASET, DATASET_NEW, attributes)
+	}, attributes);
+	return newLocalModel(Schemas.DATASET, DATASET_NEW, attributes)
 }
 
 const DATASET_UPDATE = 'DATASET_UPDATE';
 export function updateDataset(dataset) {
-	return updateModel(Schemas.DATASET, DATASET_UPDATE, dataset)
+	return updateLocalModel(Schemas.DATASET, DATASET_UPDATE, dataset)
 }
 
 export const DATASETS_REQUEST = 'DATASETS_REQUEST'
@@ -36,7 +39,7 @@ export function fetchDatasets(query, page, pageSize) {
 
 export function loadDatasets(query, page, pageSize) {
 	return (dispatch, getState) => {
-    // const user = getState().entities.users[login]
+    // const dataset = selectDatasetById(getState(), )
     // if (user && requiredFields.every(key => user.hasOwnProperty(key))) {
     //   return null
     // }
@@ -63,7 +66,7 @@ export function fetchDataset(id, requiredFields=[]) {
 
 export function loadDataset(id, requiredFields=[]) {
 	return (dispatch, getState) => {
-    const dataset = getState().entities.datasets[id]
+    const dataset = selectDatasetById(getState(), id)
     if (dataset.schema != null) {
     	return null
     }
@@ -83,14 +86,26 @@ export function saveDataset(dataset) {
 	if (dataset.id == "new") {
 		return createDataset(dataset)
 	} else {
-		return {
-			[CALL_API] : {
-				types : [ DATASET_SAVE_REQUEST, DATASET_SAVE_SUCCESS, DATASET_SAVE_FAILURE ],
-				endpoint : `/datasets/${dataset.id}`,
-				method : "PUT",
-				schema : Schemas.DATASET,
-				data : dataset
-			}
+		return (dispatch, getState) => {
+			return dispatch({
+				[CALL_API] : {
+					types : [ DATASET_SAVE_REQUEST, DATASET_SAVE_SUCCESS, DATASET_SAVE_FAILURE ],
+					endpoint : `/datasets/${dataset.id}`,
+					method : "PUT",
+					schema : Schemas.DATASET,
+					data : dataset
+				}
+			}).then(action => {
+				if (action.type == DATASET_SAVE_SUCCESS) {
+					const dataset = action.response.entities.datasets[Object.keys(action.response.entities.datasets)[0]]
+					const path = "/" + dataset.address.replace(".","/",-1);
+					dispatch(setMessage("dataset updated"));
+					setTimeout(() => dispatch(resetMessage()), 5000);
+					return dispatch(push(path))
+				}
+
+				return null;
+			});
 		}
 	}
 }
@@ -100,14 +115,24 @@ export const DATASET_CREATE_SUCCESS = "DATASET_CREATE_SUCCESS"
 export const DATASET_CREATE_FAILURE = "DATASET_CREATE_FAILURE"
 
 function createDataset(dataset) {
-	return {
-		[CALL_API] : {
-			types : [ DATASET_CREATE_REQUEST, DATASET_CREATE_SUCCESS, DATASET_CREATE_FAILURE ],
-			endpoint : "/datasets",
-			method : "POST",
-			schema : Schemas.DATASET,
-			data : Object.assign({}, dataset, { id : undefined, address : `${dataset.address}.${dataset.handle}` })
-		}
+	return (dispatch, getState) => {
+		return dispatch({
+			[CALL_API] : {
+				types : [ DATASET_CREATE_REQUEST, DATASET_CREATE_SUCCESS, DATASET_CREATE_FAILURE ],
+				endpoint : "/datasets",
+				method : "POST",
+				schema : Schemas.DATASET,
+				data : Object.assign({}, dataset, { id : undefined, address : `${dataset.address}.${dataset.handle}` })
+			}
+		}).then(action => {
+			if (action.type == DATASET_CREATE_SUCCESS && action.response.entities.datasets) {
+				const dataset = action.response.entities.datasets[Object.keys(action.response.entities.datasets)[0]]
+				const path = "/" + dataset.address.replace(".","/",-1);
+				return dispatch(push(path));
+			}
+
+			return null;
+		})
 	}
 }
 
@@ -115,14 +140,54 @@ export const DATASET_DELETE_REQUEST = 'DATASET_DELETE_REQUEST'
 export const DATASET_DELETE_SUCCESS = 'DATASET_DELETE_SUCCESS'
 export const DATASET_DELETE_FAILURE = 'DATASET_DELETE_FAILURE'
 
-export function deleteDataset(datasetId) {
-	return {
-		[CALL_API] : {
-			types : [ DATASET_DELETE_REQUEST, DATASET_DELETE_SUCCESS, DATASET_DELETE_FAILURE ],
-			endpoint : `/datasets/${dataset.id}`,
-			method : "DELETE",
-			id : datasetId
+export function deleteDataset(id, redirectUrl="") {
+	return (dispatch, getState) => {
+		return dispatch({
+			[CALL_API] : {
+				types : [ DATASET_DELETE_REQUEST, DATASET_DELETE_SUCCESS, DATASET_DELETE_FAILURE ],
+				endpoint : `/datasets/${id}`,
+				method : "DELETE",
+				schema : Schemas.DATASET,
+				id
+			}
+		}).then(action => {
+			if (action.type == DATASET_DELETE_SUCCESS) {
+				// remove the model locally
+				dispatch(removeModel(Schemas.DATASET, id))
+
+				// on successful delete, redirect
+				if (redirectUrl != "") {
+					dispatch(push(redirectUrl))
+				}
+
+				// and set a message with a timeout
+				dispatch(setMessage('dataset deleted'))
+				setTimeout(() => { 
+					dispatch(resetMessage()); 
+				}, 5000);
+			}
+			
+			return null;
+		});
+	}
+}
+
+export const EDIT_DATASET = 'DATASET_EDIT';
+
+export function editDataset(address) {
+	return (dispatch, getState) => {
+		const dataset = selectDatasetByAddress(getState(), address)
+		if (!dataset) {
+			return dispatch(fetchDatasetByAddress(address)).then(action => {
+				if (action.type === DATASET_SUCCESS) {
+					const dataset = selectDatasetByAddress(getState(), address)
+					return dispatch(editModel(Schemas.DATASET, EDIT_DATASET, dataset));
+				}
+			})
+		} else {
+			return dispatch(editModel(Schemas.DATASET, EDIT_DATASET, dataset))
 		}
+
 	}
 }
 

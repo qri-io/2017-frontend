@@ -27,6 +27,7 @@ class Dataset extends React.Component {
 
 	render() {
 		const { address, dataset } = this.props
+		const path = "/" + address.replace(".", "/", -1)
 		
 		if (!dataset) {
 			return (
@@ -46,7 +47,7 @@ class Dataset extends React.Component {
 							</h4>
 							<h1>{ dataset.name }</h1>
 							<p>
-								<Link to={`/${dataset.address}/edit`}>Edit</Link>
+								<Link to={`${path}/edit`}>Edit</Link>
 								<span>{ dataset.TableCount } Tables</span>
 								<span>{ dataset.RowCount } Rows</span> |
 								<span><a href={ dataset.sourceUrl } target="_blank">{ dataset.sourceUrl }</a></span>

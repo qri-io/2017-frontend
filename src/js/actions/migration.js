@@ -1,15 +1,25 @@
+import { push } from 'react-router-redux'
+
 import { CALL_API } from '../middleware/api'
-import { newModel, updateModel } from '../middleware/models'
 import Schemas from '../schemas'
+import { removeModel } from './index'
+import { newLocalModel, updateLocalModel, editModel } from './locals'
+import { selectMigrationByNumber, selectMigrationById } from '../selectors/migration'
 
 const MIGRATION_NEW = 'MIGRATION_NEW';
-export function newMigration (attributes={}) {
-	return newModel(Schemas.MIGRATION, MIGRATION_NEW, attributes);
+export function newMigration (author, dataset, attributes={}) {
+	attributes = Object.assign({
+		author,
+		dataset,
+		type : "ADD_TABLE",
+		sql : "",
+	}, attributes);
+	return newLocalModel(Schemas.MIGRATION, MIGRATION_NEW, attributes);
 }
 
 const MIGRATION_UPDATE = 'MIGRATION_UPDATE';
 export function updateMigration(migration) {
-	return updateMigration(Schemas.MIGRATION, MIGRATION_UPDATE, migration);
+	return updateLocalModel(Schemas.MIGRATION, MIGRATION_UPDATE, migration);
 }
 
 
@@ -29,23 +39,26 @@ export function fetchMigration(id, requiredFields=[]) {
 
 export function loadMigration(id, requiredFields=[]) {
 	return (dispatch, getState) => {
-		const migration = getState().entities.migrations[id];
+		const migration = selectMigrationById(getState(), id);
+		if (migration && requiredFields.every(key => migration.hasOwnProperty(key))) {
+			return null
+		}
 
 		return fetchMigration(id, requiredFields)
 	}
 }
 
-export function fetchMigrationByNumber(handle, slug, number, requiredFields=[]) {
+export function fetchMigrationByNumber(address, number, requiredFields=[]) {
 	return {
 		[CALL_API] : {
 			types : [ MIGRATION_FETCH_REQUEST, MIGRATION_FETCH_SUCCESS, MIGRATION_FETCH_FAIL ],
-			endpoint : `/migrations?dataset=${slug}&number=${number}`,
+			endpoint : `/migrations?dataset=${address}&number=${number}`,
 			schema : Schemas.MIGRATION
 		}
 	}
 }
 
-export function loadMigrationByNumber(handle, slug, number, requiredFields=[]) {
+export function loadMigrationByNumber(address, number, requiredFields=[]) {
 	return (dispatch, getState) => {
 		const migration = selectMigrationByNumber(getState(), handle, slug, number);
 
@@ -62,12 +75,68 @@ export const MIGRATION_SAVE_SUCCESS = 'MIGRATION_SAVE_SUCCESS';
 export const MIGRATION_SAVE_FAIL = 'MIGRATION_SAVE_FAIL';
 
 export function saveMigration(migration) {
+	if (!dataset.id || dataset.id == "new") {
+		return createMigration(migration);
+	} else {
+		return (dispatch, getState) => {
+			return dispatch({
+				[CALL_API] : {
+					types : [ MIGRATION_SAVE_REQUEST, MIGRATION_SAVE_SUCCESS, MIGRATION_SAVE_FAIL ],
+					endpoint : migration.id ? `/migrations/${id}` : '/migrations',
+					method : 'POST',
+					schema : Schemas.MIGRATION,
+				}
+			}).then(action => {
+				if (action.type == MIGRATION_SAVE_SUCCESS) {
+					dispatch(setMessage("migration updated"));
+					setTimeout(() => dispatch(resetMessage()), 5000);
+					// TODO - construct proper URL to send user to
+					return dispatch(push("/console"));
+				}
+			});
+		}
+		
+	}
+}
+
+export const MIGRATION_CREATE_REQUEST = 'MIGRATION_CREATE_REQUEST';
+export const MIGRATION_CREATE_SUCCESS = 'MIGRATION_CREATE_SUCCESS';
+export const MIGRATION_CREATE_FAIL = 'MIGRATION_CREATE_FAIL';
+
+function createMigration(migration) {
+	return (dispatch, getState) => {
+		return dispatch({
+			[CALL_API] : {
+				types : [ MIGRATION_CREATE_REQUEST, MIGRATION_CREATE_SUCCESS, MIGRATION_CREATE_FAIL ],
+				endpoint : "/migrations",
+				method : "POST",
+				schema : Schemas.MIGRATION,
+				data : Object.assign({}, migration, { id : undefined })
+			}
+		}).then(action => {
+			if (action.type === MIGRATION_CREATE_SUCCESS && action.response.entities.migrations) {
+
+				return dispatch(push());
+			}
+		})
+
+		return null;
+	}
+}
+
+
+export const MIGRATION_EXECUTE_REQUEST = 'MIGRATION_EXECUTE_REQUEST';
+export const MIGRATION_EXECUTE_SUCCESS = 'MIGRATION_EXECUTE_SUCCESS';
+export const MIGRATION_EXECUTE_FAIL = 'MIGRATION_EXECUTE_FAIL';
+
+export function executeMigration(migration) {
 	return {
 		[CALL_API] : {
-			types : [ MIGRATION_SAVE_REQUEST, MIGRATION_SAVE_SUCCESS, MIGRATION_SAVE_FAIL ],
-			endpoint : migration.id ? `/migrations/${id}` : '/migrations',
+			types : [ MIGRATION_EXECUTE_REQUEST, MIGRATION_EXECUTE_SUCCESS, MIGRATION_EXECUTE_FAIL ],
+			endpoint : migration.id ? `/migrations/${id}/execute` : `/migrations?execute=true`,
 			method : 'POST',
 			schema : Schemas.MIGRATION,
+			data : migration
 		}
 	}
 }
@@ -76,13 +145,46 @@ export const MIGRATION_DELETE_REQUEST = 'MIGRATION_DELETE_REQUEST';
 export const MIGRATION_DELETE_SUCCESS = 'MIGRATION_DELETE_SUCCESS';
 export const MIGRATION_DELETE_FAIL = 'MIGRATION_DELETE_FAIL';
 
-export function deleteMigration(id) {
-	return {
-		[CALL_API] : {
-			types : [ MIGRATION_DELETE_REQUEST, MIGRATION_DELETE_SUCCESS, MIGRATION_DELETE_FAIL ],
-			endpoint : `/migrations/${id}`,
-			method : 'DELETE',
-			schema : Schemas.MIGRATION
+export function deleteMigration(id, redirectUrl="") {
+	return (dispatch, getState) => {
+		return dispatch({
+			[CALL_API] : {
+				types : [ MIGRATION_DELETE_REQUEST, MIGRATION_DELETE_SUCCESS, MIGRATION_DELETE_FAIL ],
+				endpoint : `/migrations/${id}`,
+				method : 'DELETE',
+				schema : Schemas.MIGRATION
+			}
+		}).then(action => {
+			if (action.type === MIGRATION_DELETE_SUCCESS) {
+				dispatch(removeModel(Schemas.MIGRATION, id))
+
+				if (redirectUrl != "") {
+					dispatch(push(redirectUrl));
+				}
+
+				dispatch(setMessage('migration deleted'))
+				setTimeout(() => dispatch(resetMessage()), 5000);
+			}
+
+			return null;
+		});
+	}
+}
+
+export const EDIT_MIGRATION = 'EDIT_MIGRATION';
+
+export function editMigration(address, number) {
+	return (dispatch, getState) => {
+		const migration = selectMigrationByNumber(getState(), address, number);
+		if (!migration) {
+			return dispatch(fetchMigrationByNumber(address, number)).then(action => {
+				if (action.type === MIGRATION_FETCH_SUCCESS) {
+					const migration = selectMigrationByNumber(address, number);
+					return dispatch(editModel(Schemas.MIGRATION, EDIT_MIGRATION, migration));
+				}
+			})
+		} else {
+			return dispatch(editModel(Schemas.MIGRATION, EDIT_MIGRATION, migration));
 		}
 	}
 }

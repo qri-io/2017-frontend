@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
-import { resetErrorMessage } from '../actions'
+import { resetErrorMessage, resetMessage } from '../actions'
 import { loadSessionUser } from '../actions/session'
 import { resizeDevice } from '../actions/device'
 import { selectSessionUser } from '../selectors/session'
@@ -11,9 +11,8 @@ import Navbar from '../components/Navbar'
 
 class App extends Component {
   constructor(props) {
-    super(props)
-    this.handleChange = this.handleChange.bind(this)
-    this.handleDismissClick = this.handleDismissClick.bind(this)
+    super(props);
+    [ "handleChange", "handleDismissClick", "handleDismissMessage" ].forEach(m => this[m] = this[m].bind(this))
   }
 
   componentWillMount() {
@@ -35,6 +34,11 @@ class App extends Component {
 
   handleDismissClick(e) {
     this.props.resetErrorMessage()
+    e.preventDefault()
+  }
+
+  handleDismissMessage(e) {
+    this.props.resetMessage()
     e.preventDefault()
   }
 
@@ -60,6 +64,24 @@ class App extends Component {
     )
   }
 
+  renderMessage() {
+    const { message } = this.props
+    if (!message) {
+      return null
+    }
+
+    return (
+      <div className="alert alert-success" role="alert">
+        <b>{message}</b>
+        {' '}
+        (<a href="#"
+            onClick={this.handleDismissClick}>
+          Dismiss
+        </a>)
+      </div>
+    )
+  }
+
   render() {
     const { children, inputValue, user } = this.props
     return (
@@ -75,17 +97,20 @@ class App extends Component {
 App.propTypes = {
   // Injected by React Redux
   errorMessage: PropTypes.string,
+  message : PropTypes.string,
   inputValue: PropTypes.string.isRequired,
   // Injected by React Router
   children: PropTypes.node,
   user : PropTypes.object,
 
   resetErrorMessage: PropTypes.func.isRequired,
+  resetMessage: PropTypes.func.isRequired,
   loadSessionUser: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state, ownProps) {
   return {
+    message: state.message,
     errorMessage: state.errorMessage,
     inputValue: ownProps.location.pathname.substring(1),
     user : selectSessionUser(state)
@@ -93,6 +118,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default connect(mapStateToProps, {
+  resetMessage,
   resetErrorMessage,
   loadSessionUser,
   resizeDevice

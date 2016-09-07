@@ -26,14 +26,41 @@ function entities(state = initialState, action) {
     return merge({}, state, action.response.entities)
   }
 
+  if (action.type === ActionTypes.REMOVE_MODEL) {
+    const newState = merge({}, state);
+    newState[action.schema.getKey()] = merge({}, newState[action.schema.getKey()])
+    delete newState[action.schema.getKey()][action.id]
+    return newState
+  }
+
   return state
 }
 
-// updates an entity cache in response to any actuion with response.models.
-// see models middleware
-function models(state = initialState, action) {
-  if (action.models && action.models.entities) {
-    return merge({}, state, action.models.entities)
+// updates an entity cache in response to any actuion with response.local.
+// see local middleware
+function locals(state = initialState, action) {
+  if (action.locals && action.locals.entities) {
+    return merge({}, state, action.locals.entities)
+  }
+
+  if (action.type === ActionTypes.REMOVE_MODEL) {
+    const newState = merge({}, state);
+    newState[action.schema.getKey()] = merge({}, newState[action.schema.getKey()])
+    delete newState[action.schema.getKey()][action.id]
+    return newState
+  }
+
+  return state;
+}
+
+//
+function message (state = null, action) {
+  const { type, message } = action
+
+  if (type === ActionTypes.SET_MESSAGE) {
+    return null;
+  } else if (message) {
+    return message;
   }
 
   return state;
@@ -46,7 +73,7 @@ function errorMessage(state = null, action) {
   if (type === ActionTypes.RESET_ERROR_MESSAGE) {
     return null
   } else if (error && !silentError) {
-    return action.error
+    return error
   }
 
   return state
@@ -74,9 +101,10 @@ function errorMessage(state = null, action) {
 
 const rootReducer = combineReducers({
   entities,
-  models,
+  locals,
   // pagination,
   errorMessage,
+  message,
   session : sessionReducer,
   console: consoleReducer,
   device : deviceReducer,

@@ -5,7 +5,7 @@ import validateChange from '../validators/change'
 import { loadDatasetByAddress } from '../actions/dataset'
 import { newChange, updateChange, saveChange, executeChange } from '../actions/change'
 import { selectDatasetByAddress } from '../selectors/dataset'
-import { selectChangeByNumber } from '../selectors/change'
+import { selectLocalChangeById } from '../selectors/change'
 import { selectSessionUser } from '../selectors/session'
 
 import SessionRequired from '../components/SessionRequired'
@@ -106,12 +106,13 @@ NewChange.defaultProps = {
 }
 
 function mapStateToProps(state, ownProps) {
-	const address = [ ownProps.params.user, ownProps.params.dataset ].join(".")
+	const address = [ ownProps.params.user, ownProps.params.dataset ].join(".");
+	const change = selectLocalChangeById(state, "new");
 
 	return Object.assign({
 		address,
+		change,
 		user : selectSessionUser(state),
-		change : state.models.changes.new
 	}, ownProps)
 }
 
