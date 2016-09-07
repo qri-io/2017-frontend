@@ -6,15 +6,42 @@ import { removeModel } from './index'
 import { newLocalModel, updateLocalModel, editModel } from './locals'
 import { selectMigrationByNumber, selectMigrationById } from '../selectors/migration'
 
+import { selectDatasetByAddress } from '../selectors/dataset'
+import { DATASET_SUCCESS, fetchDatasetByAddress } from './dataset'
+
 const MIGRATION_NEW = 'MIGRATION_NEW';
-export function newMigration (author, dataset, attributes={}) {
-	attributes = Object.assign({
-		author,
-		dataset,
-		type : "ADD_TABLE",
-		sql : "",
-	}, attributes);
-	return newLocalModel(Schemas.MIGRATION, MIGRATION_NEW, attributes);
+export function newMigration (address, attributes={}) {
+	return (dispatch, getState) => {
+		// check for the dataset we're trying to add to
+		const dataset = selectDatasetByAddress(getState(), address);
+		
+		// if we have it, create a new migration using the loaded dataset
+		if (dataset) {
+			attributes = Object.assign({
+				dataset,
+				sql : "",
+				description : ""
+			}, attributes);
+		 return dispatch(newLocalModel(Schemas.MIGRATION, MIGRATION_NEW, attributes));
+
+		} else {
+			// otherwise, do a fetch first to make sure the dataset actually exists &
+			// stuff
+			dispatch(fetchDatasetByAddress(address)).then(action => {
+				const dataset = selectDatasetByAddress(getState(), address);
+
+				if (action.type === DATASET_SUCCESS) {
+					attributes = Object.assign({
+						sql : "",
+						description : ""
+					}, attributes, { dataset });
+					return dispatch(newLocalModel(Schemas.MIGRATION, MIGRATION_NEW, attributes))
+				}
+
+				return null;
+			});
+		}
+	}
 }
 
 const MIGRATION_UPDATE = 'MIGRATION_UPDATE';

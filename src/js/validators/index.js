@@ -11,7 +11,7 @@ Validator.prototype.required = function () {
 	if (!this.input) {
 		this.errors.push("required");
 	}
-	return this
+	return this;
 }
 
 Validator.prototype.handle = function () {	
@@ -42,6 +42,14 @@ Validator.prototype.name = function () {
 	// 	this.errors.push("invalid name")
 	// }
 
+	return this;
+}
+
+Validator.prototype.model = function () {
+	const model = this.input || {}
+	if (!validUuid(model.id)) {
+		this.errors.push("model has invalid id")
+	}
 	return this;
 }
 
@@ -76,6 +84,10 @@ const	alphaNumericRegex = /^[a-z0-9_-]{2,35}$/gi,
 // make sure a handle contains only alphanumeric chars,_,-, and starts with a letter
 function validHandle(handle="") {
 	return (alphaNumericRegex.exec(handle) != null)
+}
+
+function validUuid(uuid="") {
+	return (/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.exec(uuid) != null) 
 }
 
 // check email against regex

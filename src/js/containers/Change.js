@@ -1,10 +1,9 @@
 import React, { PropTypes } from 'react'
-import { connect } from 'redux'
+import { connect } from 'react-redux'
 
 import { loadChange, saveChange } from '../actions/change'
 
 class Change extends React.Component {
-
 	componentWillMount() {
 		this.props.loadChange(handle, slug, number);
 	}

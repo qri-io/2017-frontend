@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 import validateChange from '../validators/change'
-import { loadDatasetByAddress } from '../actions/dataset'
 import { newChange, updateChange, saveChange, executeChange } from '../actions/change'
 import { selectDatasetByAddress } from '../selectors/dataset'
 import { selectLocalChangeById } from '../selectors/change'
@@ -90,10 +89,9 @@ NewChange.propTypes = {
 	address : PropTypes.string.isRequired,
 	
 	user : PropTypes.object,
+	dataset : PropTypes.object,
 	change : PropTypes.object, 
 	errors : PropTypes.object,
-
-	loadDatasetByAddress : PropTypes.func.isRequired,
 
 	newChange : PropTypes.func.isRequired,
 	updateChange : PropTypes.func.isRequired,
@@ -117,8 +115,6 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default connect(mapStateToProps, { 
-	loadDatasetByAddress,
-
 	newChange,
 	updateChange,
 	saveChange,

@@ -1,34 +1,40 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import { loadDatasetByAddress } from '../actions/dataset'
+import { selectDatasetByAddress } from '../selectors/dataset'
 import { newMigration, updateMigration, saveMigration } from '../actions/migration'
-import { selectMigrationByNumber } from '../selectors/migration'
+import { selectLocalMigrationById } from '../selectors/migration'
+import validateMigration from '../validators/migration'
 
 import SessionRequired from '../components/SessionRequired'
 import ValidInput from '../components/ValidInput'
 import ValidTextarea from '../components/ValidTextarea'
 import SchemaTable from '../components/SchemaTable'
+import Spinner from '../components/Spinner' 
 
 class NewMigration extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = { loading : !props.dataset, showErrors : false };
+
 		[
 			'handleChange',
-		].forEach(m => this[m] = this[m].bind(this))
+			'handleSave'
+		].forEach(m => this[m] = this[m].bind(this));
 	}
 
   componentWillMount() {
-  	// fire off a load dataset request to make sure we have the dataset
-  	this.props.loadDatasetByAddress(this.props.address)
-    // this.props.loadMigrationByNumber(this.props.address, this.props.number)
-    this.props.newMigration({ address : this.props.address });
+    this.props.newMigration(this.props.address, { author : this.props.user });
   }
 
 	componentWillReceiveProps(nextProps) {
-		const { handle, slug } = this.props
-		if (nextProps.handle != handle || nextProps.slug != slug) {
-	    this.props.loadMigrationByNumber(nextProps.handle, nextProps.slug)
+		if (nextProps.address != this.props.address) {
+	    this.props.newMigration(nextProps.address, { author : this.props.user });
+	    this.setState({ loading : !nextProps.dataset })
+		} else {
+			if (nextProps.dataset && this.state.loading) {
+				this.setState({ loading : false });
+			}
 		}
 	}
 
@@ -38,8 +44,26 @@ class NewMigration extends React.Component {
 		this.props.updateMigration(migration)
 	}
 
+	handleSave(e) {
+		e.preventDefault();
+		if (!this.props.validation.isValid && !this.state.showErrors) {
+			this.setState({ showErrors : true });
+		} else if (this.props.validation.isValid) {
+			this.props.saveMigration(this.props.migration);
+		}
+	}
+
 	render() {
-		const { dataset, migration } = this.props
+		const { loading, showErrors } = this.state
+		const { dataset, migration, validation } = this.props
+
+		if (loading) {
+			return (
+				<div className="newMigration">
+					<Spinner />
+				</div>
+			);
+		}
 		
 		if (!migration) {
 			return (
@@ -55,8 +79,9 @@ class NewMigration extends React.Component {
 					<div class="col-md-12">
 						<form className="newMigration">
 							<h3>New Migration</h3>
-							<ValidTextarea label="SQL" name="sql" onChange={this.handleChange} />
-							<button className="btn btn-large submit"></button>
+							<ValidTextarea label="Description" name="description" value={migration.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />
+							<ValidTextarea label="SQL" name="sql" value={migration.sql} showError={showErrors} error={validation.sql} onChange={this.handleChange} />
+							<button className="btn btn-large submit" disabled={(!validation.isValid && showErrors)} onClick={this.handleSave}>Create Migration</button>
 						</form>
 						<section class="col-md-12">
 							<hr />
@@ -70,13 +95,17 @@ class NewMigration extends React.Component {
 }
 
 NewMigration.propTypes = {
+	// dataset address provided by url params
 	address : PropTypes.string.isRequired,
-	// the migration model
-	migration : PropTypes.object,
-	dataset : PropTypes.object,
+	// general error
+	error : PropTypes.string,
+	
 	user : PropTypes.object,
+	// the migration model
+	dataset : PropTypes.object,
+	migration : PropTypes.object,
+	validation : PropTypes.object,
 
-	loadDatasetByAddress : PropTypes.func.isRequired,
 	newMigration : PropTypes.func.isRequired,
 	updateMigration : PropTypes.func.isRequired,
 	saveMigration : PropTypes.func.isRequired,
@@ -88,13 +117,18 @@ NewMigration.defaultProps = {
 
 function mapStateToProps(state, ownProps) {
 	const address = [ownProps.params.user, ownProps.params.dataset].join(".")
+	const migration = selectLocalMigrationById(state, "new");
+
 	return Object.assign({
+		address,
+		migration,
 		dataset : selectDatasetByAddress(state, address),
-		migration : selectMigrationByNumber(state, address, ownProps.params.number)
+		validation : validateMigration(migration),
 	}, ownProps)
 }
 
 export default connect(mapStateToProps, { 
-	loadDatasetByAddress,
 	newMigration,
+	updateMigration,
+	saveMigration,
 })(NewMigration)

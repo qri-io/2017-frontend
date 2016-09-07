@@ -7,13 +7,35 @@ import { selectChangeByNumber, selectChangeById } from '../selectors/change'
 import { setMessage, resetMessage, removeModel } from './index'
 import { updateLocalModel, newLocalModel, editModel } from './locals'
 
+import { selectDatasetByAddress } from '../selectors/dataset'
+import { DATASET_SUCCESS, fetchDatasetByAddress } from './dataset'
+
 const CHANGE_NEW = 'CHANGE_NEW';
-export function newChange (author, dataset, attributes={}) {
-	attributes = Object.assign({
-		author,
-		dataset,
-	}, attributes);
-	return newLocalModel(Schemas.CHANGE, CHANGE_NEW, attributes);
+export function newChange (address, attributes={}) {
+	return (dispatch, getState) => {
+		// check for the dataset we're trying to add to
+		const dataset = selectDatasetByAddress(getState(), address);
+		if (dataset) {
+			attributes = Object.assign({
+				dataset,
+			}, attributes);
+			return newLocalModel(Schemas.CHANGE, CHANGE_NEW, attributes);
+		} else {
+			// otherwise, do a fetch first to make sure the dataset actually exists &
+			// stuff
+			dispatch(fetchDatasetByAddress(address)).then(action => {
+				const dataset = selectDatasetByAddress(getState(), address);
+
+				if (action.type === DATASET_SUCCESS) {
+					attributes = Object.assign({}, attributes, { dataset });
+					return dispatch(newLocalModel(Schemas.CHANGE, CHANGE_NEW, attributes))
+				}
+
+				return null;
+			});
+		}
+
+	}
 }
 
 const CHANGE_UPDATE = 'CHANGE_UPDATE';

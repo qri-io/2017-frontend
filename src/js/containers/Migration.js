@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { connect } from 'redux'
+import { connect } from 'react-redux'
 
 import { loadMigration, saveMigration } from '../actions/migration'
 

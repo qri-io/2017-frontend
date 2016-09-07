@@ -11,7 +11,6 @@ require('../scss/style.scss')
 const store = configureStore(window.data)
 const history = syncHistoryWithStore(browserHistory, store)
 
-
 render(
   <Root store={store} history={history} />,
   document.getElementById('root')
