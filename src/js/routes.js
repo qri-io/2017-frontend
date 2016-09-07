@@ -52,6 +52,12 @@ export default {
 				System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);
 			}
 		},
+		{
+			path: '/:user/:dataset/edit',
+			getComponent(location, cb) {
+				System.import('./containers/EditDataset').then(loadRoute(cb)).catch(errorLoading);
+			}
+		},
 
 		{
 			path: '/:user/:dataset/changes/new',

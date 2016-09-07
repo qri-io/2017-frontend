@@ -19,7 +19,6 @@ class NewDataset extends React.Component {
 	}
 
   componentWillMount() {
-  	console.log(this.props.user)
     this.props.newDataset({
     	// if we have a session user, let's set it to be the owner
     	owner : this.props.user,

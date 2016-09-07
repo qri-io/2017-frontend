@@ -67,6 +67,23 @@ export function saveChange(change) {
 			endpoint : change.id ? `/changes/${id}` : '/changes',
 			method : 'POST',
 			schema : Schemas.CHANGE,
+			data : change
+		}
+	}
+}
+
+export const CHANGE_EXECUTE_REQUEST = 'CHANGE_EXECUTE_REQUEST';
+export const CHANGE_EXECUTE_SUCCESS = 'CHANGE_EXECUTE_SUCCESS';
+export const CHANGE_EXECUTE_FAIL = 'CHANGE_EXECUTE_FAIL';
+
+export function executeChange(change) {
+	return {
+		[CALL_API] : {
+			types : [ CHANGE_EXECUTE_REQUEST, CHANGE_EXECUTE_SUCCESS, CHANGE_EXECUTE_FAIL ],
+			endpoint : `/changes/new?execute=true`,
+			method : 'POST',
+			schema : Schemas.CHANGE,
+			data : change
 		}
 	}
 }

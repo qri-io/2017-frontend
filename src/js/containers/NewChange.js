@@ -1,28 +1,59 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import { loadChangeByNumber } from '../actions/change'
+import validateChange from '../validators/change'
+import { loadDatasetByAddress } from '../actions/dataset'
+import { newChange, updateChange, saveChange, executeChange } from '../actions/change'
+import { selectDatasetByAddress } from '../selectors/dataset'
 import { selectChangeByNumber } from '../selectors/change'
+import { selectSessionUser } from '../selectors/session'
 
+import SessionRequired from '../components/SessionRequired'
+import ValidTextarea from '../components/ValidTextarea'
 import SchemaTable from '../components/SchemaTable'
 
 class NewChange extends React.Component {
 	constructor(props) {
 		super(props);
-		// [
-		// 	'handleRunQuery',
-		// ].forEach(m => this[m] = this[m].bind(this))
+		[
+			'handleChange',
+			'handleSave',
+			'handleExecute',
+		].forEach(m => this[m] = this[m].bind(this))
 	}
 
   componentWillMount() {
-    this.props.loadChangeByNumber(this.props.handle, this.props.slug)
+  	newChange({
+  		user : this.props.user,
+  		dataset : this.props.dataset,
+  	})
+    this.props.loadDatasetByAddress(this.props.address)
   }
 
 	componentWillReceiveProps(nextProps) {
-		const { handle, slug } = this.props
-		if (nextProps.handle != handle || nextProps.slug != slug) {
-	    this.props.loadChangeByNumber(nextProps.handle, nextProps.slug)
+		if (nextProps.address != this.props.address) {
+			newChange({
+	  		user : nextProps.user,
+	  		dataset : nextProps.dataset,
+	  	})
+	    this.props.loadDatasetByAddress(nextProps.address)
 		}
+	}
+
+	handleChange(name, value, e) {
+		e.preventDefault();
+
+		const attrs = Object.assign({}, this.props.change);
+		attrs[name] = value
+		this.props.updateChange(attrs)
+	}
+
+	handleSave() {
+
+	}
+
+	handleExecute() {
+
 	}
 
 	render() {
@@ -42,14 +73,6 @@ class NewChange extends React.Component {
 					<div class="col-md-12">
 						<form className="newChange">
 							<h3>New Change</h3>
-							<label for="handle">handle</label>
-							<input name="handle" type="text" />
-							<label for="handle">name</label>
-							<input name="name" type="text" />
-							<label for="source_url">name</label>
-							<input name="source_url" type="text" />
-							<label for="handle">description</label>
-							<textarea name="description"></textarea>
 							<button className="btn btn-large submit"></button>
 						</form>
 						<section class="col-md-12">
@@ -64,11 +87,18 @@ class NewChange extends React.Component {
 }
 
 NewChange.propTypes = {
-	handle : PropTypes.string.isRequired,
-	slug : PropTypes.string.isRequired,
-	dataset : PropTypes.object,
+	address : PropTypes.string.isRequired,
+	
+	user : PropTypes.object,
+	change : PropTypes.object, 
+	errors : PropTypes.object,
 
-	loadChangeByNumber : PropTypes.func.isRequired,
+	loadDatasetByAddress : PropTypes.func.isRequired,
+
+	newChange : PropTypes.func.isRequired,
+	updateChange : PropTypes.func.isRequired,
+	saveChange : PropTypes.func.isRequired,
+	executeChange : PropTypes.func.isRequired
 }
 
 NewChange.defaultProps = {
@@ -76,11 +106,20 @@ NewChange.defaultProps = {
 }
 
 function mapStateToProps(state, ownProps) {
-	return Object.assign({}, {
-		dataset : selectChangeByNumber(state, ownProps.params.handle, ownProps.params.slug)
-	}, ownProps.params, ownProps)
+	const address = [ ownProps.params.user, ownProps.params.dataset ].join(".")
+
+	return Object.assign({
+		address,
+		user : selectSessionUser(state),
+		change : state.models.changes.new
+	}, ownProps)
 }
 
 export default connect(mapStateToProps, { 
-	loadChangeByNumber 
+	loadDatasetByAddress,
+
+	newChange,
+	updateChange,
+	saveChange,
+	executeChange
 })(NewChange)
