@@ -17,7 +17,7 @@ export default class EditDataset extends React.Component {
 		super(props);
 		this.state = {
 			showErrors : false,
-			loading : !this.props.dataset
+			loading : !props.dataset
 		};
 
 		[ "handleChange", "handleSave", "handleDelete" ].forEach(m => this[m] = this[m].bind(this));

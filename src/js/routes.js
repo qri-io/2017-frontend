@@ -96,5 +96,11 @@ export default {
 				System.import('./containers/Migration').then(loadRoute(cb)).catch(errorLoading);
 			}
 		},
+		{
+			path : '/:user/:dataset/migrations/:number/edit',
+			getComponent(location, cb) {
+				System.import('./containers/EditMigration').then(loadRoute(cb)).catch(errorLoading);
+			}
+		}
  ]
 };

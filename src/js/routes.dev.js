@@ -13,6 +13,7 @@ import Dataset from './containers/Dataset'
 import DatasetChanges from './containers/DatasetChanges'
 import DatasetMigrations from './containers/DatasetMigrations'
 import EditDataset from './containers/EditDataset'
+import EditMigration from './containers/EditMigration'
 import NewChange from './containers/NewChange'
 import Change from './containers/Change'
 import NewMigration from './containers/NewMigration'
@@ -84,6 +85,10 @@ export default {
 		{
 			path: '/:user/:dataset/migrations/:number',
 			component : Migration
+		},
+		{
+			path: '/:user/:dataset/migrations/:number/edit',
+			component : EditMigration
 		},
  ]
 };

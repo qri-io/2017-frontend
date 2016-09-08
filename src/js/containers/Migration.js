@@ -10,7 +10,6 @@ import Spinner from '../components/Spinner'
 class Migration extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log(props);
 		this.state = { loading : !props.migration };
 		[ "handleExecute", "handleDecline" ].forEach(m => this[m] = this[m].bind(this))
 	}

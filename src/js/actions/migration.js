@@ -108,9 +108,10 @@ export function saveMigration(migration) {
 			return dispatch({
 				[CALL_API] : {
 					types : [ MIGRATION_SAVE_REQUEST, MIGRATION_SAVE_SUCCESS, MIGRATION_SAVE_FAIL ],
-					endpoint : migration.id ? `/migrations/${id}` : '/migrations',
-					method : 'POST',
+					endpoint : `/migrations/${migration.id}`,
+					method : 'PUT',
 					schema : Schemas.MIGRATION,
+					data : migration
 				}
 			}).then(action => {
 				if (action.type == MIGRATION_SAVE_SUCCESS) {
@@ -230,9 +231,11 @@ export function editMigration(address, number) {
 		if (!migration) {
 			return dispatch(fetchMigrationByNumber(address, number)).then(action => {
 				if (action.type === MIGRATION_FETCH_SUCCESS) {
-					const migration = selectMigrationByNumber(address, number);
+					const migration = selectMigrationByNumber(getState(), address, number);
 					return dispatch(editModel(Schemas.MIGRATION, EDIT_MIGRATION, migration));
 				}
+
+				return null
 			})
 		} else {
 			return dispatch(editModel(Schemas.MIGRATION, EDIT_MIGRATION, migration));
