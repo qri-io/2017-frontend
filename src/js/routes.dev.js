@@ -1,3 +1,7 @@
+/*
+ * 
+ * Gooby pls. Don 4get to update the prod routes.js file 
+ */
 import React from 'react'
 import App from './containers/App'
 import Datasets from './containers/Datasets'
@@ -6,6 +10,8 @@ import Console from './containers/Console'
 import Login from './containers/Login'
 import User from './containers/User'
 import Dataset from './containers/Dataset'
+import DatasetChanges from './containers/DatasetChanges'
+import DatasetMigrations from './containers/DatasetMigrations'
 import EditDataset from './containers/EditDataset'
 import NewChange from './containers/NewChange'
 import Change from './containers/Change'
@@ -59,6 +65,10 @@ export default {
 			component : NewChange
 		},
 		{
+			path: '/:user/:dataset/changes',
+			component : DatasetChanges
+		},
+		{
 			path: '/:user/:dataset/changes/:number',
 			component: Change
 		},
@@ -66,6 +76,10 @@ export default {
 		{
 			path: '/:user/:dataset/migrations/new',
 			component : NewMigration
+		},
+		{
+			path: '/:user/:dataset/migrations',
+			component : DatasetMigrations
 		},
 		{
 			path: '/:user/:dataset/migrations/:number',

@@ -83,7 +83,7 @@ export function loadChangeByNumber(handle, slug, number, requiredFields=[]) {
 			return null
 		}
 
-		return fetchChangeByNumber(handle, slug, number, requiredFields);
+		return dispatch(fetchChangeByNumber(handle, slug, number, requiredFields));
 	}
 }
 

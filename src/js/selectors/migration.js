@@ -11,6 +11,16 @@ export function selectMigrationByNumber(state, address, number) {
 	return id ? migrations[id] : undefined;
 }
 
+export function selectDatasetMigrations(state, datasetId) {
+	const { migrations } = state.entities;
+	return Object.keys(migrations).reduce((a, id) => {
+		const m = migrations[id];
+		if (m.dataset == datasetId) {
+			a.push(m);
+		}
+		return a;
+	}, [])
+}
 
 export function selectLocalMigrationById(state, id) {
 	return state.locals.migrations[id];

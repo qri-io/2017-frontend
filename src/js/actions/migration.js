@@ -2,7 +2,7 @@ import { push } from 'react-router-redux'
 
 import { CALL_API } from '../middleware/api'
 import Schemas from '../schemas'
-import { removeModel } from './index'
+import { setMessage, resetMessage, removeModel } from './index'
 import { newLocalModel, updateLocalModel, editModel } from './locals'
 import { selectMigrationByNumber, selectMigrationById } from '../selectors/migration'
 
@@ -79,7 +79,7 @@ export function fetchMigrationByNumber(address, number, requiredFields=[]) {
 	return {
 		[CALL_API] : {
 			types : [ MIGRATION_FETCH_REQUEST, MIGRATION_FETCH_SUCCESS, MIGRATION_FETCH_FAIL ],
-			endpoint : `/migrations?dataset=${address}&number=${number}`,
+			endpoint : `/migrations?address=${address}&number=${number}`,
 			schema : Schemas.MIGRATION
 		}
 	}
@@ -87,13 +87,12 @@ export function fetchMigrationByNumber(address, number, requiredFields=[]) {
 
 export function loadMigrationByNumber(address, number, requiredFields=[]) {
 	return (dispatch, getState) => {
-		const migration = selectMigrationByNumber(getState(), handle, slug, number);
-
+		const migration = selectMigrationByNumber(getState(), address, number);
 		if (migration && requiredFields.every(field => (migration.hasOwnProperty(field)))) {
 			return null
 		}
 
-		return fetchMigrationByNumber(handle, slug, number, requiredFields);
+		return dispatch(fetchMigrationByNumber(address, number, requiredFields));
 	}
 }
 
@@ -102,7 +101,7 @@ export const MIGRATION_SAVE_SUCCESS = 'MIGRATION_SAVE_SUCCESS';
 export const MIGRATION_SAVE_FAIL = 'MIGRATION_SAVE_FAIL';
 
 export function saveMigration(migration) {
-	if (!dataset.id || dataset.id == "new") {
+	if (!migration.id || migration.id == "new") {
 		return createMigration(migration);
 	} else {
 		return (dispatch, getState) => {
@@ -142,8 +141,17 @@ function createMigration(migration) {
 			}
 		}).then(action => {
 			if (action.type === MIGRATION_CREATE_SUCCESS && action.response.entities.migrations) {
+				
+				dispatch(setMessage("migration created"));
+				setTimeout(() => resetMessage(), 5000);
 
-				return dispatch(push());
+				const { datasets, migrations } = action.response.entities;
+				let address = datasets[Object.keys(datasets)[0]].address
+				const migration = migrations[Object.keys(migrations)[0]]
+				const number = migration.number || migration.id;
+				address = address.replace(".", "/", -1)
+				
+				return dispatch(push(`/${address}/migrations/${number}`));
 			}
 		})
 
@@ -161,6 +169,22 @@ export function executeMigration(migration) {
 		[CALL_API] : {
 			types : [ MIGRATION_EXECUTE_REQUEST, MIGRATION_EXECUTE_SUCCESS, MIGRATION_EXECUTE_FAIL ],
 			endpoint : migration.id ? `/migrations/${id}/execute` : `/migrations?execute=true`,
+			method : 'POST',
+			schema : Schemas.MIGRATION,
+			data : migration
+		}
+	}
+}
+
+export const MIGRATION_DECLINE_REQUEST = 'MIGRATION_DECLINE_REQUEST';
+export const MIGRATION_DECLINE_SUCCESS = 'MIGRATION_DECLINE_SUCCESS';
+export const MIGRATION_DECLINE_FAIL = 'MIGRATION_DECLINE_FAIL';
+
+export function declineMigration(migration) {
+	return {
+		[CALL_API] : {
+			types : [ MIGRATION_DECLINE_REQUEST, MIGRATION_DECLINE_SUCCESS, MIGRATION_DECLINE_FAIL ],
+			endpoint : migration.id ? `/migrations/${id}/decline` : `/migrations?decline=true`,
 			method : 'POST',
 			schema : Schemas.MIGRATION,
 			data : migration

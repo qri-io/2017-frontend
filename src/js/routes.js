@@ -60,6 +60,12 @@ export default {
 		},
 
 		{
+			path: '/:user/:dataset/changes',
+			getComponent(location, cb) {
+				System.import('./containers/DatasetChanges').then(loadRoute(cb)).catch(errorLoading);
+			}
+		},
+		{
 			path: '/:user/:dataset/changes/new',
 			getComponent(location, cb) {
 				System.import('./containers/NewChange').then(loadRoute(cb)).catch(errorLoading);
@@ -72,6 +78,12 @@ export default {
 			}
 		},
 		
+		{
+			path: '/:user/:dataset/migrations',
+			getComponent(location, cb) {
+				System.import('./containers/DatasetMigrations').then(loadRoute(cb)).catch(errorLoading);
+			}
+		},
 		{
 			path: '/:user/:dataset/migrations/new',
 			getComponent(location, cb) {

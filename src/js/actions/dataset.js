@@ -243,7 +243,7 @@ export const DATASET_MIGRATIONS_REQUEST = 'DATASET_MIGRATIONS_REQUEST';
 export const DATASET_MIGRATIONS_SUCCESS = 'DATASET_MIGRATIONS_SUCCESS';
 export const DATASET_MIGRATIONS_FAIL = 'DATASET_MIGRATIONS_FAIL';
 
-export function fetchDatasetChanges(datasetId, page=1, pageSize=50) {
+export function fetchDatasetMigrations(datasetId, page=1, pageSize=50) {
 	return {
 		[CALL_API] : {
 			types : [ DATASET_MIGRATIONS_REQUEST, DATASET_MIGRATIONS_SUCCESS, DATASET_MIGRATIONS_FAIL ],
@@ -255,9 +255,9 @@ export function fetchDatasetChanges(datasetId, page=1, pageSize=50) {
 	}
 }
 
-export function loadDatasetChanges(datasetId, page=1, pageSize=50) {
+export function loadDatasetMigrations(datasetId, page=1, pageSize=50) {
 	return (dispatch, getState) => {
-		return fetchDatasetChanges(datasetId, page, pageSize);
+		return dispatch(fetchDatasetMigrations(datasetId, page, pageSize));
 	}
 }
 
@@ -279,6 +279,7 @@ export function fetchDatasetChanges(datasetId, page=1, pageSize=50) {
 
 export function loadDatasetChanges(datasetId, page=1, pageSize=50) {
 	return (dispatch, getState) => {
-		return fetchDatasetChanges(datasetId, page, pageSize);
+		return dispatch(fetchDatasetChanges(datasetId, page, pageSize));
 	}
 }
+

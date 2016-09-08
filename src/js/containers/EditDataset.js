@@ -17,7 +17,7 @@ export default class EditDataset extends React.Component {
 		super(props);
 		this.state = {
 			showErrors : false,
-			loading : !!this.props.dataset
+			loading : !this.props.dataset
 		};
 
 		[ "handleChange", "handleSave", "handleDelete" ].forEach(m => this[m] = this[m].bind(this));
@@ -29,7 +29,7 @@ export default class EditDataset extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.address != this.props.address) {
 			this.props.editDataset(nextProps.address);
-			this.setState({ showErrors: false, loading : !!nextProps.dataset });
+			this.setState({ showErrors: false, loading : !nextProps.dataset });
 		} else if (nextProps.dataset && this.state.loading) {
 			this.setState({ loading : false });
 		}

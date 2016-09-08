@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
+import { selectSessionUser } from '../selectors/session'
 import { selectDatasetByAddress } from '../selectors/dataset'
 import { newMigration, updateMigration, saveMigration } from '../actions/migration'
 import { selectLocalMigrationById } from '../selectors/migration'
@@ -55,7 +56,11 @@ class NewMigration extends React.Component {
 
 	render() {
 		const { loading, showErrors } = this.state
-		const { dataset, migration, validation } = this.props
+		const { user, dataset, migration, validation } = this.props
+
+		if (!user) {
+			return <SessionRequired />
+		}
 
 		if (loading) {
 			return (
@@ -122,6 +127,8 @@ function mapStateToProps(state, ownProps) {
 	return Object.assign({
 		address,
 		migration,
+
+		user : selectSessionUser(state),
 		dataset : selectDatasetByAddress(state, address),
 		validation : validateMigration(migration),
 	}, ownProps)

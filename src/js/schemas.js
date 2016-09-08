@@ -22,6 +22,16 @@ datasetSchema.define({
   owner: userSchema
 });
 
+migrationSchema.define({
+  author : userSchema,
+  dataset : datasetSchema,
+});
+
+changeSchema.define({
+  author : userSchema,
+  dataset : datasetSchema,
+});
+
 datasetSchema.new = function (attrs) {
   return Object.assign({
     "name" : "new dataset",

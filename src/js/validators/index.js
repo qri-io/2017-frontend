@@ -46,8 +46,11 @@ Validator.prototype.name = function () {
 }
 
 Validator.prototype.model = function () {
-	const model = this.input || {}
-	if (!validUuid(model.id)) {
+	let id = this.input || ""
+	if (typeof id == "object") {
+		id = id.id
+	}
+	if (!validUuid(id)) {
 		this.errors.push("model has invalid id")
 	}
 	return this;
