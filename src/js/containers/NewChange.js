@@ -8,12 +8,16 @@ import { selectLocalChangeById } from '../selectors/change'
 import { selectSessionUser } from '../selectors/session'
 
 import SessionRequired from '../components/SessionRequired'
+import Spinner from '../components/Spinner'
+import ValidInput from '../components/ValidInput'
 import ValidTextarea from '../components/ValidTextarea'
-import SchemaTable from '../components/SchemaTable'
+import SelectSchemaTable from '../components/SelectSchemaTable'
 
 class NewChange extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = { loading : !props.dataset, showErrors : false };
+
 		[
 			'handleChange',
 			'handleSave',
@@ -22,46 +26,64 @@ class NewChange extends React.Component {
 	}
 
   componentWillMount() {
-  	newChange({
+  	this.props.newChange(this.props.address, {
   		user : this.props.user,
   		dataset : this.props.dataset,
-  	})
-    this.props.loadDatasetByAddress(this.props.address)
+  	});
   }
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.address != this.props.address) {
-			newChange({
+			this.props.newChange(nextProps.address, {
 	  		user : nextProps.user,
 	  		dataset : nextProps.dataset,
-	  	})
-	    this.props.loadDatasetByAddress(nextProps.address)
+	  	});
+	  	this.setState({ loading : !nextProps.dataset });
+		} else if (nextProps.dataset && this.state.loading) {
+			this.setState({ loading : false });
 		}
 	}
 
 	handleChange(name, value, e) {
 		e.preventDefault();
-
 		const attrs = Object.assign({}, this.props.change);
 		attrs[name] = value
 		this.props.updateChange(attrs)
 	}
 
-	handleSave() {
-
+	handleSave(e) {
+		e.preventDefault();
+		if (!this.props.validation.isValid && !this.state.showErrors) {
+			this.setState({ showErrors : true });
+		} else if (this.props.validation.isValid) {
+			this.props.saveChange(this.props.change);
+		}
 	}
 
-	handleExecute() {
+	handleExecute(e) {
 
 	}
 
 	render() {
-		const { handle, slug, dataset } = this.props
+		const { loading, showErrors } = this.state;
+		const { user, dataset, change, validation } = this.props;
 		
-		if (!dataset) {
+		if (!user) {
+			return <SessionRequired />
+		}
+
+		if (loading) {
+			return (
+				<div className="container">
+					<Spinner />
+				</div>
+			);
+		}
+
+		if (!change) {
 			return (
 				<div className="dataset container">
-					<p>No Change</p>
+					<p>Change</p>
 				</div>
 			);
 		}
@@ -72,12 +94,16 @@ class NewChange extends React.Component {
 					<div class="col-md-12">
 						<form className="newChange">
 							<h3>New Change</h3>
-							<button className="btn btn-large submit"></button>
+							<label>Type:</label>
+							<select onChange={(e) => { this.handleChange("type", e.target.value, e) }}>
+								<option>Insert</option>
+								<option>Modify</option>
+								<option>Delete</option>
+							</select>
+							<SelectSchemaTable label="Table" name="table" value={change.table} schema={[{ name : "example_table" }, { name : "another_example"}]} onChange={this.handleChange} />
+							<ValidTextarea label="Description" name="description" value={change.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />
+							<button className="btn btn-large submit"  disabled={(!validation.isValid && showErrors)} onClick={this.handleSave}>Create Change</button>
 						</form>
-						<section class="col-md-12">
-							<hr />
-							{ dataset.schema ? <SchemaTable schema={dataset.schema} /> : <p>This dataset currently has no schema</p> }
-						</section>
 					</div>
 				</div>
 			</div>
@@ -91,7 +117,7 @@ NewChange.propTypes = {
 	user : PropTypes.object,
 	dataset : PropTypes.object,
 	change : PropTypes.object, 
-	errors : PropTypes.object,
+	validation : PropTypes.object,
 
 	newChange : PropTypes.func.isRequired,
 	updateChange : PropTypes.func.isRequired,
@@ -111,6 +137,8 @@ function mapStateToProps(state, ownProps) {
 		address,
 		change,
 		user : selectSessionUser(state),
+		dataset : selectDatasetByAddress(state, address),
+		validation : validateChange(change)
 	}, ownProps)
 }
 

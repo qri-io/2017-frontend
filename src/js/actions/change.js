@@ -18,16 +18,19 @@ export function newChange (address, attributes={}) {
 		if (dataset) {
 			attributes = Object.assign({
 				dataset,
+				description : "",
 			}, attributes);
 			return newLocalModel(Schemas.CHANGE, CHANGE_NEW, attributes);
 		} else {
 			// otherwise, do a fetch first to make sure the dataset actually exists &
 			// stuff
 			dispatch(fetchDatasetByAddress(address)).then(action => {
+				
 				const dataset = selectDatasetByAddress(getState(), address);
-
 				if (action.type === DATASET_SUCCESS) {
-					attributes = Object.assign({}, attributes, { dataset });
+					attributes = Object.assign({ 
+						description : "" 
+					}, attributes, { dataset });
 					return dispatch(newLocalModel(Schemas.CHANGE, CHANGE_NEW, attributes))
 				}
 

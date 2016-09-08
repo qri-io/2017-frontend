@@ -166,14 +166,25 @@ export const MIGRATION_EXECUTE_SUCCESS = 'MIGRATION_EXECUTE_SUCCESS';
 export const MIGRATION_EXECUTE_FAIL = 'MIGRATION_EXECUTE_FAIL';
 
 export function executeMigration(migration) {
-	return {
-		[CALL_API] : {
-			types : [ MIGRATION_EXECUTE_REQUEST, MIGRATION_EXECUTE_SUCCESS, MIGRATION_EXECUTE_FAIL ],
-			endpoint : migration.id ? `/migrations/${id}/execute` : `/migrations?execute=true`,
-			method : 'POST',
-			schema : Schemas.MIGRATION,
-			data : migration
-		}
+	return (dispatch, getState) => {
+		return dispatch({
+			[CALL_API] : {
+				types : [ MIGRATION_EXECUTE_REQUEST, MIGRATION_EXECUTE_SUCCESS, MIGRATION_EXECUTE_FAIL ],
+				endpoint : migration.id ? `/migrations/${migration.id}/execute` : `/migrations?execute=true`,
+				method : 'POST',
+				schema : Schemas.MIGRATION,
+				data : migration
+			}
+		}).then(action => {
+			if (action.type === MIGRATION_EXECUTE_SUCCESS) {
+				dispatch(setMessage("migration executed"));
+				setTimeout(() => dispatch(resetMessage()), 5000);
+				// TODO - redirect to a proper location, like, say the dataset address
+				return dispatch(push('/console'))
+			}
+
+			return null
+		});
 	}
 }
 
@@ -182,14 +193,26 @@ export const MIGRATION_DECLINE_SUCCESS = 'MIGRATION_DECLINE_SUCCESS';
 export const MIGRATION_DECLINE_FAIL = 'MIGRATION_DECLINE_FAIL';
 
 export function declineMigration(migration) {
-	return {
-		[CALL_API] : {
-			types : [ MIGRATION_DECLINE_REQUEST, MIGRATION_DECLINE_SUCCESS, MIGRATION_DECLINE_FAIL ],
-			endpoint : migration.id ? `/migrations/${id}/decline` : `/migrations?decline=true`,
-			method : 'POST',
-			schema : Schemas.MIGRATION,
-			data : migration
-		}
+	return (dispatch, getState) => {
+		return dispatch({
+			[CALL_API] : {
+				types : [ MIGRATION_DECLINE_REQUEST, MIGRATION_DECLINE_SUCCESS, MIGRATION_DECLINE_FAIL ],
+				endpoint : migration.id ? `/migrations/${migration.id}/decline` : `/migrations?decline=true`,
+				method : 'POST',
+				schema : Schemas.MIGRATION,
+				data : migration
+			}
+		}).then(action => {
+			if (action.type == MIGRATION_DECLINE_SUCCESS) {
+				dispatch(setMessage("migration declined"));
+				setTimeout(() => dispatch(resetMessage()), 5000);
+				
+				// TODO - redirect to a proper location, like, say the dataset address
+				return dispatch(push('/console'));
+			}
+
+			return null
+		});
 	}
 }
 

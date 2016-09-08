@@ -1,3 +1,4 @@
+import { selectDatasetByAddress } from './dataset'
 
 export function selectMigrationById(state, id) {
 	return state.entities.migrations[id];
@@ -7,7 +8,8 @@ export function selectMigrationById(state, id) {
 // or just slamming an ID into the number field
 export function selectMigrationByNumber(state, address, number) {
 	const { migrations } = state.entities;
-	const id = Object.keys(migrations).find(id => (migrations[id].number == number && migrations[id].address == address) || id == number);
+	const dataset = selectDatasetByAddress(state, address);
+	const id = Object.keys(migrations).find(id => (migrations[id].number == number && migrations[id].dataset == dataset.id) || id == number);
 	return id ? migrations[id] : undefined;
 }
 

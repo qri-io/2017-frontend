@@ -32,10 +32,8 @@ class NewMigration extends React.Component {
 		if (nextProps.address != this.props.address) {
 	    this.props.newMigration(nextProps.address, { author : this.props.user });
 	    this.setState({ loading : !nextProps.dataset })
-		} else {
-			if (nextProps.dataset && this.state.loading) {
-				this.setState({ loading : false });
-			}
+		} else if (nextProps.dataset && this.state.loading) {
+			this.setState({ loading : false });
 		}
 	}
 
@@ -106,8 +104,8 @@ NewMigration.propTypes = {
 	error : PropTypes.string,
 	
 	user : PropTypes.object,
-	// the migration model
 	dataset : PropTypes.object,
+	// the migration model
 	migration : PropTypes.object,
 	validation : PropTypes.object,
 

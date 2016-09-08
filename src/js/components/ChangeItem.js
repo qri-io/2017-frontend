@@ -6,6 +6,7 @@ export default class ChangeItem extends React.Component {
 		return (
 			<div className="change item">
 				<h3>{ data.number }</h3>
+				<p>{ data.descriptions }</p>
 			</div>
 		);
 	}

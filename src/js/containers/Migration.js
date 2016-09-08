@@ -61,9 +61,13 @@ class Migration extends React.Component {
 
 		return (
 			<div className="migration container">
-				<h1>Migration</h1>
-				<h1>{migration.number || migration.id}</h1>
-				<h3>{migration.description}</h3>
+				<p>Migration</p>
+				<h3>{migration.number || migration.id}</h3>
+				<hr />
+				<h4>{migration.sql}</h4>
+				<p>{migration.description}</p>
+				<button className="btn btn-large btn-warning" onClick={this.handleDecline}>Decline</button>
+				<button className="btn btn-large btn-success" onClick={this.handleExecute}>Execute</button>
 			</div>
 		);
 	}
