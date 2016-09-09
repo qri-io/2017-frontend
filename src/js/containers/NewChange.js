@@ -97,9 +97,10 @@ class NewChange extends React.Component {
 							<h3>New Change</h3>
 							<label>Type:</label>
 							<select onChange={(e) => { this.handleChange("type", e.target.value, e) }}>
-								<option>Insert</option>
-								<option>Modify</option>
-								<option>Delete</option>
+								<option value="">-Choose Type-</option>
+								<option>INSERT</option>
+								<option>MODIFY</option>
+								<option>DELETE</option>
 							</select>
 							<SelectSchemaTable label="Table" name="table_name" value={change.table_name} schema={dataset.schema || []} onChange={this.handleChange} />
 							<ValidTextarea label="Description" name="description" value={change.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />

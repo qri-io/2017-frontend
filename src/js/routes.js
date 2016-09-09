@@ -77,6 +77,12 @@ export default {
 				System.import('./containers/Change').then(loadRoute(cb)).catch(errorLoading);
 			}
 		},
+		{
+			path: '/:user/:dataset/changes/:edit',
+			getComponent(location, cb) {
+				System.import('./containers/EditChange').then(loadRoute(cb)).catch(errorLoading);
+			}
+		},
 		
 		{
 			path: '/:user/:dataset/migrations',

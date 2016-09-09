@@ -68,25 +68,24 @@ export function loadChange(id, requiredFields=[]) {
 	}
 }
 
-export function fetchChangeByNumber(handle, slug, number, requiredFields=[]) {
+export function fetchChangeByNumber(address, number, requiredFields=[]) {
 	return {
 		[CALL_API] : {
 			types : [ CHANGE_FETCH_REQUEST, CHANGE_FETCH_SUCCESS, CHANGE_FETCH_FAIL ],
-			endpoint : `/changes?dataset=${slug}&number=${number}`,
+			endpoint : `/changes?address=${address}&number=${number}`,
 			schema : Schemas.CHANGE
 		}
 	}
 }
 
-export function loadChangeByNumber(handle, slug, number, requiredFields=[]) {
+export function loadChangeByNumber(address, number, requiredFields=[]) {
 	return (dispatch, getState) => {
-		const change = selectChangeByNumber(getState(), handle, slug, number);
-
+		const change = selectChangeByNumber(getState(), address, number);
 		if (change && requiredFields.every(field => (change.hasOwnProperty(field)))) {
 			return null
 		}
 
-		return dispatch(fetchChangeByNumber(handle, slug, number, requiredFields));
+		return dispatch(fetchChangeByNumber(address, number, requiredFields));
 	}
 }
 
@@ -102,7 +101,7 @@ export function saveChange(change) {
 			return dispatch({
 				[CALL_API] : {
 					types : [ CHANGE_SAVE_REQUEST, CHANGE_SAVE_SUCCESS, CHANGE_SAVE_FAIL ],
-					endpoint : `/changes/${id}`,
+					endpoint : `/changes/${change.id}`,
 					method : 'PUT',
 					schema : Schemas.CHANGE,
 					data : change
@@ -153,14 +152,52 @@ export const CHANGE_EXECUTE_SUCCESS = 'CHANGE_EXECUTE_SUCCESS';
 export const CHANGE_EXECUTE_FAIL = 'CHANGE_EXECUTE_FAIL';
 
 export function executeChange(change) {
-	return {
-		[CALL_API] : {
-			types : [ CHANGE_EXECUTE_REQUEST, CHANGE_EXECUTE_SUCCESS, CHANGE_EXECUTE_FAIL ],
-			endpoint : `/changes/new?execute=true`,
-			method : 'POST',
-			schema : Schemas.CHANGE,
-			data : change
-		}
+	return (dispatch, getState) => {
+		return dispatch({
+			[CALL_API] : {
+				types : [ CHANGE_EXECUTE_REQUEST, CHANGE_EXECUTE_SUCCESS, CHANGE_EXECUTE_FAIL ],
+				endpoint : (change.id && change.id != "new") ? `/changes/${change.id}/execute` : `/changes/new?execute=true`,
+				method : 'POST',
+				schema : Schemas.CHANGE,
+				data : change
+			}
+		}).then(action => {
+			if (action.type === CHANGE_EXECUTE_SUCCESS) {
+				dispatch(setMessage("Change Executed"));
+				setTimeout(() => { dispatch(resetMessage()) }, 5000);
+				// TODO - go somewhere of value
+				return dispatch(push('/console'));
+			}
+
+			return null;
+		})
+	}
+}
+
+export const CHANGE_DECLINE_REQUEST = 'CHANGE_DECLINE_REQUEST';
+export const CHANGE_DECLINE_SUCCESS = 'CHANGE_DECLINE_SUCCESS';
+export const CHANGE_DECLINE_FAIL = 'CHANGE_DECLINE_FAIL';
+
+export function declineChange(change) {
+	return (dispatch, getState) => {
+		return dispatch({
+			[CALL_API] : {
+				types : [ CHANGE_DECLINE_REQUEST, CHANGE_DECLINE_SUCCESS, CHANGE_DECLINE_FAIL ],
+				endpoint : `/changes/${change.id}/decline`,
+				method : 'POST',
+				schema : Schemas.CHANGE,
+				data : change
+			}
+		}).then(action => {
+			if (action.type === CHANGE_DECLINE_SUCCESS) {
+				dispatch(setMessage("change declined"))
+				setTimeout(() => { dispatch(setMessage("change declined")) }, 5000)
+				// TODO - redirect somewhere useful
+				return dispatch(push("/console"))
+			}
+
+			return null
+		});
 	}
 }
 
@@ -199,13 +236,13 @@ export function deleteChange(id, redirectUrl="") {
 
 export const EDIT_CHANGE = 'EDIT_CHANGE';
 
-export function editChange(address, id) {
+export function editChange(address, number) {
 	return (dispatch, getState) => {
-		const change = selectChangeByNumber(getState(), address, id)
+		const change = selectChangeByNumber(getState(), address, number)
 		if (!change) {
-			return dispatch(fetchDatasetByAddress(address)).then(action => {
+			return dispatch(fetchChangeByNumber(address, number)).then(action => {
 				if (action.type === CHANGE_FETCH_SUCCESS) {
-					const change = selectChangeByNumber(getState(), address, id)
+					const change = selectChangeByNumber(getState(), address, number)
 					return dispatch(editModel(Schemas.CHANGE, EDIT_CHANGE, change));
 				}
 			})

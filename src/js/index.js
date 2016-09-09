@@ -24,4 +24,12 @@ if (__BUILD__.PRODUCTION) {
 	  analytics.load(__BUILD__.SEGMENT_KEY);
 	  analytics.page()
 	}}();
+} else {
+	// dummy analytics funcs
+	window.analytics = {
+		track() {},
+		identify() {},
+		page() {},
+		load() {}
+	}
 }

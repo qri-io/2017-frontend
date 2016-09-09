@@ -1,41 +1,87 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
 
-import { loadChange, saveChange } from '../actions/change'
+import { loadChangeByNumber, executeChange, declineChange } from '../actions/change'
+import { selectChangeByNumber } from '../selectors/change'
+
+import Spinner from '../components/Spinner'
 
 class Change extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = { loading : !props.change };
+		[ "handleExecute", "handleDecline" ].forEach(m => this[m] = this[m].bind(this))
+	}
+
 	componentWillMount() {
-		this.props.loadChange(handle, slug, number);
+		this.props.loadChangeByNumber(this.props.address, this.props.number);
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.handle != this.props.handle || nextProps.slug != this.props.slug || nextProps.number != this.props.number) {
-			this.props.loadChange(handle, slug, number);
+		if (nextProps.address != this.props.address || nextProps.number != this.props.number) {
+			this.props.loadChangeByNumber(nextProps.address, nextProps.number);
+			this.setState({ loading : true });
+		} else if (nextProps.change && this.state.loading) {
+			this.setState({ loading : false });
+		}
+	}
+
+	handleExecute() {
+		if (confirm("are you sure you want to execute this change?")) {
+			this.props.executeChange(this.props.change);
+		}
+	}
+
+	handleDecline() {
+		if (confirm("are you sure you want to decline this change")) {
+			this.props.declineChange(this.props.change);
 		}
 	}
 
 	render() {
-		const { handle, slug, number, change } = this.props
+		const { loading } = this.state;
+		const { address, number, change } = this.props;
+
+		if (loading) {
+			return (
+				<div className="spinner">
+					<Spinner />
+				</div>
+			);
+		}
+
+		if (!change) {
+			return (
+				<div className="notFound">
+					<h1>Not Found</h1>
+				</div>
+			);
+		}
+
 		return (
 			<div className="change container">
-				<h1>Change</h1>
-				<h3>{handle} {slug} {number}</h3>
+				<p>Change</p>
+				<h3>{change.number || change.id}</h3>
+				<hr />
+				<h4>{change.sql}</h4>
+				<p>{change.description}</p>
+				<button className="btn btn-large btn-warning" onClick={this.handleDecline}>Decline</button>
+				<button className="btn btn-large btn-success" onClick={this.handleExecute}>Execute</button>
 			</div>
 		);
 	}
 }
 
 Change.propTypes = {
-	handle : PropTypes.string.isRequired,
-	slug : PropTypes.string.isRequired,
+	address : PropTypes.string.isRequired,
 	number : PropTypes.string.isRequired,
 
-	dataset : PropTypes.object,
 	change : PropTypes.object,
 
-	loadChange : PropTypes.func.isRequired,
-	saveChange : PropTypes.func,
-	deleteChange : PropTypes.func
+	loadChangeByNumber : PropTypes.func.isRequired,
+	executeChange : PropTypes.func.isRequired,
+	declineChange : PropTypes.func.isRequired,
 }
 
 Change.defaultProps = {
@@ -43,12 +89,17 @@ Change.defaultProps = {
 }
 
 function mapStateToProps(state, ownProps) {
-	return Object.assign({}, {
-
-	}, ownProps.params, ownProps);
+	const { number, user, dataset } = ownProps.params
+	const address = [ user, dataset ].join(".")
+	return Object.assign({
+		address,
+		number,
+		change : selectChangeByNumber(state, address, number)
+	}, ownProps);
 }
 
 export default connect(mapStateToProps, {
-	loadChange,
-	saveChange
+	loadChangeByNumber,
+	executeChange,
+	declineChange
 })(Change);

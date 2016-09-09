@@ -2,9 +2,9 @@ import React, { PropTypes } from 'react'
 
 export default class ChangeItem extends React.Component {
 	render() {
-		const { data } = this.props;
+		const { data, onSelect } = this.props;
 		return (
-			<div className="change item">
+			<div className="change item" onClick={onSelect}>
 				<h3>{ data.number }</h3>
 				<p>{ data.description }</p>
 			</div>

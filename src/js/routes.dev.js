@@ -12,6 +12,7 @@ import User from './containers/User'
 import Dataset from './containers/Dataset'
 import DatasetChanges from './containers/DatasetChanges'
 import DatasetMigrations from './containers/DatasetMigrations'
+import EditChange from './containers/EditChange'
 import EditDataset from './containers/EditDataset'
 import EditMigration from './containers/EditMigration'
 import NewChange from './containers/NewChange'
@@ -72,6 +73,10 @@ export default {
 		{
 			path: '/:user/:dataset/changes/:number',
 			component: Change
+		},
+		{
+			path: '/:user/:dataset/changes/:number/edit',
+			component: EditChange
 		},
 		
 		{
