@@ -92,15 +92,18 @@ export default class EditMigration extends React.Component {
 		}
 
 		return (
-			<div className="editMigration">
-				<h3>Edit Migration</h3>
-				<form className="editMigration">
-					<ValidTextarea label="Description" name="description" value={migration.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />
-					<ValidTextarea label="SQL" name="sql" value={migration.sql} showError={showErrors} error={validation.sql} onChange={this.handleChange} />
-					<button className="btn btn-large submit" disabled={(!validation.isValid && showErrors)} onClick={this.handleSave}>Save Migration</button>
-					
-				</form>
-				<button className="btn btn-large submit" onClick={this.handleDelete}>Delete</button>
+			<div id="wrapper">
+				<div className="editMigration container">
+					<div className="col-md-8">
+						<h3>Edit Migration</h3>
+						<form>
+							<ValidTextarea label="Description" name="description" value={migration.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />
+							<ValidTextarea label="SQL" name="sql" value={migration.sql} showError={showErrors} error={validation.sql} onChange={this.handleChange} />
+							<button className="btn btn-large btn-primary submit" disabled={(!validation.isValid && showErrors)} onClick={this.handleSave}>Save Migration</button>
+						</form>
+						<button className="btn btn-large btn-danger submit" onClick={this.handleDelete}>Delete</button>
+					</div>
+				</div>
 			</div>
 		);
 	}

@@ -1,12 +1,11 @@
 import React, { PropTypes } from 'react';
 
 export default class EditAddress extends React.Component {
-
-
 	render() {
 		const { name, value, onChange } = this.props;
 		return (
-			<div className="editAddress">
+			<div className="form-group">
+				<label className="form-label">Address:</label>
 				<p>{this.props.value}</p>
 			</div>
 		);

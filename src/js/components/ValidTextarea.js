@@ -2,20 +2,20 @@ import React, { PropTypes } from 'react';
 
 export default class ValidTextarea extends React.Component {
 	render() {
-		const { props } = this
+		const { label, name, type, showError, error, value, placeholder, onChange } = this.props
 
 		return (
-			<div className="validFormField">
-				{props.label ? <label for={props.name}>{props.label}</label> : undefined }
-
-				<textarea 
-					name={props.name} 
-					type={props.type} 
-					value={props.value}
-					placeholder={props.placeholder} 
-					onChange={(e) => { props.onChange(props.name, e.target.value, e)} } />
-
-				{(props.error != "" && props.showError) ? <div className="error">{props.error}</div> : undefined }
+			<div className={ (error && showError) ? "validFormField form-group has-error" : "validFormField form-group" }>
+				{label ? <label for={name}>{label}</label> : undefined }
+				<textarea
+					id={name}
+					name={name} 
+					type={type} 
+					className="form-control"
+					value={value}
+					placeholder={placeholder} 
+					onChange={(e) => { onChange(name, e.target.value, e)} } />
+				{(error != "" && showError) ? <div className="control-label">{error}</div> : undefined }
 			</div>
 		);
 	}

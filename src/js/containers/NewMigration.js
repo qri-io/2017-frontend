@@ -78,13 +78,13 @@ class NewMigration extends React.Component {
 
 		return (
 			<div id="wrapper">
-				<div class="container">
-					<div class="col-md-12">
+				<div className="container">
+					<div className="col-sm-8 col-md-8 col-md-offset-2">
 						<form className="newMigration">
 							<h3>New Migration</h3>
 							<ValidTextarea label="Description" name="description" value={migration.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />
 							<ValidTextarea label="SQL" name="sql" value={migration.sql} showError={showErrors} error={validation.sql} onChange={this.handleChange} />
-							<button className="btn btn-large submit" disabled={(!validation.isValid && showErrors)} onClick={this.handleSave}>Create Migration</button>
+							<button className="btn btn-large btn-primary" disabled={(!validation.isValid && showErrors)} onClick={this.handleSave}>Create Migration</button>
 						</form>
 						<section class="col-md-12">
 							<hr />

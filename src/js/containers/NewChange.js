@@ -91,17 +91,19 @@ class NewChange extends React.Component {
 
 		return (
 			<div id="wrapper">
-				<div class="container">
-					<div class="col-md-12">
+				<div className="container">
+					<div className="col-md-12">
 						<form className="newChange">
 							<h3>New Change</h3>
-							<label>Type:</label>
-							<select onChange={(e) => { this.handleChange("type", e.target.value, e) }}>
-								<option value="">-Choose Type-</option>
-								<option>INSERT</option>
-								<option>MODIFY</option>
-								<option>DELETE</option>
-							</select>
+							<div class="form-group">
+								<label for="type" className="control-label">Type:</label>
+								<select id="type" className="form-control" name="type" onChange={(e) => { this.handleChange("type", e.target.value, e) }}>
+									<option value="">-Choose Type-</option>
+									<option>INSERT</option>
+									<option>MODIFY</option>
+									<option>DELETE</option>
+								</select>
+							</div>
 							<SelectSchemaTable label="Table" name="table_name" value={change.table_name} schema={dataset.schema || []} onChange={this.handleChange} />
 							<ValidTextarea label="Description" name="description" value={change.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />
 							<ValidTextarea label="CSV Data" name="data" value={change.data} showError={showErrors} error={validation.description} onChange={this.handleChange} />

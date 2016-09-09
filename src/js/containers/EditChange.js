@@ -97,22 +97,28 @@ export default class EditChange extends React.Component {
 		}
 
 		return (
-			<div className="editChange">
-				<form className="editChange">
-					<h3>Edit Change</h3>
-					<label>Type:</label>
-					<select onChange={(e) => { this.handleChange("type", e.target.value, e) }}>
-						<option value="">-Choose Type-</option>
-						<option>INSERT</option>
-						<option>MODIFY</option>
-						<option>DELETE</option>
-					</select>
-					<SelectSchemaTable label="Table" name="table_name" value={change.table_name} schema={dataset.schema || []} onChange={this.handleChange} />
-					<ValidTextarea label="Description" name="description" value={change.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />
-					<ValidTextarea label="CSV Data" name="data" value={change.data} showError={showErrors} error={validation.description} onChange={this.handleChange} />
-					<button className="btn btn-large submit" disabled={(!validation.isValid && showErrors)} onClick={this.handleSave}>Save Change</button>
-				</form>
-				<button className="btn btn-large submit" onClick={this.handleDelete}>Delete</button>
+			<div id="wrapper">
+				<div className="editChange container">
+					<div className="col-md-8 col-md-offset-2">
+						<form className="editChange">
+							<h3>Edit Change</h3>
+							<div className="form-group">
+								<label for="type">Type:</label>
+								<select name="type" value={change.type} onChange={(e) => { this.handleChange("type", e.target.value, e) }}>
+									<option value="">-Choose Type-</option>
+									<option>INSERT</option>
+									<option>MODIFY</option>
+									<option>DELETE</option>
+								</select>
+							</div>
+							<SelectSchemaTable label="Table" name="table_name" value={change.table_name} schema={dataset.schema || []} onChange={this.handleChange} />
+							<ValidTextarea label="Description" name="description" value={change.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />
+							<ValidTextarea label="CSV Data" name="data" value={change.data} showError={showErrors} error={validation.description} onChange={this.handleChange} />
+							<button className="btn btn-large submit" disabled={(!validation.isValid && showErrors)} onClick={this.handleSave}>Save Change</button>
+						</form>
+						<button className="btn btn-large submit" onClick={this.handleDelete}>Delete</button>
+					</div>
+				</div>
 			</div>
 		);
 	}
