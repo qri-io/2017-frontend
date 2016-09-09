@@ -13,7 +13,7 @@ import Spinner from '../components/Spinner'
 class DatasetMigrations extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { loading : !!props.dataset };
+		this.state = { loading : !props.dataset };
 		[ 'handleSelectItem' ].forEach(m => this[m] = this[m].bind(this));
 	}
 

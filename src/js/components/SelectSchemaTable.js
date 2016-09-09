@@ -6,10 +6,12 @@ export default class SelectSchemaTable extends React.Component {
 		return (
 			<div className="selectSchemaTable">
 				{ label ? <label>{label}</label> : undefined }
-				<select value={value} onChange={(e) => { onChange(name, value, e) }}>
+				<select value={value} onChange={(e) => { onChange(name, e.target.value, e) }}>
 					<option value="">-Select Table-</option>
 					{
-						schema.forEach((table, i) => <option key={i} value={table.name}>table.name</option>)
+						schema.map((table, i) => {
+							return <option key={i} value={table.name}>{table.name}</option>
+						})
 					}
 				</select>
 			</div>

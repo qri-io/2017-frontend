@@ -13,6 +13,18 @@ export function selectChangeByNumber(state, address, number) {
 	return id ? changes[id] : undefined;
 }
 
+export function selectDatasetChanges(state, datasetId) {
+	const { changes } = state.entities;
+	return Object.keys(changes).reduce((a, id) => {
+		const m = changes[id];
+		if (m.dataset == datasetId) {
+			a.push(m);
+		}
+		return a;
+	}, [])
+}
+
+
 
 export function selectLocalChangeById(state, id) {
 	return state.locals.changes[id];

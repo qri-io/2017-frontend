@@ -13,7 +13,7 @@ import Spinner from '../components/Spinner'
 class DatasetChanges extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { loading : !!props.dataset };
+		this.state = { loading : !props.dataset };
 		[ 'handleSelectItem' ].forEach(m => this[m] = this[m].bind(this));
 	}
 
@@ -83,7 +83,6 @@ function mapStateToProps(state, ownProps) {
 	const address = [ ownProps.params.user, ownProps.params.dataset ].join(".")
 	const dataset = selectDatasetByAddress(state, address)
 	let changes = [];
-	
 	if (dataset) {
 		changes = selectDatasetChanges(state, dataset.id);
 	}

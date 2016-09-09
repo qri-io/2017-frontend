@@ -12,6 +12,7 @@ import Spinner from '../components/Spinner'
 import ValidInput from '../components/ValidInput'
 import ValidTextarea from '../components/ValidTextarea'
 import SelectSchemaTable from '../components/SelectSchemaTable'
+import SchemaTable from '../components/SchemaTable'
 
 class NewChange extends React.Component {
 	constructor(props) {
@@ -100,11 +101,13 @@ class NewChange extends React.Component {
 								<option>Modify</option>
 								<option>Delete</option>
 							</select>
-							<SelectSchemaTable label="Table" name="table" value={change.table} schema={[{ name : "example_table" }, { name : "another_example"}]} onChange={this.handleChange} />
+							<SelectSchemaTable label="Table" name="table_name" value={change.table_name} schema={dataset.schema || []} onChange={this.handleChange} />
 							<ValidTextarea label="Description" name="description" value={change.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />
+							<ValidTextarea label="CSV Data" name="data" value={change.data} showError={showErrors} error={validation.description} onChange={this.handleChange} />
 							<button className="btn btn-large submit"  disabled={(!validation.isValid && showErrors)} onClick={this.handleSave}>Create Change</button>
 						</form>
 					</div>
+					{dataset.schema ? <SchemaTable schema={dataset.schema} /> : undefined}
 				</div>
 			</div>
 		);
