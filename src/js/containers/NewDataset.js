@@ -48,7 +48,7 @@ class NewDataset extends React.Component {
 	}
 
 	render() {
-		const { handle, slug, user, dataset, validation } = this.props;
+		const { name, slug, user, dataset, validation } = this.props;
 		const { showErrors } = this.state;
 
 		if (!user) {
@@ -68,8 +68,8 @@ class NewDataset extends React.Component {
 				<div className="container">
 					<div className="col-md-8 col-md-offset-2">
 						<form className="newDataset">
-							<h3>New Dataset</h3>
-							<ValidInput label="Name" name="handle" value={dataset.name} showError={showErrors} error={validation.name} onChange={this.handleChange} />
+							<h3>{user.username}/{dataset.name}</h3>
+							<ValidInput label="Name" name="name" value={dataset.name} showError={showErrors} error={validation.name} onChange={this.handleChange} />
 							<ValidInput label="External Url" name="source_url" value={dataset.source_url} showError={showErrors} error={validation.source_url} onChange={this.handleChange}  />
 							<ValidInput label="Summary" name="summary" value={dataset.summary} showError={showErrors} error={validation.summary} onChange={this.handleChange}  />
 							<ValidTextarea  label="Description" name="description" value={dataset.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />

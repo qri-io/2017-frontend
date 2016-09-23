@@ -48,8 +48,8 @@ const paginate = ({ types, mapActionToKey }) => {
       case requestType:
       case successType:
       case failureType:
-        if (!action.page) { console.warn("expected page property for a pagainated request"); }
-        if (!action.pageSize) { console.warn("expected pageSize property for a pagainated request"); }
+        if (!action.page) { console.warn("expected page property for a pagainated request", action.type); }
+        if (!action.pageSize) { console.warn("expected pageSize property for a pagainated request: ", action.type); }
 
         const key = mapActionToKey(action)
         if (typeof key !== 'string') {

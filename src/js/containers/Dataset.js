@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 
 import { loadDatasetByAddress } from '../actions/dataset'
 import { selectDatasetByAddress } from '../selectors/dataset'
+import { selectSessionUser } from '../selectors/session'
 
 import SchemaTable from '../components/SchemaTable'
 
@@ -25,8 +26,24 @@ class Dataset extends React.Component {
 		}
 	}
 
+	editButtons(props) {
+		const { permissions, address } = props;
+		let path = "/" + address.replace(".", "/", -1)
+		if (permissions.migrate && permissions.change) {
+			return (
+				<div>
+					<Link to={path + "/edit"}><button className="btn btn-large">Edit</button></Link>
+					<Link to={path + "/migrations/new"}><button className="btn btn-large">New Migration</button></Link>
+					<Link to={path + "/changes/new"}><button className="btn btn-large">New Change</button></Link>
+				</div>
+			);
+		}
+
+		return undefined
+	}
+
 	render() {
-		const { address, dataset } = this.props
+		const { address, dataset, permissions } = this.props
 		const path = "/" + address.replace(".", "/", -1)
 		
 		if (!dataset) {
@@ -46,14 +63,11 @@ class Dataset extends React.Component {
 								<a href={ "/" + dataset.address.replace(".", "/", -1) }>{ dataset.address }</a>
 							</h2>
 							<p>
-								<Link to={`${path}/edit`}>Edit</Link>
 								<span>{ dataset.TableCount } Tables</span>
 								<span>{ dataset.RowCount } Rows</span> |
 								<span><a href={ dataset.sourceUrl } target="_blank">{ dataset.sourceUrl }</a></span>
 							</p>
-							{/*
-								<p><a href="{{ dataset.Path}}/edit">Edit</a></p>
-							*/}
+							{this.editButtons(this.props)}
 							<div>
 								<p>{ dataset.description }</p>
 							</div>
@@ -75,20 +89,42 @@ Dataset.propTypes = {
 	address : PropTypes.string.isRequired,
 	// the dataset model to display
 	dataset : PropTypes.object,
+
+	// permissions stuff, will show things based on capabilities
+	permissions: PropTypes.object.isRequired,
+
 	// action to load a dataset from passed-in address
 	loadDatasetByAddress : PropTypes.func.isRequired
 }
 
 Dataset.defaultProps = {
-
+	permissions : {
+		edit : false,
+		migrate : false,
+		change : false
+	}
 }
 
 
 function mapStateToProps(state, ownProps) {
 	const address = [ownProps.params.user, ownProps.params.dataset].join(".")
+	const user = selectSessionUser(state);
+
+	let permissions = {
+		edit : false,
+		migrate : false,
+		change : false
+	};
+
+	if (user && user.username == ownProps.params.user) {
+		permissions.migrate = true;
+		permissions.change = true;
+	}
+
 	return Object.assign({
 		address,
-		dataset : selectDatasetByAddress(state, address)
+		dataset : selectDatasetByAddress(state, address),
+		permissions
 	}, ownProps)
 }
 

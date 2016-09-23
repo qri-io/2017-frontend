@@ -59,7 +59,7 @@ export function fetchQueryPage(page=1, pageSize=30) {
   }
 }
 
-export function loadQueryPage(page, pageSize) {
+export function loadQueryPage(page=1, pageSize=30) {
   return (dispatch, getState) => {
     // TODO - check pagination
     return dispatch(fetchQueryPage(page, pageSize));

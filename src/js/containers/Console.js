@@ -17,7 +17,7 @@ import QueryItem from '../components/QueryItem'
 
 
 function loadData(props) {
-	props.loadDatasets("", 1, 100)
+	props.loadDatasets(1, 100)
 	props.loadQueryPage(1,50)
 }
 
