@@ -3,7 +3,7 @@ import Validate from './index'
 export default function validateDataset(dataset={}) {
 	const errors = { 
 		// handle : Validate(dataset.handle).required().handle().message(),
-		name : Validate(dataset.name).required().message(),
+		name : Validate(dataset.name).required().handle().message(),
 		// currently we don't validate the owner, as it'll be automatically set by the server
 		// to the requesting session user
 		// owner : requiredField(ownerError(dataset.owner))

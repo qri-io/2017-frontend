@@ -42,10 +42,9 @@ class Dataset extends React.Component {
 				<div class="container">
 					<div class="col-md-12">
 						<header class="page-header col-md-12">
-							<h4>
-								<a href={ "/" + dataset.address }>{ dataset.address }</a>
-							</h4>
-							<h1>{ dataset.name }</h1>
+							<h2>
+								<a href={ "/" + dataset.address.replace(".", "/", -1) }>{ dataset.address }</a>
+							</h2>
 							<p>
 								<Link to={`${path}/edit`}>Edit</Link>
 								<span>{ dataset.TableCount } Tables</span>

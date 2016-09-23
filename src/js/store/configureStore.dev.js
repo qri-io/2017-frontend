@@ -15,7 +15,7 @@ export default function configureStore(preloadedState) {
     rootReducer,
     preloadedState,
     compose(
-      applyMiddleware(thunk, api, locals, globalDatasets, routerMiddleware(browserHistory)),
+      applyMiddleware(thunk, api, locals, globalDatasets, routerMiddleware(browserHistory)/*, createLogger()*/),
       DevTools.instrument()
     )
   )

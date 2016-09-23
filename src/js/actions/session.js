@@ -34,14 +34,14 @@ export const SESSION_LOGIN_REQUEST = 'SESSION_LOGIN_REQUEST'
 export const SESSION_LOGIN_SUCCESS = 'SESSION_LOGIN_SUCCESS'
 export const SESSION_LOGIN_FAILURE = 'SESSION_LOGIN_FAILURE'
 
-export function loginUser(handle, password) {
+export function loginUser(username, password) {
   return {
     [CALL_API] : {
       types : [SESSION_LOGIN_REQUEST, SESSION_LOGIN_SUCCESS, SESSION_LOGIN_FAILURE],
       endpoint : '/session',
       method : 'POST',
       schema : Schemas.SESSION_USER,
-      data : { handle, password }
+      data : { username, password }
     }
   }
 }

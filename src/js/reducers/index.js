@@ -1,13 +1,17 @@
-import * as ActionTypes from '../actions'
+import { combineReducers } from 'redux'
 import merge from 'lodash/merge'
-// import paginate from './paginate'
 import { routerReducer as routing } from 'react-router-redux'
+
+import * as ActionTypes from '../actions'
+// import paginate from './paginate'
 import sessionReducer from './session'
 import deviceReducer from './device'
 import consoleReducer from './console'
-import { combineReducers } from 'redux'
+import appReducer from './app'
 
 const initialState = {
+  app : {},
+
   session : {},
   users : {},
 
@@ -108,6 +112,7 @@ const rootReducer = combineReducers({
   session : sessionReducer,
   console: consoleReducer,
   device : deviceReducer,
+  app : appReducer,
   routing
 })
 

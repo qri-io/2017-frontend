@@ -42,6 +42,29 @@ body {
   color: #999999;
 }
 
+#main_menu {
+  width: 300px;
+  background: $other-dark-blue-slate;
+  height: 100%;
+  position: fixed;
+  transition: left 0.25s;
+  z-index: 1000;
+  a {
+    display: block;
+    color: $light-blue-slate;
+    text-transform: uppercase;
+    padding: 0.5em;
+    font-weight: bold;
+  }
+}
+
+#main_menu.hide {
+  left: -100%;
+}
+#main_menu.show {
+  left: 0;
+}
+
 a {
   text-decoration: none;
   transition: color 0.5s;

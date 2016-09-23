@@ -99,6 +99,7 @@ export default class EditDataset extends React.Component {
 							<EditAddress label="Address" value={dataset.address} showError={showErrors} error={validation.address} onChange={this.handleChange} />
 							<ValidInput label="Name" name="name" value={dataset.name} showError={showErrors} error={validation.name} onChange={this.handleChange}  />
 							<ValidInput label="External Url" name="source_url" value={dataset.source_url} showError={showErrors} error={validation.source_url} onChange={this.handleChange}  />
+							<ValidTextarea label="Summary" name="summar" value={dataset.summary} showError={showErrors} error={validation.summary} onChange={this.handleChange} />
 							<ValidTextarea label="Description" name="description" value={dataset.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />
 							<button className="btn btn-large submit" disabled={(!validation.isValid && showErrors)} onClick={this.handleSave}>Save Dataset</button>
 						</form>

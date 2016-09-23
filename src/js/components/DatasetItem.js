@@ -7,7 +7,7 @@ export default class DatasetItem extends React.Component {
 		return (
 			<div className="datasetItem" onClick={onSelect}>
 				<Link className="namespace" to={data.address.replace(".","/",-1)}>{data.address}</Link>
-				<p>{data.name}</p>
+				<p>{data.summary}</p>
 				<ul>
 					{data.schema ? data.schema.map((table, i) => <li key={i}>{table.name}</li>) : null}
 				</ul>

@@ -69,9 +69,9 @@ class NewDataset extends React.Component {
 					<div className="col-md-8 col-md-offset-2">
 						<form className="newDataset">
 							<h3>New Dataset</h3>
-							<ValidInput label="Handle" name="handle" value={dataset.handle} showError={showErrors} error={validation.handle} onChange={this.handleChange} />
-							<ValidInput label="Name" name="name" value={dataset.name} showError={showErrors} error={validation.name} onChange={this.handleChange}  />
+							<ValidInput label="Name" name="handle" value={dataset.name} showError={showErrors} error={validation.name} onChange={this.handleChange} />
 							<ValidInput label="External Url" name="source_url" value={dataset.source_url} showError={showErrors} error={validation.source_url} onChange={this.handleChange}  />
+							<ValidInput label="Summary" name="summary" value={dataset.summary} showError={showErrors} error={validation.summary} onChange={this.handleChange}  />
 							<ValidTextarea  label="Description" name="description" value={dataset.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />
 							<button className="btn btn-large btn-primary submit" disabled={(!validation.isValid && showErrors)} onClick={this.handleSubmit}>Create Dataset</button>
 						</form>

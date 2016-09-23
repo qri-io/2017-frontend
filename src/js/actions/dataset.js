@@ -10,8 +10,8 @@ const DATASET_NEW = 'DATASET_NEW';
 export function newDataset(attributes={}) {
 	attributes = Object.assign({
 		name : "",
-		handle : "",
 		source_url : "",
+		summary : "",
 		description : ""
 	}, attributes);
 	return newLocalModel(Schemas.DATASET, DATASET_NEW, attributes)
@@ -122,7 +122,7 @@ function createDataset(dataset) {
 				endpoint : "/datasets",
 				method : "POST",
 				schema : Schemas.DATASET,
-				data : Object.assign({}, dataset, { id : undefined, address : `${dataset.address}.${dataset.handle}` })
+				data : Object.assign({}, dataset, { id : undefined, address : dataset.address })
 			}
 		}).then(action => {
 			if (action.type == DATASET_CREATE_SUCCESS && action.response.entities.datasets) {

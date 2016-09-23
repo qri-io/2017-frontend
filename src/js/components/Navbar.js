@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 
 export default class Navbar extends Component {
 	render() {
-		const { user } = this.props;
+		const { user, onToggleMenu } = this.props;
 		return (
 			<div id="navbar">
 				<div className="container">
@@ -15,11 +15,10 @@ export default class Navbar extends Component {
 							<small className="alpha caps">VERY MUCH A WORK IN PROGRESS.</small>
 						</div>
 						<div className="menu col-md-4">
-							<a href="/explore">Explore</a>
-							<Link to="/console">Console</Link>
+							<a onClick={onToggleMenu}> Menu</a>
 							{ 
 								user ? 
-									<Link to={`/${user.handle}`}>{user.handle}</Link> : 
+									<Link to={`/${user.username}`}>{user.username}</Link> : 
 									<Link to="/login">Login</Link>
 							}
 						</div>
@@ -33,7 +32,9 @@ export default class Navbar extends Component {
 Navbar.propTypes = {
 	user : React.PropTypes.oneOfType([
 		React.PropTypes.object, 
-		React.PropTypes.null])
+		React.PropTypes.null]),
+
+	onToggleMenu : React.PropTypes.func.isRequired
 }
 
 Navbar.defaultProps = {

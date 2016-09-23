@@ -1,6 +1,6 @@
 import { CALL_API } from '../middleware/api'
 import Schemas from '../schemas'
-import { selectUserByHandle } from '../selectors/user'
+import { selectUserByUsername } from '../selectors/user'
 
 export const USER_REQUEST = 'USER_REQUEST'
 export const USER_SUCCESS = 'USER_SUCCESS'
@@ -31,23 +31,23 @@ export function loadUser(login, requiredFields = []) {
   }
 }
 
-export function fetchUserByHandle(handle, requiredFields=[]) {
+export function fetchUserByUsername(username, requiredFields=[]) {
   return {
     [CALL_API] : {
       types : [ USER_REQUEST, USER_SUCCESS, USER_FAILURE ],
-      endpoint: `/users?handle=${handle}`,
+      endpoint: `/users?username=${username}`,
       schema : Schemas.USER
     }
   }
 }
 
-export function loadUserByHandle(handle, requiredFields=[]) {
+export function loadUserByUsername(username, requiredFields=[]) {
   return (dispatch, getState) => {
-    const user = selectUserByHandle(getState(), handle)
+    const user = selectUserByUsername(getState(), username)
     if (user && requiredFields.every(key => user.hasOwnProperty(key))) {
       return null
     }
 
-    return dispatch(fetchUserByHandle(handle));
+    return dispatch(fetchUserByUsername(username));
   }
 }

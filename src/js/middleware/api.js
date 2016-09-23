@@ -59,14 +59,6 @@ function callApi(method, endpoint, schema, data) {
       const data = (schema._key != Schemas.RESULT.getKey()) ? json.data : json
       // const nextPageUrl = getNextPageUrl(response)
 
-      // deletes return null in the data parm, so we need to make that not a bad thing.
-      // if (method.toUpperCase() == "DELETE" && json.meta.code == 200) {
-      //   const remove = normalize(data, schema)
-      //   return  {
-      //     remove : remove.entities
-      //   }
-      // }
-
       return Object.assign({},
         normalize(data, schema)
         // { nextPageUrl }
@@ -125,8 +117,8 @@ export default store => next => action => {
     })),
     error => {
       var msg = 'Something Bad Happened' 
-      if (error.meta && error.meta.err) {
-        msg = error.meta.err
+      if (error.meta && error.meta.error) {
+        msg = error.meta.error
       }
       return next(actionWith({
         type: failureType, 

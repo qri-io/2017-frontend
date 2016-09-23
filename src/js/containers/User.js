@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-import { loadUserByHandle } from '../actions/user'
-import { selectUserByHandle } from '../selectors/user'
+import { loadUserByUsername } from '../actions/user'
+import { selectUserByUsername } from '../selectors/user'
 
 
 class User extends React.Component {
@@ -12,17 +12,17 @@ class User extends React.Component {
 	}
 
 	componentWillMount() {
-		this.props.loadUserByHandle(this.props.handle);
+		this.props.loadUserByUsername(this.props.username);
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.handle != this.props.handle) {
-			nextProps.loadUserByHandle(nextProps.handle)
+		if (nextProps.username != this.props.username) {
+			nextProps.loadUserByUsername(nextProps.username)
 		}
 	}
 
 	render() {
-		const { handle, user } = this.props;
+		const { username, user, datasets } = this.props;
 		
 		if (!user) {
 			return (
@@ -35,12 +35,12 @@ class User extends React.Component {
 		return (
 			<div className="user container">
 				<h1>User Profile</h1>
-				<h3>{ user.handle }</h3>
+				<h3>{ user.username }</h3>
 				<h3>Datasets:</h3>
-				{user.datasets.map((ds, i) => {
+				{datasets.map((ds, i) => {
 					return (
 						<div class="dataset" key={i}>
-							<Link to={`/${ ds.ownerHandle }/${ ds.slug }`}><h4>{ ds.name }</h4></Link>
+							<Link to={ "/" + ds.address.replace(".", "/", -1) }><h4>{ ds.name }</h4></Link>
 							<p>{ ds.description }</p>
 						</div>
 					);
@@ -51,18 +51,21 @@ class User extends React.Component {
 }
 
 User.propTypes = {
-	handle : PropTypes.string.isRequired,
+	username : PropTypes.string.isRequired,
 	user : PropTypes.object,
+	datasets : PropTypes.array,
 
-	loadUserByHandle : PropTypes.func.isRequired,
+	loadUserByUsername : PropTypes.func.isRequired,
 }
 
 function mapStateToProps(state, ownProps) {
-	return Object.assign({}, {
-		user : selectUserByHandle(state, ownProps.params.handle)
-	}, ownProps.params, ownProps)
+	return Object.assign({
+		username : ownProps.params.user,
+		user : selectUserByUsername(state, ownProps.params.user),
+		datasets : [],
+	}, ownProps)
 }
 
 export default connect(mapStateToProps, {
-	loadUserByHandle
+	loadUserByUsername
 })(User)

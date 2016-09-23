@@ -19,6 +19,7 @@ import NewChange from './containers/NewChange'
 import Change from './containers/Change'
 import NewMigration from './containers/NewMigration'
 import Migration from './containers/Migration'
+import Queries from './containers/Queries'
 
 function errorLoading(err) {
 	console.error('Dynamic page loading failed', err);
@@ -33,6 +34,10 @@ export default {
 	component: App,
 	indexRoute: Datasets, 
 	childRoutes: [
+		{
+			path: '/queries',
+			component : Queries
+		},
 		{
 			path: '/datasets',
 			component : Datasets

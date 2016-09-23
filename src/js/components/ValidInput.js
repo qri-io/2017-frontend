@@ -14,7 +14,7 @@ export default class ValidInput extends React.Component {
 					className="form-control"
 					value={value} 
 					placeholder={placeholder} 
-					onChange={(e) => { props.onChange(name, e.target.value, e) }} />
+					onChange={(e) => { onChange(name, e.target.value, e) }} />
 				{(error != "" && showError) ? <div className="control-label">{error}</div> : undefined}
 			</div>
 		);

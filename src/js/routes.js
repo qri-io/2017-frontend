@@ -17,6 +17,12 @@ export default {
 	},
 	childRoutes: [
 		{
+			path: '/queries',
+			getComponent(location, cb) {
+				System.import('./containers/Queries').then(loadRoute(cb)).catch(errorLoading)
+			},
+		},
+		{
 			path: '/datasets',
 			getComponent(location, cb) {
 				System.import('./containers/Datasets').then(loadRoute(cb)).catch(errorLoading)

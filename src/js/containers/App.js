@@ -1,18 +1,23 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
-import { resetErrorMessage, resetMessage } from '../actions'
-import { loadSessionUser } from '../actions/session'
-import { resizeDevice } from '../actions/device'
-import { selectSessionUser } from '../selectors/session'
 import { debounce } from 'lodash'
 
+import { resetErrorMessage, resetMessage } from '../actions'
+import { loadSessionUser } from '../actions/session'
+import { toggleMenu, hideMenu } from '../actions/app'
+import { resizeDevice } from '../actions/device'
+
+import { selectSessionUser } from '../selectors/session'
+
 import Navbar from '../components/Navbar'
+import MainMenu from '../components/MainMenu'
 
 class App extends Component {
   constructor(props) {
     super(props);
-    [ "handleChange", "handleDismissClick", "handleDismissMessage" ].forEach(m => this[m] = this[m].bind(this))
+
+    [ "handleChange", "handleDismissClick", "handleDismissMessage", "handleMenuToggle", "handleHideMenu" ].forEach(m => this[m] = this[m].bind(this))
   }
 
   componentWillMount() {
@@ -40,6 +45,16 @@ class App extends Component {
   handleDismissMessage(e) {
     this.props.resetMessage()
     e.preventDefault()
+  }
+
+  handleMenuToggle(e) {
+    e.stopPropagation();
+    this.props.toggleMenu();
+  }
+  handleHideMenu(e) {
+    if (this.props.showMenu) {
+      this.props.hideMenu();
+    }
   }
 
   handleChange(nextValue) {
@@ -83,10 +98,11 @@ class App extends Component {
   }
 
   render() {
-    const { children, inputValue, user } = this.props
+    const { children, inputValue, user, showMenu } = this.props
     return (
-      <div>
-        <Navbar user={user} />
+      <div onClick={this.handleHideMenu}>
+        <Navbar user={user} onToggleMenu={this.handleMenuToggle} />
+        <MainMenu show={showMenu} />
         {this.renderErrorMessage()}
         {children}
       </div>
@@ -105,7 +121,9 @@ App.propTypes = {
 
   resetErrorMessage: PropTypes.func.isRequired,
   resetMessage: PropTypes.func.isRequired,
-  loadSessionUser: PropTypes.func.isRequired
+  loadSessionUser: PropTypes.func.isRequired,
+  toggleMenu: PropTypes.func.isRequired,
+  hideMenu: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state, ownProps) {
@@ -113,7 +131,8 @@ function mapStateToProps(state, ownProps) {
     message: state.message,
     errorMessage: state.errorMessage,
     inputValue: ownProps.location.pathname.substring(1),
-    user : selectSessionUser(state)
+    user : selectSessionUser(state),
+    showMenu : state.app.showMenu
   }
 }
 
@@ -121,5 +140,7 @@ export default connect(mapStateToProps, {
   resetMessage,
   resetErrorMessage,
   loadSessionUser,
-  resizeDevice
+  resizeDevice,
+  toggleMenu,
+  hideMenu
 })(App)
