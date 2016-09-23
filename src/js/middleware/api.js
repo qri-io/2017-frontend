@@ -109,6 +109,7 @@ export default store => next => action => {
 
   // fire an action indicating a request has been made
   next(actionWith({ type: requestType }));
+
   // make the request
   return callApi(method, endpoint, schema, data).then(
     response => next(actionWith({

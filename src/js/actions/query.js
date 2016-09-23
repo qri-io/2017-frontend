@@ -42,19 +42,20 @@ export function runQuery(query) {
   }
 }
 
-
 export const QUERIES_REQUEST = 'QUERIES_REQUEST'
 export const QUERIES_SUCCESS = 'QUERIES_SUCCESS'
 export const QUERIES_FAILURE = 'QUERIES_FAILURE'
 
-export function fetchQueryPage(page=1, pageSize=20) {
+export function fetchQueryPage(page=1, pageSize=30) {
   return {
     [CALL_API] : {
       types : [QUERIES_REQUEST, QUERIES_SUCCESS, QUERIES_FAILURE],
       endpoint : '/queries',
       data : { page, pageSize },
       schema : Schemas.QUERY_ARRAY
-    }
+    },
+    page,
+    pageSize
   }
 }
 

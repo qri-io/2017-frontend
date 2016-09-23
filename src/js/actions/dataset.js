@@ -26,25 +26,27 @@ export const DATASETS_REQUEST = 'DATASETS_REQUEST'
 export const DATASETS_SUCCESS = 'DATASETS_SUCCESS'
 export const DATASETS_FAILURE = 'DATASETS_FAILURE'
 
-export function fetchDatasets(query, page, pageSize) {
+export function fetchDatasets(page=1, pageSize=30) {
 	return {
 		[CALL_API] : {
 			types : [ DATASETS_REQUEST, DATASETS_SUCCESS, DATASETS_FAILURE ],
 			endpoint : '/datasets',
-			data : { query, page, pageSize },
+			data : { page, pageSize },
 			schema : Schemas.DATASET_ARRAY
-		}
+		},
+		page,
+		pageSize
 	}
 }
 
-export function loadDatasets(query, page, pageSize) {
+export function loadDatasets(page=1, pageSize=30) {
 	return (dispatch, getState) => {
     // const dataset = selectDatasetById(getState(), )
     // if (user && requiredFields.every(key => user.hasOwnProperty(key))) {
     //   return null
     // }
 
-    return dispatch(fetchDatasets(query, page, pageSize))
+    return dispatch(fetchDatasets(page, pageSize))
   }
 }
 
@@ -249,9 +251,10 @@ export function fetchDatasetMigrations(datasetId, page=1, pageSize=50) {
 			types : [ DATASET_MIGRATIONS_REQUEST, DATASET_MIGRATIONS_SUCCESS, DATASET_MIGRATIONS_FAIL ],
 			endpoint : `/datasets/${datasetId}/migrations?page=${page}&pageSize=${pageSize}`,
 			schema : Schemas.MIGRATION_ARRAY,
-			page,
-			pageSize
-		}
+		},
+		datasetId,
+		page,
+		pageSize
 	}
 }
 
@@ -271,9 +274,10 @@ export function fetchDatasetChanges(datasetId, page=1, pageSize=50) {
 			types : [ DATASET_CHANGES_REQUEST, DATASET_CHANGES_SUCCESS, DATASET_CHANGES_FAIL ],
 			endpoint : `/datasets/${datasetId}/changes?page=${page}&pageSize=${pageSize}`,
 			schema : Schemas.CHANGE_ARRAY,
-			page,
-			pageSize
-		}
+		},
+		// needed for pagination
+		page,
+		pageSize
 	}
 }
 

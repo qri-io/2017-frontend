@@ -12,20 +12,18 @@ import Spinner from '../components/Spinner'
 class Datasets extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { loading : !props.datasets.length };
+
 		[ 'handleSelectItem' ].forEach(m => this[m] = this[m].bind(this));
 	}
 
 	componentWillMount() {
-		this.props.loadDatasets("", 1);
+		this.props.loadDatasets(this.props.nextPage);
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.datasets.length && !this.props.datasets.length) {
-			this.setState({ loading : false });
-			// this.props.loadDatasetMigrations(nextProps.dataset.id);
-			this.props.loadDatasets("", 1);
-		}
+		// if (nextProps.datasets.length && !this.props.datasets.length) {
+		// 	this.props.loadDatasets(this.props.nextPage);
+		// }
 	}
 
 	handleSelectItem(index, dataset) {
@@ -34,29 +32,23 @@ class Datasets extends React.Component {
 
 
 	render() {
-		const { loading } = this.state;
-		const { datasets } = this.props;
+		const { datasets, loading } = this.props;
 
-		if (this.state.loading) {
-			return (
-				<div className="container">
-					<Spinner />
-				</div>
-			);
-		}
-		
 		return (
 			<div className="container">
 				<h3>Datasets</h3>
 				<List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectItem} />
+				{ loading ? <Spinner /> : undefined }
 			</div>
 		);
 	}
 }
 
 Datasets.propTypes = {
-	loading : PropTypes.bool,
 	datasets : PropTypes.array.isRequired,
+
+	nextPage : PropTypes.number.isRequired,
+	loading : PropTypes.bool,
 
 	push : PropTypes.func.isRequired,
 	loadDatasets : PropTypes.func.isRequired
@@ -67,7 +59,11 @@ Datasets.defaultProps = {
 }
 
 function mapStateToProps(state, ownProps) {
+	const pagination = state.pagination.popularDatasets;
+
 	return Object.assign({
+		loading : (pagination.popularDatasets) ? pagination.popularDatasets.isFetching : false,
+		nextPage : (pagination.popularDatasets) ? (pagination.popularDatasets.pageCount + 1) : 1,
 		datasets : selectAllDatasets(state)
 	}, ownProps)
 }

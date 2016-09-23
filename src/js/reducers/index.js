@@ -3,7 +3,8 @@ import merge from 'lodash/merge'
 import { routerReducer as routing } from 'react-router-redux'
 
 import * as ActionTypes from '../actions'
-// import paginate from './paginate'
+
+import pagination from './pagination'
 import sessionReducer from './session'
 import deviceReducer from './device'
 import consoleReducer from './console'
@@ -20,7 +21,7 @@ const initialState = {
   migrations : {},
   
   queries : {},
-  results : {}
+  results : {},
 }
 
 // Updates an entity cache in response to any action with response.entities.
@@ -83,30 +84,10 @@ function errorMessage(state = null, action) {
   return state
 }
 
-// Updates the pagination data for different actions.
-// const pagination = combineReducers({
-//   starredByUser: paginate({
-//     mapActionToKey: action => action.login,
-//     types: [
-//       ActionTypes.STARRED_REQUEST,
-//       ActionTypes.STARRED_SUCCESS,
-//       ActionTypes.STARRED_FAILURE
-//     ]
-//   }),
-//   stargazersByRepo: paginate({
-//     mapActionToKey: action => action.fullName,
-//     types: [
-//       ActionTypes.STARGAZERS_REQUEST,
-//       ActionTypes.STARGAZERS_SUCCESS,
-//       ActionTypes.STARGAZERS_FAILURE
-//     ]
-//   })
-// })
-
 const rootReducer = combineReducers({
   entities,
   locals,
-  // pagination,
+  pagination,
   errorMessage,
   message,
   session : sessionReducer,
