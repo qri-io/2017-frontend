@@ -47,7 +47,8 @@ body {
   background: $other-dark-blue-slate;
   height: 100%;
   position: fixed;
-  transition: left 0.25s;
+  transition: right 0.25s;
+  right: -100%;
   z-index: 1000;
   a {
     display: block;
@@ -59,10 +60,10 @@ body {
 }
 
 #main_menu.hide {
-  left: -100%;
+  right: -100%;
 }
 #main_menu.show {
-  left: 0;
+  right: 0;
 }
 
 a {

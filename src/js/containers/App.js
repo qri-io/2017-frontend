@@ -102,7 +102,7 @@ class App extends Component {
     return (
       <div onClick={this.handleHideMenu}>
         <Navbar user={user} onToggleMenu={this.handleMenuToggle} />
-        <MainMenu show={showMenu} />
+        <MainMenu user={user} show={showMenu} />
         {this.renderErrorMessage()}
         {children}
       </div>

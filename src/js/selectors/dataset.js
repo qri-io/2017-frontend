@@ -23,3 +23,10 @@ export function selectDatasetChanges(state, datasetId) {
 	const { changes } = state.entities;
 	return changes.filter(change => (change.datasetId == datasetId));
 }
+
+export function selectAllDatasets(state) {
+	const { datasets } = state.entities;
+	return Object.keys(datasets).map(id => datasets[id]).sort((a,b) => {
+		return (a.address == b.address) ? 0 : ((a.address < a.address)) ? -1 : 1;
+	});
+}
