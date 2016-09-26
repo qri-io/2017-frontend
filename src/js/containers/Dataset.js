@@ -65,6 +65,18 @@ class Dataset extends React.Component {
 		return undefined
 	}
 
+	renderResults(props) {
+		const { results, query } = props;
+		if (!results) { return undefined; }
+		return (
+			<div className="col-md-12">
+				<hr />
+				<h6>RESULTS</h6>
+				<ResultsTable data={results} query={query} />
+			</div>
+		);
+	}
+
 	render() {
 		const { address, dataset, permissions, query, results } = this.props
 		const path = "/" + address.replace(".", "/", -1)
@@ -93,11 +105,11 @@ class Dataset extends React.Component {
 							</p>
 							{this.renderEditButtons(this.props)}
 							<QueryEditor value={query} onRun={this.handleRunQuery} onChange={this.handleEditorChange} />
-							{ results || <ResultsTable data={results} query={query} />}
 							<div>
 								<p>{ dataset.description }</p>
 							</div>
 						</header>
+						{this.renderResults(this.props)}
 						<section className="col-md-12">
 							<hr />
 							{ dataset.schema ? <SchemaTable schema={dataset.schema} /> : <p>This dataset currently has no schema</p> }
