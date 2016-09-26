@@ -5,37 +5,40 @@ export default class SchemaTable extends React.Component {
 		const { schema } = this.props
 		return (
 			<div class="table-resizable">
-				<h3>Schema</h3>
+				<h6>DATASET SCHEMA:</h6>
 				<div class="row">
 					{schema.map( (table, i) => {
 						return (
 							<div class="col-md-6" key={i}>
+								<small>TABLE:</small>
+								<h3>{ table.name }</h3>
+								<small>COLUMNS:</small>
 								<table class="table table-bordered table-condensed">
 									<thead>
-										<tr>
-											<td colspan="3">
-												<h3>{ table.name }</h3>
-												<small><em>table</em></small>
-											</td>
+										<tr className="name">
+											{table.columns.map( (col, i) => {
+												return (
+													<td key={i}><h5 style={{ "marginRight" : 15 }}>{ col.name }</h5></td>
+												);
+											})}
 										</tr>
-										<tr>
-											<th>Name</th>
-											<th>Type</th>
-											<th>Description</th>
+										<tr className="type">
+											{table.columns.map( (col, i) => {
+												return (
+													<td key={i}><small className={"dt-" + col.type}>{ col.type }</small></td>
+												);
+											})}
+										</tr>
+										<tr classNam="description">
+											{table.columns.map( (col, i) => {
+												return (
+													<td key={i}>{ col.description }</td>
+												);
+											})}
 										</tr>
 									</thead>
-									<tbody>
-										{table.columns.map( (col, i) => {
-											return (
-												<tr key={i}>
-													<td>{ col.name }</td>
-													<td>{ col.type }</td>
-													<td>{ col.description }</td>
-												</tr>
-											);
-										})}
-									</tbody>
 								</table>
+								<hr />
 							</div>
 						);
 					})}

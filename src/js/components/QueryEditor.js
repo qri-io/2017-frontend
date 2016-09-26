@@ -11,7 +11,7 @@ export default class QueryEditor extends React.Component {
 			<div class="queryEditor">
 				<ContextPicker />
 				<CodeEditor value={value} onChange={onChange} mode='pgsql' completers={[datasetCompleter]} setOptions={{ enableBasicAutocompletion: true, enableLiveAutocompletion : true }} />
-				<button className="btn btn-default" onClick={onRun}>Run</button>
+				<button className="btn btn-primary" onClick={onRun}>Run</button>
 			</div>
 		);
 	}

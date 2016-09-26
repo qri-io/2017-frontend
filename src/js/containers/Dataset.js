@@ -1,19 +1,27 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import { debounce } from 'lodash'
 
 import { loadDatasetByAddress } from '../actions/dataset'
 import { selectDatasetByAddress } from '../selectors/dataset'
 import { selectSessionUser } from '../selectors/session'
+import { setQuery, runQuery } from '../actions/query'
 
 import SchemaTable from '../components/SchemaTable'
+import QueryEditor from '../components/QueryEditor'
+import ResultsTable from '../components/ResultsTable'
 
 class Dataset extends React.Component {
 	constructor(props) {
 		super(props);
-		// [
-		// 	'handleRunQuery',
-		// ].forEach(m => this[m] = this[m].bind(this))
+
+		[
+			'handleRunQuery',
+			'handleEditorChange',
+		].forEach(m => this[m] = this[m].bind(this))
+
+		this.debouncedSetQuery = debounce(props.setQuery, 200)
 	}
 
   componentWillMount() {
@@ -26,15 +34,30 @@ class Dataset extends React.Component {
 		}
 	}
 
-	editButtons(props) {
+	handleRunQuery(e) {
+		this.props.runQuery({
+			query : {
+				namespace: this.props.namespace,
+				statement : this.props.query
+			},
+			page : 1, 
+			pageSize : 50
+		});
+	}
+
+	handleEditorChange(value) {
+		this.debouncedSetQuery(value)
+	}
+
+	renderEditButtons(props) {
 		const { permissions, address } = props;
 		let path = "/" + address.replace(".", "/", -1)
 		if (permissions.migrate && permissions.change) {
 			return (
 				<div>
-					<Link to={path + "/edit"}><button className="btn btn-large">Edit</button></Link>
-					<Link to={path + "/migrations/new"}><button className="btn btn-large">New Migration</button></Link>
-					<Link to={path + "/changes/new"}><button className="btn btn-large">New Change</button></Link>
+					<Link to={path + "/edit"}><button type="button" className="btn btn-primary" style={{ marginRight : 5 }}>Edit</button></Link>
+					<Link to={path + "/migrations/new"}><button type="button" className="btn btn-primary" style={{ marginRight : 5}}>New Migration</button></Link>
+					<Link to={path + "/changes/new"}><button type="button" className="btn btn-primary" style={{ marginRight : 5}}>New Change</button></Link>
 				</div>
 			);
 		}
@@ -43,7 +66,7 @@ class Dataset extends React.Component {
 	}
 
 	render() {
-		const { address, dataset, permissions } = this.props
+		const { address, dataset, permissions, query, results } = this.props
 		const path = "/" + address.replace(".", "/", -1)
 		
 		if (!dataset) {
@@ -56,23 +79,26 @@ class Dataset extends React.Component {
 
 		return (
 			<div id="wrapper">
-				<div class="container">
-					<div class="col-md-12">
-						<header class="page-header col-md-12">
+				<div className="container">
+					<div className="col-md-12">
+						<header className="page-header col-md-12">
+							<small>DATASET</small>
 							<h2>
 								<a href={ "/" + dataset.address.replace(".", "/", -1) }>{ dataset.address }</a>
 							</h2>
 							<p>
-								<span>{ dataset.TableCount } Tables</span>
-								<span>{ dataset.RowCount } Rows</span> |
-								<span><a href={ dataset.sourceUrl } target="_blank">{ dataset.sourceUrl }</a></span>
+								<span>{ dataset.TableCount || 0 } Tables </span>
+								<span>{ dataset.RowCount || 0 } Rows </span>
+								{ dataset.sourceUrl ? <span>| <a href={ dataset.sourceUrl } target="_blank">{ dataset.sourceUrl }</a></span> : undefined }
 							</p>
-							{this.editButtons(this.props)}
+							{this.renderEditButtons(this.props)}
+							<QueryEditor value={query} onRun={this.handleRunQuery} onChange={this.handleEditorChange} />
+							{ results || <ResultsTable data={results} query={query} />}
 							<div>
 								<p>{ dataset.description }</p>
 							</div>
 						</header>
-						<section class="col-md-12">
+						<section className="col-md-12">
 							<hr />
 							{ dataset.schema ? <SchemaTable schema={dataset.schema} /> : <p>This dataset currently has no schema</p> }
 						</section>
@@ -89,12 +115,22 @@ Dataset.propTypes = {
 	address : PropTypes.string.isRequired,
 	// the dataset model to display
 	dataset : PropTypes.object,
+	
+	// query namespace to operate in
+	namespace : PropTypes.string.isRequired,
+	// query for console
+	query : PropTypes.string.isRequired,
+	// results (if any)
+	results : React.PropTypes.object,
 
 	// permissions stuff, will show things based on capabilities
 	permissions: PropTypes.object.isRequired,
 
 	// action to load a dataset from passed-in address
-	loadDatasetByAddress : PropTypes.func.isRequired
+	loadDatasetByAddress : PropTypes.func.isRequired,
+
+	setQuery: PropTypes.func.isRequired, 
+	runQuery: PropTypes.func.isRequired
 }
 
 Dataset.defaultProps = {
@@ -104,7 +140,6 @@ Dataset.defaultProps = {
 		change : false
 	}
 }
-
 
 function mapStateToProps(state, ownProps) {
 	const address = [ownProps.params.user, ownProps.params.dataset].join(".")
@@ -124,10 +159,15 @@ function mapStateToProps(state, ownProps) {
 	return Object.assign({
 		address,
 		dataset : selectDatasetByAddress(state, address),
+		results : state.entities.results.result,
+
 		permissions
-	}, ownProps)
+	}, state.console, ownProps)
 }
 
 export default connect(mapStateToProps, { 
-	loadDatasetByAddress 
+	setQuery, 
+	runQuery,
+
+	loadDatasetByAddress
 })(Dataset)

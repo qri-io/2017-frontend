@@ -15,7 +15,7 @@ export default class ResultsTable extends Component {
 						<tbody>
 							{data.map((row, i) => {
 								return (
-									<tr key={i}>{row.map((cell, j) => <td className={schema[j].type} key={`${i}.${j}`}>{cell}</td>)}</tr>
+									<tr key={i}>{row.map((cell, j) => <td className={"dt-" + schema[j].type} key={`${i}.${j}`}>{cell}</td>)}</tr>
 								);
 							})}
 						</tbody>
