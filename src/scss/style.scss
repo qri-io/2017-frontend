@@ -16,12 +16,16 @@
 @import "components";
 @import "datatypes";
 
+html, body, #root {
+  min-height: 100%;
+}
+
 body {
   background: $dark-blue-slate;
   color: $light-blue-slate;
 }
 
-#content-wrapper {
+#content-wrapper, #root {
   min-height: 90%;
 }
 
@@ -43,29 +47,6 @@ body {
   color: #999999;
 }
 
-#main_menu {
-  width: 300px;
-  background: $other-dark-blue-slate;
-  height: 100%;
-  position: fixed;
-  transition: right 0.25s;
-  right: -100%;
-  z-index: 1000;
-  a {
-    display: block;
-    color: $light-blue-slate;
-    text-transform: uppercase;
-    padding: 0.5em;
-    font-weight: bold;
-  }
-}
-
-#main_menu.hide {
-  right: -100%;
-}
-#main_menu.show {
-  right: 0;
-}
 
 a {
   text-decoration: none;

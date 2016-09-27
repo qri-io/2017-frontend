@@ -1,4 +1,6 @@
 
+import { selectUserByUsername } from './user'
+
 export function selectQueryById(state, id) {
 	return state.entities.queries[id];
 }
@@ -7,6 +9,22 @@ export function selectQueryByAddress(state, address) {
 	const { queries } = state.entities;
 	const id = Object.keys(queries).find(id => (queries[id].address == address));
 	return id ? queries[id] : undefined;
+}
+
+export function selectUserQueries(state, username) {
+	const user = selectUserByUsername(state, username);
+	const { queries } = state.entities;
+	if (!user) {
+		return [];
+	}
+
+	return Object.keys(queries).reduce((set, id) => {
+		const q = queries[id];
+		if (q.owner == user.id) {
+			set.push(q);
+		}
+		return set;
+	},[]);
 }
 
 export function selectLocalQueryByAddress(state, address) {

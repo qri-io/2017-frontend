@@ -28,6 +28,7 @@ export default class MainMenu extends React.Component {
 				<Link to="/console">Console</Link>
 				<Link to="/queries">Queries</Link>
 				<Link to="/datasets">Datasets</Link>
+				<a href="/docs">Docs</a>
 				{this.userLinks(user)}
 			</div>
 		);

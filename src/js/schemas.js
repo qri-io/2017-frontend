@@ -18,17 +18,21 @@ const resultSchema = new Schema('results', {
 const migrationSchema = new Schema('migrations');
 const changeSchema = new Schema('changes');
 
+querySchema.define({
+  owner: userSchema
+});
+
 datasetSchema.define({
   owner: userSchema
 });
 
 migrationSchema.define({
-  author : userSchema,
+  owner : userSchema,
   dataset : datasetSchema,
 });
 
 changeSchema.define({
-  author : userSchema,
+  owner : userSchema,
   dataset : datasetSchema,
 });
 

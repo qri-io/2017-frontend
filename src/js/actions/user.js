@@ -51,3 +51,51 @@ export function loadUserByUsername(username, requiredFields=[]) {
     return dispatch(fetchUserByUsername(username));
   }
 }
+
+export const USER_QUERIES_REQUEST = 'USER_QUERIES_REQUEST';
+export const USER_QUERIES_SUCCESS = 'USER_QUERIES_SUCCESS';
+export const USER_QUERIES_FAILURE = 'USER_QUERIES_FAILURE';
+
+export function fetchUserQueries(username, page=1, pageSize=30) {
+  return {
+    [CALL_API] : {
+      types : [ USER_QUERIES_REQUEST, USER_QUERIES_SUCCESS, USER_QUERIES_FAILURE ],
+      endpoint : `/users/${username}/queries`,
+      schema: Schemas.QUERY_ARRAY
+    },
+    page,
+    pageSize,
+    username
+  }
+}
+
+export function loadUserQueries(username, page=1, pageSize=30) {
+  return (dispatch, getState) => {
+    // TODO - prevent overfetching
+    return dispatch(fetchUserQueries(username, page, pageSize));
+  }
+}
+
+export const USER_DATASETS_REQUEST = 'USER_DATASETS_REQUEST';
+export const USER_DATASETS_SUCCESS = 'USER_DATASETS_SUCCESS';
+export const USER_DATASETS_FAILURE = 'USER_DATASETS_FAILURE';
+
+export function fetchUserDatasets(username, page=1, pageSize=30) {
+  return {
+    [CALL_API] : {
+      types : [ USER_DATASETS_REQUEST, USER_DATASETS_SUCCESS, USER_DATASETS_FAILURE ],
+      endpoint : `/users/${username}/datasets`,
+      schema: Schemas.DATASET_ARRAY
+    },
+    page,
+    pageSize,
+    username
+  }
+}
+
+export function loadUserDatasets(username, page=1, pageSize=30) {
+  return (dispatch, getState) => {
+    // TODO - prevent overfetching
+    return dispatch(fetchUserDatasets(username, page, pageSize));
+  }
+}

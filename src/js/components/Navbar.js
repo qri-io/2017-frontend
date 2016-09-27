@@ -15,12 +15,12 @@ export default class Navbar extends Component {
 							<small className="alpha caps">VERY MUCH A WORK IN PROGRESS.</small>
 						</div>
 						<div className="menu col-md-4">
-							<a onClick={onToggleMenu}> Menu</a>
 							{ 
 								user ? 
 									<Link to={`/${user.username}`}>{user.username}</Link> : 
 									<Link to="/login">Login</Link>
 							}
+							<a className="glyphicon glyphicon-menu-hamburger" onClick={onToggleMenu}> MENU</a>
 						</div>
 					</div>
 				</div>

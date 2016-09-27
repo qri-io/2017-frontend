@@ -78,7 +78,7 @@ class Dataset extends React.Component {
 	}
 
 	render() {
-		const { address, dataset, permissions, query, results } = this.props
+		const { username, datasetName, address, dataset, permissions, query, results } = this.props
 		const path = "/" + address.replace(".", "/", -1)
 		
 		if (!dataset) {
@@ -96,7 +96,9 @@ class Dataset extends React.Component {
 						<header className="page-header col-md-12">
 							<small>DATASET</small>
 							<h2>
-								<a href={ "/" + dataset.address.replace(".", "/", -1) }>{ dataset.address }</a>
+								<a href={ "/" + username }>{ username }</a>
+								<span>.</span>
+								<a href={ "/" + username + "/" + datasetName }>{ datasetName }</a>
 							</h2>
 							<p>
 								<span>{ dataset.TableCount || 0 } Tables </span>
@@ -122,6 +124,10 @@ class Dataset extends React.Component {
 }
 
 Dataset.propTypes = {
+	// username & datasetName from url params
+	username : PropTypes.string.isRequired,
+	datasetName : PropTypes.string.isRequired,
+
 	// username.dataset address for this dataset, should
 	// be derived from url params
 	address : PropTypes.string.isRequired,
@@ -154,7 +160,9 @@ Dataset.defaultProps = {
 }
 
 function mapStateToProps(state, ownProps) {
-	const address = [ownProps.params.user, ownProps.params.dataset].join(".")
+	const username = ownProps.params.user;
+	const datasetName = ownProps.params.dataset;
+	const address = [username, ownProps.params.dataset].join(".")
 	const user = selectSessionUser(state);
 
 	let permissions = {
@@ -169,6 +177,9 @@ function mapStateToProps(state, ownProps) {
 	}
 
 	return Object.assign({
+		username,
+		datasetName,
+
 		address,
 		dataset : selectDatasetByAddress(state, address),
 		results : state.entities.results.result,
