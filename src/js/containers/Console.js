@@ -47,18 +47,16 @@ class Console extends React.Component {
 	}
 
 	handleRunQuery(e) {
-		this.props.runQuery({
-			query : {
-				namespace: this.props.namespace,
-				statement : this.props.query
-			},
-			page : 1, 
-			pageSize : 50
-		});
+		// TODO - enable pagination
+		// this.props.runQuery(this.props.query, page, pageSize);
+		this.props.runQuery(this.props.query);
 	}
 
 	handleEditorChange(value) {
 		this.debouncedSetQuery(value)
+	}
+	handleEditorAddressChange(value) {
+		this.props.setQueryAddress(value);
 	}
 
 	handleSetTopPanel(index) {
@@ -98,7 +96,7 @@ class Console extends React.Component {
 							onSelectPanel={this.handleSetTopPanel}
 							labels={['Editor', 'History']}
 							components={[
-								<QueryEditor value={query} onRun={this.handleRunQuery} onChange={this.handleEditorChange} />,
+								<QueryEditor query={query} onRun={this.handleRunQuery} onChange={this.handleEditorChange} />,
 								<List className="queryHistory list" data={queryHistory} component={QueryHistoryItem} onSelectItem={this.handleSelectHistoryEntry} />,
 							]} />
 					</div>
@@ -125,7 +123,8 @@ class Console extends React.Component {
 }
 
 Console.propTypes = {
-	namespace : React.PropTypes.string,
+	query : React.PropTypes.object.isRequired,
+
 	dataset : React.PropTypes.array,
 	queries : React.PropTypes.array,
 	datasets : React.PropTypes.array,
@@ -144,7 +143,6 @@ Console.propTypes = {
 }
 
 Console.defaultProps = {
-	namespace : ""
 }
 
 function mapStateToProps(state, ownProps) {

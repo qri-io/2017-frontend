@@ -1,16 +1,18 @@
 import React from 'react'
 import CodeEditor from './CodeEditor'
-import ContextPicker from './ContextPicker'
+import Address from './Address'
 
 import { datasetCompleter } from '../ace/completer/datasets'
 
 export default class QueryEditor extends React.Component {
 	render() {
-		const { onRun, onChange, value } = this.props
+		const { query, onRun, onChange } = this.props
 		return (
 			<div class="queryEditor">
-				<ContextPicker />
-				<CodeEditor value={value} onChange={onChange} mode='pgsql' completers={[datasetCompleter]} setOptions={{ enableBasicAutocompletion: true, enableLiveAutocompletion : true }} />
+				<small>ADDRESS</small>
+				<Address editable={true} value={query.address} onChange={(name, value, e) => onChange({ statement : query.statement, address : value }, e) } />
+				<small>QUERY</small>
+				<CodeEditor value={query.statement} onChange={(value) => onChange({ statement : value, address : query.address})} mode='pgsql' completers={[datasetCompleter]} setOptions={{ enableBasicAutocompletion: true, enableLiveAutocompletion : true }} />
 				<button className="btn btn-primary" onClick={onRun}>Run</button>
 			</div>
 		);
@@ -18,8 +20,7 @@ export default class QueryEditor extends React.Component {
 }
 
 QueryEditor.propTypes = {
-	value : React.PropTypes.string,
-	context : React.PropTypes.object,
+	query : React.PropTypes.object,
 	datasets : React.PropTypes.array,
 	
 	onRun : React.PropTypes.func.isRequired,
@@ -27,5 +28,8 @@ QueryEditor.propTypes = {
 }
 
 QueryEditor.defaultProps = {
-	value : "",
+	query : {
+		address : "",
+		statement : ""
+	}
 }

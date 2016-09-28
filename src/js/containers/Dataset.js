@@ -19,6 +19,7 @@ class Dataset extends React.Component {
 		[
 			'handleRunQuery',
 			'handleEditorChange',
+			'handleEditorAddressChange',
 		].forEach(m => this[m] = this[m].bind(this))
 
 		this.debouncedSetQuery = debounce(props.setQuery, 200)
@@ -26,6 +27,11 @@ class Dataset extends React.Component {
 
   componentWillMount() {
     this.props.loadDatasetByAddress(this.props.address)
+		// match the address to the current namespce, unless there's already a query
+    this.props.setQuery({
+    	address : this.props.address,
+    	statement : this.props.query.statement
+    });
   }
 
 	componentWillReceiveProps(nextProps) {
@@ -34,19 +40,16 @@ class Dataset extends React.Component {
 		}
 	}
 
-	handleRunQuery(e) {
-		this.props.runQuery({
-			query : {
-				namespace: this.props.namespace,
-				statement : this.props.query
-			},
-			page : 1, 
-			pageSize : 50
-		});
+	handleEditorAddressChange(value) {
+		this.props.setQueryAddress(value)
 	}
 
 	handleEditorChange(value) {
 		this.debouncedSetQuery(value)
+	}
+
+	handleRunQuery(e) {
+		this.props.runQuery(this.props.query);
 	}
 
 	renderEditButtons(props) {
@@ -106,7 +109,7 @@ class Dataset extends React.Component {
 								{ dataset.sourceUrl ? <span>| <a href={ dataset.sourceUrl } target="_blank">{ dataset.sourceUrl }</a></span> : undefined }
 							</p>
 							{this.renderEditButtons(this.props)}
-							<QueryEditor value={query} onRun={this.handleRunQuery} onChange={this.handleEditorChange} />
+							<QueryEditor query={query} onRun={this.handleRunQuery} onChange={this.handleEditorChange} />
 							<div>
 								<p>{ dataset.description }</p>
 							</div>
@@ -134,10 +137,8 @@ Dataset.propTypes = {
 	// the dataset model to display
 	dataset : PropTypes.object,
 	
-	// query namespace to operate in
-	namespace : PropTypes.string.isRequired,
 	// query for console
-	query : PropTypes.string.isRequired,
+	query : PropTypes.object.isRequired,
 	// results (if any)
 	results : React.PropTypes.object,
 

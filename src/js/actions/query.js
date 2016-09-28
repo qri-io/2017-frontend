@@ -18,14 +18,14 @@ export const QUERY_FAILURE = 'QUERY_FAILURE'
 
 // Fetches a single user from Github API.
 // Relies on the custom API middleware defined in ../middleware/api.js.
-export function runQuery(query) {
+export function runQuery(query, page=1, pageSize=200) {
   return (dispatch, getState) => {
 
     analytics.track("Submitted Query", {
-      statement : query.query,
-      namespace : '',
-      page : query.page,
-      pageSize : query.pageSize
+      statement : query,
+      address : '',
+      page : page,
+      pageSize : pageSize
     });
 
     dispatch(setBottomPanel(0));
@@ -35,9 +35,12 @@ export function runQuery(query) {
         types: [ QUERY_REQUEST, QUERY_SUCCESS, QUERY_FAILURE ],
         endpoint: `/select`,
         method: 'POST',
-        data : query,
+        data : { query, page, pageSize },
         schema: Schemas.RESULT
-      }
+      },
+      statement : query.statement,
+      page,
+      pageSize
     });
   }
 }

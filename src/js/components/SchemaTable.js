@@ -1,13 +1,27 @@
 import React, { PropTypes } from 'react'
 
+function removeStdCols(schema, show) {
+	return (a,b,i) => {
+		if (!show) {
+			const colName = schema[i].name
+			if (colName == "id" || colName == "created" || colName == "updated") {
+				return a
+			}
+		}
+		a.push(b);
+		return a;
+	}
+}
+
 export default class SchemaTable extends React.Component {
 	render() {
-		const { schema } = this.props
+		const { schema, showStdCols } = this.props
 		return (
 			<div class="table-resizable">
 				<h6>DATASET SCHEMA:</h6>
 				<div class="row">
-					{schema.map( (table, i) => {
+					{schema.map((table, i) => {
+						const cols = table.columns.reduce(removeStdCols(table.columns, showStdCols),[])
 						return (
 							<div class="col-md-6" key={i}>
 								<small>TABLE:</small>
@@ -16,21 +30,21 @@ export default class SchemaTable extends React.Component {
 								<table class="table table-bordered table-condensed">
 									<thead>
 										<tr className="name">
-											{table.columns.map( (col, i) => {
+											{cols.map( (col, i) => {
 												return (
 													<td key={i}><h5 style={{ "marginRight" : 15 }}>{ col.name }</h5></td>
 												);
 											})}
 										</tr>
 										<tr className="type">
-											{table.columns.map( (col, i) => {
+											{cols.map( (col, i) => {
 												return (
 													<td key={i}><small className={"dt-" + col.type}>{ col.type }</small></td>
 												);
 											})}
 										</tr>
 										<tr classNam="description">
-											{table.columns.map( (col, i) => {
+											{cols.map( (col, i) => {
 												return (
 													<td key={i}>{ col.description }</td>
 												);
@@ -49,5 +63,10 @@ export default class SchemaTable extends React.Component {
 }
 
 SchemaTable.propTypes = {
-	schema : PropTypes.array.isRequired
+	schema : PropTypes.array.isRequired,
+	showStdCols: PropTypes.bool.isRequired
+}
+
+SchemaTable.defaultProps = {
+	showStdCols : false
 }
