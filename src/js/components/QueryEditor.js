@@ -8,9 +8,9 @@ export default class QueryEditor extends React.Component {
 	render() {
 		const { query, onRun, onChange } = this.props
 		return (
-			<div class="queryEditor">
+			<div className="queryEditor">
 				<small>ADDRESS</small>
-				<Address editable={true} value={query.address} onChange={(name, value, e) => onChange({ statement : query.statement, address : value }, e) } />
+				<Address editable={true} value={query.address} onChange={(name, value, e) => onChange({ statement : query.statement, address : value }) } />
 				<small>QUERY</small>
 				<CodeEditor value={query.statement} onChange={(value) => onChange({ statement : value, address : query.address})} mode='pgsql' completers={[datasetCompleter]} setOptions={{ enableBasicAutocompletion: true, enableLiveAutocompletion : true }} />
 				<button className="btn btn-primary" onClick={onRun}>Run</button>
