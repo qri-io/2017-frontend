@@ -13,7 +13,10 @@ class Datasets extends React.Component {
 	constructor(props) {
 		super(props);
 
-		[ 'handleSelectItem' ].forEach(m => this[m] = this[m].bind(this));
+		[ 
+			'handleSelectItem',
+			'handleLoadNextPage',
+		].forEach(m => this[m] = this[m].bind(this));
 	}
 
 	componentWillMount() {
@@ -30,15 +33,19 @@ class Datasets extends React.Component {
 		this.props.push("/" + dataset.address.replace(".", "/", -1))
 	}
 
+	handleLoadNextPage() {
+		this.props.loadDatasets(this.props.nextPage);
+	}
 
 	render() {
-		const { datasets, loading } = this.props;
+		const { datasets, loading, fetchedAll } = this.props;
 
 		return (
 			<div className="container">
 				<h3>Datasets</h3>
 				<List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectItem} />
 				{ loading ? <Spinner /> : undefined }
+				{ (!loading && !fetchedAll) ? <button className="btn btn-large btn-primary" onClick={this.handleLoadNextPage}>Load More</button> : undefined }
 			</div>
 		);
 	}
@@ -47,8 +54,9 @@ class Datasets extends React.Component {
 Datasets.propTypes = {
 	datasets : PropTypes.array.isRequired,
 
-	nextPage : PropTypes.number.isRequired,
 	loading : PropTypes.bool,
+	nextPage : PropTypes.number.isRequired,
+	fetchedAll : PropTypes.bool,
 
 	push : PropTypes.func.isRequired,
 	loadDatasets : PropTypes.func.isRequired
@@ -62,9 +70,12 @@ function mapStateToProps(state, ownProps) {
 	const pagination = state.pagination.popularDatasets;
 
 	return Object.assign({
+		datasets : selectAllDatasets(state),
+
 		loading : (pagination.popularDatasets) ? pagination.popularDatasets.isFetching : false,
 		nextPage : (pagination.popularDatasets) ? (pagination.popularDatasets.pageCount + 1) : 1,
-		datasets : selectAllDatasets(state)
+		fetchedAll : (pagination.popularDatasets) ? pagination.popularDatasets.fetchedAll : false
+
 	}, ownProps)
 }
 

@@ -57,15 +57,23 @@ function callApi(method, endpoint, schema, data) {
       // TODO - remove this uglyness, checks to see if the schema matches the resultSchema & desctructures if so
       // should have the server put result data in the data param
       const data = (schema._key != Schemas.RESULT.getKey()) ? json.data : json
+      // const data = json.data
       // const nextPageUrl = getNextPageUrl(response)
 
-      return Object.assign({},
-        normalize(data, schema)
-        // { nextPageUrl }
-      )
+      if (schema._key != Schemas.RESULT.getKey()) {
+        return Object.assign({},
+          normalize(data, schema)
+          // { nextPageUrl }
+        )
+      } else {
+        // more badness to get results to work properly b/c results may or may not have an ID property.
+        // TODO - custom query results middleware
+        let nrml = normalize(data,schema);
+        nrml.result = nrml.entities.results.result.data.map((d,i) => `result.${i}`);
+        return Object.assign({}, nrml);
+      }
     })
 }
-
 
 // Action key that carries API call info interpreted by this Redux middleware.
 export const CALL_API = Symbol('Call API')

@@ -14,11 +14,11 @@ function removeStdCols(schema, show) {
 	}
 }
 
-// TODO - plumb query into results table to support download links
 export default class ResultsTable extends Component {
 	render() {
 		if (!this.props.data) { return null; }
-		const { schema, data, showStdCols } = this.props.data;
+		const { schema, data } = this.props.data;
+		const { showLoadMore, onLoadMore, showStdCols } = this.props;
 		const displaySchema = schema.reduce(removeStdCols(schema, showStdCols),[])
 
 		return (
@@ -39,6 +39,7 @@ export default class ResultsTable extends Component {
 						</tbody>
 					</table>
 				</div>
+				{ (showLoadMore) ? <button className="btn btn-primary btn-large" onClick={onLoadMore}>Load Next Page</button> : undefined }
 			</div>
 		)
 	}
@@ -46,10 +47,13 @@ export default class ResultsTable extends Component {
 
 ResultsTable.propTypes = {
 	data : React.PropTypes.object,
-	query : React.PropTypes.object.isRequired,
-	showStdCols : React.PropTypes.bool.isRequired
+	showStdCols : React.PropTypes.bool.isRequired,
+
+	showLoadMore : React.PropTypes.bool.isRequired,
+	onLoadMore : React.PropTypes.func,
 }
 
 ResultsTable.defaultProps = {
-	showStdCols : false
+	showStdCols : false,
+	showLoadMore : false
 }

@@ -1,5 +1,7 @@
 import { Schema, arrayOf } from 'normalizr'
 
+let result_cid = 0
+
 // We use this Normalizr schemas to transform API responses from a nested form
 // to a flat form where repos and users are placed in `entities`, and nested
 // JSON objects are replaced with their IDs. This is very convenient for
@@ -12,9 +14,7 @@ const userSchema = new Schema('users');
 const datasetSchema = new Schema('datasets');
 // const schemaSchema = new Schema('schemas');
 const querySchema = new Schema('queries');
-const resultSchema = new Schema('results', {
-  idAttribute : (result) => "result"
-});
+const resultSchema = new Schema('results', { idAttribute : (result) => 'result' });
 const migrationSchema = new Schema('migrations');
 const changeSchema = new Schema('changes');
 

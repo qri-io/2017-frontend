@@ -17,7 +17,7 @@ const paginate = ({ types, mapActionToKey }) => {
 
   const updatePagination = (state = {
     isFetching: false,
-    nextPageUrl: undefined,
+    // nextPageUrl: undefined,
     pageCount: 0,
     fetchedAll : false,
     ids: []
@@ -29,7 +29,7 @@ const paginate = ({ types, mapActionToKey }) => {
         return Object.assign({}, state, {
           isFetching: false,
           ids: union(state.ids, action.response.result),
-          nextPageUrl: action.response.nextPageUrl,
+          // nextPageUrl: action.response.nextPageUrl,
           fetchedAll: (action.response.result.length < action.pageSize),
           pageCount: state.pageCount + 1
         });

@@ -3,6 +3,9 @@ import Schemas from '../schemas'
 import { setBottomPanel } from './console'
 import { addHistoryEntry } from './session'
 
+
+let queryId = 1
+
 export const QUERY_SET = 'QUERY_SET'
 
 export function setQuery(value) {
