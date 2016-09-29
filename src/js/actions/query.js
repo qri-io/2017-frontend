@@ -25,8 +25,7 @@ export function runQuery(query, page=1, pageSize=200) {
   return (dispatch, getState) => {
 
     analytics.track("Submitted Query", {
-      statement : query,
-      address : '',
+      query : query,
       page : page,
       pageSize : pageSize
     });
@@ -44,6 +43,33 @@ export function runQuery(query, page=1, pageSize=200) {
       statement : query.statement,
       page,
       pageSize
+    });
+  }
+}
+
+export const QUERY_DOWNLOAD_REQUEST = 'QUERY_DOWNLOAD_REQUEST'
+export const QUERY_DOWNLOAD_SUCCESS = 'QUERY_DOWNLOAD_SUCCESS'
+export const QUERY_DOWNLOAD_FAILURE = 'QUERY_DOWNLOAD_FAILURE'
+
+// Fetches a single user from Github API.
+// Relies on the custom API middleware defined in ../middleware/api.js.
+export function downloadQuery(query) {
+  return (dispatch, getState) => {
+
+    analytics.track("Download Query", {
+      query,
+    });
+
+    dispatch(setBottomPanel(0));
+    dispatch(addHistoryEntry(query));
+    return dispatch({
+      [CALL_API]: {
+        types: [ QUERY_DOWNLOAD_REQUEST, QUERY_DOWNLOAD_SUCCESS, QUERY_DOWNLOAD_FAILURE ],
+        endpoint: `/select`,
+        method: 'POST',
+        data : { query, format : 'csv', download : true },
+        schema: Schemas.RESULT
+      }
     });
   }
 }

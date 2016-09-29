@@ -6,7 +6,7 @@ import { debounce } from 'lodash'
 import { loadDatasetByAddress } from '../actions/dataset'
 import { selectDatasetByAddress } from '../selectors/dataset'
 import { selectSessionUser } from '../selectors/session'
-import { setQuery, runQuery } from '../actions/query'
+import { setQuery, runQuery, downloadQuery } from '../actions/query'
 
 import SchemaTable from '../components/SchemaTable'
 import QueryEditor from '../components/QueryEditor'
@@ -20,6 +20,8 @@ class Dataset extends React.Component {
 			'handleRunQuery',
 			'handleEditorChange',
 			'handleEditorAddressChange',
+			'handleLoadMoreResults',
+			'handleDownloadQuery',
 		].forEach(m => this[m] = this[m].bind(this))
 
 		this.debouncedSetQuery = debounce(props.setQuery, 200)
@@ -52,6 +54,14 @@ class Dataset extends React.Component {
 		this.props.runQuery(this.props.query);
 	}
 
+	handleDownloadQuery() {
+		this.props.downloadQuery(this.props.query);
+	}
+
+	handleLoadMoreResults() {
+		this.props.runQuery(this.props.query, this.props.nextResultsPage)
+	}
+
 	renderEditButtons(props) {
 		const { permissions, address } = props;
 		let path = "/" + address.replace(".", "/", -1)
@@ -69,13 +79,13 @@ class Dataset extends React.Component {
 	}
 
 	renderResults(props) {
-		const { results, query } = props;
+		const { results, query, hasMoreResults, fetchingResults } = props;
 		if (!results) { return undefined; }
 		return (
 			<div className="col-md-12">
 				<hr />
 				<h6>RESULTS</h6>
-				<ResultsTable data={results} query={query} />
+				<ResultsTable data={results} showLoadMore={!fetchingResults && hasMoreResults} onLoadMore={this.handleLoadMoreResults} />
 			</div>
 		);
 	}
@@ -109,7 +119,7 @@ class Dataset extends React.Component {
 								{ dataset.sourceUrl ? <span>| <a href={ dataset.sourceUrl } target="_blank">{ dataset.sourceUrl }</a></span> : undefined }
 							</p>
 							{this.renderEditButtons(this.props)}
-							<QueryEditor query={query} onRun={this.handleRunQuery} onChange={this.handleEditorChange} />
+							<QueryEditor query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />
 							<div>
 								<p>{ dataset.description }</p>
 							</div>
@@ -142,6 +152,10 @@ Dataset.propTypes = {
 	// results (if any)
 	results : React.PropTypes.object,
 
+	fetchingResults : PropTypes.bool.isRequired,
+	hasMoreResults : PropTypes.bool.isRequired,
+	nextResultsPage : PropTypes.number.isRequired,
+
 	// permissions stuff, will show things based on capabilities
 	permissions: PropTypes.object.isRequired,
 
@@ -166,6 +180,9 @@ function mapStateToProps(state, ownProps) {
 	const address = [username, ownProps.params.dataset].join(".")
 	const user = selectSessionUser(state);
 
+	const pagination = state.pagination.results[state.console.query.statement] || {};
+	const nextResultsPage = (pagination.pageCount) ? pagination.pageCount + 1 : 1;
+
 	let permissions = {
 		edit : false,
 		migrate : false,
@@ -184,14 +201,19 @@ function mapStateToProps(state, ownProps) {
 		address,
 		dataset : selectDatasetByAddress(state, address),
 		results : state.entities.results.result,
+		fetchingResults : pagination.isFetching || false,
+		hasMoreResults :  !pagination.fetchedAll || false,
+		nextResultsPage,
 
-		permissions
+		permissions,
+
 	}, state.console, ownProps)
 }
 
 export default connect(mapStateToProps, { 
 	setQuery, 
 	runQuery,
+	downloadQuery,
 
 	loadDatasetByAddress
 })(Dataset)

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { debounce } from 'lodash'
 
-import { setQuery, runQuery, loadQueryPage } from '../actions/query'
+import { setQuery, runQuery, downloadQuery, loadQueryPage } from '../actions/query'
 import { setTopPanel, setBottomPanel, setChartOptions } from '../actions/console'
 import { loadDatasets, loadDataset } from '../actions/dataset'
 
@@ -15,7 +15,6 @@ import DatasetItem from '../components/DatasetItem'
 import QueryHistoryItem from '../components/QueryHistoryItem'
 import QueryItem from '../components/QueryItem'
 
-
 function loadData(props) {
 	props.loadDatasets(1, 100)
 	props.loadQueryPage(1,50)
@@ -26,6 +25,7 @@ class Console extends React.Component {
 		super(props);
 		[
 			'handleRunQuery',
+			'handleDownloadQuery',
 			'handleEditorChange',
 			'handleSetTopPanel',
 			'handleSetBottomPanel',
@@ -51,6 +51,10 @@ class Console extends React.Component {
 		// TODO - enable pagination
 		// this.props.runQuery(this.props.query, page, pageSize);
 		this.props.runQuery(this.props.query);
+	}
+
+	handleDownloadQuery(e) {
+		this.props.downloadQuery(this.props.query);
 	}
 
 	handleEditorChange(value) {
@@ -101,7 +105,7 @@ class Console extends React.Component {
 							onSelectPanel={this.handleSetTopPanel}
 							labels={['Editor', 'History']}
 							components={[
-								<QueryEditor query={query} onRun={this.handleRunQuery} onChange={this.handleEditorChange} />,
+								<QueryEditor query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />,
 								<List className="queryHistory list" data={queryHistory} component={QueryHistoryItem} onSelectItem={this.handleSelectHistoryEntry} />,
 							]} />
 					</div>
@@ -176,6 +180,7 @@ function mapStateToProps(state, ownProps) {
 export default connect(mapStateToProps, { 
 	setQuery, 
 	runQuery,
+	downloadQuery,
 	loadQueryPage,
 
 	setTopPanel, 
