@@ -45,16 +45,31 @@ export default function resultsReducer (state=initialState, action) {
 	switch (action.type) {
 		case QUERY_RUN_REQUEST:
 			stmt = action.request.query.statement;
+			if (action.request.download) {
+				return Object.assign({}, state, {
+					[`download:${stmt}`] : initialReq(state[`download:${stmt}`], action) 
+				});
+			}
 			return Object.assign({}, state, { 
 				[stmt] : initialReq(state[stmt], action),
 			});
 		case QUERY_RUN_SUCCESS:
 			stmt = action.request.query.statement;
+			if (action.request.download) {
+				return Object.assign({}, state, {
+					[`download:${stmt}`] : initialReq(state[`download:${stmt}`], action) 
+				});
+			}
 			return Object.assign({}, state, {
 				[stmt] : successReq(state[stmt], action),
 			});
 		case QUERY_RUN_FAILURE:
 			stmt = action.request.query.statement;
+			if (action.request.download) {
+				return Object.assign({}, state, {
+					[`download:${stmt}`] : initialReq(state[`download:${stmt}`], action) 
+				});
+			}
 			return Object.assign({}, state, {
 				[stmt] : failureReq(state[stmt], action),
 			});

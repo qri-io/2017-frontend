@@ -39,31 +39,6 @@ export function runQuery(request) {
   }
 }
 
-export const QUERY_DOWNLOAD_REQUEST = 'QUERY_DOWNLOAD_REQUEST'
-export const QUERY_DOWNLOAD_SUCCESS = 'QUERY_DOWNLOAD_SUCCESS'
-export const QUERY_DOWNLOAD_FAILURE = 'QUERY_DOWNLOAD_FAILURE'
-
-export function downloadQuery(query) {
-  return (dispatch, getState) => {
-
-    analytics.track("Download Query", {
-      query,
-    });
-
-    dispatch(setBottomPanel(0));
-    dispatch(addHistoryEntry(query));
-    return dispatch({
-      [CALL_API]: {
-        types: [ QUERY_DOWNLOAD_REQUEST, QUERY_DOWNLOAD_SUCCESS, QUERY_DOWNLOAD_FAILURE ],
-        endpoint: `/select`,
-        method: 'POST',
-        data : { query, format : 'csv', download : true },
-        schema: Schemas.RESULT
-      }
-    });
-  }
-}
-
 export const QUERIES_REQUEST = 'QUERIES_REQUEST'
 export const QUERIES_SUCCESS = 'QUERIES_SUCCESS'
 export const QUERIES_FAILURE = 'QUERIES_FAILURE'

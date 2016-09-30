@@ -58,7 +58,10 @@ class Dataset extends React.Component {
 	}
 
 	handleDownloadQuery() {
-		this.props.downloadQuery(this.props.query);
+		this.props.runQuery({
+			query : this.props.query,
+			download : true
+		});
 	}
 
 	handleLoadMoreResults() {
