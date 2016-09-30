@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { debounce } from 'lodash'
 
-import { setQuery, runQuery, downloadQuery, loadQueryPage } from '../actions/query'
+import { setQuery, runQuery, loadQueryPage } from '../actions/query'
 import { setTopPanel, setBottomPanel, setChartOptions } from '../actions/console'
 import { loadDatasets, loadDataset } from '../actions/dataset'
 
@@ -55,7 +55,10 @@ class Console extends React.Component {
 	}
 
 	handleDownloadQuery(e) {
-		this.props.downloadQuery(this.props.query);
+		this.props.runQuery({
+			query : this.props.query,
+			download : true
+		});
 	}
 
 	handleEditorChange(value) {
@@ -147,10 +150,6 @@ Console.propTypes = {
 	bottomPanelIndex : PropTypes.number.isRequired,
 	device : PropTypes.object.isRequired,
 
-	// fetchingResults : PropTypes.bool.isRequired,
-	// hasMoreResults : PropTypes.bool.isRequired,
-	// nextResultsPage : PropTypes.number.isRequired,
-
 	setQuery : PropTypes.func.isRequired,
 	runQuery : PropTypes.func.isRequired,
 	setTopPanel : PropTypes.func.isRequired,
@@ -174,17 +173,12 @@ function mapStateToProps(state, ownProps) {
 		device : state.device,
 
 		results,
-		// results : state.entities.results.result,
-		// fetchingResults : pagination.isFetching || false,
-		// hasMoreResults :  !pagination.fetchedAll || false,
-		// nextResultsPage,
 	}, state.console, ownProps)
 }
 
 export default connect(mapStateToProps, { 
 	setQuery, 
 	runQuery,
-	downloadQuery,
 	loadQueryPage,
 
 	setTopPanel, 

@@ -18,6 +18,9 @@ function removeStdCols(schema, show) {
 
 export default class ResultsTable extends Component {
 	render() {
+		if (!this.props.results) {
+			return <div className="resultsTable"></div>;
+		}
 		const { schema, data, fetching, fetchedAll } = this.props.results;
 		const { onLoadMore, showStdCols } = this.props;
 		const displaySchema = schema.reduce(removeStdCols(schema, showStdCols),[])

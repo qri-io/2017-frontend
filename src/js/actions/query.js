@@ -28,7 +28,10 @@ export function runQuery(request) {
 
     analytics.track("Submitted Query", request);
 
-    dispatch(setBottomPanel(0));
+    if (!request.download) {
+      dispatch(setBottomPanel(0));
+    }
+    
     dispatch(addHistoryEntry(request.query));
     return dispatch({
       [RUN_QUERY]: {
