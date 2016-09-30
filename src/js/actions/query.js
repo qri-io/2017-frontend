@@ -1,10 +1,8 @@
 import { CALL_API } from '../middleware/api'
+import { RUN_QUERY } from '../middleware/runQuery'
 import Schemas from '../schemas'
 import { setBottomPanel } from './console'
 import { addHistoryEntry } from './session'
-
-
-let queryId = 1
 
 export const QUERY_SET = 'QUERY_SET'
 
@@ -15,34 +13,28 @@ export function setQuery(value) {
 	}
 }
 
-export const QUERY_REQUEST = 'QUERY_REQUEST'
-export const QUERY_SUCCESS = 'QUERY_SUCCESS'
-export const QUERY_FAILURE = 'QUERY_FAILURE'
+export const QUERY_RUN_REQUEST = 'QUERY_RUN_REQUEST'
+export const QUERY_RUN_SUCCESS = 'QUERY_RUN_SUCCESS'
+export const QUERY_RUN_FAILURE = 'QUERY_RUN_FAILURE'
 
-// Fetches a single user from Github API.
-// Relies on the custom API middleware defined in ../middleware/api.js.
-export function runQuery(query, page=1, pageSize=200) {
+export function runQuery(request) {
+  // add in defaults
+  request = Object.assign({
+    page : 1,
+    pageSize : 200
+  }, request);
+
   return (dispatch, getState) => {
 
-    analytics.track("Submitted Query", {
-      query : query,
-      page : page,
-      pageSize : pageSize
-    });
+    analytics.track("Submitted Query", request);
 
     dispatch(setBottomPanel(0));
-    dispatch(addHistoryEntry(query));
+    dispatch(addHistoryEntry(request.query));
     return dispatch({
-      [CALL_API]: {
-        types: [ QUERY_REQUEST, QUERY_SUCCESS, QUERY_FAILURE ],
-        endpoint: `/select`,
-        method: 'POST',
-        data : { query, page, pageSize },
-        schema: Schemas.RESULT
-      },
-      statement : query.statement,
-      page,
-      pageSize
+      [RUN_QUERY]: {
+        types: [ QUERY_RUN_REQUEST, QUERY_RUN_SUCCESS, QUERY_RUN_FAILURE ],
+        request,
+      }
     });
   }
 }
@@ -51,8 +43,6 @@ export const QUERY_DOWNLOAD_REQUEST = 'QUERY_DOWNLOAD_REQUEST'
 export const QUERY_DOWNLOAD_SUCCESS = 'QUERY_DOWNLOAD_SUCCESS'
 export const QUERY_DOWNLOAD_FAILURE = 'QUERY_DOWNLOAD_FAILURE'
 
-// Fetches a single user from Github API.
-// Relies on the custom API middleware defined in ../middleware/api.js.
 export function downloadQuery(query) {
   return (dispatch, getState) => {
 

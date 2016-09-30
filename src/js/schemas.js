@@ -12,9 +12,9 @@ let result_cid = 0
 const sessionUserSchema = new Schema('session');
 const userSchema = new Schema('users');
 const datasetSchema = new Schema('datasets');
-// const schemaSchema = new Schema('schemas');
 const querySchema = new Schema('queries');
-const resultSchema = new Schema('results', { idAttribute : (result) => 'result' });
+// const schemaSchema = new Schema('schemas');
+// const resultSchema = new Schema('results', { idAttribute : (result) => 'result' });
 const migrationSchema = new Schema('migrations');
 const changeSchema = new Schema('changes');
 
@@ -67,7 +67,7 @@ const Schemas = {
   CHANGE_ARRAY : arrayOf(changeSchema),
   QUERY : querySchema,
   QUERY_ARRAY: arrayOf(querySchema),
-  RESULT : resultSchema
+  // RESULT : resultSchema
 }
 
 export default Schemas

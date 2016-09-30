@@ -9,6 +9,7 @@ import sessionReducer from './session'
 import deviceReducer from './device'
 import consoleReducer from './console'
 import appReducer from './app'
+import resultsReducer from './results'
 
 const initialState = {
   app : {},
@@ -21,7 +22,6 @@ const initialState = {
   migrations : {},
   
   queries : {},
-  results : {},
 }
 
 // Updates an entity cache in response to any action with response.entities.
@@ -94,6 +94,7 @@ const rootReducer = combineReducers({
   console: consoleReducer,
   device : deviceReducer,
   app : appReducer,
+  results : resultsReducer,
   routing
 })
 

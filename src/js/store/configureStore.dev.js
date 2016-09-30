@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import createLogger from 'redux-logger'
 import api from '../middleware/api'
+import runQuery from '../middleware/runQuery'
 import locals from '../middleware/locals'
 import globalDatasets from '../middleware/globalDatasets'
 import rootReducer from '../reducers'
@@ -15,7 +16,7 @@ export default function configureStore(preloadedState) {
     rootReducer,
     preloadedState,
     compose(
-      applyMiddleware(thunk, api, locals, globalDatasets, routerMiddleware(browserHistory)/*, createLogger()*/),
+      applyMiddleware(thunk, api, runQuery, locals, globalDatasets, routerMiddleware(browserHistory)/*, createLogger()*/),
       DevTools.instrument()
     )
   )

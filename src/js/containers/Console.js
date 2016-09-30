@@ -48,9 +48,10 @@ class Console extends React.Component {
 	}
 
 	handleRunQuery(e) {
-		// TODO - enable pagination
-		// this.props.runQuery(this.props.query, page, pageSize);
-		this.props.runQuery(this.props.query);
+		this.props.runQuery({
+			query : this.props.query,
+			page : 1
+		});
 	}
 
 	handleDownloadQuery(e) {
@@ -91,11 +92,14 @@ class Console extends React.Component {
 	}
 
 	handleLoadMoreResults() {
-		this.props.runQuery(this.props.query, this.props.nextResultsPage)
+		this.props.runQuery({
+			query : this.props.query,
+			page : this.props.results.pageCount + 1
+		})
 	}
 
 	render() {
-		const { runQuery, queries, datasets, results, query, topPanelIndex, bottomPanelIndex, queryHistory, chartOptions, device, hasMoreResults, fetchingResults } = this.props
+		const { runQuery, queries, datasets, results, query, topPanelIndex, bottomPanelIndex, queryHistory, chartOptions, device } = this.props
 		return (
 			<div id="console">
 				<div className="top container">
@@ -118,7 +122,7 @@ class Console extends React.Component {
 								labels={['Results', 'Chart', 'Datasets', 'Queries']}
 								onSelectPanel={this.handleSetBottomPanel}
 								components={[
-									<ResultsTable data={results} showLoadMore={hasMoreResults && !fetchingResults} onLoadMore={this.handleLoadMoreResults} />,
+									<ResultsTable results={results} onLoadMore={this.handleLoadMoreResults} />,
 									<ResultsChart results={results} options={chartOptions} onOptionsChange={this.handleSetChartOptions} device={device} />,
 									<List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectDataset} />,
 									<List className="queryItem list" data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} />
@@ -143,9 +147,9 @@ Console.propTypes = {
 	bottomPanelIndex : PropTypes.number.isRequired,
 	device : PropTypes.object.isRequired,
 
-	fetchingResults : PropTypes.bool.isRequired,
-	hasMoreResults : PropTypes.bool.isRequired,
-	nextResultsPage : PropTypes.number.isRequired,
+	// fetchingResults : PropTypes.bool.isRequired,
+	// hasMoreResults : PropTypes.bool.isRequired,
+	// nextResultsPage : PropTypes.number.isRequired,
 
 	setQuery : PropTypes.func.isRequired,
 	runQuery : PropTypes.func.isRequired,
@@ -161,19 +165,19 @@ Console.defaultProps = {
 }
 
 function mapStateToProps(state, ownProps) {
-	const pagination = state.pagination.results[state.console.query.statement] || {};
-	const nextResultsPage = (pagination.pageCount) ? pagination.pageCount + 1 : 1;
+	const results = state.results[state.console.query.statement];
 
 	return Object.assign({}, {
-		results : state.entities.results.result,
 		queries : Object.keys(state.entities.queries).map(key => state.entities.queries[key]),
 		datasets : Object.keys(state.entities.datasets).map(key => state.entities.datasets[key]),
 		queryHistory : state.session.history,
 		device : state.device,
 
-		fetchingResults : pagination.isFetching || false,
-		hasMoreResults :  !pagination.fetchedAll || false,
-		nextResultsPage,
+		results,
+		// results : state.entities.results.result,
+		// fetchingResults : pagination.isFetching || false,
+		// hasMoreResults :  !pagination.fetchedAll || false,
+		// nextResultsPage,
 	}, state.console, ownProps)
 }
 

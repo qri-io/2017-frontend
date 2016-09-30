@@ -27,10 +27,6 @@ import {
 } from '../actions/dataset';
 
 import { 
-  QUERY_REQUEST,
-  QUERY_SUCCESS,
-  QUERY_FAILURE,
-
   QUERIES_REQUEST,
   QUERIES_SUCCESS,
   QUERIES_FAILURE
@@ -71,15 +67,6 @@ const pagination = combineReducers({
       USER_QUERIES_REQUEST,
       USER_QUERIES_SUCCESS,
       USER_QUERIES_FAILURE,
-    ]
-  }),
-
-  results : paginate({
-    mapActionToKey : action => action.statement,
-    types : [
-      QUERY_REQUEST,
-      QUERY_SUCCESS,
-      QUERY_FAILURE,
     ]
   }),
 

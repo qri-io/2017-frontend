@@ -51,7 +51,10 @@ class Dataset extends React.Component {
 	}
 
 	handleRunQuery(e) {
-		this.props.runQuery(this.props.query);
+		this.props.runQuery({ 
+			query : this.props.query,
+			page : 1,
+		});
 	}
 
 	handleDownloadQuery() {
@@ -59,7 +62,10 @@ class Dataset extends React.Component {
 	}
 
 	handleLoadMoreResults() {
-		this.props.runQuery(this.props.query, this.props.nextResultsPage)
+		this.props.runQuery({
+			query : this.props.query,
+			page : this.props.results.pageCount + 1
+		});
 	}
 
 	renderEditButtons(props) {
@@ -79,13 +85,13 @@ class Dataset extends React.Component {
 	}
 
 	renderResults(props) {
-		const { results, query, hasMoreResults, fetchingResults } = props;
+		const { results } = props;
 		if (!results) { return undefined; }
 		return (
 			<div className="col-md-12">
 				<hr />
 				<h6>RESULTS</h6>
-				<ResultsTable data={results} showLoadMore={!fetchingResults && hasMoreResults} onLoadMore={this.handleLoadMoreResults} />
+				<ResultsTable results={results} onLoadMore={this.handleLoadMoreResults} />
 			</div>
 		);
 	}
@@ -152,10 +158,6 @@ Dataset.propTypes = {
 	// results (if any)
 	results : React.PropTypes.object,
 
-	fetchingResults : PropTypes.bool.isRequired,
-	hasMoreResults : PropTypes.bool.isRequired,
-	nextResultsPage : PropTypes.number.isRequired,
-
 	// permissions stuff, will show things based on capabilities
 	permissions: PropTypes.object.isRequired,
 
@@ -180,8 +182,7 @@ function mapStateToProps(state, ownProps) {
 	const address = [username, ownProps.params.dataset].join(".")
 	const user = selectSessionUser(state);
 
-	const pagination = state.pagination.results[state.console.query.statement] || {};
-	const nextResultsPage = (pagination.pageCount) ? pagination.pageCount + 1 : 1;
+	const results = state.results[state.console.query.statement];
 
 	let permissions = {
 		edit : false,
@@ -197,14 +198,10 @@ function mapStateToProps(state, ownProps) {
 	return Object.assign({
 		username,
 		datasetName,
-
 		address,
-		dataset : selectDatasetByAddress(state, address),
-		results : state.entities.results.result,
-		fetchingResults : pagination.isFetching || false,
-		hasMoreResults :  !pagination.fetchedAll || false,
-		nextResultsPage,
 
+		dataset : selectDatasetByAddress(state, address),
+		results,
 		permissions,
 
 	}, state.console, ownProps)

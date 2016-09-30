@@ -1,37 +1,18 @@
-import { normalize } from 'normalizr'
-import Schemas from '../schemas'
+import { API_ROOT } from './api'
 import 'isomorphic-fetch'
 
-export const API_ROOT = `${__BUILD__.API_URL}/api`
 
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
-function callApi(method, endpoint, schema, data) {
-  let fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint
-  let body
-
-  // add query params to GET requests listed on data
-  if (data && method == "GET") {
-    let addedFirst = false
-    Object.keys(data).forEach((key, i) => {
-      const val = encodeURIComponent(data[key])
-      if (val != "") {
-        fullUrl += (addedFirst) ? `&${key}=${val}` : `?${key}=${val}`
-        addedFirst = true
-      }
-    })
-  } else if (data) {
-    body = JSON.stringify(data)
-  }
-
-  return fetch(fullUrl, {
-    method : method,
+function execQuery(query, page, pageSize) {
+  return fetch(`${API_ROOT}/select?page=${page}&pageSize=${pageSize}`, {
+    method : 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     credentials: 'include',
-    body
+    body : JSON.stringify({ query, page, pageSize })
   })
     .then(response =>
       response.json().then(json => ({ json, response }))
@@ -39,38 +20,35 @@ function callApi(method, endpoint, schema, data) {
       if (!response.ok) {
         return Promise.reject(json)
       }
-      const { data } = json
 
-      return Object.assign({},
-        normalize(data, schema)
-        // { nextPageUrl }
-      )
+      return json;
     });
 }
 
 // Action key that carries API call info interpreted by this Redux middleware.
-export const CALL_API = Symbol('Call API')
+export const RUN_QUERY = Symbol('RUN_QUERY')
 
-// A Redux middleware that interprets actions with CALL_API info specified.
+// A Redux middleware that interprets actions with RUN_QUERY info specified.
 // Performs the call and promises when such actions are dispatched.
 export default store => next => action => {
-  const callAPI = action[CALL_API]
-  if (typeof callAPI === 'undefined') {
+  const runQuery = action[RUN_QUERY]
+  if (typeof runQuery === 'undefined') {
     return next(action)
   }
 
-  let { endpoint } = callAPI
-  const { schema, types, data, method="GET", silentError=false } = callAPI
+  const { types, request } = runQuery;
+  const { query, page, pageSize } = request
 
-  if (typeof endpoint === 'function') {
-    endpoint = endpoint(store.getState())
+  if (typeof query != "object") {
+    throw new Error("query must be an object")
+  }
+  
+  if (typeof page !== 'number') {
+    throw new Error('Specify a query page')
   }
 
-  if (typeof endpoint !== 'string') {
-    throw new Error('Specify a string endpoint URL.')
-  }
-  if (!schema) {
-    throw new Error('Specify one of the exported Schemas.')
+  if (typeof pageSize !== 'number') {
+    throw new Error('Specify a query pageSize')
   }
 
   if (!Array.isArray(types) || types.length !== 3) {
@@ -82,19 +60,20 @@ export default store => next => action => {
 
   function actionWith(data) {
     const finalAction = Object.assign({}, action, data)
-    delete finalAction[CALL_API]
+    delete finalAction[RUN_QUERY]
     return finalAction
   }
 
   const [ requestType, successType, failureType ] = types
 
   // fire an action indicating a request has been made
-  next(actionWith({ type: requestType }));
+  next(actionWith({ type: requestType, request }));
 
   // make the request
-  return callApi(method, endpoint, schema, data).then(
+  return execQuery(query, page, pageSize).then(
     response => next(actionWith({
       type: successType,
+      request,
       response
     })),
     error => {
@@ -105,7 +84,7 @@ export default store => next => action => {
       return next(actionWith({
         type: failureType, 
         error: msg,
-        silentError
+        request
       }))
     }
   )

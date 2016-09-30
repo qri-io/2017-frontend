@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import DownloadResultsButton from './DownloadResultsButton'
 
+import Spinner from './Spinner'
+
 function removeStdCols(schema, show) {
 	return (a,b,i) => {
 		if (!show) {
@@ -16,9 +18,8 @@ function removeStdCols(schema, show) {
 
 export default class ResultsTable extends Component {
 	render() {
-		if (!this.props.data) { return null; }
-		const { schema, data } = this.props.data;
-		const { showLoadMore, onLoadMore, showStdCols } = this.props;
+		const { schema, data, fetching, fetchedAll } = this.props.results;
+		const { onLoadMore, showStdCols } = this.props;
 		const displaySchema = schema.reduce(removeStdCols(schema, showStdCols),[])
 
 		return (
@@ -39,7 +40,8 @@ export default class ResultsTable extends Component {
 						</tbody>
 					</table>
 				</div>
-				{ (showLoadMore) ? <button className="btn btn-primary btn-large" onClick={onLoadMore}>Load Next Page</button> : undefined }
+				{ fetching ? <Spinner /> : undefined }
+				{ (!fetching && !fetchedAll) ? <button className="btn btn-primary btn-large" onClick={onLoadMore}>Load More</button> : undefined }
 			</div>
 		)
 	}
