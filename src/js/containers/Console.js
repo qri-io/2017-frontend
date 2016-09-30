@@ -86,12 +86,12 @@ class Console extends React.Component {
 
 	handleSelectHistoryEntry(i, query) {
 		this.props.setTopPanel(0);
-		this.props.setQuery(query.query.statement);
+		this.props.setQuery(query);
 	}
 
 	handleQuerySelect(i, query) {
 		this.props.setTopPanel(0);
-		this.props.setQuery(query.statement);
+		this.props.setQuery(query);
 	}
 
 	handleLoadMoreResults() {

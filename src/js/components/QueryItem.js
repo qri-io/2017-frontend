@@ -5,7 +5,9 @@ export default class QueryItem extends React.Component {
 		const { data, onSelect } = this.props
 		return (
 			<div className="queryItem" onClick={onSelect}>
-				<h5 className="title">{data.name || data.statement}</h5>
+				<hr />
+				<h5 className="title">{data.name || "unnamed query"}</h5>
+				<small>{data.statement}</small>
 			</div>
 		);
 	}

@@ -1,3 +1,4 @@
+import { selectQueryById } from './query';
 
 export function selectDatasetById(state, id) {
 	return state.entities.datasets[id];
@@ -17,7 +18,14 @@ export function selectUserDatasets(state, username) {
 export function selectDatasetByAddress(state, address) {
 	const { datasets } = state.entities;
 	const id = Object.keys(datasets).find(id => (datasets[id].address == address));
-	return id ? datasets[id] : undefined;
+	if (!id) { return undefined; }
+	if (datasets[id].default_query) {
+		return Object.assign({}, 
+			datasets[id], 
+			{ default_query : selectQueryById(state, datasets[id].default_query) });
+	} else {
+		return datasets[id]
+	}
 }
 
 export function selectLocalDatasetByAddress(state, address) {

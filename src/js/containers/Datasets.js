@@ -42,10 +42,15 @@ class Datasets extends React.Component {
 
 		return (
 			<div className="container">
-				<h3>Datasets</h3>
-				<List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectItem} />
-				{ loading ? <Spinner /> : undefined }
-				{ (!loading && !fetchedAll) ? <button className="btn btn-large btn-primary" onClick={this.handleLoadNextPage}>Load More</button> : undefined }
+				<header className="col-md-12">
+					<h3>DATASETS</h3>
+					<p>user-contributed datasets</p>
+				</header>
+				<div className="col-md-12">
+					<List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectItem} />
+					{ loading ? <Spinner /> : undefined }
+					{ (!loading && !fetchedAll) ? <button className="btn btn-large btn-primary" onClick={this.handleLoadNextPage}>Load More</button> : undefined }
+				</div>
 			</div>
 		);
 	}

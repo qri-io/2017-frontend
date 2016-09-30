@@ -6,6 +6,7 @@ export default class DatasetItem extends React.Component {
 		const { data, onSelect } = this.props
 		return (
 			<div className="datasetItem" onClick={onSelect}>
+				<hr />
 				<Link className="namespace" to={data.address.replace(".","/",-1)}>{data.address}</Link>
 				<p>{data.summary}</p>
 				<ul>

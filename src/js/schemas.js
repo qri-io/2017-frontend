@@ -23,7 +23,8 @@ querySchema.define({
 });
 
 datasetSchema.define({
-  owner: userSchema
+  owner: userSchema,
+  default_query : querySchema
 });
 
 migrationSchema.define({

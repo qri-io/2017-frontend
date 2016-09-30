@@ -5,7 +5,7 @@ export default class QueryHistoryItem extends React.Component {
 		const { data, onSelect } = this.props
 		return (
 			<div className="queryHistoryItem" onClick={onSelect}>
-				<p>{data.query.statement}</p>
+				<p>{data.statement}</p>
 			</div>
 		);
 	}

@@ -1,3 +1,5 @@
+import { push } from 'react-router-redux'
+
 import { CALL_API } from '../middleware/api'
 import { RUN_QUERY } from '../middleware/runQuery'
 import Schemas from '../schemas'
@@ -63,6 +65,13 @@ export function loadQueryPage(page=1, pageSize=30) {
   return (dispatch, getState) => {
     // TODO - check pagination
     return dispatch(fetchQueryPage(page, pageSize));
+  }
+}
+
+export function toConsoleQuery(query) {
+  return (dispatch, getState) => {
+    dispatch(setQuery(query));
+    return dispatch(push('/console'))
   }
 }
 

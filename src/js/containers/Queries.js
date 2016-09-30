@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import { loadQueryPage } from '../actions/query'
+import { toConsoleQuery, loadQueryPage } from '../actions/query'
 import { selectAllQueries } from '../selectors/query'
 
 import List from '../components/List'
@@ -28,7 +28,9 @@ class Queries extends React.Component {
 	}
 
 	handleSelectItem(index, query) {
-		this.props.push("/" + query.address.replace(".", "/", -1))
+		// this.props.push("/" + query.address.replace(".", "/", -1))
+		// console.log(index, query);
+		this.props.toConsoleQuery(query);
 	}
 
 	render() {
@@ -36,9 +38,14 @@ class Queries extends React.Component {
 		
 		return (
 			<div className="container">
-				<h3>Queries</h3>
-				<List data={queries} component={QueryItem} onSelectItem={this.handleSelectItem} />
-				{ loading ? <Spinner /> : undefined }
+				<header className="col-md-12">
+					<h3>QUERIES</h3>
+					<p>Saved <pre>select</pre>'s against qri datasets</p>
+				</header>
+				<div className="col-md-12">
+					<List data={queries} component={QueryItem} onSelectItem={this.handleSelectItem} />
+					{ loading ? <Spinner /> : undefined }
+				</div>
 			</div>
 		);
 	}
@@ -51,7 +58,8 @@ Queries.propTypes = {
 	loading : PropTypes.bool.isRequired,
 
 	push : PropTypes.func.isRequired,
-	loadQueryPage : PropTypes.func.isRequired
+	loadQueryPage : PropTypes.func.isRequired,
+	toConsoleQuery : PropTypes.func.isRequired,
 }
 
 Queries.defaultProps = {
@@ -70,5 +78,6 @@ function mapStateToProps(state, ownProps) {
 
 export default connect(mapStateToProps, {
 	push,
-	loadQueryPage
+	loadQueryPage,
+	toConsoleQuery
 })(Queries)

@@ -4,9 +4,11 @@ import { Link } from 'react-router'
 import { debounce } from 'lodash'
 
 import { loadDatasetByAddress } from '../actions/dataset'
+import { setQuery, runQuery, downloadQuery } from '../actions/query'
+
 import { selectDatasetByAddress } from '../selectors/dataset'
 import { selectSessionUser } from '../selectors/session'
-import { setQuery, runQuery, downloadQuery } from '../actions/query'
+import { selectQueryById } from '../selectors/query'
 
 import SchemaTable from '../components/SchemaTable'
 import QueryEditor from '../components/QueryEditor'
@@ -30,13 +32,21 @@ class Dataset extends React.Component {
   componentWillMount() {
     this.props.loadDatasetByAddress(this.props.address)
 		// match the address to the current namespce, unless there's already a query
-    this.props.setQuery({
-    	address : this.props.address,
-    	statement : this.props.query.statement
-    });
+		if (this.props.dataset && this.props.dataset.default_query) {
+			this.props.setQuery(this.props.dataset.default_query);
+		} else {
+	    this.props.setQuery({
+	    	address : this.props.address,
+	    	statement : this.props.query.statement
+	    });
+	  }
   }
 
 	componentWillReceiveProps(nextProps) {
+		if (nextProps.dataset && nextProps.dataset.default_query && (!this.props.dataset || !this.props.dataset.default_query)) {
+			this.props.setQuery(nextProps.dataset.default_query);
+		}
+
 		if (nextProps.address != this.props.address) {
 	    this.props.loadDatasetByAddress(nextProps.address)
 		}
@@ -155,6 +165,8 @@ Dataset.propTypes = {
 	address : PropTypes.string.isRequired,
 	// the dataset model to display
 	dataset : PropTypes.object,
+	// default query to show if none is present
+	default_query : PropTypes.object,
 	
 	// query for console
 	query : PropTypes.object.isRequired,
@@ -185,7 +197,7 @@ function mapStateToProps(state, ownProps) {
 	const address = [username, ownProps.params.dataset].join(".")
 	const user = selectSessionUser(state);
 
-	const results = state.results[state.console.query.statement];
+	const results = state.results[state.console.query.statement]
 
 	let permissions = {
 		edit : false,
@@ -204,6 +216,7 @@ function mapStateToProps(state, ownProps) {
 		address,
 
 		dataset : selectDatasetByAddress(state, address),
+
 		results,
 		permissions,
 
