@@ -21,9 +21,17 @@ export default class ResultsTable extends Component {
 		if (!this.props.results) {
 			return <div className="resultsTable"></div>;
 		}
-		const { schema, data, fetching, fetchedAll } = this.props.results;
+		const { schema, data, fetching, fetchedAll, error } = this.props.results;
 		const { onLoadMore, showStdCols } = this.props;
 		const displaySchema = schema.reduce(removeStdCols(schema, showStdCols),[])
+
+		if (error) {
+			return (
+				<div className="resultsTable">
+					<h5>{error}</h5>
+				</div>
+			); 
+		}
 
 		return (
 			<div className="resultsTable">

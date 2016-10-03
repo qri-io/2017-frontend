@@ -36,7 +36,7 @@ class Console extends React.Component {
 			'handleLoadMoreResults'
 		].forEach(m => this[m] = this[m].bind(this))
 
-		this.debouncedSetQuery = debounce(props.setQuery, 200)
+		// this.debouncedSetQuery = debounce(props.setQuery, 200)
 	}
 
   componentWillMount(props) {
@@ -62,7 +62,8 @@ class Console extends React.Component {
 	}
 
 	handleEditorChange(value) {
-		this.debouncedSetQuery(value)
+		// this.debouncedSetQuery(value)
+		this.props.setQuery(value);
 	}
 	handleEditorAddressChange(value) {
 		this.props.setQueryAddress(value);

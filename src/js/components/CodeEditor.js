@@ -1,6 +1,6 @@
 import ace from 'brace';
 import React, { Component, PropTypes } from 'react';
-import { isEqual } from 'lodash';
+import { isEqual, debounce } from 'lodash';
 
 import 'brace/ext/language_tools';
 import '../ace/mode/pgsql';
@@ -32,6 +32,10 @@ export default class CodeEditor extends Component {
     .forEach(method => {
       this[method] = this[method].bind(this);
     });
+
+    this.debouncedOnChange = debounce((v) => {
+      this.props.onChange(v);
+    }, 200)
   }
 
   componentDidMount() {
@@ -152,7 +156,7 @@ export default class CodeEditor extends Component {
   onChange() {
     if (this.props.onChange && !this.silent) {
       const value = this.editor.getValue();
-      this.props.onChange(value);
+      this.debouncedOnChange(value);
     }
   }
 

@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { debounce } from 'lodash'
 
 import { loadDatasetByAddress } from '../actions/dataset'
 import { setQuery, runQuery, downloadQuery } from '../actions/query'
@@ -26,29 +25,29 @@ class Dataset extends React.Component {
 			'handleDownloadQuery',
 		].forEach(m => this[m] = this[m].bind(this))
 
-		this.debouncedSetQuery = debounce(props.setQuery, 200)
+		// this.debouncedSetQuery = debounce(props.setQuery, 200)
 	}
 
   componentWillMount() {
-    this.props.loadDatasetByAddress(this.props.address)
+    this.props.loadDatasetByAddress(this.props.address, ["schema"])
 		// match the address to the current namespce, unless there's already a query
 		if (this.props.dataset && this.props.dataset.default_query) {
 			this.props.setQuery(this.props.dataset.default_query);
 		} else {
 	    this.props.setQuery({
 	    	address : this.props.address,
-	    	statement : this.props.query.statement
+	    	statement : ""
 	    });
 	  }
   }
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.dataset && nextProps.dataset.default_query && (!this.props.dataset || !this.props.dataset.default_query)) {
-			this.props.setQuery(nextProps.dataset.default_query);
-		}
-
 		if (nextProps.address != this.props.address) {
 	    this.props.loadDatasetByAddress(nextProps.address)
+		}
+
+		if (nextProps.dataset && nextProps.dataset.default_query && (!this.props.dataset || !this.props.dataset.default_query)) {
+			this.props.setQuery(nextProps.dataset.default_query);
 		}
 	}
 
@@ -57,7 +56,8 @@ class Dataset extends React.Component {
 	}
 
 	handleEditorChange(value) {
-		this.debouncedSetQuery(value)
+		// this.debouncedSetQuery(value)
+		this.props.setQuery(value);
 	}
 
 	handleRunQuery(e) {

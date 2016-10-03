@@ -5,6 +5,7 @@ import { RUN_QUERY } from '../middleware/runQuery'
 import Schemas from '../schemas'
 import { setBottomPanel } from './console'
 import { addHistoryEntry } from './session'
+import { resetErrorMessage } from './index'
 
 export const QUERY_SET = 'QUERY_SET'
 
@@ -40,7 +41,16 @@ export function runQuery(request) {
         types: [ QUERY_RUN_REQUEST, QUERY_RUN_SUCCESS, QUERY_RUN_FAILURE ],
         request,
       }
-    });
+    }).then(action => {
+      // Dismiss errors after 3.8 seconds
+      if (action.type == QUERY_RUN_FAILURE) {
+        setTimeout(() => {
+          dispatch(resetErrorMessage());
+        }, 3800);
+      }
+
+      return null;
+    })
   }
 }
 
