@@ -6,6 +6,7 @@ import { loadDatasetByAddress, loadDatasetMigrations } from '../actions/dataset'
 import { selectDatasetMigrations } from '../selectors/migration'
 import { selectDatasetByAddress } from '../selectors/dataset'
 
+import DatasetHeader from '../components/DatasetHeader'
 import List from '../components/List'
 import MigrationItem from '../components/MigrationItem'
 import Spinner from '../components/Spinner'
@@ -59,10 +60,14 @@ class DatasetMigrations extends React.Component {
 		}
 		
 		return (
-			<div className="container">
-				<h2>{dataset.name} migrations</h2>
-				<hr />
-				<List data={migrations} component={MigrationItem} onSelectItem={this.handleSelectItem} />
+			<div id="wrapper">
+				<div className="container">
+					<DatasetHeader dataset={dataset} />
+					<div className="col-md-12">
+						<p>MIGRATIONS</p>
+						<List data={migrations} component={MigrationItem} onSelectItem={this.handleSelectItem} />
+					</div>
+				</div>
 			</div>
 		);
 	}

@@ -6,6 +6,7 @@ import { loadDatasetByAddress, loadDatasetChanges } from '../actions/dataset'
 import { selectDatasetChanges } from '../selectors/change'
 import { selectDatasetByAddress } from '../selectors/dataset'
 
+import DatasetHeader from '../components/DatasetHeader'
 import List from '../components/List'
 import ChangeItem from '../components/ChangeItem'
 import Spinner from '../components/Spinner'
@@ -59,10 +60,14 @@ class DatasetChanges extends React.Component {
 		}
 		
 		return (
-			<div className="container">
-				<h2>{dataset.name} changes</h2>
-				<hr />
-				<List data={changes} component={ChangeItem} onSelectItem={this.handleSelectItem} />
+			<div id="wrapper">
+				<div className="container">
+					<DatasetHeader dataset={dataset} />
+					<div className="col-md-12">
+						<p>CHANGES</p>
+						<List data={changes} component={ChangeItem} onSelectItem={this.handleSelectItem} />
+					</div>
+				</div>
 			</div>
 		);
 	}

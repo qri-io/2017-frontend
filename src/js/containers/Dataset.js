@@ -9,6 +9,7 @@ import { selectDatasetByAddress } from '../selectors/dataset'
 import { selectSessionUser } from '../selectors/session'
 import { selectQueryById } from '../selectors/query'
 
+import DatasetHeader from '../components/DatasetHeader'
 import SchemaTable from '../components/SchemaTable'
 import QueryEditor from '../components/QueryEditor'
 import ResultsTable from '../components/ResultsTable'
@@ -124,25 +125,13 @@ class Dataset extends React.Component {
 		return (
 			<div id="wrapper">
 				<div className="container">
+					<DatasetHeader dataset={dataset} />
 					<div className="col-md-12">
-						<header className="page-header col-md-12">
-							<small>DATASET</small>
-							<h2>
-								<a href={ "/" + username }>{ username }</a>
-								<span>.</span>
-								<a href={ "/" + username + "/" + datasetName }>{ datasetName }</a>
-							</h2>
-							<p>
-								<span>{ dataset.TableCount || 0 } Tables </span>
-								<span>{ dataset.RowCount || 0 } Rows </span>
-								{ dataset.sourceUrl ? <span>| <a href={ dataset.sourceUrl } target="_blank">{ dataset.sourceUrl }</a></span> : undefined }
-							</p>
-							{this.renderEditButtons(this.props)}
-							<QueryEditor query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />
-							<div>
-								<p>{ dataset.description }</p>
-							</div>
-						</header>
+						{this.renderEditButtons(this.props)}
+						<p>{ dataset.description }</p>
+					</div>
+					<div className="col-md-12">
+						<QueryEditor query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />
 						{this.renderResults(this.props)}
 						<section className="col-md-12">
 							<hr />
