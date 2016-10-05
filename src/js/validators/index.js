@@ -1,3 +1,10 @@
+// alphanumeric must start with a letter and contian only letters & numbers
+const	alphaNumericRegex = /^[a-z0-9_-]{2,35}$/gi,
+			titleRegex        = /^[\sa-z0-9_-]{1,200}$/gi,
+			emailRegex 				= /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+			// slugRegex  = /^[a-z0-9-_]+$/gi,
+			// pathRegex  = /^[a-z0-9-_/]+/$/gi,
+
 
 var Validator = function (input) {
 	// code
@@ -67,6 +74,15 @@ Validator.prototype.user = function () {
 	return this;
 }
 
+Validator.prototype.email = function() {
+	let email = this.input || ""
+	if (emailRegex.exec(email) == null) {
+		this.errors.push("invalid email");
+	}
+	
+	return this;
+}
+
 Validator.prototype.message = function ()  {
 	return (this.errors.length > 0) ? this.errors[0] : undefined;
 }
@@ -74,15 +90,6 @@ Validator.prototype.message = function ()  {
 export default function Validate(input) {
 	return new Validator(input);
 }
-
-
-// alphanumeric must start with a letter and contian only letters & numbers
-const	alphaNumericRegex = /^[a-z0-9_-]{2,35}$/gi,
-			titleRegex        = /^[\sa-z0-9_-]{1,200}$/gi
-			// yes, this is just ripped from the internet somewhere. Yes it should be improved. TODO - validate emails the right way
-			// emailRegex = /(?i)[A-Z0-9!#$%&'*+/=?^_{|}~-]+(?:\.[A-Z0-9!#$%&'*+/=?^_{|}~-]+)*@(?:[A-Z0-9](?:[A-Z0-9-]*[A-Z0-9])?\.)+[A-Z0-9](?:[A-Z0-9-]*[A-Z0-9])?/gi
-			// slugRegex  = /^[a-z0-9-_]+$/gi,
-			// pathRegex  = /^[a-z0-9-_/]+/$/gi,
 
 // make sure a handle contains only alphanumeric chars,_,-, and starts with a letter
 function validHandle(handle="") {

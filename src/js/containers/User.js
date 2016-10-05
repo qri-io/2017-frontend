@@ -49,7 +49,7 @@ class User extends React.Component {
 					<h2>
 						<Link to={"/" + user.username }>{ user.username }</Link>
 					</h2>
-					{ permissions.edit ? <Link to="/settings/user" >settings</Link> : undefined }
+					{ permissions.edit ? <Link to="/settings" >settings</Link> : undefined }
 					<p>{ user.description }</p>
 				</header>
 				<div className="col-md-12">

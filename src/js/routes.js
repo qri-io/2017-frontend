@@ -41,6 +41,12 @@ export default {
 			}
 		},
 		{
+			path: '/settings',
+			getComponent(location, cb) {
+				System.import('./containers/UserSettings').then(loadRoute(cb)).catch(errorLoading);
+			}
+		},
+		{
 			path: '/login',
 			getComponent(location, cb) {
 			 System.import('./containers/Login').then(loadRoute(cb)).catch(errorLoading);

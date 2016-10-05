@@ -58,19 +58,6 @@ function locals(state = initialState, action) {
   return state;
 }
 
-//
-function message (state = null, action) {
-  const { type, message } = action
-
-  if (type === ActionTypes.SET_MESSAGE) {
-    return null;
-  } else if (message) {
-    return message;
-  }
-
-  return state;
-}
-
 // Updates error message to notify about the failed fetches.
 function errorMessage(state = null, action) {
   const { type, error, silentError } = action
@@ -84,11 +71,24 @@ function errorMessage(state = null, action) {
   return state
 }
 
+function message(state = null, action) {
+  const { type, message } = action
+
+  if (type === ActionTypes.RESET_MESSAGE) {
+    return null
+  } else if (message) {
+    return message;
+  }
+
+  return state
+}
+
 const rootReducer = combineReducers({
   entities,
   locals,
   pagination,
   errorMessage,
+  message,
   message,
   session : sessionReducer,
   console: consoleReducer,

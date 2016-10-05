@@ -104,6 +104,7 @@ class App extends Component {
         <Navbar user={user} onToggleMenu={this.handleMenuToggle} />
         <MainMenu user={user} show={showMenu} />
         {this.renderErrorMessage()}
+        {this.renderMessage()}
         {children}
       </div>
     )

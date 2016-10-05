@@ -9,6 +9,7 @@ import NewDataset from './containers/NewDataset'
 import Console from './containers/Console'
 import Login from './containers/Login'
 import User from './containers/User'
+import UserSettings from './containers/UserSettings'
 import Dataset from './containers/Dataset'
 import DatasetChanges from './containers/DatasetChanges'
 import DatasetMigrations from './containers/DatasetMigrations'
@@ -53,6 +54,10 @@ export default {
 		{
 			path: '/login',
 			component : Login
+		},
+		{
+			path: '/settings',
+			component : UserSettings
 		},
 		{
 			path: '/:user',

@@ -1,5 +1,10 @@
 import { CALL_API } from '../middleware/api'
+import { push } from 'react-router-redux';
+
 import Schemas from '../schemas'
+import { setMessage, resetMessage } from './index'
+import { updateLocalModel, editModel, clearLocalModel } from './locals'
+import { selectSessionUser } from '../selectors/session';
 
 export const SESSION_USER_REQUEST = 'SESSION_USER_REQUEST'
 export const SESSION_USER_SUCCESS = 'SESSION_USER_SUCCESS'
@@ -27,6 +32,51 @@ export function loadSessionUser() {
     }
 
     return dispatch(fetchSessionUser())
+  }
+}
+
+export const EDIT_SESSION_USER = 'EDIT_SESSION_USER';
+export function editSessionUser() {
+  return (dispatch, getState) => {
+    const user = selectSessionUser(getState());
+    if (!user) {
+      return null
+    }
+
+    return dispatch(editModel(Schemas.SESSION_USER, EDIT_SESSION_USER, user));
+  }
+}
+
+const SESSION_USER_UPDATE = 'SESSION_USER_UPDATE';
+export function updateSessionUser(user) {
+  return updateLocalModel(Schemas.SESSION_USER, SESSION_USER_UPDATE, user);
+}
+
+export const SAVE_SESSION_USER_REQUEST = 'SAVE_SESSION_USER_REQUEST';
+export const SAVE_SESSION_USER_SUCCESS = 'SAVE_SESSION_USER_SUCCESS';
+export const SAVE_SESSION_USER_FAILURE = 'SAVE_SESSION_USER_FAILURE';
+
+export function saveSessionUser(user) {
+  return (dispatch, setState) => {
+    return dispatch({
+      [CALL_API] : {
+        types : [SAVE_SESSION_USER_REQUEST, SAVE_SESSION_USER_SUCCESS, SAVE_SESSION_USER_FAILURE],
+        endpoint : '/session',
+        method : 'PUT',
+        schema : Schemas.SESSION_USER,
+        data : user
+      }
+    }).then(action => {
+      if (action.type == SAVE_SESSION_USER_SUCCESS) {
+        dispatch(setMessage("settings successfully saved"));
+        setTimeout(() => {
+          dispatch(resetMessage());
+        }, 3500);
+        return dispatch(push(`/${user.username}`));
+      }
+
+      return null
+    });
   }
 }
 

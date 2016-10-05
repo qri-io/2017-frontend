@@ -20,7 +20,11 @@ export default class EditDataset extends React.Component {
 			loading : !props.dataset
 		};
 
-		[ "handleChange", "handleSave", "handleDelete" ].forEach(m => this[m] = this[m].bind(this));
+		[ 
+			"handleChange", 
+			"handleSave", 
+			"handleDelete" 
+		].forEach(m => this[m] = this[m].bind(this));
 	}
 
 	componentWillMount() {
