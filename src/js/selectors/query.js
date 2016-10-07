@@ -27,6 +27,12 @@ export function selectUserQueries(state, username) {
 	},[]);
 }
 
+export function selectQueryBySlug(state, slug) {
+	const { queries } = state.locals
+	const id = Object.keys(queries).find(id => (queries[id].slug  == slug));
+	return id ? queries[id] : undefined;
+}
+
 export function selectLocalQueryByAddress(state, address) {
 	const { queries } = state.locals
 	const id = Object.keys(queries).find(id => (queries[id].address == address));

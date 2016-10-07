@@ -144,7 +144,9 @@ function createMigration(migration) {
 			if (action.type === MIGRATION_CREATE_SUCCESS && action.response.entities.migrations) {
 				
 				dispatch(setMessage("migration created"));
-				setTimeout(() => resetMessage(), 5000);
+				setTimeout(() => { 
+					dispatch(resetMessage()) 
+				}, 3500);
 
 				const { datasets, migrations } = action.response.entities;
 				let address = datasets[Object.keys(datasets)[0]].address

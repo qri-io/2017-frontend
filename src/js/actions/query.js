@@ -7,6 +7,8 @@ import { setBottomPanel } from './console'
 import { addHistoryEntry } from './session'
 import { resetErrorMessage } from './index'
 
+import { selectQueryBySlug } from '../selectors/query';
+
 export const QUERY_SET = 'QUERY_SET'
 
 export function setQuery(value) {
@@ -54,6 +56,45 @@ export function runQuery(request) {
   }
 }
 
+export const QUERY_REQUEST = 'QUERY_REQUEST'
+export const QUERY_SUCCESS = 'QUERY_SUCCESS'
+export const QUERY_FAILURE = 'QUERY_FAILURE'
+
+export function fetchQueryBySlug(slug="") {
+  return {
+    [CALL_API] : {
+      types : [ QUERY_REQUEST, QUERY_SUCCESS, QUERY_FAILURE ],
+      endpoint : "/queries",
+      method : "GET",
+      schema : Schemas.QUERY,
+      data : { slug }
+    }
+  }
+}
+
+export function loadQueryBySlug(slug="", requiredFields=[], setOnLoad=false) {
+  return (dispatch, getState) => {
+    const q = selectQueryBySlug(getState(), slug);
+    if (q && requiredFields.every(key => q.hasOwnProperty(key))) {
+      if (setOnLoad) {
+        return dispatch(setQuery(q));
+      }
+      return null;
+    }
+
+    return dispatch(fetchQueryBySlug(slug))
+      .then(action => {
+        if (action.type === QUERY_SUCCESS && setOnLoad) {
+          return dispatch(setQuery(action.response.entities.queries[action.response.result]));
+        }
+
+        return null;
+      });
+  }
+}
+
+
+
 export const QUERIES_REQUEST = 'QUERIES_REQUEST'
 export const QUERIES_SUCCESS = 'QUERIES_SUCCESS'
 export const QUERIES_FAILURE = 'QUERIES_FAILURE'
@@ -81,7 +122,7 @@ export function loadQueryPage(page=1, pageSize=30) {
 export function toConsoleQuery(query) {
   return (dispatch, getState) => {
     dispatch(setQuery(query));
-    return dispatch(push('/console'))
+    return dispatch(push(`/console?q=${query.slug}`))
   }
 }
 

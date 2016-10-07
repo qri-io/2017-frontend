@@ -13,7 +13,7 @@ export default {
 	path : "/",
 	component: App,
 	getIndexRoute(location, cb) {
-		System.import('./containers/Datasets').then(loadRoute(cb)).catch(errorLoading)
+		System.import('./containers/Console').then(loadRoute(cb)).catch(errorLoading)
 	},
 	childRoutes: [
 		{

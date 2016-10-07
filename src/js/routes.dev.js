@@ -33,12 +33,8 @@ function loadRoute(cb) {
 export default {
 	path : "/",
 	component: App,
-	indexRoute: Datasets, 
+	indexRoute: Console, 
 	childRoutes: [
-		{
-			path: '/queries',
-			component : Queries
-		},
 		{
 			path: '/datasets',
 			component : Datasets

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { debounce } from 'lodash'
 
-import { setQuery, runQuery, loadQueryPage } from '../actions/query'
+import { setQuery, runQuery, loadQueryBySlug, loadQueryPage } from '../actions/query'
 import { setTopPanel, setBottomPanel, setChartOptions } from '../actions/console'
 import { loadDatasets, loadDataset } from '../actions/dataset'
 
@@ -41,10 +41,17 @@ class Console extends React.Component {
 
   componentWillMount(props) {
     loadData(this.props)
+    if (this.props.slug) {
+    	this.props.loadQueryBySlug(this.props.slug, [], true);
+    }
   }
 
 	componentWillReceiveProps(nextProps) {
     // loadData(nextProps)
+    if (nextProps.slug != this.props.slug) {
+    	this.props.loadQueryBySlug(nextProps.slug, [], true);
+    	this.props.setBottomPanel(0);
+    }
 	}
 
 	handleRunQuery(e) {
@@ -140,6 +147,9 @@ class Console extends React.Component {
 }
 
 Console.propTypes = {
+	// query slug to load to
+	slug : PropTypes.string,
+
 	query : PropTypes.object.isRequired,
 
 	dataset : PropTypes.array,
@@ -168,6 +178,8 @@ function mapStateToProps(state, ownProps) {
 	const results = state.results[state.console.query.statement];
 
 	return Object.assign({}, {
+		slug : ownProps.location.query.slug,
+
 		queries : Object.keys(state.entities.queries).map(key => state.entities.queries[key]),
 		datasets : Object.keys(state.entities.datasets).map(key => state.entities.datasets[key]),
 		queryHistory : state.session.history,
@@ -181,6 +193,7 @@ export default connect(mapStateToProps, {
 	setQuery, 
 	runQuery,
 	loadQueryPage,
+	loadQueryBySlug,
 
 	setTopPanel, 
 	setBottomPanel,
