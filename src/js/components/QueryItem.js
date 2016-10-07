@@ -6,7 +6,7 @@ export default class QueryItem extends React.Component {
 		return (
 			<div className="queryItem" onClick={onSelect}>
 				<hr />
-				<h5 className="title">{data.name || "unnamed query"}</h5>
+				<h5 className="title">{data.headline || data.name || "unnamed query"}</h5>
 				<small>{data.statement}</small>
 			</div>
 		);
