@@ -59,6 +59,12 @@ export default {
 			}
 		},
 		{
+			path: '/:user/queries/:slug',
+			getComponent(location, cb) {
+				System.import('./containers/Query').then(loadRoute(cb)).catch(errorLoading);
+			}
+		},
+		{
 			path: '/:user/:dataset',
 			getComponent(location, cb) {
 				System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);

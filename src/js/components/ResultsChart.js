@@ -39,9 +39,10 @@ function chartDimensions(size) {
 }
 
 export default class ResultsChart extends React.Component {
+
 	render() {
 		const { results, title, margins, options, onOptionsChange, device } = this.props
-		
+
 		if (!results) {
 			return (
 				<div>
@@ -51,20 +52,38 @@ export default class ResultsChart extends React.Component {
 		}
 
 		const { width, height } = chartDimensions(device.size);
+		let xIndex = options.xIndex
+			, yIndex = options.yIndex;
 
-		if (options.xIndex == undefined || options.yIndex == undefined)  {
+		if (typeof options.x_axis == "string") {
+			results.schema.forEach((col, i) => {
+				if (col.name == options.x_axis) {
+					xIndex = i;
+				}
+			});
+		}
+
+		if (typeof options.y_axis == "string") {
+			results.schema.forEach((col, i) => {
+				if (col.name == options.y_axis) {
+					yIndex = i;
+				}
+			});
+		}
+
+		if (xIndex == undefined || yIndex == undefined)  {
 			return (
 				<div className="resultsChart">
-					<ChartOptionsPicker schema={results.schema} options={options} onChange={onOptionsChange} />
+					{ onOptionsChange ? <ChartOptionsPicker schema={results.schema} options={options} onChange={onOptionsChange} /> : undefined  }
 				</div>
 			)
 		}
 		
-		const data = transformResults(results.schema, results.data, options.xIndex, options.yIndex)
+		const data = transformResults(results.schema, results.data, xIndex, yIndex)
 
 		return (
 			<div className="resultsChart">
-				<ChartOptionsPicker schema={results.schema} options={options} onChange={onOptionsChange} />
+				{onOptionsChange ? <ChartOptionsPicker schema={results.schema} options={options} onChange={onOptionsChange} /> : undefined}
 				<LineChart 
 					title={title}
 					data={data}
@@ -80,8 +99,9 @@ export default class ResultsChart extends React.Component {
 
 ResultsChart.propTypes = {
 	options : React.PropTypes.object,
-	onOptionsChange : React.PropTypes.func.isRequired,
-	size : React.PropTypes.string
+	size : React.PropTypes.string,
+
+	onOptionsChange : React.PropTypes.func
 }
 
 ResultsChart.defaultProps = {

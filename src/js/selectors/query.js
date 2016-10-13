@@ -28,7 +28,7 @@ export function selectUserQueries(state, username) {
 }
 
 export function selectQueryBySlug(state, slug) {
-	const { queries } = state.locals
+	const { queries } = state.entities
 	const id = Object.keys(queries).find(id => (queries[id].slug  == slug));
 	return id ? queries[id] : undefined;
 }

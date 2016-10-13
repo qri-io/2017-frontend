@@ -21,6 +21,7 @@ import Change from './containers/Change'
 import NewMigration from './containers/NewMigration'
 import Migration from './containers/Migration'
 import Queries from './containers/Queries'
+import Query from './containers/Query'
 
 function errorLoading(err) {
 	console.error('Dynamic page loading failed', err);
@@ -58,6 +59,10 @@ export default {
 		{
 			path: '/:user',
 			component : User
+		},
+		{
+			path: '/:user/queries/:slug',
+			component : Query
 		},
 		{
 			path: '/:user/:dataset',
