@@ -1,0 +1,52 @@
+.query {
+	margin-top: 2.0rem;
+	margin-bottom: 4.0rem;
+
+	header {
+		margin-bottom: 1.0rem;
+
+		.title {
+			font-family: $bold-heading-font-family;
+			color : $green;
+			text-transform: uppercase;
+		}
+
+		.infoBar {
+			border-top: 1px solid $med-blue-slate;
+			margin-top: 1.0rem;
+			// margin-bottom: 1.0rem;
+			&:after {
+				display: block;
+				content: "";
+				clear: both;	
+			}
+			.item {
+				float: left;
+				margin-right: 2%
+			}
+		}
+
+		.sqlCode {
+			border-bottom: 1px solid $med-blue-slate;
+			margin-bottom: 1.0rem;
+		}
+	}
+
+	footer {
+		margin-top: 2.0rem;
+		padding-top: 1.0rem;
+
+		.run {
+			margin: 0 auto;
+			color: #fff;
+			font-family: $bold-heading-font-family;
+			background-color: $hawt-pink;
+			border-color: $hawt-pink;
+			display: block;
+			&:hover {
+				background-color: $teal;
+				border-color: $teal;
+			}
+		}
+	}
+}

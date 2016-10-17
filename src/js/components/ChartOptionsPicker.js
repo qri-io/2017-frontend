@@ -23,7 +23,7 @@ export default class ChartOptionsPicker extends React.Component {
 			<div className="chartPicker">
 				<label>Chart Type</label>
 				<select disabled={true}>
-					<option>Line</option>
+					<option value="lineChart">Line</option>
 				</select>
 				<label>X Axis</label>
 				<select value={options.xIndex} onChange={this.onXAxisChange}>

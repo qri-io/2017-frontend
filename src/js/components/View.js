@@ -1,20 +1,29 @@
 import React, { PropTypes } from 'react';
 
 import ResultsChart from './ResultsChart';
+import BarChartView from './views/BarChartView';
+import LineChartView from './views/LineChartView';
+import ValueListView from './views/ValueListView';
 
 export default class View extends React.Component {
 	render() {
-		const { data, results, device } = this.props;
+		const { view, results, device } = this.props;
 		
-		if (!data || !data.type) {
-			return undefined;
+		if (!view || !view.type) {
+			return null;
 		}
 
-		switch (data.type) {
-			case "lineChart":
-				return <ResultsChart results={results} options={data.attributes} device={device} />
+		switch (view.type) {
+			case "bar_chart":
+				return <BarChartView {...this.props} />
+			case "column_chart":
+				return <BarChartView {...this.props} />
+			case "value_list":
+				return <ValueListView {...this.props} />
+			case "line_chart":
+				return <LineChartView results={results} options={view.attributes} device={device} />
 			default:
-				return <div>unrecognized view type: {data.type}</div>
+				return <div>unrecognized view type: {view.type}</div>
 		}
 	}
 }
@@ -22,7 +31,7 @@ export default class View extends React.Component {
 View.propTypes = {
 	device : PropTypes.object.isRequired,
 	results : PropTypes.object,
-	data : PropTypes.object.isRequired,
+	view : PropTypes.object.isRequired,
 }
 
 View.defaultProps = {

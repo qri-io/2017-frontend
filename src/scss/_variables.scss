@@ -216,10 +216,13 @@ $display3-weight: 300 !default;
 $display4-weight: 300 !default;
 
 $headings-margin-bottom: ($spacer / 2) !default;
-$headings-font-family:   inherit !default;
+// $headings-font-family:   inherit !default;
+$headings-font-family:   'Colfax-Medium', Helvetica, sans-serif !default;
 $headings-font-weight:   500 !default;
 $headings-line-height:   1.1 !default;
 $headings-color:         inherit !default;
+
+$bold-heading-font-family: 'Colfax-Black', Helvetica, sans-serif !default;
 
 $lead-font-size:   1.25rem !default;
 $lead-font-weight: 300 !default;

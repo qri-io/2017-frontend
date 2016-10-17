@@ -151,6 +151,35 @@ fieldset[disabled] a.btn {
   @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $font-size-sm, $btn-border-radius-sm);
 }
 
+//
+// Circle Buttons
+//
+
+.btn-circle {
+  width: 3.0rem;
+  height: 3.0rem;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 100%;
+}
+.btn-circle.btn-lg {
+  width: 5.0rem;
+  height: 5.0rem;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+}
+
+.btn-circle.btn-xl {
+  width: 7.0rem;
+  height: 7.0rem;
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.33;
+}
+
 
 //
 // Block button

@@ -6,3 +6,7 @@ export function selectUserByUsername(state, username) {
 	
 	return id ? users[id] : undefined;
 }
+
+export function selectUserById(state, id) {
+	return state.entities.users[id];
+}

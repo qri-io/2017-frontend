@@ -1,0 +1,29 @@
+.chart.view {
+	.recharts-text {
+		fill : $med-blue-slate;
+	}
+	.recharts-cartesian-axis-line {
+		stroke : $med-blue-slate;
+	}
+	.recharts-cartesian-axis-tick-line {
+		stroke : $med-blue-slate;
+	}
+	.recharts-bar-cursor {
+		fill: $warm-slate;
+	}
+}
+
+.value.list.view {
+	margin-top: 2.0rem;
+	margin-bottom: 2.0rem;
+	// border-top: 1px solid $med-blue-slate;
+	// border-bottom: 1px solid $med-blue-slate;
+	// background: $warm-slate;
+	border-radius: 3px;
+	padding-top: 1.0rem;
+
+	.value {
+		text-align: left;
+		color: $green;
+	}
+}
