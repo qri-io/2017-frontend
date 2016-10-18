@@ -1,0 +1,20 @@
+.betaSignup {
+	.close {
+		float : right;
+		background: none;
+		border: none;
+		color: $light-blue-slate;
+		font-size: 1.5em;
+		margin-top: -0.8rem;
+	}
+	.title {
+		color: $hawt-pink;
+		margin-top: 0.5rem;
+	}
+
+	.checkbox {
+		margin-left: 3%;
+		float: right;
+		margin-top: 5px;
+	}
+}

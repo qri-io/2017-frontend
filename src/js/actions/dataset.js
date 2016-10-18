@@ -4,7 +4,7 @@ import { CALL_API } from '../middleware/api'
 import Schemas from '../schemas'
 import { selectDatasetByAddress, selectDatasetById } from '../selectors/dataset'
 import { newLocalModel, updateLocalModel, editModel, clearLocalModel } from './locals'
-import { setMessage, resetMessage, removeModel } from './index'
+import { setMessage, resetMessage, removeModel } from './app'
 
 const DATASET_NEW = 'DATASET_NEW';
 export function newDataset(attributes={}) {

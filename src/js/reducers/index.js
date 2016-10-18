@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import merge from 'lodash/merge'
 import { routerReducer as routing } from 'react-router-redux'
 
-import * as ActionTypes from '../actions'
+import * as ActionTypes from '../actions/app'
 
 import pagination from './pagination'
 import sessionReducer from './session'
@@ -10,6 +10,7 @@ import deviceReducer from './device'
 import consoleReducer from './console'
 import appReducer from './app'
 import resultsReducer from './results'
+import locals from './locals'
 
 const initialState = {
   app : {},
@@ -39,23 +40,6 @@ function entities(state = initialState, action) {
   }
 
   return state
-}
-
-// updates an entity cache in response to any actuion with response.local.
-// see local middleware
-function locals(state = initialState, action) {
-  if (action.locals && action.locals.entities) {
-    return merge({}, state, action.locals.entities)
-  }
-
-  if (action.type === ActionTypes.REMOVE_MODEL) {
-    const newState = merge({}, state);
-    newState[action.schema.getKey()] = merge({}, newState[action.schema.getKey()])
-    delete newState[action.schema.getKey()][action.id]
-    return newState
-  }
-
-  return state;
 }
 
 // Updates error message to notify about the failed fetches.
@@ -89,7 +73,7 @@ const rootReducer = combineReducers({
   pagination,
   errorMessage,
   message,
-  message,
+
   session : sessionReducer,
   console: consoleReducer,
   device : deviceReducer,

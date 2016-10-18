@@ -5,7 +5,7 @@ import { RUN_QUERY } from '../middleware/runQuery'
 import Schemas from '../schemas'
 import { setBottomPanel } from './console'
 import { addHistoryEntry } from './session'
-import { resetErrorMessage } from './index'
+import { resetErrorMessage } from './app'
 
 import { selectQueryBySlug } from '../selectors/query';
 

@@ -12,11 +12,13 @@
 @import "forms";
 @import "buttons";
 @import "grid";
+@import "modal";
 
 @import "components";
+@import "containers";
 @import "datatypes";
 
-html, body, #root {
+html, body, #root, #app {
   min-height: 100%;
 }
 
@@ -27,6 +29,10 @@ body {
 
 #content-wrapper, #root {
   min-height: 90%;
+}
+
+.wrapper, .page {
+  min-height: 100%
 }
 
 .logotype {

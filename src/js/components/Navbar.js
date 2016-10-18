@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 
 export default class Navbar extends Component {
 	render() {
-		const { user, onToggleMenu } = this.props;
+		const { user, onToggleMenu, onGimmieInvite } = this.props;
 		return (
 			<div id="navbar">
 				<div className="container">
@@ -18,7 +18,7 @@ export default class Navbar extends Component {
 							{ 
 								user ? 
 									<Link to={`/${user.username}`}>{user.username}</Link> : 
-									<Link to="/login">Login</Link>
+									<button className="btn btn-small btn-primary" onClick={onGimmieInvite}>gimmie beta</button>
 							}
 							<a className="glyphicon glyphicon-menu-hamburger" onClick={onToggleMenu}> MENU</a>
 						</div>
@@ -34,7 +34,8 @@ Navbar.propTypes = {
 		React.PropTypes.object, 
 		React.PropTypes.null]),
 
-	onToggleMenu : React.PropTypes.func.isRequired
+	onToggleMenu : React.PropTypes.func.isRequired,
+	onGimmieInvite : React.PropTypes.func.isRequired
 }
 
 Navbar.defaultProps = {

@@ -3,21 +3,32 @@ import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import { debounce } from 'lodash'
 
-import { resetErrorMessage, resetMessage } from '../actions'
-import { loadSessionUser } from '../actions/session'
-import { toggleMenu, hideMenu } from '../actions/app'
+import { toggleMenu, hideMenu, resetMessage, resetErrorMessage, showModal, hideModal } from '../actions/app'
 import { resizeDevice } from '../actions/device'
+import { loadSessionUser } from '../actions/session'
 
-import { selectSessionUser } from '../selectors/session'
+import { selectSessionUser } from '../selectors/session';
 
 import Navbar from '../components/Navbar'
 import MainMenu from '../components/MainMenu'
+import BetaSignup from './BetaSignup';
+
+const BETA_SIGNUP_MODAL = 'BETA_SIGNUP_MODAL';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
-    [ "handleChange", "handleDismissClick", "handleDismissMessage", "handleMenuToggle", "handleHideMenu" ].forEach(m => this[m] = this[m].bind(this))
+    [ 
+      "handleChange", 
+      "handleDismissClick", 
+      "handleDismissMessage", 
+      "handleHideMenu",
+      "handleMenuToggle", 
+      "handleGimmieInvite",
+      "handleHideModal",
+      "modal"
+    ].forEach(m => this[m] = this[m].bind(this));
   }
 
   componentWillMount() {
@@ -27,7 +38,7 @@ class App extends Component {
     // debounce device resizing to not be a jerk on resize
     window.onresize = debounce((e) => {
       this.props.resizeDevice(window.innerWidth, window.innerHeight)
-    }, 200)
+    }, 250)
 
     // initial call to make things not crazy
     this.props.resizeDevice(window.innerWidth, window.innerHeight)
@@ -37,6 +48,9 @@ class App extends Component {
     window.onresize = this._oldResize
   }
 
+  handleChange(nextValue) {
+    browserHistory.push(`/${nextValue}`)
+  }
   handleDismissClick(e) {
     this.props.resetErrorMessage()
     e.preventDefault()
@@ -57,8 +71,37 @@ class App extends Component {
     }
   }
 
-  handleChange(nextValue) {
-    browserHistory.push(`/${nextValue}`)
+  handleGimmieInvite() {
+    this.props.showModal(BETA_SIGNUP_MODAL, this);
+  }
+  handleHideModal() {
+    this.props.hideModal();
+  }
+
+
+  /* app implements the modal pattern as well as using it */
+  modal(name, data) {
+    switch (name) {
+      case BETA_SIGNUP_MODAL:
+        return <BetaSignup onSaved={this.handleHideModal} onCancelled={this.handleHideModal} />
+    }
+  }
+
+  /**
+   * presenting modals is easy! fun even! yay! import showModal from actions/app, and call it with ("name", [element that will present modal], [data object])
+   * it's expected that the element that presents the modal will have a method "modal", that will return either a react element or undefined
+   * Whatever it gives back will be presented
+   */
+  renderModal() {
+    if (this.props.modal) {
+      return (
+        <div id="modal-wrap">
+          <div className="modal dialog"  tabindex="-1" role="dialog">
+            {this.props.modal.element ? this.props.modal.element.modal(this.props.modal.name, this.props.modal.data) : undefined}
+          </div>
+        </div>
+      );
+    }
   }
 
   renderErrorMessage() {
@@ -100,12 +143,13 @@ class App extends Component {
   render() {
     const { children, inputValue, user, showMenu } = this.props
     return (
-      <div onClick={this.handleHideMenu}>
-        <Navbar user={user} onToggleMenu={this.handleMenuToggle} />
+      <div id="app" onClick={this.handleHideMenu}>
+        <Navbar user={user} onToggleMenu={this.handleMenuToggle} onGimmieInvite={this.handleGimmieInvite} />
         <MainMenu user={user} show={showMenu} />
         {this.renderErrorMessage()}
         {this.renderMessage()}
         {children}
+        {this.renderModal()}
       </div>
     )
   }
@@ -133,7 +177,9 @@ function mapStateToProps(state, ownProps) {
     errorMessage: state.errorMessage,
     inputValue: ownProps.location.pathname.substring(1),
     user : selectSessionUser(state),
-    showMenu : state.app.showMenu
+    showMenu : state.app.showMenu,
+
+    modal : state.app.modal,
   }
 }
 
@@ -143,5 +189,7 @@ export default connect(mapStateToProps, {
   loadSessionUser,
   resizeDevice,
   toggleMenu,
-  hideMenu
+  hideMenu,
+  showModal,
+  hideModal
 })(App)

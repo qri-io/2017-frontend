@@ -2,7 +2,7 @@ import { push } from 'react-router-redux'
 
 import { CALL_API } from '../middleware/api'
 import Schemas from '../schemas'
-import { setMessage, resetMessage, removeModel } from './index'
+import { setMessage, resetMessage, removeModel } from './app'
 import { newLocalModel, updateLocalModel, editModel } from './locals'
 import { selectMigrationByNumber, selectMigrationById } from '../selectors/migration'
 

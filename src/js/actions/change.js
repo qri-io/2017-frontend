@@ -4,7 +4,7 @@ import { CALL_API } from '../middleware/api'
 import Schemas from '../schemas'
 
 import { selectChangeByNumber, selectChangeById } from '../selectors/change'
-import { setMessage, resetMessage, removeModel } from './index'
+import { setMessage, resetMessage, removeModel } from './app'
 import { updateLocalModel, newLocalModel, editModel } from './locals'
 
 import { selectDatasetByAddress } from '../selectors/dataset'

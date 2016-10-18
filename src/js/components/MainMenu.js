@@ -10,7 +10,7 @@ export default class MainMenu extends React.Component {
 
 	userLinks(user) {
 		if (!user) {
-			return undefined
+			return <Link to="/login">Login</Link>
 		}
 
 		return (

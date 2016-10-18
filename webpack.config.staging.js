@@ -5,6 +5,7 @@ var webpack = require('webpack');
 
 // for local tesing of compressed files
 var ENV = {
+ "process.env.REACT_SYNTAX_HIGHLIGHTER_LIGHT_BUILD": true,
   __BUILD__ : {
     PRODUCTION : false,
     DEVELOP : false,

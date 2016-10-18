@@ -4,6 +4,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 var ENV = {
+ "process.env.REACT_SYNTAX_HIGHLIGHTER_LIGHT_BUILD": true,
   __BUILD__ : {
     PRODUCTION : JSON.stringify(false),
     DEVELOP : JSON.stringify(true),

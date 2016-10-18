@@ -2,7 +2,7 @@ import { CALL_API } from '../middleware/api'
 import { push } from 'react-router-redux';
 
 import Schemas from '../schemas'
-import { setMessage, resetMessage } from './index'
+import { setMessage, resetMessage } from './app'
 import { updateLocalModel, editModel, clearLocalModel } from './locals'
 import { selectSessionUser } from '../selectors/session';
 

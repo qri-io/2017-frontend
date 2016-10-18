@@ -12,7 +12,6 @@ export function newLocalModel(schema, type, attributes={}) {
 	}
 }
 
-
 export function removeLocalModel(schema, type, id) {
 	return {
 		[LOCAL_ACTION] : {

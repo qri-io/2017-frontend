@@ -9,6 +9,11 @@ import AxisTick from './AxisTick';
 export default class BarChartView extends React.Component {
 	render() {
 		const { view, results, device } = this.props;
+
+		if (!results || !results.data) {
+			return null;
+		}
+
 		const data = selectViewData(view, results);
 		const dim = viewConfig.dimensions(device, view);
 

@@ -85,7 +85,8 @@ User.defaultProps = {
 
 function mapStateToProps(state, ownProps) {
 	const username = ownProps.params.user;
-
+	console.log(username);
+	
 	let permissions = {
 		edit : false,
 		del : false
