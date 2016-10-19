@@ -37,16 +37,25 @@
 		padding-top: 1.0rem;
 
 		.run {
+			width: 30px;
+			height: 60px;
 			margin: 0 auto;
-			color: #fff;
-			font-family: $bold-heading-font-family;
-			background-color: $hawt-pink;
-			border-color: $hawt-pink;
 			display: block;
-			&:hover {
-				background-color: $teal;
-				border-color: $teal;
+			.qBang {
+				transition: all 0.3s;
 			}
+			&:hover .qBang {
+				fill : white;
+			}
+			// color: #fff;
+			// font-family: $bold-heading-font-family;
+			// background-color: $hawt-pink;
+			// border-color: $hawt-pink;
+			// display: block;
+			// &:hover {
+				// background-color: $teal;
+				// border-color: $teal;
+			// }
 		}
 	}
 }

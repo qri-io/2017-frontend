@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router'
 
@@ -10,10 +10,12 @@ import SqlCode from '../components/SqlCode';
 import Spinner from '../components/Spinner';
 import View from '../components/View';
 import ValueListView from '../components/views/ValueListView';
+import QBang from '../components/QBang'
 
-export default class Query extends React.Component {
+class Query extends Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			loading : !props.query,
 		};
@@ -69,7 +71,7 @@ export default class Query extends React.Component {
 									<small>Written By:</small>
 									<Link to={`/${owner.username}`} ><h5>{owner.username}</h5></Link>
 								</div>
-								<div className="item">
+								{/*<div className="item">
 									<small>Address:</small>
 									<Link to={"/" + query.address.replace(".", "/")}><h5>{query.address}</h5></Link>
 								</div>
@@ -80,11 +82,13 @@ export default class Query extends React.Component {
 							</div>
 							<SqlCode title="Statement" namespace={query.namespace} statement={query.statement} slug={query.slug} />
 							<p className="description">{query.description}</p>
+						</div>*/}
+							</div>
 						</div>
 					</header>
 					{this.renderViews()}
 					<section className="run-button-wrap col-md-10 offset-md-1">
-						{ query.views ? <button className="run btn btn-circle btn-xl" onClick={this.handleRunQuery}>RUN</button> : undefined }
+						{ query.views ? <a className="run" onClick={this.handleRunQuery}><QBang /></a> : undefined }
 					</section>
 				</div>
 			</div>

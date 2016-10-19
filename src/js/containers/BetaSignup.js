@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import { newInvite, updateInvite, saveInvite } from '../actions/invite';
@@ -7,8 +7,7 @@ import validateInvite from '../validators/invite';
 
 import ValidInput from '../components/ValidInput';
 
-
-class BetaSignup extends React.Component {
+class BetaSignup extends Component {
 	constructor(props) {
 		super(props);
 
