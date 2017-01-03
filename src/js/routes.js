@@ -17,39 +17,35 @@ export default {
 	},
 	childRoutes: [
 		{
-			path: '/queries',
-			getComponent(location, cb) {
-				System.import('./containers/Queries').then(loadRoute(cb)).catch(errorLoading)
-			},
-		},
-		{
 			path: '/datasets',
 			getComponent(location, cb) {
 				System.import('./containers/Datasets').then(loadRoute(cb)).catch(errorLoading)
 			},
 		},
 		{
-			path: '/datasets/new',
+			path: '/login',
 			getComponent(location, cb) {
-				System.import('./containers/NewDataset').then(loadRoute(cb)).catch(errorLoading)
-			}
-		},
-		{
-			path: '/console',
-			getComponent(location, cb) {
-			  System.import('./containers/Console').then(loadRoute(cb)).catch(errorLoading);
+			 System.import('./containers/Login').then(loadRoute(cb)).catch(errorLoading);
 			}
 		},
 		{
 			path: '/settings',
 			getComponent(location, cb) {
 				System.import('./containers/UserSettings').then(loadRoute(cb)).catch(errorLoading);
-			}
+			},
+			childRoutes : [
+				{
+					path : "/keys",
+					getComponent(location, cb) {
+						System.import('./containers/SshKeys').then(loadRoute(cb)).catch(errorLoading);
+					}
+				}
+			]
 		},
 		{
-			path: '/login',
+			path : '/user/:user',
 			getComponent(location, cb) {
-			 System.import('./containers/Login').then(loadRoute(cb)).catch(errorLoading);
+				System.import('./containers/User').then(loadRoute(cb)).catch(errorLoading);
 			}
 		},
 		{
@@ -59,55 +55,81 @@ export default {
 			},
 			childRoutes: [
 				{
-					path: '/qri/:user',
-					getComponent(location, cb) {
-						System.import('./containers/User').then(loadRoute(cb)).catch(errorLoading);
-					}
-				},
-				{
-					path: '/qri/:user/queries/:slug',
-					getComponent(location, cb) {
-						System.import('./containers/Query').then(loadRoute(cb)).catch(errorLoading);
-					}
-				},
-				{
-					path: '/qri/:user/:dataset',
+					path: '/:path',
 					getComponent(location, cb) {
 						System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);
-					}
-				},
-				{
-					path: '/qri/:user/:dataset/edit',
-					getComponent(location, cb) {
-						System.import('./containers/EditDataset').then(loadRoute(cb)).catch(errorLoading);
-					}
-				},
-
-				{
-					path: '/qri/:user/:dataset/changes',
-					getComponent(location, cb) {
-						System.import('./containers/DatasetChanges').then(loadRoute(cb)).catch(errorLoading);
-					}
-				},
-				{
-					path: '/qri/:user/:dataset/changes/new',
-					getComponent(location, cb) {
-						System.import('./containers/NewChange').then(loadRoute(cb)).catch(errorLoading);
-					}
-				},
-				{
-					path: '/qri/:user/:dataset/changes/:number',
-					getComponent(location, cb) {
-						System.import('./containers/Change').then(loadRoute(cb)).catch(errorLoading);
-					}
-				},
-				{
-					path: '/qri/:user/:dataset/changes/:edit',
-					getComponent(location, cb) {
-						System.import('./containers/EditChange').then(loadRoute(cb)).catch(errorLoading);
-					}
+					},
 				}
 			]
-		}
+			// childRoutes: [
+			// 	{
+			// 		path: '/qri/:user',
+			// 		getComponent(location, cb) {
+			// 			System.import('./containers/User').then(loadRoute(cb)).catch(errorLoading);
+			// 		}
+			// 	},
+			// 	{
+			// 		path: '/qri/:user/queries/:slug',
+			// 		getComponent(location, cb) {
+			// 			System.import('./containers/Query').then(loadRoute(cb)).catch(errorLoading);
+			// 		}
+			// 	},
+			// 	{
+			// 		path: '/qri/:user/:dataset',
+			// 		getComponent(location, cb) {
+			// 			System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);
+			// 		}
+			// 	},
+			// 	{
+			// 		path: '/qri/:user/:dataset/edit',
+			// 		getComponent(location, cb) {
+			// 			System.import('./containers/EditDataset').then(loadRoute(cb)).catch(errorLoading);
+			// 		}
+			// 	},
+
+			// 	{
+			// 		path: '/qri/:user/:dataset/changes',
+			// 		getComponent(location, cb) {
+			// 			System.import('./containers/DatasetChanges').then(loadRoute(cb)).catch(errorLoading);
+			// 		}
+			// 	},
+			// 	{
+			// 		path: '/qri/:user/:dataset/changes/new',
+			// 		getComponent(location, cb) {
+			// 			System.import('./containers/NewChange').then(loadRoute(cb)).catch(errorLoading);
+			// 		}
+			// 	},
+			// 	{
+			// 		path: '/qri/:user/:dataset/changes/:number',
+			// 		getComponent(location, cb) {
+			// 			System.import('./containers/Change').then(loadRoute(cb)).catch(errorLoading);
+			// 		}
+			// 	},
+			// 	{
+			// 		path: '/qri/:user/:dataset/changes/:edit',
+			// 		getComponent(location, cb) {
+			// 			System.import('./containers/EditChange').then(loadRoute(cb)).catch(errorLoading);
+			// 		}
+			// 	}
+			// ]
+		},
+		// {
+		// 	path: '/datasets/new',
+		// 	getComponent(location, cb) {
+		// 		System.import('./containers/NewDataset').then(loadRoute(cb)).catch(errorLoading)
+		// 	}
+		// },
+		// {
+		// 	path: '/queries',
+		// 	getComponent(location, cb) {
+		// 		System.import('./containers/Queries').then(loadRoute(cb)).catch(errorLoading)
+		// 	},
+		// },
+		// {
+		// 	path: '/console',
+		// 	getComponent(location, cb) {
+		// 	  System.import('./containers/Console').then(loadRoute(cb)).catch(errorLoading);
+		// 	}
+		// },
  ]
 };

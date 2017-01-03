@@ -94,7 +94,6 @@ export function loadQueryBySlug(slug="", requiredFields=[], setOnLoad=false) {
 }
 
 
-
 export const QUERIES_REQUEST = 'QUERIES_REQUEST'
 export const QUERIES_SUCCESS = 'QUERIES_SUCCESS'
 export const QUERIES_FAILURE = 'QUERIES_FAILURE'

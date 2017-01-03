@@ -55,20 +55,20 @@ export const DATASET_REQUEST = 'DATASET_REQUEST'
 export const DATASET_SUCCESS = 'DATASET_SUCCESS'
 export const DATASET_FAILURE = 'DATASET_FAILURE'
 
-export function fetchDataset(id, requiredFields=[]) {
+export function fetchDataset(address, requiredFields=[]) {
 	return {
 		[CALL_API] : {
 			types : [ DATASET_REQUEST, DATASET_SUCCESS, DATASET_FAILURE ],
-			endpoint : `/datasets/${id}`,
+			endpoint : `/datasets?address=${address}`,
 			schema : Schemas.DATASET,
-			id,
+			address,
 		}
 	}
 }
 
-export function loadDataset(id, requiredFields=[]) {
+export function loadDataset(address, requiredFields=[]) {
 	return (dispatch, getState) => {
-    const dataset = selectDatasetById(getState(), id)
+    const dataset = selectDatasetByAddress(getState(), address)
     if (dataset.schema != null) {
     	return null
     }
@@ -76,7 +76,7 @@ export function loadDataset(id, requiredFields=[]) {
     //   return null
     // }
 
-    return dispatch(fetchDataset(id, requiredFields))
+    return dispatch(fetchDataset(address, requiredFields))
   }
 }
 

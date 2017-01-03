@@ -39,14 +39,6 @@ export default {
 			component : Datasets
 		},
 		{
-			path: '/datasets/new',
-			component : NewDataset
-		},
-		{
-			path: '/console',
-			component : Console
-		},
-		{
 			path: '/login',
 			component : Login
 		},
@@ -59,13 +51,29 @@ export default {
 			component : SshKeys
 		},
 		{
+			path: '/user/:user',
+			component: User
+		},
+		{
 			path: '/qri',
 			component : Dataset
 		},
 		{
-			path: '/qri/:user',
-			component : User
+			path: '/qri/:path',
+			component : Dataset
 		},
+		// {
+		// 	path: '/datasets/new',
+		// 	component : NewDataset
+		// },
+		// {
+		// 	path: '/console',
+		// 	component : Console
+		// },
+		// {
+		// 	path: '/qri/:user',
+		// 	component : User
+		// },
 		// {
 		// 	path: '/:user/queries/:slug',
 		// 	component : Query
@@ -78,21 +86,21 @@ export default {
 		// 	path: '/qri/:user/:dataset/edit',
 		// 	component : EditDataset
 		// },
-		{
-			path: '/qri/:user/:dataset/changes/new',
-			component : NewChange
-		},
-		{
-			path: '/qri/:user/:dataset/changes',
-			component : DatasetChanges
-		},
-		{
-			path: '/qri/:user/:dataset/changes/:number',
-			component: Change
-		},
-		{
-			path: '/qri/:user/:dataset/changes/:number/edit',
-			component: EditChange
-		}
+		// {
+		// 	path: '/qri/:user/:dataset/changes/new',
+		// 	component : NewChange
+		// },
+		// {
+		// 	path: '/qri/:user/:dataset/changes',
+		// 	component : DatasetChanges
+		// },
+		// {
+		// 	path: '/qri/:user/:dataset/changes/:number',
+		// 	component: Change
+		// },
+		// {
+		// 	path: '/qri/:user/:dataset/changes/:number/edit',
+		// 	component: EditChange
+		// }
  ]
 };

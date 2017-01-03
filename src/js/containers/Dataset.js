@@ -111,7 +111,7 @@ class Dataset extends React.Component {
 	}
 
 	render() {
-		const { username, datasetName, address, dataset, permissions, query, results } = this.props
+		const { address, dataset, permissions, query, results } = this.props
 		const path = "/" + address.replace(".", "/", -1)
 		
 		if (!dataset) {
@@ -145,10 +145,6 @@ class Dataset extends React.Component {
 }
 
 Dataset.propTypes = {
-	// username & datasetName from url params
-	username : PropTypes.string.isRequired,
-	datasetName : PropTypes.string.isRequired,
-
 	// username.dataset address for this dataset, should
 	// be derived from url params
 	address : PropTypes.string.isRequired,
@@ -181,14 +177,12 @@ Dataset.defaultProps = {
 }
 
 function mapStateToProps(state, ownProps) {
-	const username = ownProps.params.user;
-	const datasetName = ownProps.params.dataset;
 	let address = "qri"
-	if (ownProps.username) {
-		address = ["qri", username, ownProps.params.dataset].join(".")
+	if (ownProps.params.path) {
+		address += "." + ownProps.params.path.replace(/\//gi,".")
 	}
+	
 	const user = selectSessionUser(state);
-
 	const results = state.results[state.console.query.statement]
 
 	let permissions = {
@@ -203,8 +197,6 @@ function mapStateToProps(state, ownProps) {
 	}
 
 	return Object.assign({
-		username,
-		datasetName,
 		address,
 
 		dataset : selectDatasetByAddress(state, address),
