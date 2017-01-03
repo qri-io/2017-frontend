@@ -19,15 +19,15 @@ class User extends React.Component {
 
 	componentWillMount() {
 		this.props.loadUserByUsername(this.props.username);
-		this.props.loadUserDatasets(this.props.username);
-		this.props.loadUserQueries(this.props.username);
+		// this.props.loadUserDatasets(this.props.username);
+		// this.props.loadUserQueries(this.props.username);
 	}
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.username != this.props.username) {
 			nextProps.loadUserByUsername(nextProps.username)
-			nextProps.loadUserDatasets(this.props.username);
-			nextProps.loadUserQueries(this.props.username);
+			// nextProps.loadUserDatasets(this.props.username);
+			// nextProps.loadUserQueries(this.props.username);
 		}
 	}
 
@@ -52,7 +52,7 @@ class User extends React.Component {
 					{ permissions.edit ? <Link to="/settings" >settings</Link> : undefined }
 					<p>{ user.description }</p>
 				</header>
-				<div className="col-md-12">
+				{/*<div className="col-md-12">
 					<hr />
 					<h6>QUERIES:</h6>
 					<List data={queries} component={QueryItem} />
@@ -61,7 +61,7 @@ class User extends React.Component {
 					<hr />
 					<h6>DATASETS:</h6>
 					<List data={datasets} component={DatasetItem} />
-				</div>
+				</div>*/}
 			</div>
 		);
 	}
@@ -85,7 +85,6 @@ User.defaultProps = {
 
 function mapStateToProps(state, ownProps) {
 	const username = ownProps.params.user;
-	console.log(username);
 	
 	let permissions = {
 		edit : false,
@@ -93,7 +92,7 @@ function mapStateToProps(state, ownProps) {
 	}
 
 	const session = selectSessionUser(state);
-	if (session.username == username) {
+	if (session && session.username == username) {
 		permissions.edit = true;
 		permissions.del = true;
 	}

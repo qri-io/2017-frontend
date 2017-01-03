@@ -130,7 +130,6 @@ function createDataset(dataset) {
 			if (action.type == DATASET_CREATE_SUCCESS && action.response.entities.datasets) {
 				const dataset = action.response.entities.datasets[Object.keys(action.response.entities.datasets)[0]]
 				const path = "/" + dataset.address.replace(".","/",-1);
-				console.log(path);
 				return dispatch(push(path));
 			}
 

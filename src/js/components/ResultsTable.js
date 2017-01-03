@@ -19,7 +19,6 @@ export default class ResultsTable extends Component {
 				</div>
 			); 
 		}
-		console.log(this.props.results);
 		return (
 			<div className="resultsTable">
 				<div className="table-responsive">

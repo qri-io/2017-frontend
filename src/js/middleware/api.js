@@ -33,12 +33,15 @@ function callApi(method, endpoint, schema, data) {
     credentials: 'include',
     body
   })
-    .then(response =>
-      response.json().then(json => ({ json, response }))
-    ).then(({ json, response }) => {
+    .then(response => {
+      return response.json().then(json => ({ json, response }))
+    }).then(({ json, response }) => {
       if (!response.ok) {
         return Promise.reject(json)
+      } else if (response.status == 204) {
+        return {}
       }
+
       const { data } = json
 
       return Object.assign({},
