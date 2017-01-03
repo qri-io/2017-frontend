@@ -13,7 +13,7 @@ import SessionRequired from '../components/SessionRequired'
 import EditAddress from '../components/EditAddress'
 import ValidInput from '../components/ValidInput'
 import ValidTextarea from '../components/ValidTextarea'
-import SelectSchemaTable from '../components/SelectSchemaTable'
+import SelectFieldsTable from '../components/SelectFieldsTable'
 
 export default class EditChange extends React.Component {
 	constructor(props) {
@@ -111,7 +111,7 @@ export default class EditChange extends React.Component {
 									<option>DELETE</option>
 								</select>
 							</div>
-							<SelectSchemaTable label="Table" name="table_name" value={change.table_name} schema={dataset.schema || []} onChange={this.handleChange} />
+							<SelectFieldsTable label="Table" name="table_name" value={change.table_name} fields={dataset.fields || []} onChange={this.handleChange} />
 							<ValidTextarea label="Description" name="description" value={change.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />
 							<ValidTextarea label="CSV Data" name="data" value={change.data} showError={showErrors} error={validation.description} onChange={this.handleChange} />
 							<button className="btn btn-large submit" disabled={(!validation.isValid && showErrors)} onClick={this.handleSave}>Save Change</button>
@@ -134,7 +134,7 @@ EditChange.propTypes = {
 
 	// session user model
 	user : PropTypes.object,
-	// dataset model, need this to read schemas
+	// dataset model, need this to read fields
 	dataset : PropTypes.object,
 	// change model to edit. should be a local model
 	change : PropTypes.object,

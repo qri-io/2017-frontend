@@ -10,16 +10,14 @@ import Console from './containers/Console'
 import Login from './containers/Login'
 import User from './containers/User'
 import UserSettings from './containers/UserSettings'
+import SshKeys from './containers/SshKeys'
 import Dataset from './containers/Dataset'
 import DatasetChanges from './containers/DatasetChanges'
 import DatasetMigrations from './containers/DatasetMigrations'
 import EditChange from './containers/EditChange'
 import EditDataset from './containers/EditDataset'
-import EditMigration from './containers/EditMigration'
 import NewChange from './containers/NewChange'
 import Change from './containers/Change'
-import NewMigration from './containers/NewMigration'
-import Migration from './containers/Migration'
 import Queries from './containers/Queries'
 import Query from './containers/Query'
 
@@ -57,54 +55,44 @@ export default {
 			component : UserSettings
 		},
 		{
-			path: '/:user',
-			component : User
+			path: '/settings/keys',
+			component : SshKeys
 		},
 		{
-			path: '/:user/queries/:slug',
-			component : Query
-		},
-		{
-			path: '/:user/:dataset',
+			path: '/qri',
 			component : Dataset
 		},
 		{
-			path: '/:user/:dataset/edit',
-			component : EditDataset
+			path: '/qri/:user',
+			component : User
 		},
-
+		// {
+		// 	path: '/:user/queries/:slug',
+		// 	component : Query
+		// },
+		// {
+		// 	path: '/qri/:user/:dataset',
+		// 	component : Dataset
+		// },
+		// {
+		// 	path: '/qri/:user/:dataset/edit',
+		// 	component : EditDataset
+		// },
 		{
-			path: '/:user/:dataset/changes/new',
+			path: '/qri/:user/:dataset/changes/new',
 			component : NewChange
 		},
 		{
-			path: '/:user/:dataset/changes',
+			path: '/qri/:user/:dataset/changes',
 			component : DatasetChanges
 		},
 		{
-			path: '/:user/:dataset/changes/:number',
+			path: '/qri/:user/:dataset/changes/:number',
 			component: Change
 		},
 		{
-			path: '/:user/:dataset/changes/:number/edit',
+			path: '/qri/:user/:dataset/changes/:number/edit',
 			component: EditChange
-		},
-		
-		{
-			path: '/:user/:dataset/migrations/new',
-			component : NewMigration
-		},
-		{
-			path: '/:user/:dataset/migrations',
-			component : DatasetMigrations
-		},
-		{
-			path: '/:user/:dataset/migrations/:number',
-			component : Migration
-		},
-		{
-			path: '/:user/:dataset/migrations/:number/edit',
-			component : EditMigration
-		},
+		}
  ]
 };

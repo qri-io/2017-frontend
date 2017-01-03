@@ -10,7 +10,7 @@ import { selectSessionUser } from '../selectors/session'
 import { selectQueryById } from '../selectors/query'
 
 import DatasetHeader from '../components/DatasetHeader'
-import SchemaTable from '../components/SchemaTable'
+import FieldsTable from '../components/FieldsTable'
 import QueryEditor from '../components/QueryEditor'
 import ResultsTable from '../components/ResultsTable'
 
@@ -135,7 +135,7 @@ class Dataset extends React.Component {
 						{this.renderResults(this.props)}
 						<section className="col-md-12">
 							<hr />
-							{ dataset.schema ? <SchemaTable schema={dataset.schema} /> : <p>This dataset currently has no schema</p> }
+							{ dataset.fields ? <FieldsTable fields={dataset.fields} /> : <p>This dataset currently has no schema</p> }
 						</section>
 					</div>
 				</div>
@@ -183,7 +183,10 @@ Dataset.defaultProps = {
 function mapStateToProps(state, ownProps) {
 	const username = ownProps.params.user;
 	const datasetName = ownProps.params.dataset;
-	const address = [username, ownProps.params.dataset].join(".")
+	let address = "qri"
+	if (ownProps.username) {
+		address = ["qri", username, ownProps.params.dataset].join(".")
+	}
 	const user = selectSessionUser(state);
 
 	const results = state.results[state.console.query.statement]

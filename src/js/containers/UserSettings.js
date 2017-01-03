@@ -54,10 +54,10 @@ class UserSettings extends React.Component {
 		}
 	}
 	render() {
-		const { showErrors, saving } = this.state;
+		const { showErrors, saving, loading } = this.state;
 		const { user, validation } = this.props;
 		
-		if (!user) {
+		if (loading) {
 			return <Spinner />
 		}
 

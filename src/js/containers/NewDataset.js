@@ -6,7 +6,6 @@ import { selectLocalDatasetById } from '../selectors/dataset'
 import { selectSessionUser } from '../selectors/session'
 import validateDataset from '../validators/dataset'
 
-import SchemaTable from '../components/SchemaTable'
 import ValidInput from '../components/ValidInput'
 import ValidTextarea from '../components/ValidTextarea'
 import SessionRequired from '../components/SessionRequired'

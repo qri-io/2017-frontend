@@ -10,8 +10,9 @@ let result_cid = 0
 
 // Read more about Normalizr: https://github.com/paularmstrong/normalizr
 const sessionUserSchema = new Schema('session');
+const sshKeySchema = new Schema('ssh_keys', { idAttribute : 'sha256' });
 const userSchema = new Schema('users');
-const datasetSchema = new Schema('datasets');
+const datasetSchema = new Schema('datasets', { idAttribute : 'address' });
 const querySchema = new Schema('queries');
 // const schemaSchema = new Schema('schemas');
 // const resultSchema = new Schema('results', { idAttribute : (result) => 'result' });
@@ -63,6 +64,8 @@ inviteSchema.new = function (attrs) {
 // Schemas for Github API responses.
 const Schemas = {
   SESSION_USER : sessionUserSchema,
+  SSH_KEY : sshKeySchema,
+  SSH_KEY_ARRAY : arrayOf(sshKeySchema),
   USER: userSchema,
   USER_ARRAY: arrayOf(userSchema),
   DATASET : datasetSchema,

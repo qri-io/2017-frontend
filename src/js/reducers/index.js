@@ -16,6 +16,7 @@ const initialState = {
   app : {},
 
   session : {},
+  ssh_keys: {},
   users : {},
 
   datasets : {},

@@ -53,78 +53,61 @@ export default {
 			}
 		},
 		{
-			path: '/:user',
-			getComponent(location, cb) {
-				System.import('./containers/User').then(loadRoute(cb)).catch(errorLoading);
-			}
-		},
-		{
-			path: '/:user/queries/:slug',
-			getComponent(location, cb) {
-				System.import('./containers/Query').then(loadRoute(cb)).catch(errorLoading);
-			}
-		},
-		{
-			path: '/:user/:dataset',
+			path: '/qri',
 			getComponent(location, cb) {
 				System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);
-			}
-		},
-		{
-			path: '/:user/:dataset/edit',
-			getComponent(location, cb) {
-				System.import('./containers/EditDataset').then(loadRoute(cb)).catch(errorLoading);
-			}
-		},
+			},
+			childRoutes: [
+				{
+					path: '/qri/:user',
+					getComponent(location, cb) {
+						System.import('./containers/User').then(loadRoute(cb)).catch(errorLoading);
+					}
+				},
+				{
+					path: '/qri/:user/queries/:slug',
+					getComponent(location, cb) {
+						System.import('./containers/Query').then(loadRoute(cb)).catch(errorLoading);
+					}
+				},
+				{
+					path: '/qri/:user/:dataset',
+					getComponent(location, cb) {
+						System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);
+					}
+				},
+				{
+					path: '/qri/:user/:dataset/edit',
+					getComponent(location, cb) {
+						System.import('./containers/EditDataset').then(loadRoute(cb)).catch(errorLoading);
+					}
+				},
 
-		{
-			path: '/:user/:dataset/changes',
-			getComponent(location, cb) {
-				System.import('./containers/DatasetChanges').then(loadRoute(cb)).catch(errorLoading);
-			}
-		},
-		{
-			path: '/:user/:dataset/changes/new',
-			getComponent(location, cb) {
-				System.import('./containers/NewChange').then(loadRoute(cb)).catch(errorLoading);
-			}
-		},
-		{
-			path: '/:user/:dataset/changes/:number',
-			getComponent(location, cb) {
-				System.import('./containers/Change').then(loadRoute(cb)).catch(errorLoading);
-			}
-		},
-		{
-			path: '/:user/:dataset/changes/:edit',
-			getComponent(location, cb) {
-				System.import('./containers/EditChange').then(loadRoute(cb)).catch(errorLoading);
-			}
-		},
-		
-		{
-			path: '/:user/:dataset/migrations',
-			getComponent(location, cb) {
-				System.import('./containers/DatasetMigrations').then(loadRoute(cb)).catch(errorLoading);
-			}
-		},
-		{
-			path: '/:user/:dataset/migrations/new',
-			getComponent(location, cb) {
-				System.import('./containers/NewMigration').then(loadRoute(cb)).catch(errorLoading);
-			}
-		},
-		{
-			path: '/:user/:dataset/migrations/:number',
-			getComponent(location, cb) {
-				System.import('./containers/Migration').then(loadRoute(cb)).catch(errorLoading);
-			}
-		},
-		{
-			path : '/:user/:dataset/migrations/:number/edit',
-			getComponent(location, cb) {
-				System.import('./containers/EditMigration').then(loadRoute(cb)).catch(errorLoading);
-			}
+				{
+					path: '/qri/:user/:dataset/changes',
+					getComponent(location, cb) {
+						System.import('./containers/DatasetChanges').then(loadRoute(cb)).catch(errorLoading);
+					}
+				},
+				{
+					path: '/qri/:user/:dataset/changes/new',
+					getComponent(location, cb) {
+						System.import('./containers/NewChange').then(loadRoute(cb)).catch(errorLoading);
+					}
+				},
+				{
+					path: '/qri/:user/:dataset/changes/:number',
+					getComponent(location, cb) {
+						System.import('./containers/Change').then(loadRoute(cb)).catch(errorLoading);
+					}
+				},
+				{
+					path: '/qri/:user/:dataset/changes/:edit',
+					getComponent(location, cb) {
+						System.import('./containers/EditChange').then(loadRoute(cb)).catch(errorLoading);
+					}
+				}
+			]
 		}
  ]
 };

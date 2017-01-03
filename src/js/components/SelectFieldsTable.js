@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react';
 
-export default class SelectSchemaTable extends React.Component {
+export default class SelectFieldsTable extends React.Component {
 	render() {
-		const { label, name, value, onChange, schema } = this.props;
+		const { label, name, value, onChange, fields } = this.props;
 		return (
-			<div className="selectSchemaTable form-group">
+			<div className="selectFieldsTable form-group">
 				{ label ? <label for={name} className="control-label">{label}</label> : undefined }
 				<select className="form-control" value={value} onChange={(e) => { onChange(name, e.target.value, e) }}>
 					<option value="">-Select Table-</option>
 					{
-						schema.map((table, i) => {
+						fields.map((table, i) => {
 							return <option key={i} value={table.name}>{table.name}</option>
 						})
 					}
@@ -19,8 +19,8 @@ export default class SelectSchemaTable extends React.Component {
 	}
 }
 
-SelectSchemaTable.propTypes = {
-	schema : PropTypes.array.isRequired,
+SelectFieldsTable.propTypes = {
+	fields : PropTypes.array.isRequired,
 	name : PropTypes.string.isRequired,
 	onChange : PropTypes.func.isRequired,
 	value : PropTypes.string,
@@ -30,6 +30,6 @@ SelectSchemaTable.propTypes = {
 	error : PropTypes.string,
 }
 
-SelectSchemaTable.defaultProps = {
+SelectFieldsTable.defaultProps = {
 	showError : false
 }

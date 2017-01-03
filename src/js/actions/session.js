@@ -104,3 +104,84 @@ export function addHistoryEntry(query) {
     value : query
   } 
 }
+
+export const SESSION_SSH_KEYS_REQUEST = 'SESSION_SSH_KEYS_REQUEST'
+export const SESSION_SSH_KEYS_SUCCESS = 'SESSION_SSH_KEYS_SUCCESS'
+export const SESSION_SSH_KEYS_FAILURE = 'SESSION_SSH_KEYS_FAILURE'
+
+export function fetchSshKeys() {
+  return {
+    [CALL_API]: {
+      types: [ SESSION_SSH_KEYS_REQUEST, SESSION_SSH_KEYS_SUCCESS, SESSION_SSH_KEYS_FAILURE ],
+      endpoint: `/session/keys`,
+      schema: Schemas.SSH_KEY_ARRAY,
+      silentError : true
+    }
+  }
+}
+
+export function loadSshKeys() {
+  return (dispatch, getState) => {
+    if (getState().entities.ssh_keys) {
+      return null
+    }
+
+    return dispatch(fetchSshKeys())
+  }
+}
+
+export const SESSION_CREATE_SSH_KEY_REQUEST = 'SESSION_CREATE_SSH_KEY_REQUEST'
+export const SESSION_CREATE_SSH_KEY_SUCCESS = 'SESSION_CREATE_SSH_KEY_SUCCESS'
+export const SESSION_CREATE_SSH_KEY_FAILURE = 'SESSION_CREATE_SSH_KEY_FAILURE'
+
+export function createSshKey(name="",key="") {
+  return (dispatch, getState) => {
+    return dispatch({
+      [CALL_API] : {
+        types : [ SESSION_CREATE_SSH_KEY_REQUEST, SESSION_CREATE_SSH_KEY_SUCCESS, SESSION_CREATE_SSH_KEY_FAILURE],
+        endpoint: "/session/keys",
+        method : "POST",
+        schema: Schemas.SSH_KEY,
+        data : { name, key }
+      }
+    }).then(action => {
+      if (action.type == SESSION_CREATE_SSH_KEY_SUCCESS) {
+        dispatch(setMessage(`added ssh key:${name}`));
+        setTimeout(() => {
+          dispatch(resetMessage());
+        }, 3500);
+        // return dispatch(push(`/qri`));
+      }
+
+      return null
+    });
+  }
+}
+
+
+export const SESSION_DELETE_SSH_KEY_REQUEST = 'SESSION_DELETE_SSH_KEY_REQUEST'
+export const SESSION_DELETE_SSH_KEY_SUCCESS = 'SESSION_DELETE_SSH_KEY_SUCCESS'
+export const SESSION_DELETE_SSH_KEY_FAILURE = 'SESSION_DELETE_SSH_KEY_FAILURE'
+
+export function deleteSshKey(name="",sha="") {
+  return (dispatch, getState) => {
+    return dispatch({
+      [CALL_API] : {
+        types : [ SESSION_DELETE_SSH_KEY_REQUEST, SESSION_DELETE_SSH_KEY_SUCCESS, SESSION_DELETE_SSH_KEY_FAILURE],
+        endpoint: `/session/keys/${sha}`,
+        method : "DELETE",
+        schema: Schemas.SSH_KEY,
+      }
+    }).then(action => {
+      if (action.type == SESSION_DELETE_SSH_KEY_SUCCESS) {
+        dispatch(setMessage(`deleted ssh key: ${name}`));
+        setTimeout(() => {
+          dispatch(resetMessage());
+        }, 3500);
+        // return dispatch(push(`/qri`));
+      }
+
+      return null
+    });
+  }
+}

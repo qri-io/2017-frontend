@@ -7,7 +7,7 @@ const initialState = {
 const newRequest = {
 	pageCount : 0,
 	fetchedAll : false,
-	schema : [],
+	fields : [],
 	data : []
 }
 
@@ -18,7 +18,7 @@ function initialReq(prev=newRequest, action) {
 		pageCount : prev.pageCount + 1,
 		fetching : true,
 		fetchedAll : prev.fetchedAll,
-		schema : prev.schema,
+		fields : prev.fields,
 		data : prev.data
 	});
 }
@@ -27,7 +27,7 @@ function successReq(prev={},action) {
 	return Object.assign({}, prev, {
 		fetching : false,
 		fetchedAll : (action.response.data.length < action.request.pageSize),
-		schema : action.response.schema,
+		fields : action.response.fields,
 		data : prev.data.concat(action.response.data),
 		error : undefined,
 	});

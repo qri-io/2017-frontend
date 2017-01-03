@@ -3,27 +3,14 @@ import DownloadResultsButton from './DownloadResultsButton'
 
 import Spinner from './Spinner'
 
-function removeStdCols(schema, show) {
-	return (a,b,i) => {
-		if (!show) {
-			const colName = schema[i].name
-			if (colName == "id" || colName == "created" || colName == "updated") {
-				return a
-			}
-		}
-		a.push(b);
-		return a;
-	}
-}
-
 export default class ResultsTable extends Component {
 	render() {
 		if (!this.props.results) {
 			return <div className="resultsTable"></div>;
 		}
-		const { schema, data, fetching, fetchedAll, error } = this.props.results;
+		const { fields, data, fetching, fetchedAll, error } = this.props.results;
 		const { onLoadMore, showStdCols } = this.props;
-		const displaySchema = schema.reduce(removeStdCols(schema, showStdCols),[])
+		// const displaySchema = fields.reduce(removeStdCols(fields, showStdCols),[])
 
 		if (error) {
 			return (
@@ -32,18 +19,18 @@ export default class ResultsTable extends Component {
 				</div>
 			); 
 		}
-
+		console.log(this.props.results);
 		return (
 			<div className="resultsTable">
 				<div className="table-responsive">
 					<table className="table table-hover query-results">
-						<thead><tr>{displaySchema.map((col, i) => <th key={i}>{col.name}</th>)}</tr></thead>
+						<thead><tr>{fields.map((col, i) => <th key={i}>{col.name}</th>)}</tr></thead>
 						<tbody>
 							{data.map((row, i) => {
 								return (
 									<tr key={i}>
-										{row.reduce(removeStdCols(schema, showStdCols),[]).map((cell, j) => 
-											<td className={"dt-" + displaySchema[j].type} key={`${i}.${j}`}>{cell.toString()}</td>
+										{row.map((cell, j) => 
+											<td className={"dt-" + fields[j].type} key={`${i}.${j}`}>{cell.toString()}</td>
 										)}
 									</tr>
 								);

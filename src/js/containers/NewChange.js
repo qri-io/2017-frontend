@@ -11,8 +11,8 @@ import SessionRequired from '../components/SessionRequired'
 import Spinner from '../components/Spinner'
 import ValidInput from '../components/ValidInput'
 import ValidTextarea from '../components/ValidTextarea'
-import SelectSchemaTable from '../components/SelectSchemaTable'
-import SchemaTable from '../components/SchemaTable'
+import SelectFieldsTable from '../components/SelectFieldsTable'
+import FieldsTable from '../components/FieldsTable'
 
 class NewChange extends React.Component {
 	constructor(props) {
@@ -104,13 +104,13 @@ class NewChange extends React.Component {
 									<option>DELETE</option>
 								</select>
 							</div>
-							<SelectSchemaTable label="Table" name="table_name" value={change.table_name} schema={dataset.schema || []} onChange={this.handleChange} />
+							<SelectFieldsTable label="Table" name="table_name" value={change.table_name} fields={dataset.fields || []} onChange={this.handleChange} />
 							<ValidTextarea label="Description" name="description" value={change.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />
 							<ValidTextarea label="CSV Data" name="data" value={change.data} showError={showErrors} error={validation.description} onChange={this.handleChange} />
 							<button className="btn btn-large submit"  disabled={(!validation.isValid && showErrors)} onClick={this.handleSave}>Create Change</button>
 						</form>
 					</div>
-					{dataset.schema ? <SchemaTable schema={dataset.schema} /> : undefined}
+					{dataset.fields ? <FieldsTable fields={dataset.fields} /> : undefined}
 				</div>
 			</div>
 		);
