@@ -53,14 +53,6 @@ export default {
 			getComponent(location, cb) {
 				System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);
 			},
-			childRoutes: [
-				{
-					path: '/:path',
-					getComponent(location, cb) {
-						System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);
-					},
-				}
-			]
 			// childRoutes: [
 			// 	{
 			// 		path: '/qri/:user',
@@ -113,6 +105,12 @@ export default {
 			// 	}
 			// ]
 		},
+		{
+			path: '/qri/*',
+			getComponent(location, cb) {
+				System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);
+			},
+		}
 		// {
 		// 	path: '/datasets/new',
 		// 	getComponent(location, cb) {

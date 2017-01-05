@@ -59,7 +59,7 @@ export default {
 			component : Dataset
 		},
 		{
-			path: '/qri/:path',
+			path: '/qri/*',
 			component : Dataset
 		},
 		// {

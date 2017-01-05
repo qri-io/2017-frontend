@@ -178,8 +178,8 @@ Dataset.defaultProps = {
 
 function mapStateToProps(state, ownProps) {
 	let address = "qri"
-	if (ownProps.params.path) {
-		address += "." + ownProps.params.path.replace(/\//gi,".")
+	if (ownProps.params.splat) {
+		address += "." + ownProps.params.splat.replace(/\//gi,".")
 	}
 	
 	const user = selectSessionUser(state);
