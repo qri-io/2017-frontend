@@ -9,6 +9,7 @@ import NewDataset from './containers/NewDataset'
 import Console from './containers/Console'
 import Login from './containers/Login'
 import User from './containers/User'
+import UserRoles from './containers/UserRoles'
 import UserSettings from './containers/UserSettings'
 import SshKeys from './containers/SshKeys'
 import Dataset from './containers/Dataset'
@@ -51,8 +52,12 @@ export default {
 			component : SshKeys
 		},
 		{
-			path: '/user/:user',
+			path: '/users/:user',
 			component: User
+		},
+		{
+			path : '/users/:username/roles',
+			component: UserRoles
 		},
 		{
 			path: '/qri',

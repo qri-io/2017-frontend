@@ -99,3 +99,33 @@ export function loadUserDatasets(username, page=1, pageSize=30) {
     return dispatch(fetchUserDatasets(username, page, pageSize));
   }
 }
+
+
+export const USER_ROLES_REQUEST = 'USER_ROLES_REQUEST';
+export const USER_ROLES_SUCCESS = 'USER_ROLES_SUCCESS';
+export const USER_ROLES_FAILURE = 'USER_ROLES_FAILURE';
+export function fetchUserRoles(username, page=1, pageSize=30) {
+  return {
+    [CALL_API] : {
+      types : [USER_ROLES_REQUEST, USER_ROLES_SUCCESS, USER_ROLES_FAILURE],
+      endpoint: `/users/roles`,
+      schema: Schemas.ROLE_ARRAY,
+      data : {
+        username,
+        page,
+        pageSize
+      }
+    },
+    page,
+    pageSize,
+    username
+  }
+}
+
+export function loadUserRoles(username, page=1, pageSize=30) {
+  return (dispatch, getState) => {
+    // const role = getState().entities.roles[id];
+    // return fetchRole(id, requiredFields)
+    return dispatch(fetchUserRoles(username, page, pageSize));
+  }
+}

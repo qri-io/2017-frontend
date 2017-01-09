@@ -43,9 +43,15 @@ export default {
 			]
 		},
 		{
-			path : '/user/:user',
+			path : '/users/:user',
 			getComponent(location, cb) {
 				System.import('./containers/User').then(loadRoute(cb)).catch(errorLoading);
+			}
+		},
+		{
+			path : '/users/:username/roles',
+			getComponent(location, cb) {
+				System.import('./containers/UserRoles').then(loadRoute(cb)).catch(errorLoading);
 			}
 		},
 		{

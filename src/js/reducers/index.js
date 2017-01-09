@@ -18,12 +18,14 @@ const initialState = {
   session : {},
   ssh_keys: {},
   users : {},
+  roles : {},
 
   datasets : {},
   changes : {},
   migrations : {},
   
   queries : {},
+  pagination: {},
 }
 
 // Updates an entity cache in response to any action with response.entities.

@@ -6,6 +6,7 @@ const initialState = {
   datasets : {},
   migrations : {},
   changes : {},
+  roles: {},
 }
 
 // updates an entity cache in response to any actuion with response.local.

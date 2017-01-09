@@ -19,6 +19,7 @@ const querySchema = new Schema('queries');
 const migrationSchema = new Schema('migrations');
 const changeSchema = new Schema('changes');
 const inviteSchema = new Schema('invites');
+const roleSchema = new Schema('roles');
 
 querySchema.define({
   owner: userSchema
@@ -32,6 +33,10 @@ datasetSchema.define({
 migrationSchema.define({
   owner : userSchema,
   dataset : datasetSchema,
+});
+
+roleSchema.define({
+  user : userSchema,
 });
 
 changeSchema.define({
@@ -61,6 +66,10 @@ inviteSchema.new = function (attrs) {
   return Object.assign({}, attrs, { id : "new" });
 }
 
+roleSchema.new = function (attrs) {
+  return Object.assign({}, attrs, { id : "new" });
+}
+
 // Schemas for Github API responses.
 const Schemas = {
   SESSION_USER : sessionUserSchema,
@@ -77,6 +86,8 @@ const Schemas = {
   QUERY : querySchema,
   QUERY_ARRAY: arrayOf(querySchema),
   INVITE : inviteSchema,
+  ROLE : roleSchema,
+  ROLE_ARRAY: arrayOf(roleSchema),
 }
 
 export default Schemas

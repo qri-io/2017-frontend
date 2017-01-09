@@ -9,6 +9,10 @@ import {
   USER_DATASETS_REQUEST,
   USER_DATASETS_SUCCESS,
   USER_DATASETS_FAILURE,
+
+  USER_ROLES_REQUEST,
+  USER_ROLES_SUCCESS,
+  USER_ROLES_FAILURE,
 } from '../actions/user';
 
 import { 
@@ -58,6 +62,15 @@ const pagination = combineReducers({
       USER_DATASETS_REQUEST,
       USER_DATASETS_SUCCESS,
       USER_DATASETS_FAILURE,
+    ]
+  }),
+
+  userRoles : paginate({
+    mapActionToKey: action => action.username + ".roles",
+    types : [
+      USER_ROLES_REQUEST,
+      USER_ROLES_SUCCESS,
+      USER_ROLES_FAILURE,
     ]
   }),
 
