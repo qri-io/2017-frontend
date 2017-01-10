@@ -102,8 +102,8 @@ export default store => next => action => {
     })),
     error => {
       var msg = 'Something Bad Happened' 
-      if (error.meta && error.meta.error) {
-        msg = error.meta.error
+      if (error.meta && error.meta.message) {
+        msg = error.meta.message
       }
       return next(actionWith({
         type: failureType, 

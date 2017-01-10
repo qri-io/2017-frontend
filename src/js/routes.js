@@ -17,7 +17,7 @@ export default {
 	},
 	childRoutes: [
 		{
-			path: '/datasets',
+			path: '/browse',
 			getComponent(location, cb) {
 				System.import('./containers/Datasets').then(loadRoute(cb)).catch(errorLoading)
 			},
@@ -116,7 +116,19 @@ export default {
 			getComponent(location, cb) {
 				System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);
 			},
-		}
+		},
+		{
+			path: '/invites/:id',
+			getComponent(location, cb) {
+				System.import('./containers/Signup').then(loadRoute(cb)).catch(errorLoading);
+			}
+		},
+		{
+			path: '/welcome',
+			getComponent(location, cb) {
+				System.import ('./containers/Welcome').then(loadRoute(cb)).catch(errorLoading);
+			}
+		},
 		// {
 		// 	path: '/datasets/new',
 		// 	getComponent(location, cb) {

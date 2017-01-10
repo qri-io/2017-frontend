@@ -42,14 +42,18 @@ class Datasets extends React.Component {
 
 		return (
 			<div className="container">
-				<header className="col-md-12">
-					<h3>DATASETS</h3>
-					<p>user-contributed datasets</p>
-				</header>
-				<div className="col-md-12">
+				<div className="row">
+					<header className="col-md-12">
+						<h3>DATASETS</h3>
+						<p>user-contributed datasets</p>
+					</header>
+				</div>
+				<div className="row">
 					<List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectItem} />
-					{ loading ? <Spinner /> : undefined }
-					{ (!loading && !fetchedAll) ? <button className="btn btn-large btn-primary" onClick={this.handleLoadNextPage}>Load More</button> : undefined }
+					<div className="col-md-12">
+						{ loading ? <Spinner /> : undefined }
+						{ (!loading && !fetchedAll) ? <button className="btn btn-large btn-primary" onClick={this.handleLoadNextPage}>Load More</button> : undefined }
+					</div>
 				</div>
 			</div>
 		);

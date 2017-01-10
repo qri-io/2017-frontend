@@ -24,13 +24,13 @@ class Login extends React.Component {
 
 	componentWillMount() {
 		if (this.props.user != null ) {
-			browserHistory.push('/console')
+			browserHistory.push('/browse')
 		}
 	}
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.user != null ) {
-			browserHistory.push('/console')
+			browserHistory.push('/browse')
 		}
 	}
 
@@ -50,10 +50,12 @@ class Login extends React.Component {
 		return (
 			<div id="login">
 				<div className="container">
-					<form onSubmit={this.handleLoginSubmit}>
+					<form onSubmit={this.handleLoginSubmit} className="form col-md-4 offset-md-4">
+						<h3>Login:</h3>
 						<ValidInput type="text" label="Username" name="username" value={username} error={validation.username} showError={false} onChange={this.handleChange} />
-						<ValidInput type="password" name="password" value={password} error={validation.username} showError={false} onChange={this.handleChange} />
-						<input className="btn btn-standard" type="submit" value="submit" />
+						<ValidInput type="password" label="Password" name="password" value={password} error={validation.username} showError={false} onChange={this.handleChange} />
+						<input className="login btn btn-standard" type="submit" value="login" />
+						<a href="/login/forgot">I forgot my password</a>
 					</form>
 				</div>
 			</div>

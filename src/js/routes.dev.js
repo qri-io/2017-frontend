@@ -11,6 +11,7 @@ import Login from './containers/Login'
 import User from './containers/User'
 import UserRoles from './containers/UserRoles'
 import UserSettings from './containers/UserSettings'
+import Signup from './containers/Signup'
 import SshKeys from './containers/SshKeys'
 import Dataset from './containers/Dataset'
 import DatasetChanges from './containers/DatasetChanges'
@@ -21,6 +22,7 @@ import NewChange from './containers/NewChange'
 import Change from './containers/Change'
 import Queries from './containers/Queries'
 import Query from './containers/Query'
+import Welcome from './containers/Welcome'
 
 function errorLoading(err) {
 	console.error('Dynamic page loading failed', err);
@@ -36,7 +38,7 @@ export default {
 	indexRoute: Console, 
 	childRoutes: [
 		{
-			path: '/datasets',
+			path: '/browse',
 			component : Datasets
 		},
 		{
@@ -67,6 +69,14 @@ export default {
 			path: '/qri/*',
 			component : Dataset
 		},
+		{
+			path: '/invites/:id',
+			component : Signup
+		},
+		{
+			path: '/welcome',
+			component: Welcome
+		}
 		// {
 		// 	path: '/datasets/new',
 		// 	component : NewDataset
