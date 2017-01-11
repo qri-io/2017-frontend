@@ -1,6 +1,6 @@
 #navbar {
   padding: 15px 0;
-  background: $other-dark-blue-slate;
+  background: $slate;
 
 	#logotype {
 	  max-width: 100px;
@@ -13,14 +13,17 @@
 	.alpha {
 		text-align: center;
 		letter-spacing: 1px;
-	  color: $light-blue-slate;
+	  color: $slate;
 	}
 	
 	.menu {
 	  text-align: right;
 		a {
-		  margin-right: 10px;
-			color: $tope;
+		  margin-right: 16px;
+		  letter-spacing: 2px;
+		  text-transform: uppercase;
+		  font-weight: 500;
+		  font-size: 14px;
 		}
 	}
 }

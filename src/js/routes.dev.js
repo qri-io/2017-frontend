@@ -12,6 +12,7 @@ import User from './containers/User'
 import UserRoles from './containers/UserRoles'
 import UserSettings from './containers/UserSettings'
 import Signup from './containers/Signup'
+import Stylesheet from './containers/Stylesheet'
 import SshKeys from './containers/SshKeys'
 import Dataset from './containers/Dataset'
 import DatasetChanges from './containers/DatasetChanges'
@@ -76,6 +77,10 @@ export default {
 		{
 			path: '/welcome',
 			component: Welcome
+		},
+		{
+			path: '/stylesheet',
+			component: Stylesheet
 		}
 		// {
 		// 	path: '/datasets/new',

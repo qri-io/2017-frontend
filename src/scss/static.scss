@@ -21,8 +21,8 @@ html, body, #root, #app {
 }
 
 body {
-  background: $dark-blue-slate;
-  color: $light-blue-slate;
+  background: $slate;
+  color: $slate;
   min-height: 100;
 }
 
@@ -131,7 +131,7 @@ a:hover {
 #navbar .alpha {
   text-align: center;
   letter-spacing: 1px;
-  color: $light-blue-slate;
+  color: $slate;
 }
 
 #navbar .menu {

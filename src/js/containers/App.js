@@ -111,13 +111,13 @@ class App extends Component {
     }
 
     return (
-      <div className="alert alert-warning" role="alert">
-        <b>{errorMessage}</b>
-        {' '}
-        (<a href="#"
-            onClick={this.handleDismissClick}>
-          Dismiss
-        </a>)
+      <div className="alert container red">
+        <div className="row">
+          <div className="col-md-12">
+            <p className="message">{errorMessage}</p>
+            <a className="dismiss" href="#" onClick={this.handleDismissClick}>Dismiss</a>
+          </div>
+        </div>
       </div>
     )
   }

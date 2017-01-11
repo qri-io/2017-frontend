@@ -39,22 +39,24 @@
 // Grayscale and brand colors for use across Bootstrap.
 
 // background colors
-$cold-slate: #272727;
-$warm-slate: #2A2E2E;
-$dark-blue-slate: #2A3439;
-$other-dark-blue-slate: #2D3A40;
-$med-blue-slate: #40515D;
-$light-blue-slate: #A1B2BC;
+$slate: #253238;
+// $cold-slate: #272727;
+// $warm-slate: #2A2E2E;
+// $dark-blue-slate: #2A3439;
+// $other-dark-blue-slate: #2D3A40;
+// $med-blue-slate: #40515D;
+// $light-blue-slate: #A1B2BC;
+
+$text: #ABCAD6;
+$background-text: #657780;
 
 // brand colors
-$hawt-pink: #FA009B;
-
-// accent colors
-$yellow: #E6DB74;
-$green: #49C797;
-$teal: #49C3C7;
-$purple: #B04BD8;
-$orange: #E2542E;
+$green: #C3E88D;
+$blue: #89DDFF;
+$purple: #C792E2;
+$red: #FF5370;
+$yellow: #FAC465;
+$orange: #F78C6C;
 $tope: #DFE2CE;
 
 $gray-dark:                 #373a3c !default;
@@ -63,21 +65,14 @@ $gray-light:                #818a91 !default;
 $gray-lighter:              #eceeef !default;
 $gray-lightest:             #f7f7f9 !default;
 
-// $brand-primary:             #0275d8 !default;
-// $brand-success:             #5cb85c !default;
-// $brand-info:                #5bc0de !default;
-// $brand-warning:             #f0ad4e !default;
-// $brand-danger:              #d9534f !default;
-// $brand-inverse:             $gray-dark !default;
-
-$brand-primary:             #62CBC6 !default;
-$brand-success:             #5cb85c !default;
-$brand-info:                #5bc0de !default;
-$brand-warning:             #f0ad4e !default;
-$brand-danger:              #d9534f !default;
+$brand-primary:             $blue !default;
+$brand-success:             $green !default;
+$brand-info:                $purple !default;
+$brand-warning:             $yellow !default;
+$brand-danger:              $red !default;
 
 $dark-bg:                   #2A2E2E !default;
-$border-color:              $med-blue-slate !default;
+$border-color:              $slate !default;
 
 
 // Options
@@ -129,8 +124,8 @@ $border-width: 0.5px !default;
 //
 // Settings for the `<body>` element.
 
-$body-bg:    #2A3439 !default;
-$body-color: $gray-dark !default;
+$body-bg:    $slate !default;
+$body-color: $text !default;
 
 
 // Links
@@ -282,7 +277,7 @@ $table-bg-hover:                rgba(0,0,0,.075) !default;
 $table-bg-active:               $table-bg-hover !default;
 
 $table-border-width:            $border-width !default;
-$table-border-color:            $med-blue-slate !default;
+$table-border-color:            $slate !default;
 
 
 // Buttons

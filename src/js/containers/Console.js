@@ -11,9 +11,9 @@ import QueryEditor from '../components/QueryEditor'
 import ResultsTable from '../components/ResultsTable'
 import ResultsChart from '../components/ResultsChart'
 import List from '../components/List'
-import DatasetItem from '../components/DatasetItem'
-import QueryHistoryItem from '../components/QueryHistoryItem'
-import QueryItem from '../components/QueryItem'
+import DatasetItem from '../components/item/DatasetItem'
+import QueryHistoryItem from '../components/item/QueryHistoryItem'
+import QueryItem from '../components/item/QueryItem'
 
 function loadData(props) {
 	props.loadDatasets(1, 100)

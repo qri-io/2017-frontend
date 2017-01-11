@@ -6,7 +6,7 @@ import { loadDatasets } from '../actions/dataset'
 import { selectAllDatasets } from '../selectors/dataset'
 
 import List from '../components/List'
-import DatasetItem from '../components/DatasetItem'
+import DatasetItem from '../components/item/DatasetItem'
 import Spinner from '../components/Spinner'
 
 class Datasets extends React.Component {
@@ -43,8 +43,9 @@ class Datasets extends React.Component {
 		return (
 			<div className="container">
 				<div className="row">
-					<header className="col-md-12">
-						<h3>DATASETS</h3>
+					<header className="blue col-md-12">
+						<hr className="blue" />
+						<h1>Datasets</h1>
 						<p>user-contributed datasets</p>
 					</header>
 				</div>

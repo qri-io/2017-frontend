@@ -6,7 +6,7 @@ import { toConsoleQuery, loadQueryPage } from '../actions/query'
 import { selectAllQueries } from '../selectors/query'
 
 import List from '../components/List'
-import QueryItem from '../components/QueryItem'
+import QueryItem from '../components/item/QueryItem'
 import Spinner from '../components/Spinner'
 
 class Queries extends React.Component {

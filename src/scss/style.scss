@@ -22,9 +22,29 @@ html, body, #root, #app {
   min-height: 100%;
 }
 
-body {
-  background: $dark-blue-slate;
-  color: $light-blue-slate;
+.bg-green { background: $green; }
+.bg-blue { background: $blue; }
+.bg-purple { background: $purple; }
+.bg-red { background: $red; }
+.bg-yellow { background: $yellow; }
+.bg-orange { background: $orange; }
+
+.green { color: $green; }
+.blue { color: $blue; }
+.purple { color: $purple; }
+.red { color: $red; }
+.yellow { color: $yellow; }
+.orange { color: $orange; }
+
+hr.green { border-top: 1px solid $green; }
+hr.blue { border-top: 1px solid $blue; }
+hr.purple { border-top: 1px solid $purple; }
+hr.red { border-top: 1px solid $red; }
+hr.yellow { border-top: 1px solid $yellow; }
+hr.orange { border-top: 1px solid $orange; }
+
+header > hr {
+  margin-top: 0;
 }
 
 #content-wrapper, #root {
@@ -53,7 +73,6 @@ body {
   color: #999999;
 }
 
-
 a {
   text-decoration: none;
   transition: color 0.5s;
@@ -64,3 +83,16 @@ a:hover {
   text-decoration: none;
   color: #9FFFF0;
 }
+
+.address {
+  color: $orange;
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+

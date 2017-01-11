@@ -9,8 +9,8 @@ import { selectUserDatasets } from '../selectors/dataset'
 import { selectUserQueries } from '../selectors/query'
 
 import List from '../components/List';
-import DatasetItem from '../components/DatasetItem';
-import QueryItem from '../components/QueryItem';
+import DatasetItem from '../components/item/DatasetItem';
+import QueryItem from '../components/item/QueryItem';
 
 class User extends React.Component {
 	constructor(props) {
@@ -44,14 +44,14 @@ class User extends React.Component {
 
 		return (
 			<div className="user container">
-				<header className="col-md-12">
-					<small>USER</small>
-					<h2>
-						<Link to={"/" + user.username }>{ user.username }</Link>
-					</h2>
+				<div className="row">
+				<header className="yellow col-md-12">
+					<hr className="yellow" />
+					<h1><Link className="yellow" to={"/" + user.username }>{ user.username }</Link></h1>
 					{ permissions.edit ? <Link to="/settings" >settings</Link> : undefined }
 					<p>{ user.description }</p>
 				</header>
+				</div>
 				{/*<div className="col-md-12">
 					<hr />
 					<h6>QUERIES:</h6>

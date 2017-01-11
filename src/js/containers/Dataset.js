@@ -126,17 +126,21 @@ class Dataset extends React.Component {
 			<div id="wrapper">
 				<div className="container">
 					<DatasetHeader dataset={dataset} />
-					<div className="col-md-12">
-						{this.renderEditButtons(this.props)}
-						<p>{ dataset.description }</p>
+					<div className="row">
+						<div className="col-md-12">
+							{this.renderEditButtons(this.props)}
+							<p>{ dataset.description }</p>
+						</div>
 					</div>
-					<div className="col-md-12">
-						<QueryEditor query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />
-						{this.renderResults(this.props)}
-						<section className="col-md-12">
-							<hr />
-							{ dataset.fields ? <FieldsTable fields={dataset.fields} /> : <p>This dataset currently has no schema</p> }
-						</section>
+					<div className="row">
+						<div className="col-md-12">
+							<QueryEditor query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />
+							{this.renderResults(this.props)}
+							<section className="col-md-12">
+								<hr />
+								{ dataset.fields ? <FieldsTable fields={dataset.fields} /> : <p>This dataset currently has no schema</p> }
+							</section>
+						</div>
 					</div>
 				</div>
 			</div>

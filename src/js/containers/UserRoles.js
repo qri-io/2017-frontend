@@ -7,7 +7,7 @@ import { selectUserByUsername } from '../selectors/user'
 import { selectUserRoles } from '../selectors/role'
 
 import List from '../components/List'
-import RoleItem from '../components/RoleItem'
+import RoleItem from '../components/item/RoleItem'
 import Spinner from '../components/Spinner'
 
 class Roles extends React.Component {
@@ -40,18 +40,22 @@ class Roles extends React.Component {
 	}
 
 	render() {
-		const { roles, loading, fetchedAll } = this.props;
+		const { roles, loading, fetchedAll, username } = this.props;
 
 		return (
 			<div className="container">
-				<header className="col-md-12">
-					<h3>ROLES</h3>
-					<p>user-contributed roles</p>
-				</header>
-				<div className="col-md-12">
-					<List data={roles} component={RoleItem} onSelectItem={this.handleSelectItem} />
-					{ loading ? <Spinner /> : undefined }
-					{ (!loading && !fetchedAll) ? <button className="btn btn-large btn-primary" onClick={this.handleLoadNextPage}>Load More</button> : undefined }
+				<div className="row">
+					<header className="yellow col-md-12">
+						<hr className="yellow" />
+						<h1>{username}'s roles</h1>
+					</header>
+				</div>
+				<div className="row">
+					<div className="col-md-12">
+						<List data={roles} component={RoleItem} onSelectItem={this.handleSelectItem} />
+						{ loading ? <Spinner /> : undefined }
+						{ (!loading && !fetchedAll) ? <button className="btn btn-large btn-primary" onClick={this.handleLoadNextPage}>Load More</button> : undefined }
+					</div>
 				</div>
 			</div>
 		);

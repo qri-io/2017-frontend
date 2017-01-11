@@ -8,7 +8,7 @@ import { selectDatasetByAddress } from '../selectors/dataset'
 
 import DatasetHeader from '../components/DatasetHeader'
 import List from '../components/List'
-import MigrationItem from '../components/MigrationItem'
+import MigrationItem from '../components/item/MigrationItem'
 import Spinner from '../components/Spinner'
 
 class DatasetMigrations extends React.Component {

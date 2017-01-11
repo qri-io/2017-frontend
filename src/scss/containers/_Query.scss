@@ -12,7 +12,7 @@
 		}
 
 		.infoBar {
-			border-top: 1px solid $med-blue-slate;
+			border-top: 1px solid $slate;
 			margin-top: 1.0rem;
 			// margin-bottom: 1.0rem;
 			&:after {
@@ -27,7 +27,7 @@
 		}
 
 		.sqlCode {
-			border-bottom: 1px solid $med-blue-slate;
+			border-bottom: 1px solid $slate;
 			margin-bottom: 1.0rem;
 		}
 	}
@@ -49,8 +49,8 @@
 			}
 			// color: #fff;
 			// font-family: $bold-heading-font-family;
-			// background-color: $hawt-pink;
-			// border-color: $hawt-pink;
+			// background-color: $red;
+			// border-color: $red;
 			// display: block;
 			// &:hover {
 				// background-color: $teal;

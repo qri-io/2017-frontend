@@ -6,8 +6,8 @@ export default class RoleItem extends React.Component {
 
 		return (
 			<div className="role item" onClick={onSelect}>
-				<h4>{data.address}</h4>
-				<h5>{data.type}</h5>
+				<h3 className="red">{data.address}</h3>
+				<p>{data.type}</p>
 			</div>
 		);
 	}

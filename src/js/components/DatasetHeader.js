@@ -10,21 +10,16 @@ export default class DatasetHeader extends React.Component {
 		const datasetName = dataset.address.split('.')[1];
 
 		return (
-			<header className="page-header col-md-12">
-				<small>DATASET</small>
-				<h2>
-					<Link to={ "/" + username }>{ username }</Link>
-					<span>.</span>
-					<Link to={ path }>{ datasetName }</Link>
-				</h2>
-				<p>
-					<span>{ dataset.table_count || 0 } Tables </span>
-					<span>{ dataset.row_count || 0 } Rows </span>
-					<Link to={`${path}/migrations`}>{ dataset.migration_count || 0 } Migrations </Link>
-					<Link to={`${path}/changes`}>{ dataset.change_count || 0 } Changes</Link>
-					{ dataset.sourceUrl ? <span>| <a href={ dataset.sourceUrl } target="_blank">{ dataset.sourceUrl }</a></span> : undefined }
-				</p>
-			</header>
+			<div className="row">
+				<header className="blue page-header col-md-12">
+					<hr className="blue" />
+					<h1>{dataset.name || "unnamed dataset"}</h1>
+					<p className="address">{dataset.address}</p>
+					<p>
+						{ dataset.sourceUrl ? <span>| <a href={ dataset.sourceUrl } target="_blank">{ dataset.sourceUrl }</a></span> : undefined }
+					</p>
+				</header>
+			</div>
 		);
 	}
 }

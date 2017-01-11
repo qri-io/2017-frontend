@@ -12,8 +12,8 @@ export default class Navbar extends Component {
 							<img src="https://s3.amazonaws.com/static.qri.io/svg/qri.svg" />
 						</div>
 						<div className="menu col-md-4 offset-md-7">
-							<Link className="right" to="/browse">Datasets</Link>
-							{ user ? <a href="http://docs.qri.io">Docs</a> : undefined}
+							<Link className="green" to="/browse">Datasets</Link>
+							{ user ? <a className="orange" href="http://docs.qri.io">Docs</a> : undefined}
 							{ 
 								user ? 
 									<Link to={`/users/${user.username}`}>{user.username}</Link> :
