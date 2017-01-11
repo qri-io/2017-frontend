@@ -13,7 +13,6 @@ import Spinner from '../components/Spinner'
 class Roles extends React.Component {
 	constructor(props) {
 		super(props);
-
 		[ 
 			'handleSelectItem',
 			'handleLoadNextPage',

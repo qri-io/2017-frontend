@@ -1,5 +1,9 @@
 import { selectQueryById } from './query';
 
+export function addressPath(address) {
+	return "/" + address.replace(/\./gi, "/")
+}
+
 export function selectDatasetById(state, id) {
 	return state.entities.datasets[id];
 }

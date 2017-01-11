@@ -11,8 +11,8 @@ import SessionRequired from '../components/SessionRequired'
 import Spinner from '../components/Spinner'
 import ValidInput from '../components/ValidInput'
 import ValidTextarea from '../components/ValidTextarea'
-import SelectFieldsTable from '../components/SelectFieldsTable'
-import FieldsTable from '../components/FieldsTable'
+import SelectField from '../components/SelectField'
+import FieldsList from '../components/FieldsList'
 
 class NewChange extends React.Component {
 	constructor(props) {
@@ -104,13 +104,13 @@ class NewChange extends React.Component {
 									<option>DELETE</option>
 								</select>
 							</div>
-							<SelectFieldsTable label="Table" name="table_name" value={change.table_name} fields={dataset.fields || []} onChange={this.handleChange} />
+							<SelectField label="Table" name="table_name" value={change.table_name} fields={dataset.fields || []} onChange={this.handleChange} />
 							<ValidTextarea label="Description" name="description" value={change.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />
 							<ValidTextarea label="CSV Data" name="data" value={change.data} showError={showErrors} error={validation.description} onChange={this.handleChange} />
 							<button className="btn btn-large submit"  disabled={(!validation.isValid && showErrors)} onClick={this.handleSave}>Create Change</button>
 						</form>
 					</div>
-					{dataset.fields ? <FieldsTable fields={dataset.fields} /> : undefined}
+					{dataset.fields ? <FieldsList fields={dataset.fields} /> : undefined}
 				</div>
 			</div>
 		);

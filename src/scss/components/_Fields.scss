@@ -1,0 +1,15 @@
+.fields.table {
+	padding-bottom: 1em;
+	&::after {
+		content: " ";
+		display: block;
+		clear: both;
+	}
+	.field {
+		float: left;
+		margin-right: 15px;
+		padding-right: 10px;
+		padding-top: 6px;
+		border-top: 1px solid $blue;
+	}
+}

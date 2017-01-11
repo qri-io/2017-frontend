@@ -4,15 +4,14 @@ import { Link } from 'react-router'
 
 export default class DatasetHeader extends React.Component {
 	render() {
-		const { dataset } = this.props
+		const { dataset, onDownload } = this.props
 		const path = "/" + dataset.address.replace(".", "/", -1);
-		const username = dataset.address.split('.')[0];
-		const datasetName = dataset.address.split('.')[1];
 
 		return (
 			<div className="row">
 				<header className="blue page-header col-md-12">
 					<hr className="blue" />
+					<a className="green right" href={`/downloads/package?address=${dataset.address}`}>Download</a>
 					<h1>{dataset.name || "unnamed dataset"}</h1>
 					<p className="address">{dataset.address}</p>
 					<p>
@@ -26,7 +25,8 @@ export default class DatasetHeader extends React.Component {
 
 DatasetHeader.propTypes = {
 	// dataset data model
-	dataset  : PropTypes.object.isRequired
+	dataset  : PropTypes.object.isRequired,
+	onDownload : PropTypes.func.isRequired
 }
 
 DatasetHeader.defaultProps = {

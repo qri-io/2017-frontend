@@ -6,6 +6,7 @@ import UserItem from '../components/item/UserItem';
 import RoleItem from '../components/item/RoleItem';
 
 import ValidInput from '../components/ValidInput';
+import FieldsList from '../components/FieldsList';
 
 
 export default class Stylesheet extends React.Component {
@@ -92,9 +93,17 @@ export default class Stylesheet extends React.Component {
 					</div>
 				</div>
 				<div className="container">
-					<header className="col-md-12">
-						<h2></h2>
-					</header>
+					<div className="row">
+						<header className="blue col-md-12">
+							<hr className="blue" />
+							<h2>Fields</h2>
+						</header>
+					</div>
+					<div className="row">
+						<div className="col-md-12">
+							<FieldsList fields={this.props.fields} />
+						</div>
+					</div>
 				</div>
 			</div>
 		);
@@ -106,6 +115,14 @@ Stylesheet.propTypes = {
 }
 
 Stylesheet.defaultProps = {
+	fields: [
+		{ name : "field_one", type : "string" },
+		{ name : "field_two", type : "integer" },
+		{ name : "field_three", type : "float" },
+		{ name : "field_four", type : "object" },
+		{ name : "field_five", type : "array" },
+		{ name : "field_six", type : "date" },
+	],
 	users : [
 		{"id":"4254923e-a3a3-4d6f-ae1d-f6af177215db","created":1484086940,"updated":1484086940,"username":"steve","type":"none","email":"steve@qri.io","name":"Steven","description":"","home_url":""},
 		{"id":"9080d2c6-4e2a-4f5c-a49f-97dc1c6e1ecb","created":1484080475,"updated":1484080475,"username":"test_one","type":"none","email":"brendanobrienesq@gmail.com","name":"brendan","description":"","home_url":""},

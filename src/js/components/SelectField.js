@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
 
-export default class SelectFieldsTable extends React.Component {
+// TODO - this might be really fucking broken
+export default class SelectField extends React.Component {
 	render() {
 		const { label, name, value, onChange, fields } = this.props;
 		return (
-			<div className="selectFieldsTable form-group">
+			<div className="selectFieldsList form-group">
 				{ label ? <label for={name} className="control-label">{label}</label> : undefined }
 				<select className="form-control" value={value} onChange={(e) => { onChange(name, e.target.value, e) }}>
 					<option value="">-Select Table-</option>
@@ -19,7 +20,7 @@ export default class SelectFieldsTable extends React.Component {
 	}
 }
 
-SelectFieldsTable.propTypes = {
+SelectField.propTypes = {
 	fields : PropTypes.array.isRequired,
 	name : PropTypes.string.isRequired,
 	onChange : PropTypes.func.isRequired,
@@ -30,6 +31,6 @@ SelectFieldsTable.propTypes = {
 	error : PropTypes.string,
 }
 
-SelectFieldsTable.defaultProps = {
+SelectField.defaultProps = {
 	showError : false
 }

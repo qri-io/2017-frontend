@@ -23,7 +23,7 @@ export default class ResultsTable extends Component {
 			<div className="resultsTable">
 				<div className="table-responsive">
 					<table className="table table-hover query-results">
-						<thead><tr>{fields.map((col, i) => <th key={i}>{col.name}</th>)}</tr></thead>
+						<thead><tr>{fields.map((col, i) => <th className="blue" key={i}>{col.name}</th>)}</tr></thead>
 						<tbody>
 							{data.map((row, i) => {
 								return (

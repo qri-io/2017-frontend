@@ -287,3 +287,17 @@ export function loadDatasetChanges(datasetId, page=1, pageSize=50) {
 	}
 }
 
+export const DATASET_DOWNLOAD_REQUEST = 'DATASET_DOWNLOAD_REQUEST';
+export const DATASET_DOWNLOAD_SUCCESS = 'DATASET_DOWNLOAD_SUCCESS';
+export const DATASET_DOWNLOAD_FAIL = 'DATASET_DOWNLOAD_FAIL';
+
+export function downloadDataset(address="") {
+	return {
+		[CALL_API] : {
+			types : [ DATASET_CHANGES_REQUEST, DATASET_CHANGES_SUCCESS, DATASET_CHANGES_FAIL ],
+			endpoint : `/datasets/package`,
+			schema : Schemas.DATASET,
+			data : { address }
+		}
+	}
+}

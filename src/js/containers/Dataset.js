@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-import { loadDatasetByAddress } from '../actions/dataset'
+import { loadDatasetByAddress, downloadDataset } from '../actions/dataset'
 import { setQuery, runQuery, downloadQuery } from '../actions/query'
 
 import { selectDatasetByAddress } from '../selectors/dataset'
@@ -10,7 +10,7 @@ import { selectSessionUser } from '../selectors/session'
 import { selectQueryById } from '../selectors/query'
 
 import DatasetHeader from '../components/DatasetHeader'
-import FieldsTable from '../components/FieldsTable'
+import FieldsList from '../components/FieldsList'
 import QueryEditor from '../components/QueryEditor'
 import ResultsTable from '../components/ResultsTable'
 
@@ -24,6 +24,7 @@ class Dataset extends React.Component {
 			'handleEditorAddressChange',
 			'handleLoadMoreResults',
 			'handleDownloadQuery',
+			'handleDownloadDataset',
 		].forEach(m => this[m] = this[m].bind(this))
 
 		// this.debouncedSetQuery = debounce(props.setQuery, 200)
@@ -37,7 +38,7 @@ class Dataset extends React.Component {
 		} else {
 	    this.props.setQuery({
 	    	address : this.props.address,
-	    	statement : ""
+	    	statement : `select * from ${this.props.address}`
 	    });
 	  }
   }
@@ -59,6 +60,10 @@ class Dataset extends React.Component {
 	handleEditorChange(value) {
 		// this.debouncedSetQuery(value)
 		this.props.setQuery(value);
+	}
+
+	handleDownloadDataset(e) {
+		this.props.downloadDataset(this.props.address);
 	}
 
 	handleRunQuery(e) {
@@ -103,8 +108,8 @@ class Dataset extends React.Component {
 		if (!results) { return undefined; }
 		return (
 			<div className="col-md-12">
-				<hr />
-				<h6>RESULTS</h6>
+				<hr className="green" />
+				<h4 className="green">Results</h4>
 				<ResultsTable results={results} onLoadMore={this.handleLoadMoreResults} />
 			</div>
 		);
@@ -125,22 +130,28 @@ class Dataset extends React.Component {
 		return (
 			<div id="wrapper">
 				<div className="container">
-					<DatasetHeader dataset={dataset} />
+					<DatasetHeader dataset={dataset} onDownload={this.handleDownloadDataset} />
+					<div className="row">
+						<div className="col-md-12">
+							{ dataset.fields ? <FieldsList fields={dataset.fields} /> : <p>This dataset currently has no specified fields</p> }
+						</div>
+					</div>
 					<div className="row">
 						<div className="col-md-12">
 							{this.renderEditButtons(this.props)}
-							<p>{ dataset.description }</p>
 						</div>
 					</div>
 					<div className="row">
 						<div className="col-md-12">
 							<QueryEditor query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />
-							{this.renderResults(this.props)}
-							<section className="col-md-12">
-								<hr />
-								{ dataset.fields ? <FieldsTable fields={dataset.fields} /> : <p>This dataset currently has no schema</p> }
-							</section>
 						</div>
+						{this.renderResults(this.props)}
+					</div>
+					<div className="row">
+						<section className="col-md-12">
+							<hr className="blue" />
+							<p>{ dataset.description }</p>
+						</section>
 					</div>
 				</div>
 			</div>
@@ -169,7 +180,8 @@ Dataset.propTypes = {
 	loadDatasetByAddress : PropTypes.func.isRequired,
 
 	setQuery: PropTypes.func.isRequired, 
-	runQuery: PropTypes.func.isRequired
+	runQuery: PropTypes.func.isRequired,
+	downloadDataset: PropTypes.func.isRequired
 }
 
 Dataset.defaultProps = {
@@ -215,6 +227,7 @@ export default connect(mapStateToProps, {
 	setQuery, 
 	runQuery,
 	downloadQuery,
+	downloadDataset,
 
 	loadDatasetByAddress
 })(Dataset)

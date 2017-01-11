@@ -1,4 +1,3 @@
-
 @import "variables";
 @import "mixins";
 
@@ -14,61 +13,7 @@
 @import "grid";
 @import "modal";
 
-@import "datatypes";
-
-html, body, #root, #app {
-  min-height: 100%;
-}
-
-body {
-  background: $slate;
-  color: $slate;
-  min-height: 100;
-}
-
-#content-wrapper, #root {
-  min-height: 90%;
-}
-
-.wrapper, .page {
-  min-height: 100%
-}
-
-.logotype {
-  background: url('/svg/logotype.svg') center left no-repeat;
-  display: block;
-  overflow: hidden;
-  width: 100px;
-  height: 70px;
-  text-indent: -5000px;
-}
-
-.logotype.large {
-  margin: 150px auto 15px auto;
-}
-
-.tagline {
-  text-align: center;
-  color: #999999;
-}
-
-
-a {
-  text-decoration: none;
-  transition: color 0.5s;
-  cursor: pointer;
-}
-
-a:hover {
-  text-decoration: none;
-  color: #9FFFF0;
-}
-
-
-
-
-
-
+@import "site";
 
 #content-wrapper {
   min-height: 90%;
