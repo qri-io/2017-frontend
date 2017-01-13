@@ -61,14 +61,15 @@ class BetaSignup extends Component {
 
 		return (
 			<div className="betaSignup">
-				<button type="button" className="close" aria-label="Close"><span aria-hidden="true" onClick={this.handleCancel}>&times;</span></button>
-				<h4 className="title"><i>GIVE BETA</i></h4>
+				<hr className="red" />
+				<button type="button" className="close" aria-label="Close"><span aria-hidden="true" className="red" onClick={this.handleCancel}>&times;</span></button>
+				<h4 className="title">Give Beta</h4>
 				<p>Are you a brave? Are you willing to help forge this thing from it's doughy infancy? Are you awesome?</p>
 				<p>Yeah. you're awesome. Holler with an email:</p>
 				<ValidInput type="email" name="email" value={invite.email} error={validation.email} showError={showValidation} onChange={this.handleChange} placeholder="sparkle_pony_2000@qri.io" />
 				<div className="form-group">
-					<label>Ok, send me rare marketing email:</label>
-		      <input className="checkbox" type="checkbox" name="marketing" checked={invite.marketing ? "on" : ""} onChange={(e) => { this.handleChange("marketing", !invite.marketing, e) }} />
+		      <input className="checkbox right" type="checkbox" name="marketing" checked={invite.marketing ? "on" : ""} onChange={(e) => { this.handleChange("marketing", !invite.marketing, e) }} />
+					<p>Ok, send me rare marketing email:</p>
 				</div>
 				<button className="btn btn-primary" disabled={saving || (!validation.isValid && showValidation)} onClick={this.handleSave}>Signup</button>
 			</div>

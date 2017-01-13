@@ -12,13 +12,16 @@ export default class Navbar extends Component {
 							<img src="https://s3.amazonaws.com/static.qri.io/svg/qri.svg" />
 						</div>
 						<div className="menu col-md-4 offset-md-7">
-							<Link className="green" to="/browse">Datasets</Link>
-							{ user ? <a className="orange" href="http://docs.qri.io">Docs</a> : undefined}
+							<Link className="blue" to="/browse">Datasets</Link>
+							<Link className="green" to="/browse">Docs</Link>
+							{/* user ? <a className="orange" href="http://docs.qri.io">Docs</a> : undefined */}
+							{ user ? <a className="orange" href="/beta">Beta Info</a> : undefined}
 							{ 
 								user ? 
-									<Link to={`/users/${user.username}`}>{user.username}</Link> :
+									<Link className="yellow" to={`/users/${user.username}`}>{user.username}</Link> :
 									<a onClick={onGimmieInvite}>Gimmie beta</a>
 							}
+							{ user ? undefined : <Link to="/login">Login</Link>}
 						</div>
 					</div>
 				</div>

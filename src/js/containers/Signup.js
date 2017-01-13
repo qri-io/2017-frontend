@@ -76,7 +76,8 @@ class Signup extends React.Component {
 		return (
 			<div id="signup">
 				<div className="container">
-						<form className="form col-md-4 offset-md-4" method="POST" action={"/invites/" + inviteId + "/accept"}>
+						<form className="yellow form col-md-4 offset-md-4" method="POST" action={"/invites/" + inviteId + "/accept"}>
+							<hr className="yellow" />
 							<h3>Welcome!</h3>
 							<p>Accept Your Invite:</p>
 							<ValidInput name="username" type="text" label="Username" value={username} error={validation.username} showError={showValidation} onChange={this.handleChange} />
@@ -84,6 +85,7 @@ class Signup extends React.Component {
 							<ValidInput name="email" type="text" label="Email" value={email} error={validation.email} showError={showValidation} onChange={this.handleChange} />
 							<ValidInput name="password" type="password" label="Password" name="password" value={password} error={validation.password} showError={false} onChange={this.handleChange} />
 							<input className="signup btn btn-primary" type="submit" name="submit" value="Signup" disabled={!validation.isValid} />
+							<hr className="yellow" />
 						</form>
 				</div>
 			</div>
