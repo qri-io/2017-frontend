@@ -13,6 +13,7 @@ const sessionUserSchema = new Schema('session');
 const sshKeySchema = new Schema('ssh_keys', { idAttribute : 'sha256' });
 const userSchema = new Schema('users');
 const datasetSchema = new Schema('datasets', { idAttribute : 'address' });
+const readmeSchema = new Schema('readmes', { idAttribute : 'address' });
 const querySchema = new Schema('queries');
 // const schemaSchema = new Schema('schemas');
 // const resultSchema = new Schema('results', { idAttribute : (result) => 'result' });
@@ -50,6 +51,10 @@ datasetSchema.new = function (attrs) {
   }, attrs, { id : "new" });
 }
 
+readmeSchema.new = function (attrs) {
+  return Object.assign({ text : "" }, attrs, { id : "new" });
+}
+
 migrationSchema.new = function (attrs) {
   return Object.assign({}, attrs, { id : "new" });
 }
@@ -79,6 +84,7 @@ const Schemas = {
   USER_ARRAY: arrayOf(userSchema),
   DATASET : datasetSchema,
   DATASET_ARRAY : arrayOf(datasetSchema),
+  README : readmeSchema,
   MIGRATION : migrationSchema,
   MIGRATION_ARRAY : arrayOf(migrationSchema),
   CHANGE : changeSchema,

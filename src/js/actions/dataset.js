@@ -215,29 +215,27 @@ export function loadDatasetByAddress(address, requiredFields=[]) {
 	}
 }
 
-export const DATASET_SCHEMA_REQUEST = 'DATASET_SCHEMA_REQUEST'
-export const DATASET_SCHEMA_SUCCESS = 'DATASET_SCHEMA_SUCCESS'
-export const DATASET_SCHEMA_FAILURE = 'DATASET_SCHEMA_FAILURE'
+export const DATASET_README_REQUEST = 'DATASET_README_REQUEST'
+export const DATASET_README_SUCCESS = 'DATASET_README_SUCCESS'
+export const DATASET_README_FAILURE = 'DATASET_README_FAILURE'
 
-export function fetchDatasetSchema(id) {
+export function fetchDatasetReadme(address) {
 	return {
 		[CALL_API] : {
-			types : [ DATASET_SCHEMA_REQUEST, DATASET_SCHEMA_SUCCESS, DATASET_SCHEMA_FAILURE ],
-			endpoint : `/datasets/${id}/schema'`,
-			schema : Schemas.DATASET,
-			id,
+			types : [ DATASET_README_REQUEST, DATASET_README_SUCCESS, DATASET_README_FAILURE ],
+			endpoint : `/datasets/readme?address=${address}`,
+			schema : Schemas.README,
+			address,
 		}
 	}
 }
 
-export function loadDatasetSchema(id) {
+export function loadDatasetReadme(address) {
 	return (dispatch, getState) => {
-    const dataset = getState().entities.datasets[id];
-    if (dataset.hasOwnProperty(schema)) {
+    if (getState().entities.readmes[address]) {
     	return null
     }
-
-    return dispatch(fetchDatasetSchema(id))
+    return dispatch(fetchDatasetReadme(address))
   }
 }
 

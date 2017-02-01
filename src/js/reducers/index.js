@@ -12,7 +12,7 @@ import appReducer from './app'
 import resultsReducer from './results'
 import locals from './locals'
 
-const initialState = {
+const initialEntitiesState = {
   app : {},
 
   session : {},
@@ -21,6 +21,7 @@ const initialState = {
   roles : {},
 
   datasets : {},
+  readmes : {},
   changes : {},
   migrations : {},
   
@@ -30,7 +31,7 @@ const initialState = {
 
 // Updates an entity cache in response to any action with response.entities.
 // see api middleware
-function entities(state = initialState, action) {
+function entities(state = initialEntitiesState, action) {
   if (action.response && action.response.entities) {
     return merge({}, state, action.response.entities)
   }

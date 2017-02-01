@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import ReactMarkdown from 'react-markdown';
 
-import { loadDatasetByAddress, downloadDataset } from '../actions/dataset'
+import { loadDatasetByAddress, downloadDataset, loadDatasetReadme } from '../actions/dataset'
 import { setQuery, runQuery, downloadQuery } from '../actions/query'
 
-import { selectDatasetByAddress } from '../selectors/dataset'
+import { selectDatasetByAddress, selectDatasetReadme } from '../selectors/dataset'
 import { selectSessionUser } from '../selectors/session'
 import { selectQueryById } from '../selectors/query'
 
@@ -31,7 +32,8 @@ class Dataset extends React.Component {
 	}
 
   componentWillMount() {
-    this.props.loadDatasetByAddress(this.props.address, ["schema"])
+    this.props.loadDatasetByAddress(this.props.address, ["fields"])
+    this.props.loadDatasetReadme(this.props.address)
 		// match the address to the current namespce, unless there's already a query
 		if (this.props.dataset && this.props.dataset.default_query) {
 			this.props.setQuery(this.props.dataset.default_query);
@@ -115,8 +117,19 @@ class Dataset extends React.Component {
 		);
 	}
 
+	renderReadme(readme) {
+		if (!readme) return;
+		return (
+			<div className="row">
+				<section className="col-md-12">
+					<ReactMarkdown escapeHtml={true} source={readme.text} />
+				</section>
+			</div>
+		);
+	}
+
 	render() {
-		const { address, dataset, permissions, query, results } = this.props
+		const { address, dataset, readme, permissions, query, results } = this.props
 		const path = "/" + address.replace(".", "/", -1)
 		
 		if (!dataset) {
@@ -153,6 +166,7 @@ class Dataset extends React.Component {
 							<p>{ dataset.description }</p>
 						</section>
 					</div>
+					{this.renderReadme(readme)}
 				</div>
 			</div>
 		);
@@ -165,6 +179,8 @@ Dataset.propTypes = {
 	address : PropTypes.string.isRequired,
 	// the dataset model to display
 	dataset : PropTypes.object,
+	// Readme model if available
+	readme : PropTypes.object,
 	// default query to show if none is present
 	default_query : PropTypes.object,
 	
@@ -181,7 +197,8 @@ Dataset.propTypes = {
 
 	setQuery: PropTypes.func.isRequired, 
 	runQuery: PropTypes.func.isRequired,
-	downloadDataset: PropTypes.func.isRequired
+	downloadDataset: PropTypes.func.isRequired,
+	loadDatasetReadme : PropTypes.func.isRequired
 }
 
 Dataset.defaultProps = {
@@ -216,6 +233,7 @@ function mapStateToProps(state, ownProps) {
 		address,
 
 		dataset : selectDatasetByAddress(state, address),
+		readme : selectDatasetReadme(state, address),
 
 		results,
 		permissions,
@@ -228,6 +246,7 @@ export default connect(mapStateToProps, {
 	runQuery,
 	downloadQuery,
 	downloadDataset,
+	loadDatasetReadme,
 
 	loadDatasetByAddress
 })(Dataset)

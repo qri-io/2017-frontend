@@ -12,7 +12,7 @@ function execQuery(query, page, pageSize) {
       'Content-Type': 'application/json'
     },
     credentials: 'include',
-    body : JSON.stringify({ query, page, pageSize })
+    body : JSON.stringify({ query : query.statement, page, pageSize })
   })
     .then(response => response.json().then(json => ({ json, response })))
     .then(({ json, response }) => {
