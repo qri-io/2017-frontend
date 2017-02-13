@@ -3,13 +3,15 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import ReactMarkdown from 'react-markdown';
 
-import { loadDatasetByAddress, downloadDataset, loadDatasetReadme } from '../actions/dataset'
+import { loadDatasetByAddress, downloadDataset, loadDatasetReadme, loadDatasetChildren } from '../actions/dataset'
 import { setQuery, runQuery, downloadQuery } from '../actions/query'
 
-import { selectDatasetByAddress, selectDatasetReadme } from '../selectors/dataset'
+import { selectDatasetByAddress, selectDatasetReadme, selectDatasetDescendants } from '../selectors/dataset'
 import { selectSessionUser } from '../selectors/session'
 import { selectQueryById } from '../selectors/query'
 
+import List from '../components/List'
+import DatasetItem from '../components/item/DatasetItem'
 import DatasetHeader from '../components/DatasetHeader'
 import FieldsList from '../components/FieldsList'
 import QueryEditor from '../components/QueryEditor'
@@ -26,6 +28,7 @@ class Dataset extends React.Component {
 			'handleLoadMoreResults',
 			'handleDownloadQuery',
 			'handleDownloadDataset',
+			'renderChildDatasets'
 		].forEach(m => this[m] = this[m].bind(this))
 
 		// this.debouncedSetQuery = debounce(props.setQuery, 200)
@@ -34,6 +37,7 @@ class Dataset extends React.Component {
   componentWillMount() {
     this.props.loadDatasetByAddress(this.props.address, ["fields"])
     this.props.loadDatasetReadme(this.props.address)
+    this.props.loadDatasetChildren(this.props.address)
 		// match the address to the current namespce, unless there's already a query
 		if (this.props.dataset && this.props.dataset.default_query) {
 			this.props.setQuery(this.props.dataset.default_query);
@@ -128,9 +132,47 @@ class Dataset extends React.Component {
 		);
 	}
 
+	renderQueryAndResults() {
+		const { query, dataset } = this.props;
+		return (
+			<div className="row">
+				<div className="col-md-12">
+					<QueryEditor query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />
+				</div>
+				{this.renderResults(this.props)}
+			</div>
+		);
+	}
+
+	renderDescription() {
+		const { dataset } = this.props;
+		if (!dataset.description) { return undefined; }
+		return (
+			<div className="row">
+			<section className="col-md-12">
+				<hr className="blue" />
+				<p>{ dataset.description }</p>
+			</section>
+		</div>
+		)
+	}
+
+	renderChildDatasets() {
+		return (
+			<div className="row">
+				<section className="col-md-12">
+					<hr className="blue" />
+					<h4>Children:</h4>
+				</section>
+				<List component={DatasetItem} data={this.props.descendants} />
+			</div>
+		);
+	}
+
 	render() {
 		const { address, dataset, readme, permissions, query, results } = this.props
 		const path = "/" + address.replace(".", "/", -1)
+		const hasData = (dataset && (dataset.url || dataset.file || dataset.data));
 		
 		if (!dataset) {
 			return (
@@ -139,6 +181,7 @@ class Dataset extends React.Component {
 				</div>
 			);
 		}
+
 
 		return (
 			<div id="wrapper">
@@ -154,19 +197,9 @@ class Dataset extends React.Component {
 							{this.renderEditButtons(this.props)}
 						</div>
 					</div>
-					<div className="row">
-						<div className="col-md-12">
-							<QueryEditor query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />
-						</div>
-						{this.renderResults(this.props)}
-					</div>
-					<div className="row">
-						<section className="col-md-12">
-							<hr className="blue" />
-							<p>{ dataset.description }</p>
-						</section>
-					</div>
-					{this.renderReadme(readme)}
+					{hasData ? this.renderQueryAndResults() : undefined }
+					{readme ? this.renderReadme(readme) : this.renderDescription() }
+					{this.renderChildDatasets()}
 				</div>
 			</div>
 		);
@@ -210,10 +243,7 @@ Dataset.defaultProps = {
 }
 
 function mapStateToProps(state, ownProps) {
-	let address = "qri"
-	if (ownProps.params.splat) {
-		address += "." + ownProps.params.splat.replace(/\//gi,".")
-	}
+	let address = ownProps.params.splat.replace(/\//gi,".")
 	
 	const user = selectSessionUser(state);
 	const results = state.results[state.console.query.statement]
@@ -234,6 +264,7 @@ function mapStateToProps(state, ownProps) {
 
 		dataset : selectDatasetByAddress(state, address),
 		readme : selectDatasetReadme(state, address),
+		descendants : selectDatasetDescendants(state, address),
 
 		results,
 		permissions,
@@ -247,6 +278,7 @@ export default connect(mapStateToProps, {
 	downloadQuery,
 	downloadDataset,
 	loadDatasetReadme,
+	loadDatasetChildren,
 
 	loadDatasetByAddress
 })(Dataset)

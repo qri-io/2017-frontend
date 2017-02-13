@@ -36,6 +36,11 @@ export function selectDatasetReadme(state, address) {
 	return state.entities.readmes[address];
 }
 
+export function selectDatasetDescendants(state, address) {
+	const { datasets } = state.entities;
+	return Object.keys(datasets).filter((adr) => adr.includes(address) && adr != address).map(adr => { return datasets[adr] });
+}
+
 export function selectLocalDatasetByAddress(state, address) {
 	const { datasets } = state.locals
 	const id = Object.keys(datasets).find(id => (datasets[id].address == address));

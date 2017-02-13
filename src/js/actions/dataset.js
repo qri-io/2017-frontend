@@ -299,3 +299,24 @@ export function downloadDataset(address="") {
 		}
 	}
 }
+
+export const DATASET_CHILDREN_REQUEST = 'DATASET_CHILDREN_REQUEST';
+export const DATASET_CHILDREN_SUCCESS = 'DATASET_CHILDREN_SUCCESS';
+export const DATASET_CHILDREN_FAIL = 'DATASET_CHILDREN_FAIL';
+
+export function fetchDatasetChildren(address="") {
+	return {
+		[CALL_API] : {
+			types : [ DATASET_CHILDREN_REQUEST, DATASET_CHILDREN_SUCCESS, DATASET_CHILDREN_FAIL ],
+			endpoint : `/datasets/children`,
+			schema : Schemas.DATASET_ARRAY,
+			data : { address }
+		}
+	}
+}
+
+export function loadDatasetChildren(address="") {
+	return (dispatch, getState) => {
+		return dispatch(fetchDatasetChildren(address));
+	}
+}

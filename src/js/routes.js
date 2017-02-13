@@ -55,7 +55,7 @@ export default {
 			}
 		},
 		{
-			path: '/qri',
+			path: '/*',
 			getComponent(location, cb) {
 				System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);
 			},

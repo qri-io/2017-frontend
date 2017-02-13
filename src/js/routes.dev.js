@@ -63,14 +63,6 @@ export default {
 			component: UserRoles
 		},
 		{
-			path: '/qri',
-			component : Dataset
-		},
-		{
-			path: '/qri/*',
-			component : Dataset
-		},
-		{
 			path: '/invites/:id',
 			component : Signup
 		},
@@ -81,7 +73,11 @@ export default {
 		{
 			path: '/stylesheet',
 			component: Stylesheet
-		}
+		},
+		{
+			path: '/*',
+			component : Dataset
+		},
 		// {
 		// 	path: '/datasets/new',
 		// 	component : NewDataset
