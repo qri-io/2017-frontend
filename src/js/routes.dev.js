@@ -23,6 +23,7 @@ import NewChange from './containers/NewChange'
 import Change from './containers/Change'
 import Queries from './containers/Queries'
 import Query from './containers/Query'
+import Namespace from './containers/Namespace'
 import Welcome from './containers/Welcome'
 
 function errorLoading(err) {
@@ -69,6 +70,10 @@ export default {
 		{
 			path: '/welcome',
 			component: Welcome
+		},
+		{
+			path: '/namespace',
+			component: Namespace
 		},
 		{
 			path: '/stylesheet',
