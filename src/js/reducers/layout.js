@@ -4,10 +4,10 @@ const COLLAPSED_W = 0;
 
 const initialState = {
 	size : 'xs',
-	stage : { w : 0, h : 0 },
-	navbar : { w : 0, h : 80, l : 0, t : 0 },
-	main : { w : 0, h : 0, l : 0, t : 0 },
-	sidebar : {  w : COLLAPSED_W, h : 0, l : 0, t : 0, collapsed : true, pct_w : 0.35 },
+	stage : { w : 100, h : 100 },
+	navbar : { w : 100, h : 80, l : 0, t : 0 },
+	main : { w : 100, h : 100, l : 0, t : 0 },
+	sidebar : {  w : COLLAPSED_W, h : 100, l : 0, t : 0, collapsed : true, pct_w : 0.35 },
 }
 
 export default function deviceReducer(state=initialState, action) {

@@ -25,9 +25,9 @@ class Namespace extends Component {
 
 		return (
 			<div className="namespace">
-				<InteractiveForceGraph simulationOptions={{ height: layout.main.h, width: layout.main.w }}>
+				<InteractiveForceGraph simulationOptions={{ height: layout.main.h, width: layout.main.w, animate : true }}>
 					{nodes.map((node, i) => {
-					  return (<ForceGraphNode key={`node-${i}`} node={node} fill="red" />);
+					  return (<ForceGraphNode key={`node-${i}`} node={node} fill="#C3E88D" />);
 					})}
 				  {connections.map((c, i) => {
 				  	return (<ForceGraphLink key={`link-${i}`} link={c} />);
