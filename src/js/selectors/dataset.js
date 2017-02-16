@@ -68,7 +68,7 @@ export function selectDatasetTree(state) {
 	const { datasets } = state.entities;
 	return Object.keys(datasets).reduce((acc,adr,i) => {
 		adr.split(".").reduce((acc, el) => {
-			acc[el] || (acc[el] = {})
+			acc[el] || (acc[el] = { })
 			return acc[el];
 		}, acc);
 
@@ -77,14 +77,15 @@ export function selectDatasetTree(state) {
 }
 
 export function treeNodes(tree) {
-	function walk(acc, obj) {
+	function walk(acc, obj, address) {
 		return Object.keys(obj).reduce((acc,key) => {
-			acc.push({ id : key });
-			return walk(acc, obj[key]);
+			const adr = address ? address + "." + key : key;
+			acc.push({ id : key, radius: 10, address : adr });
+			return walk(acc, obj[key], adr);
 		}, acc);
 	}
 
-	return walk([], tree);
+	return walk([], tree, "");
 }
 
 export function treeConnections(tree) {

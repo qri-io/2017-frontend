@@ -7,7 +7,7 @@ export default class DatasetItem extends React.Component {
 		return (
 			<div className="dataset item col-xl-3 col-lg-4 col-md-6 col-sm-12">
 				<h3 onClick={onSelect}>
-					<Link className="name" to={data.address.replace(".","/",-1)}>{data.name ? data.name : "unnamed dataset"}</Link>
+					<Link className="name" to={"/" + data.address.replace(/\./gi,"/")}>{data.name ? data.name : "unnamed dataset"}</Link>
 				</h3>
 				<p className="address">{data.address}</p>
 				<ul>

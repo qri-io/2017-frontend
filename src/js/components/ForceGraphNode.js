@@ -57,12 +57,16 @@ export default class ForceGraphNode extends PureRenderComponent {
 
     const { radius = 5 } = node;
 
-    return (
-      <circle
-        className={`rv-force__node ${className}`}
-        r={r || radius}
-        {...spreadable}
-      />
-    );
+    // return (
+    //   <g className={`rv-force__node ${className}`}>
+    //     <circle
+    //       r={r || radius}
+    //       {...spreadable}
+    //     />
+    //     <text className={labelClass} x={spreadable.cx  + (r || radius) + 4} y={spreadable.cy + (labelStyle.fontSize / 4) } style={labelStyle}>{ node.id || node.label }</text>
+    //   </g>
+    // );
+    
+    return (<circle className={`rv-force__node ${className}`} r={r || radius} {...spreadable} />);
   }
 }

@@ -54,9 +54,9 @@ class Dataset extends React.Component {
 	    this.props.loadDatasetByAddress(nextProps.address)
 		}
 
-		if (nextProps.dataset && nextProps.dataset.default_query && (this.props.dataset != nextProps.dataset)) {
-			this.props.setQuery(nextProps.dataset.default_query);
-		}
+		if (nextProps.dataset != this.props.dataset) {
+				this.props.setQuery(nextProps.dataset.default_query || { statement : `select * from ${nextProps.address}` });
+			}
 	}
 
 	handleEditorAddressChange(value) {

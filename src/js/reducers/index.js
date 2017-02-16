@@ -6,6 +6,7 @@ import * as ActionTypes from '../actions/app'
 
 import pagination from './pagination'
 import sessionReducer from './session'
+import selectionReducer from './selection'
 import layoutReducer from './layout'
 import consoleReducer from './console'
 import appReducer from './app'
@@ -80,6 +81,7 @@ const rootReducer = combineReducers({
 
   session : sessionReducer,
   console: consoleReducer,
+  selection : selectionReducer,
   layout : layoutReducer,
   app : appReducer,
   results : resultsReducer,

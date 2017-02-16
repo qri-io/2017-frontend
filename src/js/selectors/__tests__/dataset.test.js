@@ -27,9 +27,9 @@ describe("dataset", () => {
 		const nodes = sel.treeNodes(tree);
 
 		expect(nodes).toEqual([
-			{ id : "a" },
-			{ id : "b" },
-			{ id : "c" }
+			{ id : "a", address : "a", radius : 10 },
+			{ id : "b", address : "a.b", radius : 10 },
+			{ id : "c", address : "a.b.c", radius: 10 }
 		]);
 	});
 

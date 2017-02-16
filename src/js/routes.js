@@ -55,6 +55,12 @@ export default {
 			}
 		},
 		{
+			path : "/namespace",
+			getComponent(location, cb) {
+				System.import('./containers/Namespace').then(loadRoute(cb)).catch(errorLoading);
+			}
+		}
+		{
 			path: '/*',
 			getComponent(location, cb) {
 				System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);

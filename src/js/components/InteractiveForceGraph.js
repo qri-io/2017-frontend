@@ -55,7 +55,6 @@ export default class InteractiveForceGraph extends PureRenderComponent {
 
     this.state = {
       hoveredNode: null,
-      selectedNode: props.defaultSelectedNode,
     };
   }
 
@@ -71,7 +70,7 @@ export default class InteractiveForceGraph extends PureRenderComponent {
 
   onClickNode(event, selectedNode) {
     const { onDeselectNode, onSelectNode } = this.props;
-    const previousNode = this.state.selectedNode;
+    const previousNode = this.props.selectedNode;
 
     // if the user clicked the same node that was already
     // selected, deselect it.
@@ -90,10 +89,11 @@ export default class InteractiveForceGraph extends PureRenderComponent {
       opacityFactor,
       children,
       className,
+      selectedNode,
       ...spreadableProps
     } = this.props;
 
-    const { hoveredNode, selectedNode } = this.state;
+    const { hoveredNode } = this.state;
     const { links } = ForceGraph.getDataFromChildren(children);
 
     const applyOpacity = (opacity = 1) => opacity / opacityFactor;
@@ -130,9 +130,12 @@ export default class InteractiveForceGraph extends PureRenderComponent {
     const fontWeightForNode = node =>
       (selectedNode && nodeId(node) === nodeId(selectedNode) ? 700 : null);
 
-    const showLabelForNode = node =>
-      isNodeHighlighted(selectedNode, node) ||
-      isNodeHighlighted(hoveredNode, node);
+    // const showLabelForNode = node =>
+    //   isNodeHighlighted(selectedNode, node) ||
+    //   isNodeHighlighted(hoveredNode, node);
+
+    // override to always show labels
+    const showLabelForNode = node => true
 
     const opacityForNode = (node, origOpacity = 1) => {
       if (

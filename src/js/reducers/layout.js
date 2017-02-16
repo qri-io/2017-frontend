@@ -1,4 +1,4 @@
-import { LAYOUT_RESIZE } from '../actions/layout'
+import { LAYOUT_RESIZE, LAYOUT_SHOW_SIDEBAR, LAYOUT_HIDE_SIDEBAR } from '../actions/layout'
 
 const COLLAPSED_W = 0;
 
@@ -14,6 +14,10 @@ export default function deviceReducer(state=initialState, action) {
 	switch (action.type) {
 		case LAYOUT_RESIZE:
 			return layout(Object.assign({}, state, action));
+		case LAYOUT_SHOW_SIDEBAR:
+			return layout(Object.assign({}, state, { sidebar : Object.assign({}, state.sidebar, { collapsed : false })}));
+		case LAYOUT_HIDE_SIDEBAR:
+			return layout(Object.assign({}, state, { sidebar : Object.assign({}, state.sidebar, { collapsed : true })}));
 	}
 
 	return state;
@@ -27,17 +31,17 @@ function layout(state) {
 		stage,
 		navbar : { w : stage.w, h : navbar.h, l : 0, t : 0 },
 		main : { 
-			w : sidebar.collapsed ? stage.w - COLLAPSED_W : stage.w * (1 - sidebar.pct_W),
+			w : sidebar.collapsed ? stage.w - COLLAPSED_W : stage.w * (1 - sidebar.pct_w),
 			h : stage.h - navbar.h, 
 			l : 0, t : 0
 		},
 		sidebar : {
-			w : sidebar.collapsed ? COLLAPSED_W : stage.w * sidebar.pct_W, 
+			w : sidebar.collapsed ? COLLAPSED_W : stage.w * sidebar.pct_w, 
 			h : stage.h - navbar.h,
-			l : sidebar.collapsed ? stage.w - COLLAPSED_W : stage.w * (1 - sidebar.pct_W), 
+			l : sidebar.collapsed ? stage.w - COLLAPSED_W : stage.w * (1 - sidebar.pct_w), 
 			t : navbar.h,
 			collapsed : sidebar.collapsed,
-			pct : state.pct_W
+			pct_w : sidebar.pct_w
 		},
 	}
 }

@@ -2,7 +2,9 @@ import React from 'react'
 
 function selectFunc(fn, data, i) {
 	return () => {
-		fn(i, data)
+		if (fn) {
+			fn(i, data)
+		}
 	}
 }
 
