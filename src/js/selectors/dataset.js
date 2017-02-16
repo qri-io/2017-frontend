@@ -62,3 +62,40 @@ export function selectAllDatasets(state) {
 		return (a.address == b.address) ? 0 : ((a.address < a.address)) ? -1 : 1;
 	});
 }
+
+// generate an object-of-objects that maps the address space without overlaps
+export function selectDatasetTree(state) {
+	const { datasets } = state.entities;
+	return Object.keys(datasets).reduce((acc,adr,i) => {
+		adr.split(".").reduce((acc, el) => {
+			acc[el] || (acc[el] = {})
+			return acc[el];
+		}, acc);
+
+		return acc;
+	}, {});
+}
+
+export function treeNodes(tree) {
+	function walk(acc, obj) {
+		return Object.keys(obj).reduce((acc,key) => {
+			acc.push({ id : key });
+			return walk(acc, obj[key]);
+		}, acc);
+	}
+
+	return walk([], tree);
+}
+
+export function treeConnections(tree) {
+	function walk (acc, parent, obj) {
+		return Object.keys(obj).reduce((acc, child) => {
+			acc.push({ source : parent, target : child });
+			return walk(acc, child, obj[child]);
+		}, acc);
+	}
+
+	return Object.keys(tree).reduce((acc, node) => {
+		return walk(acc, node, tree[node]);
+	}, []);
+}
