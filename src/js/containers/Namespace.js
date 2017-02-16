@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { loadDatasets } from '../actions/dataset';
 import { treeNodes, treeConnections, selectDatasetTree } from '../selectors/dataset';
 
+import ForceGraph from '../components/ForceGraph'
 import InteractiveForceGraph from '../components/InteractiveForceGraph'
 import ForceGraphNode from '../components/ForceGraphNode'
 import ForceGraphLink from '../components/ForceGraphLink'
@@ -20,11 +21,11 @@ class Namespace extends Component {
 	}
 
 	render() {
-		const { nodes, connections } = this.props;
+		const { nodes, connections, layout } = this.props;
 
 		return (
 			<div className="namespace">
-				<InteractiveForceGraph simulationOptions={{ height: 300, width: 300 }}>
+				<InteractiveForceGraph simulationOptions={{ height: layout.main.h, width: layout.main.w }}>
 					{nodes.map((node, i) => {
 					  return (<ForceGraphNode key={`node-${i}`} node={node} fill="red" />);
 					})}
@@ -49,6 +50,7 @@ function mapStateToProps(state, ownProps) {
 	return {
 		nodes : treeNodes(tree),
 		connections : treeConnections(tree),
+		layout : state.layout,
 	}
 }
 

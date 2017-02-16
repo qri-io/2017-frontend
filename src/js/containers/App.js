@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router'
 import { debounce } from 'lodash'
 
 import { toggleMenu, hideMenu, resetMessage, resetErrorMessage, showModal, hideModal } from '../actions/app'
-import { resizeDevice } from '../actions/device'
+import { layoutResize } from '../actions/layout'
 import { loadSessionUser } from '../actions/session'
 
 import { selectSessionUser } from '../selectors/session';
@@ -37,11 +37,11 @@ class App extends Component {
     this._oldResize = window.onresize
     // debounce device resizing to not be a jerk on resize
     window.onresize = debounce((e) => {
-      this.props.resizeDevice(window.innerWidth, window.innerHeight)
+      this.props.layoutResize(window.innerWidth, window.innerHeight)
     }, 250)
 
     // initial call to make things not crazy
-    this.props.resizeDevice(window.innerWidth, window.innerHeight)
+    this.props.layoutResize(window.innerWidth, window.innerHeight)
   }
 
   componentWillUnmount() {
@@ -187,7 +187,7 @@ export default connect(mapStateToProps, {
   resetMessage,
   resetErrorMessage,
   loadSessionUser,
-  resizeDevice,
+  layoutResize,
   toggleMenu,
   hideMenu,
   showModal,

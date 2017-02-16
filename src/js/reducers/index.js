@@ -6,7 +6,7 @@ import * as ActionTypes from '../actions/app'
 
 import pagination from './pagination'
 import sessionReducer from './session'
-import deviceReducer from './device'
+import layoutReducer from './layout'
 import consoleReducer from './console'
 import appReducer from './app'
 import resultsReducer from './results'
@@ -80,7 +80,7 @@ const rootReducer = combineReducers({
 
   session : sessionReducer,
   console: consoleReducer,
-  device : deviceReducer,
+  layout : layoutReducer,
   app : appReducer,
   results : resultsReducer,
   routing
