@@ -9,8 +9,10 @@ import validateDataset from '../validators/dataset'
 import Spinner from '../components/Spinner'
 import SessionRequired from '../components/SessionRequired'
 import EditAddress from '../components/EditAddress'
-import ValidInput from '../components/ValidInput'
-import ValidTextarea from '../components/ValidTextarea'
+import ValidInput from '../components/form/ValidInput'
+
+import ValidTextarea from '../components/form/ValidTextarea'
+
 
 class EditDataset extends React.Component {
 	constructor(props) {

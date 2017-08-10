@@ -6,7 +6,7 @@ const initialState = {
 	size : 'xs',
 	stage : { width : 100, height : 100 },
 	navbar : { width : 100, height : 50, left : 0, bottom : 0, collapsed : false },
-	commandbar : { width : 100, height : 50, left : 0, bottom : 0, collapsed : false },
+	commandbar : { width : 100, height : 0, left : 0, bottom : 0, collapsed : false },
 	main : { width : 100, height : 100, left : 0, top : 0 },
 	sidebar : {  width : COLLAPSED_WIDTH, height : 100, left : 0, top : 0, collapsed : true, pct_width : 0.35 },
 }
@@ -46,8 +46,8 @@ function layout(state) {
 		},
 		main : { 
 			width : sidebar.collapsed ? stage.width - COLLAPSED_WIDTH : stage.width * (1 - sidebar.pct_width),
-			height : stage.height - navbar.height, 
-			top : 0,
+			height : stage.height - navbar.height - commandbar.height, 
+			top : navbar.height,
 			left : 0, 
 		},
 		sidebar : {

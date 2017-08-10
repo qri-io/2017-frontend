@@ -5,7 +5,8 @@ import { newInvite, updateInvite, saveInvite } from '../actions/invite';
 import { selectLocalInviteById } from '../selectors/invite';
 import validateInvite from '../validators/invite';
 
-import ValidInput from '../components/ValidInput';
+import ValidInput from '../components/form/ValidInput'
+;
 
 class BetaSignup extends Component {
 	constructor(props) {

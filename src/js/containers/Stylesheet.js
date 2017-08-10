@@ -5,7 +5,8 @@ import DatasetItem from '../components/item/DatasetItem';
 import UserItem from '../components/item/UserItem';
 import RoleItem from '../components/item/RoleItem';
 
-import ValidInput from '../components/ValidInput';
+import ValidInput from '../components/form/ValidInput'
+;
 import FieldsList from '../components/FieldsList';
 
 

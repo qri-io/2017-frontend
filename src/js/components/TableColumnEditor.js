@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 
-import ValidInput from './ValidInput';
+import ValidInput from './form/ValidInput'
+;
 import SelectDataType from './SelectDataType';
 
 export default class TableColumnEditor extends React.Component {

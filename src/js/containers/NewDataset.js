@@ -6,8 +6,10 @@ import { selectLocalDatasetById } from '../selectors/dataset'
 import { selectSessionUser } from '../selectors/session'
 import validateDataset from '../validators/dataset'
 
-import ValidInput from '../components/ValidInput'
-import ValidTextarea from '../components/ValidTextarea'
+import ValidInput from '../components/form/ValidInput'
+
+import ValidTextarea from '../components/form/ValidTextarea'
+
 import SessionRequired from '../components/SessionRequired'
 
 class NewDataset extends React.Component {

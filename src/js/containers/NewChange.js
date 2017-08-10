@@ -9,8 +9,10 @@ import { selectSessionUser } from '../selectors/session'
 
 import SessionRequired from '../components/SessionRequired'
 import Spinner from '../components/Spinner'
-import ValidInput from '../components/ValidInput'
-import ValidTextarea from '../components/ValidTextarea'
+import ValidInput from '../components/form/ValidInput'
+
+import ValidTextarea from '../components/form/ValidTextarea'
+
 import SelectField from '../components/SelectField'
 import FieldsList from '../components/FieldsList'
 

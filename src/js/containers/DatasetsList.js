@@ -1,20 +1,23 @@
-import React, { PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
+import { Link } from 'react-router';
 
-import { loadDatasets } from '../actions/dataset'
-import { selectAllDatasets } from '../selectors/dataset'
+import { loadDatasets } from '../actions/dataset';
+import { selectAllDatasets } from '../selectors/dataset';
 
-import DatasetHeader from '../components/DatasetHeader'
-import List from '../components/List'
-import DatasetItem from '../components/item/DatasetItem'
-import Spinner from '../components/Spinner'
+import List from '../components/List';
+import DatasetItem from '../components/item/DatasetItem';
+import Spinner from '../components/Spinner';
 
 class DatasetsList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { loading : props.datasets.length == 0 };
-    [ 'handleSelectItem' ].forEach(m => this[m] = this[m].bind(this));
+    this.state = { loading: props.datasets.length == 0 };
+    [
+      'handleSelectItem',
+      'handleAddItem',
+    ].forEach((m) => { this[m] = this[m].bind(this); });
   }
 
   componentWillMount() {
@@ -23,7 +26,7 @@ class DatasetsList extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.datasets.length > 0 && this.props.datasets.length == 0) {
-      this.setState({ loading : false });
+      this.setState({ loading: false });
     }
   }
 
@@ -33,6 +36,10 @@ class DatasetsList extends React.Component {
 
   handleLoadNextPage() {
     this.props.loadDatasets(this.props.nextPage);
+  }
+
+  handleAddItem() {
+    this.props.push('/datasets/new');
   }
 
   render() {
@@ -46,12 +53,25 @@ class DatasetsList extends React.Component {
         </div>
       );
     }
-    
+
     return (
       <div id="wrapper">
+        <header>
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <Link to="/datasets/add"><button className="btn btn-primary right">Add</button></Link>
+                <h1>Datasets</h1>
+                <hr />
+              </div>
+            </div>
+          </div>
+        </header>
         <div className="container">
-          <div className="col-md-12">
-            <List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectItem} />
+          <div className="row">
+            <div className="col-md-12">
+              <List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectItem} />
+            </div>
           </div>
         </div>
       </div>
@@ -60,30 +80,27 @@ class DatasetsList extends React.Component {
 }
 
 DatasetsList.propTypes = {
-  datasets : PropTypes.array.isRequired,
-
-  loading : PropTypes.bool,
-  nextPage : PropTypes.number.isRequired,
-  fetchedAll : PropTypes.bool,
-
-  push : PropTypes.func.isRequired,
-  loadDatasets : PropTypes.func.isRequired
-}
+  datasets: PropTypes.array.isRequired,
+  nextPage: PropTypes.number.isRequired,
+  // fetchedAll: PropTypes.bool,
+  push: PropTypes.func.isRequired,
+  loadDatasets: PropTypes.func.isRequired,
+};
 
 function mapStateToProps(state, ownProps) {
   const pagination = state.pagination.popularDatasets;
 
   return Object.assign({
-    datasets : selectAllDatasets(state),
+    datasets: selectAllDatasets(state),
 
-    loading : (pagination.popularDatasets) ? pagination.popularDatasets.isFetching : false,
-    nextPage : (pagination.popularDatasets) ? (pagination.popularDatasets.pageCount + 1) : 1,
-    fetchedAll : (pagination.popularDatasets) ? pagination.popularDatasets.fetchedAll : false
+    loading: (pagination.popularDatasets) ? pagination.popularDatasets.isFetching : false,
+    nextPage: (pagination.popularDatasets) ? (pagination.popularDatasets.pageCount + 1) : 1,
+    fetchedAll: (pagination.popularDatasets) ? pagination.popularDatasets.fetchedAll : false,
 
-  }, ownProps)
+  }, ownProps);
 }
 
 export default connect(mapStateToProps, {
   push,
-  loadDatasets
-})(DatasetsList)
+  loadDatasets,
+})(DatasetsList);

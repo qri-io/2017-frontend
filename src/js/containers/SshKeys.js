@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import { selectLocalSessionUser, selectSshKeys } from '../selectors/session';
 import { loadSshKeys, createSshKey, deleteSshKey } from '../actions/session';
 
-import ValidInput from '../components/ValidInput';
-import ValidTextarea from '../components/ValidTextarea';
+import ValidInput from '../components/form/ValidInput'
+;
+import ValidTextarea from '../components/form/ValidTextarea'
+;
 import validateUser from '../validators/user';
 
 import Spinner from '../components/Spinner';

@@ -4,7 +4,8 @@ import { browserHistory } from 'react-router'
 
 import { loginUser } from '../actions/session'
 import { selectSessionUser } from '../selectors/session'
-import ValidInput from '../components/ValidInput'
+import ValidInput from '../components/form/ValidInput'
+
 
 // TODO - add validation logic
 class Login extends React.Component {
