@@ -10,6 +10,7 @@ import { loadSessionUser } from '../actions/session'
 import { selectSessionUser } from '../selectors/session';
 
 import Navbar from '../components/Navbar'
+import CommandBar from '../containers/CommandBar'
 import MainMenu from '../components/MainMenu'
 import BetaSignup from './BetaSignup';
 
@@ -24,7 +25,7 @@ class App extends Component {
       "handleDismissClick", 
       "handleDismissMessage", 
       "handleHideMenu",
-      "handleMenuToggle", 
+      "handleMenuToggle",
       "handleGimmieInvite",
       "handleHideModal",
       "modal"
@@ -32,7 +33,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.props.loadSessionUser()
+    // this.props.loadSessionUser()
 
     this._oldResize = window.onresize
     // debounce device resizing to not be a jerk on resize
@@ -72,6 +73,7 @@ class App extends Component {
   }
 
   handleGimmieInvite() {
+    this.props.hideMenu();
     this.props.showModal(BETA_SIGNUP_MODAL, this);
   }
   handleHideModal() {
@@ -141,11 +143,18 @@ class App extends Component {
   }
 
   render() {
-    const { children, inputValue, user, showMenu } = this.props
+    const { children, inputValue, user, showMenu, layout } = this.props
     return (
       <div id="app" onClick={this.handleHideMenu}>
-        <Navbar user={user} onToggleMenu={this.handleMenuToggle} onGimmieInvite={this.handleGimmieInvite} />
-        <MainMenu user={user} show={showMenu} />
+        {/*<Navbar 
+          user={user}
+          style={Object.assign({
+            position : "absolute"
+          }, layout.navbar)}
+          onToggleMenu={this.handleMenuToggle}
+          onGimmieInvite={this.handleGimmieInvite} />*/}
+        <CommandBar />
+        <MainMenu user={user} show={showMenu} onGimmieInvite={this.handleGimmieInvite} />
         {this.renderErrorMessage()}
         {this.renderMessage()}
         {children}
@@ -167,7 +176,6 @@ App.propTypes = {
   resetErrorMessage: PropTypes.func.isRequired,
   resetMessage: PropTypes.func.isRequired,
   loadSessionUser: PropTypes.func.isRequired,
-  toggleMenu: PropTypes.func.isRequired,
   hideMenu: PropTypes.func.isRequired
 }
 
@@ -178,6 +186,7 @@ function mapStateToProps(state, ownProps) {
     inputValue: ownProps.location.pathname.substring(1),
     user : selectSessionUser(state),
     showMenu : state.app.showMenu,
+    layout : state.layout,
 
     modal : state.app.modal,
   }
@@ -188,7 +197,6 @@ export default connect(mapStateToProps, {
   resetErrorMessage,
   loadSessionUser,
   layoutResize,
-  toggleMenu,
   hideMenu,
   showModal,
   hideModal

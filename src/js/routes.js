@@ -1,5 +1,6 @@
 import React from 'react'
 import App from './containers/App'
+import Namespace from './containers/Namespace'
 
 function errorLoading(err) {
 	console.error('Dynamic page loading failed', err);
@@ -12,32 +13,33 @@ function loadRoute(cb) {
 export default {
 	path : "/",
 	component: App,
-	getIndexRoute(location, cb) {
-		System.import('./containers/Console').then(loadRoute(cb)).catch(errorLoading)
-	},
+	indexRoute : { component : Namespace },
+	// getIndexRoute(partialState, cb) {
+	// 	import('./containers/Namespace').then(loadRoute(cb)).catch(errorLoading)
+	// },
 	childRoutes: [
 		{
 			path: '/browse',
 			getComponent(location, cb) {
-				System.import('./containers/Datasets').then(loadRoute(cb)).catch(errorLoading)
+				import('./containers/Datasets').then(loadRoute(cb)).catch(errorLoading)
 			},
 		},
 		{
 			path: '/login',
 			getComponent(location, cb) {
-			 System.import('./containers/Login').then(loadRoute(cb)).catch(errorLoading);
+			 import('./containers/Login').then(loadRoute(cb)).catch(errorLoading);
 			}
 		},
 		{
 			path: '/settings',
 			getComponent(location, cb) {
-				System.import('./containers/UserSettings').then(loadRoute(cb)).catch(errorLoading);
+				import('./containers/UserSettings').then(loadRoute(cb)).catch(errorLoading);
 			},
 			childRoutes : [
 				{
 					path : "/keys",
 					getComponent(location, cb) {
-						System.import('./containers/SshKeys').then(loadRoute(cb)).catch(errorLoading);
+						import('./containers/SshKeys').then(loadRoute(cb)).catch(errorLoading);
 					}
 				}
 			]
@@ -45,112 +47,106 @@ export default {
 		{
 			path : '/users/:user',
 			getComponent(location, cb) {
-				System.import('./containers/User').then(loadRoute(cb)).catch(errorLoading);
+				import('./containers/User').then(loadRoute(cb)).catch(errorLoading);
 			}
 		},
 		{
 			path : '/users/:username/roles',
 			getComponent(location, cb) {
-				System.import('./containers/UserRoles').then(loadRoute(cb)).catch(errorLoading);
+				import('./containers/UserRoles').then(loadRoute(cb)).catch(errorLoading);
 			}
 		},
 		{
 			path : "/namespace",
 			getComponent(location, cb) {
-				System.import('./containers/Namespace').then(loadRoute(cb)).catch(errorLoading);
+				import('./containers/Namespace').then(loadRoute(cb)).catch(errorLoading);
 			}
-		}
+		},
 		{
 			path: '/*',
 			getComponent(location, cb) {
-				System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);
+				import('./containers/DatasetsList').then(loadRoute(cb)).catch(errorLoading);
 			},
 			// childRoutes: [
 			// 	{
 			// 		path: '/qri/:user',
 			// 		getComponent(location, cb) {
-			// 			System.import('./containers/User').then(loadRoute(cb)).catch(errorLoading);
+			// 			import('./containers/User').then(loadRoute(cb)).catch(errorLoading);
 			// 		}
 			// 	},
 			// 	{
 			// 		path: '/qri/:user/queries/:slug',
 			// 		getComponent(location, cb) {
-			// 			System.import('./containers/Query').then(loadRoute(cb)).catch(errorLoading);
+			// 			import('./containers/Query').then(loadRoute(cb)).catch(errorLoading);
 			// 		}
 			// 	},
 			// 	{
 			// 		path: '/qri/:user/:dataset',
 			// 		getComponent(location, cb) {
-			// 			System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);
+			// 			import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);
 			// 		}
 			// 	},
 			// 	{
 			// 		path: '/qri/:user/:dataset/edit',
 			// 		getComponent(location, cb) {
-			// 			System.import('./containers/EditDataset').then(loadRoute(cb)).catch(errorLoading);
+			// 			import('./containers/EditDataset').then(loadRoute(cb)).catch(errorLoading);
 			// 		}
 			// 	},
 
 			// 	{
 			// 		path: '/qri/:user/:dataset/changes',
 			// 		getComponent(location, cb) {
-			// 			System.import('./containers/DatasetChanges').then(loadRoute(cb)).catch(errorLoading);
+			// 			import('./containers/DatasetChanges').then(loadRoute(cb)).catch(errorLoading);
 			// 		}
 			// 	},
 			// 	{
 			// 		path: '/qri/:user/:dataset/changes/new',
 			// 		getComponent(location, cb) {
-			// 			System.import('./containers/NewChange').then(loadRoute(cb)).catch(errorLoading);
+			// 			import('./containers/NewChange').then(loadRoute(cb)).catch(errorLoading);
 			// 		}
 			// 	},
 			// 	{
 			// 		path: '/qri/:user/:dataset/changes/:number',
 			// 		getComponent(location, cb) {
-			// 			System.import('./containers/Change').then(loadRoute(cb)).catch(errorLoading);
+			// 			import('./containers/Change').then(loadRoute(cb)).catch(errorLoading);
 			// 		}
 			// 	},
 			// 	{
 			// 		path: '/qri/:user/:dataset/changes/:edit',
 			// 		getComponent(location, cb) {
-			// 			System.import('./containers/EditChange').then(loadRoute(cb)).catch(errorLoading);
+			// 			import('./containers/EditChange').then(loadRoute(cb)).catch(errorLoading);
 			// 		}
 			// 	}
 			// ]
 		},
 		{
-			path: '/qri/*',
-			getComponent(location, cb) {
-				System.import('./containers/Dataset').then(loadRoute(cb)).catch(errorLoading);
-			},
-		},
-		{
 			path: '/invites/:id',
 			getComponent(location, cb) {
-				System.import('./containers/Signup').then(loadRoute(cb)).catch(errorLoading);
+				import('./containers/Signup').then(loadRoute(cb)).catch(errorLoading);
 			}
 		},
 		{
 			path: '/welcome',
 			getComponent(location, cb) {
-				System.import ('./containers/Welcome').then(loadRoute(cb)).catch(errorLoading);
+				import ('./containers/Welcome').then(loadRoute(cb)).catch(errorLoading);
 			}
 		},
 		// {
 		// 	path: '/datasets/new',
 		// 	getComponent(location, cb) {
-		// 		System.import('./containers/NewDataset').then(loadRoute(cb)).catch(errorLoading)
+		// 		import('./containers/NewDataset').then(loadRoute(cb)).catch(errorLoading)
 		// 	}
 		// },
 		// {
 		// 	path: '/queries',
 		// 	getComponent(location, cb) {
-		// 		System.import('./containers/Queries').then(loadRoute(cb)).catch(errorLoading)
+		// 		import('./containers/Queries').then(loadRoute(cb)).catch(errorLoading)
 		// 	},
 		// },
 		// {
 		// 	path: '/console',
 		// 	getComponent(location, cb) {
-		// 	  System.import('./containers/Console').then(loadRoute(cb)).catch(errorLoading);
+		// 	  import('./containers/Console').then(loadRoute(cb)).catch(errorLoading);
 		// 	}
 		// },
  ]

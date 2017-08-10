@@ -6,7 +6,7 @@ export default class ValidInput extends React.Component {
 
 		return (
 			<div className={ (error && showError) ? "validFormField form-group has-error" : "validFormField form-group"}>
-				{label ? <label class="control-label" for={name}>{label}</label> : undefined }
+				{label ? <label className="control-label" htmlFor={name}>{label}</label> : undefined }
 				<input 
 					id={name}
 					name={name} 

@@ -1,16 +1,17 @@
-import { LAYOUT_RESIZE, LAYOUT_SHOW_SIDEBAR, LAYOUT_HIDE_SIDEBAR } from '../actions/layout'
+import { LAYOUT_RESIZE, LAYOUT_SHOW_SIDEBAR, LAYOUT_HIDE_SIDEBAR, LAYOUT_SET } from '../actions/layout'
 
-const COLLAPSED_W = 0;
+const COLLAPSED_WIDTH = 0;
 
 const initialState = {
 	size : 'xs',
-	stage : { w : 100, h : 100 },
-	navbar : { w : 100, h : 80, l : 0, t : 0 },
-	main : { w : 100, h : 100, l : 0, t : 0 },
-	sidebar : {  w : COLLAPSED_W, h : 100, l : 0, t : 0, collapsed : true, pct_w : 0.35 },
+	stage : { width : 100, height : 100 },
+	navbar : { width : 100, height : 50, left : 0, bottom : 0, collapsed : false },
+	commandbar : { width : 100, height : 50, left : 0, bottom : 0, collapsed : false },
+	main : { width : 100, height : 100, left : 0, top : 0 },
+	sidebar : {  width : COLLAPSED_WIDTH, height : 100, left : 0, top : 0, collapsed : true, pct_width : 0.35 },
 }
 
-export default function deviceReducer(state=initialState, action) {
+export default function layoutReducer(state=initialState, action) {
 	switch (action.type) {
 		case LAYOUT_RESIZE:
 			return layout(Object.assign({}, state, action));
@@ -24,37 +25,51 @@ export default function deviceReducer(state=initialState, action) {
 }
 
 function layout(state) {
-	const { stage, navbar, main, sidebar } = state;
+	const { stage, navbar, main, sidebar, commandbar } = state;
 
 	return {
-		size : sizeClass(state.stage.w),
+		size : sizeClass(state.stage.width),
 		stage,
-		navbar : { w : stage.w, h : navbar.h, l : 0, t : 0 },
+		navbar : { 
+			width : stage.width,
+			height : navbar.height,
+			left : 0,
+			top : 0,
+			collapsed : navbar.collapsed
+		},
+		commandbar : { 
+			width : stage.width,
+			height : commandbar.height,
+			left : 0,
+			bottom : 0,
+			collapsed : commandbar.collapsed
+		},
 		main : { 
-			w : sidebar.collapsed ? stage.w - COLLAPSED_W : stage.w * (1 - sidebar.pct_w),
-			h : stage.h - navbar.h, 
-			l : 0, t : 0
+			width : sidebar.collapsed ? stage.width - COLLAPSED_WIDTH : stage.width * (1 - sidebar.pct_width),
+			height : stage.height - navbar.height, 
+			top : 0,
+			left : 0, 
 		},
 		sidebar : {
-			w : sidebar.collapsed ? COLLAPSED_W : stage.w * sidebar.pct_w, 
-			h : stage.h - navbar.h,
-			l : sidebar.collapsed ? stage.w - COLLAPSED_W : stage.w * (1 - sidebar.pct_w), 
-			t : navbar.h,
+			width : sidebar.collapsed ? COLLAPSED_WIDTH : stage.width * sidebar.pct_width, 
+			height : stage.height - navbar.height,
+			left : sidebar.collapsed ? stage.width - COLLAPSED_WIDTH : stage.width * (1 - sidebar.pct_width), 
+			top : 0,
 			collapsed : sidebar.collapsed,
-			pct_w : sidebar.pct_w
+			pct_width : sidebar.pct_width
 		},
 	}
 }
 
-// @return {string} string representation of window size class
-function sizeClass(w) {
-	if (w >= 1200) {
+// @return {string} string representation of windowidth size class
+function sizeClass(width) {
+	if (width >= 1200) {
 		return 'xl';
-	} else if (w >= 992) {
+	} else if (width >= 992) {
 		return 'lg';
-	} else if (w >= 768) {
+	} else if (width >= 768) {
 		return 'md';
-	} else if (w >= 544) {
+	} else if (width >= 544) {
 		return 'sm'
 	} else {
 		return 'xs'

@@ -6,7 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import { loadDatasetByAddress, downloadDataset, loadDatasetReadme, loadDatasetChildren } from '../actions/dataset'
 import { setQuery, runQuery, downloadQuery } from '../actions/query'
 
-import { selectDatasetByAddress, selectDatasetReadme, selectDatasetDescendants } from '../selectors/dataset'
+import { selectDataset, selectDatasetReadme, selectDatasetDescendants } from '../selectors/dataset'
 import { selectSessionUser } from '../selectors/session'
 import { selectQueryById } from '../selectors/query'
 
@@ -28,22 +28,24 @@ class Dataset extends React.Component {
 			'handleLoadMoreResults',
 			'handleDownloadQuery',
 			'handleDownloadDataset',
-			'renderChildDatasets'
+			'renderChildDatasets',
+			'renderData'
 		].forEach(m => this[m] = this[m].bind(this))
 
 		// this.debouncedSetQuery = debounce(props.setQuery, 200)
 	}
 
   componentWillMount() {
-    this.props.loadDatasetByAddress(this.props.address, ["fields"])
-    this.props.loadDatasetReadme(this.props.address)
-    this.props.loadDatasetChildren(this.props.address)
+    // this.props.loadDatasetByAddress(this.props.address, ["fields"])
+    // this.props.loadDatasetReadme(this.props.address)
+    // this.props.loadDatasetChildren(this.props.address)
+
 		// match the address to the current namespce, unless there's already a query
 		if (this.props.dataset && this.props.dataset.default_query) {
 			this.props.setQuery(this.props.dataset.default_query);
 		} else {
 	    this.props.setQuery({
-	    	address : this.props.address,
+	    	// address : this.props.address,
 	    	statement : `select * from ${this.props.address}`
 	    });
 	  }
@@ -94,8 +96,8 @@ class Dataset extends React.Component {
 	}
 
 	renderEditButtons(props) {
-		const { permissions, address } = props;
-		let path = "/" + address.replace(".", "/", -1)
+		const { path, permissions, address } = props;
+
 		if (permissions.migrate && permissions.change) {
 			return (
 				<div>
@@ -144,6 +146,18 @@ class Dataset extends React.Component {
 		);
 	}
 
+	renderData() {
+		const { data } = this.props;
+		if (!data) { return undefined; }
+		return (
+			<div className="col-md-12">
+				<hr className="green" />
+				<h4 className="green">Results</h4>
+				<ResultsTable results={data} onLoadMore={this.handleLoadMoreResults} />
+			</div>
+		);
+	}
+
 	renderDescription() {
 		const { dataset } = this.props;
 		if (!dataset.description) { return undefined; }
@@ -170,10 +184,11 @@ class Dataset extends React.Component {
 	}
 
 	render() {
-		const { address, dataset, readme, permissions, query, results } = this.props
-		const path = "/" + address.replace(".", "/", -1)
-		const hasData = (dataset && (dataset.url || dataset.file || dataset.data));
-		
+		const { path, dataset, readme, permissions, query, results } = this.props
+		// const path = "/" + address.replace(".", "/", -1)
+		// const hasData = (dataset && (dataset.url || dataset.file || dataset.data));
+		const hasData = true;
+
 		if (!dataset) {
 			return (
 				<div className="dataset container">
@@ -182,14 +197,13 @@ class Dataset extends React.Component {
 			);
 		}
 
-
 		return (
 			<div id="wrapper">
 				<div className="container">
 					<DatasetHeader dataset={dataset} onDownload={this.handleDownloadDataset} />
 					<div className="row">
 						<div className="col-md-12">
-							{ dataset.fields ? <FieldsList fields={dataset.fields} /> : <p>This dataset currently has no specified fields</p> }
+							{(dataset.schema && dataset.schema.fields) ? <FieldsList fields={dataset.schema.fields} /> : <p>This dataset currently has no specified fields</p> }
 						</div>
 					</div>
 					<div className="row">
@@ -197,9 +211,8 @@ class Dataset extends React.Component {
 							{this.renderEditButtons(this.props)}
 						</div>
 					</div>
-					{hasData ? this.renderQueryAndResults() : undefined }
+					{hasData ? this.renderData() : undefined }
 					{readme ? this.renderReadme(readme) : this.renderDescription() }
-					{this.renderChildDatasets()}
 				</div>
 			</div>
 		);
@@ -209,7 +222,7 @@ class Dataset extends React.Component {
 Dataset.propTypes = {
 	// username.dataset address for this dataset, should
 	// be derived from url params
-	address : PropTypes.string.isRequired,
+	path : PropTypes.string.isRequired,
 	// the dataset model to display
 	dataset : PropTypes.object,
 	// Readme model if available
@@ -223,15 +236,15 @@ Dataset.propTypes = {
 	results : React.PropTypes.object,
 
 	// permissions stuff, will show things based on capabilities
-	permissions: PropTypes.object.isRequired,
+	// permissions: PropTypes.object.isRequired,
 
 	// action to load a dataset from passed-in address
-	loadDatasetByAddress : PropTypes.func.isRequired,
+	// loadDatasetByAddress : PropTypes.func.isRequired,
 
 	setQuery: PropTypes.func.isRequired, 
 	runQuery: PropTypes.func.isRequired,
 	downloadDataset: PropTypes.func.isRequired,
-	loadDatasetReadme : PropTypes.func.isRequired
+	// loadDatasetReadme : PropTypes.func.isRequired
 }
 
 Dataset.defaultProps = {
@@ -243,7 +256,8 @@ Dataset.defaultProps = {
 }
 
 function mapStateToProps(state, ownProps) {
-	let address = ownProps.params.splat.replace(/\//gi,".")
+	// let address = ownProps.params.splat.replace(/\//gi,".")
+	const path = "/" + ownProps.params.splat;
 	
 	const user = selectSessionUser(state);
 	const results = state.results[state.console.query.statement]
@@ -260,11 +274,11 @@ function mapStateToProps(state, ownProps) {
 	}
 
 	return Object.assign({
-		address,
+		path,
 
-		dataset : selectDatasetByAddress(state, address),
-		readme : selectDatasetReadme(state, address),
-		descendants : selectDatasetDescendants(state, address),
+		dataset : selectDataset(state, path),
+		// readme : selectDatasetReadme(state, address),
+		// descendants : selectDatasetDescendants(state, address),
 
 		results,
 		permissions,
@@ -277,8 +291,8 @@ export default connect(mapStateToProps, {
 	runQuery,
 	downloadQuery,
 	downloadDataset,
-	loadDatasetReadme,
-	loadDatasetChildren,
+	// loadDatasetReadme,
+	// loadDatasetChildren,
 
-	loadDatasetByAddress
+	// loadDatasetByAddress
 })(Dataset)

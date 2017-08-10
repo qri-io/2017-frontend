@@ -7,11 +7,11 @@ export default class DatasetItem extends React.Component {
 		return (
 			<div className="dataset item col-xl-3 col-lg-4 col-md-6 col-sm-12">
 				<h3 onClick={onSelect}>
-					<Link className="name" to={"/" + data.address.replace(/\./gi,"/")}>{data.name ? data.name : "unnamed dataset"}</Link>
+					<Link className="name" to={`/datasets${data.subject}`}>{data.title ? data.title : "unnamed dataset"}</Link>
 				</h3>
 				<p className="address">{data.address}</p>
 				<ul>
-					{data.schema ? data.schema.map((table, i) => <li key={i}>{table.name}</li>) : null}
+					{data.schema.fields && data.schema.fields.map((table, i) => <li key={i}>{table.name}</li>)}
 				</ul>
 			</div>
 		);

@@ -46,18 +46,20 @@ module.exports = {
     new webpack.optimize.UglifyJsPlugin({minimize: true}),
   ],
   module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      loaders: ['babel'],
-      exclude: /node_modules/
-    },
-    {
-      test: /\.scss$/,
-      loaders: ["style", "css", "sass"]
-    },
-    {
-      test: /\.json$/,
-      loader: 'json'
-    }]
+    rules: [
+      {
+        test: /\.js?$/,
+        loaders: ['babel-loader'],
+        exclude: /node_modules/
+      },
+      {
+        test: /\.scss$/,
+        loaders: [
+          "style-loader",
+          "css-loader",
+          "sass-loader"
+        ]
+      },
+    ]
   }
 };

@@ -3,9 +3,9 @@ import { Link } from 'react-router'
 
 export default class Navbar extends Component {
 	render() {
-		const { user, onToggleMenu, onGimmieInvite } = this.props;
+		const { user, onToggleMenu, onGimmieInvite, style } = this.props;
 		return (
-			<div id="navbar">
+			<div id="navbar" style={style}>
 				<div className="container">
 					<div className="row">
 						<div id="logotype" className="col-md-1 col-sm-2" href={__BUILD__.BASE_URL}>

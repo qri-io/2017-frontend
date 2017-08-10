@@ -80,6 +80,35 @@ export function loadDataset(address, requiredFields=[]) {
   }
 }
 
+export const DATASET_DATA_REQUEST = 'DATASET_DATA_REQUEST'
+export const DATASET_DATA_SUCCESS = 'DATASET_DATA_SUCCESS'
+export const DATASET_DATA_FAILURE = 'DATASET_DATA_FAILURE'
+
+export function fetchDatasetData(path) {
+	return {
+		[CALL_API] : {
+			types : [ DATASET_DATA_REQUEST, DATASET_DATA_SUCCESS, DATASET_DATA_FAILURE ],
+			endpoint : `/datasets?address=${address}`,
+			schema : Schemas.DATASET_DATA,
+			path,
+		}
+	}
+}
+
+export function loadDatasetData(path) {
+	return (dispatch, getState) => {
+    // const dataset = selectDatasetByAddress(getState(), address)
+    // if (dataset.schema != null) {
+    // 	return null
+    // }
+    // if (dataset && requiredFields.every(key => dataset.hasOwnProperty(key))) {
+    //   return null
+    // }
+
+    return dispatch(fetchDatasetData(path));
+  }
+}
+
 export const DATASET_SAVE_REQUEST = 'DATASET_SAVE_REQUEST'
 export const DATASET_SAVE_SUCCESS = 'DATASET_SAVE_SUCCESS'
 export const DATASET_SAVE_FAILURE = 'DATASET_SAVE_FAILURE'
@@ -111,6 +140,7 @@ export function saveDataset(dataset) {
 		}
 	}
 }
+
 
 export const DATASET_CREATE_REQUEST = "DATASET_CREATE_REQUEST"
 export const DATASET_CREATE_SUCCESS = "DATASET_CREATE_SUCCESS"

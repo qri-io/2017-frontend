@@ -10,7 +10,7 @@ import validateUser from '../validators/user';
 
 import Spinner from '../components/Spinner';
 
-export default class SshKeys extends React.Component {
+class SshKeys extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {

@@ -4,6 +4,10 @@ export function addressPath(address) {
 	return "/" + address.replace(/\./gi, "/")
 }
 
+export function selectDataset(state, id) {
+	return state.entities.datasets[id];
+}
+
 export function selectDatasetById(state, id) {
 	return state.entities.datasets[id];
 }

@@ -5,14 +5,18 @@ import { saveAs } from 'file-saver'
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
 function execQuery(query, page, pageSize) {
-  return fetch(`${API_ROOT}/select?page=${page}&pageSize=${pageSize}`, {
-    method : 'POST',
+  return fetch(`${API_ROOT}/run?page=${page}&pageSize=${pageSize}`, {
+    method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     credentials: 'include',
-    body : JSON.stringify({ query : query.statement, page, pageSize })
+    body: JSON.stringify({
+      syntax: "sql",
+      statement: query.statement,
+      page, pageSize
+    }),
   })
     .then(response => response.json().then(json => ({ json, response })))
     .then(({ json, response }) => {
@@ -29,14 +33,18 @@ function fileName(query) {
 }
 
 function downloadQuery(query) {
-  return fetch(`${API_ROOT}/select?download=true&format=csv`, {
+  return fetch(`${API_ROOT}/run?download=true&format=csv`, {
     method : 'POST',
     headers : {
       'Accept' : 'text/csv',
       'Content-Type': 'application/json'
     },
     credentials : 'include',
-    body : JSON.stringify({ query, download : true, format : 'csv' })
+    body : JSON.stringify({
+      query,
+      download: true,
+      format: 'csv',
+    })
   })
     .then(response => response.blob().then(blob => ({ blob, response})))
     .then(({ blob, response }) => {

@@ -3,27 +3,29 @@
  * Gooby pls. Don 4get to update the prod routes.js file 
  */
 import React from 'react'
+
 import App from './containers/App'
-import Datasets from './containers/Datasets'
-import NewDataset from './containers/NewDataset'
+import Change from './containers/Change'
 import Console from './containers/Console'
-import Login from './containers/Login'
-import User from './containers/User'
-import UserRoles from './containers/UserRoles'
-import UserSettings from './containers/UserSettings'
-import Signup from './containers/Signup'
-import Stylesheet from './containers/Stylesheet'
-import SshKeys from './containers/SshKeys'
 import Dataset from './containers/Dataset'
 import DatasetChanges from './containers/DatasetChanges'
 import DatasetMigrations from './containers/DatasetMigrations'
+import Datasets from './containers/Datasets'
+import DatasetsList from './containers/DatasetsList'
 import EditChange from './containers/EditChange'
 import EditDataset from './containers/EditDataset'
+import Login from './containers/Login'
+import Namespace from './containers/Namespace'
+import NewDataset from './containers/NewDataset'
 import NewChange from './containers/NewChange'
-import Change from './containers/Change'
+import Signup from './containers/Signup'
 import Queries from './containers/Queries'
 import Query from './containers/Query'
-import Namespace from './containers/Namespace'
+import Stylesheet from './containers/Stylesheet'
+import SshKeys from './containers/SshKeys'
+import User from './containers/User'
+import UserRoles from './containers/UserRoles'
+import UserSettings from './containers/UserSettings'
 import Welcome from './containers/Welcome'
 
 function errorLoading(err) {
@@ -31,17 +33,22 @@ function errorLoading(err) {
 }
 
 function loadRoute(cb) {
-	return (module) => cb(null, module.default);
+	return (module) => {
+		return cb(null, module.default);
+	}
 }
 
 export default {
 	path : "/",
 	component: App,
-	indexRoute: Console, 
+	indexRoute: { component : DatasetsList }, 
+	// getIndexRoute(partialState, cb) {
+	// 	import('./containers/Namespace').then(loadRoute(cb)).catch(errorLoading)
+	// },
 	childRoutes: [
 		{
 			path: '/browse',
-			component : Datasets
+			component : DatasetsList
 		},
 		{
 			path: '/login',
@@ -72,8 +79,8 @@ export default {
 			component: Welcome
 		},
 		{
-			path: '/namespace',
-			component: Namespace
+			path: '/datasets/*',
+			component: Dataset
 		},
 		{
 			path: '/stylesheet',
@@ -81,7 +88,7 @@ export default {
 		},
 		{
 			path: '/*',
-			component : Dataset
+			component : DatasetsList
 		},
 		// {
 		// 	path: '/datasets/new',

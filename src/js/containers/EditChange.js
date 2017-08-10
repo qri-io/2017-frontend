@@ -15,7 +15,7 @@ import ValidInput from '../components/ValidInput'
 import ValidTextarea from '../components/ValidTextarea'
 import SelectField from '../components/SelectField'
 
-export default class EditChange extends React.Component {
+class EditChange extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {

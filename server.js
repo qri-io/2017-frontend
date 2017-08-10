@@ -6,7 +6,14 @@ var config = require('./webpack.config.dev');
 var app = new require('express')();
 var port = process.env.PORT || 4000;
 
-var compiler = webpack(config);
+var compiler
+try {
+	compiler = webpack(config);
+} catch (err) {
+	console.log(err.message);
+	process.exit();
+}
+
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
 app.use(webpackHotMiddleware(compiler, { path : '/__qri_io' }));
 

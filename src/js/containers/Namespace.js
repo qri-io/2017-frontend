@@ -50,13 +50,7 @@ class Namespace extends Component {
 		}
 
 		return (
-			<div style={{ 
-				position: "absolute",
-				width : sidebar.w,
-				height : sidebar.h,
-				top : sidebar.t,
-				left : sidebar.l,
-			}}>
+			<div style={Object.assign({ position: "absolute" }, sidebar)}>
 				<DatasetSummary dataset={dataset} />
 			</div>
 		);
@@ -71,21 +65,30 @@ class Namespace extends Component {
 
 		return (
 			<div className="namespace" onClick={this.handleDeselect}>
-				<InteractiveForceGraph
-					labelOffset={{ 
-						x : ({ radius = 10}) => 17, 
-						y : ({ radius = 10 }) => 6
-					}}
-					onSelectNode={this.handleSelectNode}
-					selectedNode={ dataset ? nodeForAddress(dataset.address) : undefined }
-					simulationOptions={{ height: layout.main.h, width: layout.main.w, animate : true, strength : { charge : -1000 } }}>
-					{nodes.map((node, i) => {
-					  return (<ForceGraphNode key={`node-${i}`} node={node} fill="#C3E88D" labelClass="label" labelStyle={{ fontSize : 14, fill : "#C3E88D" }} />);
-					})}
-				  {connections.map((c, i) => {
-				  	return (<ForceGraphLink key={`link-${i}`} link={c} />);
-				  })}
-				</InteractiveForceGraph>
+				<div className="main" style={{ 
+					position: "absolute", 
+					width : layout.main.w,
+					height : layout.main.h,
+					top : layout.main.t,
+					left : layout.main.l
+				}}>
+					{/*<hr className="green" />*/}
+					<InteractiveForceGraph
+						labelOffset={{ 
+							x : ({ radius = 10}) => 17, 
+							y : ({ radius = 10 }) => 6
+						}}
+						onSelectNode={this.handleSelectNode}
+						selectedNode={ dataset ? nodeForAddress(dataset.address) : undefined }
+						simulationOptions={{ height: layout.main.height, width: layout.main.width, animate : true, strength : { charge : -1000 } }}>
+						{nodes.map((node, i) => {
+						  return (<ForceGraphNode key={`node-${i}`} node={node} fill="#C3E88D" labelClass="label" labelStyle={{ fontSize : 14, fill : "#C3E88D" }} />);
+						})}
+					  {connections.map((c, i) => {
+					  	return (<ForceGraphLink key={`link-${i}`} link={c} />);
+					  })}
+					</InteractiveForceGraph>
+				</div>
 				{this.renderDatasetInfo()}
 			</div>
 		);

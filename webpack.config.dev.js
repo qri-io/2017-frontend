@@ -38,24 +38,23 @@ module.exports = {
     new webpack.DefinePlugin(ENV),
     // new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      loaders: ['babel'],
-      exclude: /node_modules/
-    },
-    {
-      test: /\.scss$/,
-      loaders: ["style", "css", "sass"]
-    },
-    {
-      test: /\.json$/,
-      loader: 'json'
-    }]
-  },
-  sassLoader: {
-    includePaths: [path.resolve(__dirname, "src","scss")]
+    rules: [
+      {
+        test: /\.js?$/,
+        use: ['babel-loader'],
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          "style-loader",
+          "css-loader",
+          "sass-loader"
+        ]
+      }
+    ]
   }
 };

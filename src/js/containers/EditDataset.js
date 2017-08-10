@@ -12,7 +12,7 @@ import EditAddress from '../components/EditAddress'
 import ValidInput from '../components/ValidInput'
 import ValidTextarea from '../components/ValidTextarea'
 
-export default class EditDataset extends React.Component {
+class EditDataset extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {

@@ -5,15 +5,15 @@ import { Link } from 'react-router'
 export default class DatasetHeader extends React.Component {
 	render() {
 		const { dataset, onDownload } = this.props
-		const path = "/" + dataset.address.replace(".", "/", -1);
+		const path = dataset.subject;
 
 		return (
 			<div className="row">
 				<header className="blue page-header col-md-12">
 					<hr className="blue" />
-					<a className="green right" href={`/downloads/package?address=${dataset.address}`}>Download</a>
-					<h1>{dataset.name || "unnamed dataset"}</h1>
-					<p className="address">{dataset.address}</p>
+					<a className="green right" href={`/downloads/package?path=${dataset.path}`}>Download</a>
+					<h1>{dataset.title || "unnamed dataset"}</h1>
+					<p className="path">{dataset.path}</p>
 					<p>
 						{ dataset.sourceUrl ? <span>| <a href={ dataset.sourceUrl } target="_blank">{ dataset.sourceUrl }</a></span> : undefined }
 					</p>

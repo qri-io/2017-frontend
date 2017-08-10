@@ -2,7 +2,7 @@ import { normalize } from 'normalizr'
 import Schemas from '../schemas'
 import 'isomorphic-fetch'
 
-export const API_ROOT = `${__BUILD__.API_URL}/api`
+export const API_ROOT = `${__BUILD__.API_URL}`
 
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
