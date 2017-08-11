@@ -110,7 +110,7 @@ export default class InteractiveForceGraph extends PureRenderComponent {
         link.value > 0 && (
           (link.source === nodeId(node1) && link.target === nodeId(node2)) ||
           (link.source === nodeId(node2) && link.target === nodeId(node1))
-        )
+        ),
       ) > -1;
 
     const isNodeHighlighted = (focusedNode, node) =>
@@ -135,7 +135,7 @@ export default class InteractiveForceGraph extends PureRenderComponent {
     //   isNodeHighlighted(hoveredNode, node);
 
     // override to always show labels
-    const showLabelForNode = node => true
+    const showLabelForNode = () => true;
 
     const opacityForNode = (node, origOpacity = 1) => {
       if (

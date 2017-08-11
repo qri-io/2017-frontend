@@ -4,29 +4,29 @@
  */
 import React from 'react'
 
-import App from './containers/App'
-import Change from './containers/Change'
-import Console from './containers/Console'
-import Dataset from './containers/Dataset'
-import DatasetChanges from './containers/DatasetChanges'
-import DatasetMigrations from './containers/DatasetMigrations'
-import Datasets from './containers/Datasets'
-import DatasetsList from './containers/DatasetsList'
-import EditChange from './containers/EditChange'
-import EditDataset from './containers/EditDataset'
-import Login from './containers/Login'
-import Namespace from './containers/Namespace'
-import NewDataset from './containers/NewDataset'
-import NewChange from './containers/NewChange'
-import Signup from './containers/Signup'
-import Queries from './containers/Queries'
-import Query from './containers/Query'
-import Stylesheet from './containers/Stylesheet'
-import SshKeys from './containers/SshKeys'
-import User from './containers/User'
-import UserRoles from './containers/UserRoles'
-import UserSettings from './containers/UserSettings'
-import Welcome from './containers/Welcome'
+import AddDataset from './containers/AddDataset';
+import App from './containers/App';
+import Change from './containers/Change';
+import Console from './containers/Console';
+import Dataset from './containers/Dataset';
+import DatasetChanges from './containers/DatasetChanges';
+import DatasetMigrations from './containers/DatasetMigrations';
+import Datasets from './containers/Datasets';
+import DatasetsList from './containers/DatasetsList';
+import EditChange from './containers/EditChange';
+import EditDataset from './containers/EditDataset';
+import Login from './containers/Login';
+import Namespace from './containers/Namespace';
+import NewDataset from './containers/NewDataset';
+import NewChange from './containers/NewChange';
+import Signup from './containers/Signup';
+import Queries from './containers/Queries';
+import Query from './containers/Query';
+import Stylesheet from './containers/Stylesheet';
+import SshKeys from './containers/SshKeys';
+import User from './containers/User';
+import UserRoles from './containers/UserRoles';
+import UserSettings from './containers/UserSettings';
 
 function errorLoading(err) {
 	console.error('Dynamic page loading failed', err);
@@ -75,8 +75,8 @@ export default {
 			component : Signup
 		},
 		{
-			path: '/welcome',
-			component: Welcome
+			path: '/datasets/add',
+			component: AddDataset,
 		},
 		{
 			path: '/datasets/*',
@@ -85,6 +85,10 @@ export default {
 		{
 			path: '/stylesheet',
 			component: Stylesheet
+		},
+		{
+			path: '/console',
+			component: Console
 		},
 		{
 			path: '/*',

@@ -125,12 +125,6 @@ export default {
 				import('./containers/Signup').then(loadRoute(cb)).catch(errorLoading);
 			}
 		},
-		{
-			path: '/welcome',
-			getComponent(location, cb) {
-				import ('./containers/Welcome').then(loadRoute(cb)).catch(errorLoading);
-			}
-		},
 		// {
 		// 	path: '/datasets/new',
 		// 	getComponent(location, cb) {
