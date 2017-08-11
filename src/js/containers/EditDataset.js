@@ -8,7 +8,6 @@ import validateDataset from '../validators/dataset';
 
 import Spinner from '../components/Spinner';
 import SessionRequired from '../components/SessionRequired';
-import EditAddress from '../components/EditAddress';
 import ValidInput from '../components/form/ValidInput';
 
 import ValidTextarea from '../components/form/ValidTextarea';
@@ -100,7 +99,6 @@ class EditDataset extends React.Component {
           <div className="col-md-8 col-md-offset-2">
             <h3>Edit Dataset</h3>
             <form className="editDataset">
-              <EditAddress label="Address" value={dataset.address} showError={showErrors} error={validation.address} onChange={this.handleChange} />
               <ValidInput label="Name" name="name" value={dataset.name} showError={showErrors} error={validation.name} onChange={this.handleChange} />
               <ValidInput label="External Url" name="source_url" value={dataset.source_url} showError={showErrors} error={validation.source_url} onChange={this.handleChange} />
               <ValidTextarea label="Summary" name="summar" value={dataset.summary} showError={showErrors} error={validation.summary} onChange={this.handleChange} />

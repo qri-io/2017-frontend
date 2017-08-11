@@ -17,4 +17,13 @@ const KeyValueInput = ({ name, value, onChangeValue, onChangeKey, onRemove }) =>
   );
 };
 
+KeyValueInput.propTypes = {
+  name: PropTypes.string.isRequired,
+  value: PropTypes.any,
+
+  onChangeKey: PropTypes.func.isRequired,
+  onChangeValue: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
+};
+
 export default KeyValueInput;

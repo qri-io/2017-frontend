@@ -4,7 +4,7 @@ import React, { PropTypes } from 'react';
 const SelectUser = ({ users, value, name, label, onChange }) => {
   const handleChange = (e) => {
     onChange(name, e.target.value);
-  }
+  };
 
   if (!users) {
     return null;
@@ -16,11 +16,19 @@ const SelectUser = ({ users, value, name, label, onChange }) => {
       {label && <br />}
       <select value={value} onChange={handleChange}>
         {users.map((u, i) => {
-          return <option key={i} value={u.currentKey}>{u.username}</option>
+          return <option key={i} value={u.currentKey}>{u.username}</option>;
         })}
       </select>
     </div>
   );
-}
+};
+
+SelectUser.propTypes = {
+  users: PropTypes.array.isRequired,
+  value: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  onChange: PropTypes.func,
+};
 
 export default SelectUser;

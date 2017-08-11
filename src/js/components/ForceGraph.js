@@ -105,7 +105,7 @@ export default class ForceGraph extends PureRenderComponent {
           cy: node.fy || node.y,
         },
       }),
-      {}
+      {},
     );
   }
 
@@ -124,7 +124,7 @@ export default class ForceGraph extends PureRenderComponent {
           y2: link.target.y,
         },
       }),
-      {}
+      {},
     );
   }
 
@@ -165,7 +165,7 @@ export default class ForceGraph extends PureRenderComponent {
 
   onSimulationTick() {
     this.frame = rafUtils.requestAnimationFrame(
-      this.updatePositions.bind(this)
+      this.updatePositions.bind(this),
     );
   }
 
@@ -281,7 +281,7 @@ export default class ForceGraph extends PureRenderComponent {
               style={spreadableLabelStyle}
             >
               {node[labelAttr]}
-            </text>
+            </text>,
           );
         }
       } else if (isLink(child)) {

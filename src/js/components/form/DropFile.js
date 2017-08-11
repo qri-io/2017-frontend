@@ -100,7 +100,7 @@ export default class DropFile extends React.Component {
 }
 
 DropFile.propTypes = {
-  dir: PropTypes.string,
+  // dir: PropTypes.string,
   // onUpload: PropTypes.func,
   // onError: PropTypes.func,
   onSuccess: PropTypes.func.isRequired,

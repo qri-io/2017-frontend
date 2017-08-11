@@ -14,7 +14,7 @@ const editorOptions = [
   'tabSize',
   // 'enableBasicAutocompletion',
   // 'enableLiveAutocompletion',
-  'enableSnippets '
+  'enableSnippets ',
 ];
 
 export default class CodeEditor extends Component {
@@ -29,13 +29,13 @@ export default class CodeEditor extends Component {
       'onScroll',
       'handleOptions',
     ]
-    .forEach(method => {
-      this[method] = this[method].bind(this);
+    .forEach((m) => {
+      this[m] = this[m].bind(this);
     });
 
     this.debouncedOnChange = debounce((v) => {
       this.props.onChange(v);
-    }, 200)
+    }, 200);
   }
 
   componentDidMount() {
@@ -62,7 +62,7 @@ export default class CodeEditor extends Component {
     }
 
     const editorProps = Object.keys(this.props.editorProps);
-    for (let i = 0; i < editorProps.length; i++) {
+    for (let i = 0; i < editorProps.length; i += 1) {
       this.editor[editorProps[i]] = this.props.editorProps[editorProps[i]];
     }
 
@@ -82,7 +82,7 @@ export default class CodeEditor extends Component {
     this.handleOptions(this.props);
 
 
-    for (let i = 0; i < editorOptions.length; i++) {
+    for (let i = 0; i < editorOptions.length; i += 1) {
       const option = editorOptions[i];
       this.editor.setOption(option, this.props[option]);
     }
@@ -92,10 +92,10 @@ export default class CodeEditor extends Component {
         this.editor.commands.addCommand(command);
       });
     }
-    
+
 
     if (keyboardHandler) {
-      this.editor.setKeyboardHandler('ace/keyboard/' + keyboardHandler);
+      this.editor.setKeyboardHandler(`ace/keyboard/${keyboardHandler}`);
     }
 
     if (onLoad) {
@@ -105,14 +105,14 @@ export default class CodeEditor extends Component {
     if (Array.isArray(this.props.completers)) {
       this.props.completers.forEach((compl) => {
         this.editor.completers.push(compl);
-      })
+      });
     }
   }
 
   componentWillReceiveProps(nextProps) {
     const oldProps = this.props;
 
-    for (let i = 0; i < editorOptions.length; i++) {
+    for (let i = 0; i < editorOptions.length; i += 1) {
       const option = editorOptions[i];
       if (nextProps[option] !== oldProps[option]) {
         this.editor.setOption(option, nextProps[option]);
@@ -120,10 +120,10 @@ export default class CodeEditor extends Component {
     }
 
     if (nextProps.mode !== oldProps.mode) {
-      this.editor.getSession().setMode('ace/mode/' + nextProps.mode);
+      this.editor.getSession().setMode(`ace/mode/${nextProps.mode}`);
     }
     if (nextProps.theme !== oldProps.theme) {
-      this.editor.setTheme('ace/theme/' + nextProps.theme);
+      this.editor.setTheme(`ace/theme/${nextProps.theme}`);
     }
     if (nextProps.fontSize !== oldProps.fontSize) {
       this.editor.setFontSize(nextProps.fontSize);
@@ -192,13 +192,13 @@ export default class CodeEditor extends Component {
 
   handleOptions(props) {
     const setOptions = Object.keys(props.setOptions);
-    for (let y = 0; y < setOptions.length; y++) {
+    for (let y = 0; y < setOptions.length; y + 1) {
       this.editor.setOption(setOptions[y], props.setOptions[setOptions[y]]);
     }
   }
 
   render() {
-    const { name, className="editor", width, height } = this.props;
+    const { name, className = "editor", width, height } = this.props;
     const divStyle = { width, height };
     return (
       <div className="codeEditor wrap">
@@ -226,32 +226,32 @@ CodeEditor.propTypes = {
   value: PropTypes.string,
   onLoad: PropTypes.func,
   onBeforeLoad: PropTypes.func,
-  minLines: PropTypes.number,
-  maxLines: PropTypes.number,
-  readOnly: PropTypes.bool,
-  highlightActiveLine: PropTypes.bool,
-  tabSize: PropTypes.number,
+  // minLines: PropTypes.number,
+  // maxLines: PropTypes.number,
+  // readOnly: PropTypes.bool,
+  // highlightActiveLine: PropTypes.bool,
+  // tabSize: PropTypes.number,
   showPrintMargin: PropTypes.bool,
   cursorStart: PropTypes.number,
   editorProps: PropTypes.object,
-  setOptions: PropTypes.object,
+  // setOptions: PropTypes.object,
   keyboardHandler: PropTypes.string,
   wrapEnabled: PropTypes.bool,
-  enableBasicAutocompletion: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.array,
-  ]),
-  enableLiveAutocompletion: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.array,
-  ]),
+  // enableBasicAutocompletion: PropTypes.oneOfType([
+  //   PropTypes.bool,
+  //   PropTypes.array,
+  // ]),
+  // enableLiveAutocompletion: PropTypes.oneOfType([
+  //   PropTypes.bool,
+  //   PropTypes.array,
+  // ]),
   commands: PropTypes.array,
-  completers : PropTypes.array
+  completers: PropTypes.array,
 };
 
 CodeEditor.defaultProps = {
   name: 'brace-editor',
-  className : 'editor',
+  className: 'editor',
   mode: '',
   theme: 'qri',
   height: '',

@@ -15,7 +15,7 @@ export default class KeyValueForm extends React.Component {
   }
 
   handleAddField() {
-    const change = { meta: Object.assign({}, this.props.data.meta, { new_field: "" }) };
+    // const change = { meta: Object.assign({}, this.props.data.meta, { new_field: "" }) };
     // this.props.updateMetadata({ meta: Object.assign({}, this.props.data, change) });
   }
 
@@ -33,12 +33,11 @@ export default class KeyValueForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    onSubmit(data, e);
+    this.props.onSubmit(this.props.data, e);
   }
 
   render() {
-    const { data, onChangeValue, onCancel, onSubmit, onChangeKey, onAddField, onRemove } = this.props;
-    
+    const { data } = this.props;
 
     return (
       <div className="data">
@@ -63,9 +62,9 @@ export default class KeyValueForm extends React.Component {
 
 KeyValueForm.propTypes = {
   data: PropTypes.object.isRequired,
-  validation: PropTypes.object,
+  // validation: PropTypes.object,
 
-  onChange: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
+  // onChange: PropTypes.func.isRequired,
+  // onCancel: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };

@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 
-import ValidInput from './form/ValidInput'
+import ValidInput from './ValidInput'
 ;
 import UrlInput from './UrlInput';
 import TagInput from './TagInput';
 import LanguageInput from './LanguageInput';
-import ValidTextarea from './form/ValidTextarea'
+import ValidTextarea from './ValidTextarea'
 ;
 import ValidSelect from './ValidSelect';
 import ValidLicenseInput from './ValidLicenseInput';
@@ -107,7 +107,7 @@ const MetadataForm = ({ data, validation, onChange, onCancel, onSubmit, showHelp
           options={['public', 'restricted-public']}
           onChange={onChange}
         />
-        <ValidLicenseInput 
+        <ValidLicenseInput
           name="license"
           label="License"
           className="col-md-6"
