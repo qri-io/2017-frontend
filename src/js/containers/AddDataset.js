@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { setQuery, runQuery, downloadQuery } from '../actions/query';
 import { selectSessionUser } from '../selectors/session';
 // import { selectDataset } from '../selectors/dataset';
 
@@ -20,7 +19,7 @@ class AddDataset extends React.Component {
     ].forEach((m) => { this[m] = this[m].bind(this); });
   }
 
-  handleChange(name, value) {
+  handleChange() {
 
   }
 

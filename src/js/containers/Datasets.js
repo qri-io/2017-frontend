@@ -16,7 +16,7 @@ class Datasets extends React.Component {
 		[ 
 			'handleSelectItem',
 			'handleLoadNextPage',
-		].forEach(m => this[m] = this[m].bind(this));
+		].forEach((m) => { this[m] = this[m].bind(this); });
 	}
 
 	componentWillMount() {
