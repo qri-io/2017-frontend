@@ -1,9 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { PropTypes } from 'react';
-// import S3Upload from '../../libs/S3Upload';
 import ProgressBar from '../chrome/ProgressBar';
-
-const S3_SIGNING_SERVER_PUT_URL = '//drp-upload.herokuapp.com/token';
 
 export default class DropFile extends React.Component {
   constructor(props) {
@@ -18,15 +15,15 @@ export default class DropFile extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.uploader = new S3Upload(this.fileInput, {
-      username: 'didyouaddyour',
-      password: 'metadata',
-      s3_sign_put_url: S3_SIGNING_SERVER_PUT_URL,
-      dir: this.props.dir,
-      onProgress: this.handleProgress.bind(this),
-      onFinishS3Put: this.handleSuccess.bind(this),
-      onError: this.handleError.bind(this),
-    });
+    // this.uploader = new S3Upload(this.fileInput, {
+    //   username: 'didyouaddyour',
+    //   password: 'metadata',
+    //   s3_sign_put_url: S3_SIGNING_SERVER_PUT_URL,
+    //   dir: this.props.dir,
+    //   onProgress: this.handleProgress.bind(this),
+    //   onFinishS3Put: this.handleSuccess.bind(this),
+    //   onError: this.handleError.bind(this),
+    // });
     this.setState({ stage: 'Upload' });
   }
 

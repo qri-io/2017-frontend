@@ -1,17 +1,17 @@
 import React, { PropTypes } from 'react';
 
-export default class LoadingButton extends React.Component {
-	render() {
-		return (
-			<div></div>
-		);
-	}
-}
+const LoadingButton = ({ loading, children }) => {
+  return (
+    <button disabled={!loading} className="btn btn-primary">{children}</button>
+  );
+};
 
 LoadingButton.propTypes = {
-	
-}
+  loading: PropTypes.bool,
+};
 
 LoadingButton.defaultProps = {
-	
-}
+  loading: false,
+};
+
+export default LoadingButton;

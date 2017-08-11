@@ -34,3 +34,5 @@ QueryEditor.defaultProps = {
     statement: "",
   },
 };
+
+export default QueryEditor;

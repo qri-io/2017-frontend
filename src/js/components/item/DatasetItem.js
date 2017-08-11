@@ -22,3 +22,5 @@ DatasetItem.propTypes = {
 
 DatasetItem.defaultProps = {
 };
+
+export default DatasetItem;

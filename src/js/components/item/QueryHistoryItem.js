@@ -1,21 +1,19 @@
-import React from 'react'
+import React, { PropTypes } from 'react';
 
-export default class QueryHistoryItem extends React.Component {
-	render() {
-		const { data, onSelect } = this.props
-		return (
-			<div className="queryHistoryItem" onClick={onSelect}>
-				<p>{data.statement}</p>
-			</div>
-		);
-	}
-}
+const QueryHistoryItem = ({ data, onSelect }) => {
+  return (
+    <div className="queryHistoryItem" onClick={onSelect}>
+      <p>{data.statement}</p>
+    </div>
+  );
+};
 
 QueryHistoryItem.propTypes = {
-	data : React.PropTypes.object.isRequired,
-	onSelect : React.PropTypes.func.isRequired
-}
+  data: PropTypes.object.isRequired,
+  onSelect: PropTypes.func.isRequired,
+};
 
 QueryHistoryItem.defaultProps = {
-	
-}
+};
+
+export default QueryHistoryItem;

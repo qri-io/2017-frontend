@@ -34,3 +34,5 @@ Navbar.propTypes = {
 
 Navbar.defaultProps = {
 };
+
+export default Navbar;
