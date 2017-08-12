@@ -1,11 +1,13 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import { initDataset } from '../actions/dataset';
 import { selectSessionUser } from '../selectors/session';
 // import { selectDataset } from '../selectors/dataset';
 
 import DropFile from '../components/form/DropFile';
 import ValidInput from '../components/form/ValidInput';
+import LoadingButton from '../components/chrome/LoadingButton';
 // import List from '../components/List';
 // import DatasetItem from '../components/item/DatasetItem';
 
@@ -13,30 +15,49 @@ class AddDataset extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      loading: false,
+      dataset: {
+        name: "",
+        files: undefined,
+      },
+    };
+
     [
-      'handleAddFile',
       'handleChange',
+      'handleSubmit',
     ].forEach((m) => { this[m] = this[m].bind(this); });
   }
 
-  handleChange() {
-
+  handleChange(name, value) {
+    this.setState(Object.assign({}, this.state, {
+      dataset: Object.assign(this.state.dataset, { [name]: value }),
+    }));
   }
 
-  handleAddFile() {
-
+  handleSubmit(e) {
+    const { dataset } = this.state;
+    e.preventDefault();
+    console.log(dataset);
+    this.setState({ loading: true });
+    this.props.initDataset(dataset.name, dataset.files, (action) => {
+      this.setState({ loading: false });
+    });
   }
 
   render() {
+    const { loading, dataset } = this.state;
+
     return (
       <div id="wrapper" className="page">
         <div className="container">
           <div className="row">
-            <div className="col-md-8 col-md-offset-2">
+            <div className="col-md-8 offset-md-2">
               <h1>Add a Dataset</h1>
               <hr />
-              <ValidInput type="text" name="varname" label="varname" value="varname" onChange={this.handleChange} />
-              <DropFile />
+              <ValidInput type="text" name="name" label="varname" value={dataset.name} onChange={this.handleChange} />
+              <DropFile name="files" onChange={this.handleChange} />
+              <LoadingButton loading={loading} onClick={this.handleSubmit}>Add Dataset</LoadingButton>
               <hr />
             </div>
           </div>
@@ -47,7 +68,7 @@ class AddDataset extends React.Component {
 }
 
 AddDataset.propTypes = {
-  addDataset: PropTypes.func,
+  initDataset: PropTypes.func,
 };
 
 AddDataset.defaultProps = {
@@ -64,4 +85,6 @@ function mapStateToProps(state, ownProps) {
   }, state.console, ownProps);
 }
 
-export default connect(mapStateToProps, {})(AddDataset);
+export default connect(mapStateToProps, {
+  initDataset,
+})(AddDataset);

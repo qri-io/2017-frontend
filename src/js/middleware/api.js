@@ -1,3 +1,4 @@
+/* globals FormData */
 import { normalize } from 'normalizr'
 import Schemas from '../schemas'
 import 'isomorphic-fetch'
@@ -6,46 +7,65 @@ export const API_ROOT = `${__BUILD__.API_URL}`
 
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
-function callApi(method, endpoint, schema, data) {
-  let fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint
-  let body
+function callApi(method, endpoint, schema, data, files = []) {
+  let fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint;
+  let headers, body;
+  
+  // if files is provided, let's submit via form data
+  if (files.length > 0) {
+    let fd = new FormData();
 
-  // add query params to GET requests listed on data
-  if (data && method == "GET") {
-    let addedFirst = false
+    if (files.length == 1) {
+      fd.append('file', files[0]);
+    } else {
+      files.forEach((i, f) => {
+        fd.append(`file_${i}`, f)
+      });
+    }
+
     Object.keys(data).forEach((key, i) => {
-      const val = encodeURIComponent(data[key])
+      fd.append(key, data[key]);
+    });
+
+    body = fd;
+  } else if (data && method == "GET") {
+    // add query params to GET requests listed on data
+    let addedFirst = false;
+    Object.keys(data).forEach((key, i) => {
+      const val = encodeURIComponent(data[key]);
       if (val != "") {
-        fullUrl += (addedFirst) ? `&${key}=${val}` : `?${key}=${val}`
-        addedFirst = true
+        fullUrl += (addedFirst) ? `&${key}=${val}` : `?${key}=${val}`;
+        addedFirst = true;
       }
     })
   } else if (data) {
-    body = JSON.stringify(data)
+    headers = {
+      'Accept': 'application/json',
+      'Content-Type': ContentType,
+    },
+
+    body = JSON.stringify(data);
   }
 
   return fetch(fullUrl, {
     method : method,
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
     credentials: 'include',
-    body
+    headers,
+    body,
   })
     .then(response => {
       return response.json().then(json => ({ json, response }))
     }).then(({ json, response }) => {
       if (!response.ok) {
-        return Promise.reject(json)
+        return Promise.reject(json);
       } else if (response.status == 204) {
-        return {}
+        return {};
       }
 
-      const { data } = json
+      const { data } = json;
 
       return Object.assign({},
-        normalize(data, schema)
+        normalize(data, schema),
         // { nextPageUrl }
       )
     });
@@ -63,7 +83,7 @@ export default store => next => action => {
   }
 
   let { endpoint } = callAPI
-  const { schema, types, data, method="GET", silentError=false } = callAPI
+  const { schema, types, data, files, method="GET", silentError=false } = callAPI
 
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getState())
@@ -95,7 +115,7 @@ export default store => next => action => {
   next(actionWith({ type: requestType }));
 
   // make the request
-  return callApi(method, endpoint, schema, data).then(
+  return callApi(method, endpoint, schema, data, files).then(
     response => next(actionWith({
       type: successType,
       response
