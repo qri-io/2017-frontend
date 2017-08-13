@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 import { initDataset } from '../actions/dataset';
 import { selectSessionUser } from '../selectors/session';
@@ -38,10 +39,10 @@ class AddDataset extends React.Component {
   handleSubmit(e) {
     const { dataset } = this.state;
     e.preventDefault();
-    console.log(dataset);
     this.setState({ loading: true });
     this.props.initDataset(dataset.name, dataset.files, (action) => {
       this.setState({ loading: false });
+      this.props.push('/');
     });
   }
 
@@ -87,4 +88,5 @@ function mapStateToProps(state, ownProps) {
 
 export default connect(mapStateToProps, {
   initDataset,
+  push,
 })(AddDataset);

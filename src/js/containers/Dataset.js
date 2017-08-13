@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import ReactMarkdown from 'react-markdown';
 
-import { downloadDataset } from '../actions/dataset';
+import { downloadDataset, deleteDataset } from '../actions/dataset';
 import { setQuery, runQuery, downloadQuery } from '../actions/query';
 
 import { selectDataset } from '../selectors/dataset';
@@ -28,6 +28,7 @@ class Dataset extends React.Component {
       'handleLoadMoreResults',
       'handleDownloadQuery',
       'handleDownloadDataset',
+      'handleDeleteDataset',
       'renderChildDatasets',
       'renderData',
     ].forEach((m) => { this[m] = this[m].bind(this); });
@@ -56,8 +57,8 @@ class Dataset extends React.Component {
       this.props.loadDatasetByAddress(nextProps.address);
     }
 
-    if (nextProps.dataset != this.props.dataset) {
-      this.props.setQuery(nextProps.dataset.default_query || { statement: `select * from ${nextProps.address}` });
+    if (nextProps.dataset && nextProps.dataset != this.props.dataset) {
+      // this.props.setQuery(nextProps.dataset.default_query || { statement: `select * from ${nextProps.address}` });
     }
   }
 
@@ -88,6 +89,12 @@ class Dataset extends React.Component {
       query: this.props.query,
       download: true,
     });
+  }
+
+  handleDeleteDataset() {
+    if (confirm("are you sure you want to delete this dataset?")) {
+      this.props.deleteDataset(this.props.dataset.subject, "/");
+    }
   }
 
   handleLoadMoreResults() {
@@ -202,7 +209,7 @@ class Dataset extends React.Component {
     return (
       <div id="wrapper">
         <div className="container">
-          <DatasetHeader dataset={dataset} onDownload={this.handleDownloadDataset} />
+          <DatasetHeader dataset={dataset} onDelete={this.handleDeleteDataset} onDownload={this.handleDownloadDataset} />
           <div className="row">
             <div className="col-md-12">
               {(dataset.schema && dataset.schema.fields) ? <FieldsList fields={dataset.schema.fields} /> : <p>This dataset currently has no specified fields</p> }
@@ -294,6 +301,7 @@ export default connect(mapStateToProps, {
   runQuery,
   downloadQuery,
   downloadDataset,
+  deleteDataset,
   // loadDatasetReadme,
   // loadDatasetChildren,
 
