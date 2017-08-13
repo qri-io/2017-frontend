@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 
-const LoadingButton = ({ loading, children }) => {
+const LoadingButton = ({ loading, children, onClick }) => {
   return (
-    <button disabled={!loading} className="btn btn-primary">{children}</button>
+    <button disabled={loading} onClick={onClick} className="btn btn-primary">{children}</button>
   );
 };
 
