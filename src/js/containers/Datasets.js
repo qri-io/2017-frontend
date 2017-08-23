@@ -29,8 +29,8 @@ class Datasets extends React.Component {
 		// }
 	}
 
-	handleSelectItem(index, dataset) {
-		this.props.push("/" + dataset.address.replace(".", "/", -1))
+	handleSelectItem(index, datasetRef) {
+		this.props.push(`/datasets${datasetRef.path}`)
 	}
 
 	handleLoadNextPage() {

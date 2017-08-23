@@ -14,19 +14,20 @@ import resultsReducer from './results'
 import locals from './locals'
 
 const initialEntitiesState = {
-  app : {},
+  app: {},
 
-  session : {},
+  session: {},
   ssh_keys: {},
-  users : {},
-  roles : {},
+  users: {},
+  roles: {},
 
-  datasets : {},
-  readmes : {},
-  changes : {},
-  migrations : {},
+  datasets: {},
+  data: {},
+  readmes: {},
+  changes: {},
+  migrations: {},
   
-  queries : {},
+  queries: {},
   pagination: {},
 }
 

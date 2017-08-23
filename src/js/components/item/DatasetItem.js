@@ -2,10 +2,11 @@ import React from 'react';
 import { Link } from 'react-router';
 
 const DatasetItem = ({ data, onSelect }) => {
+  const { dataset } = data;
   return (
     <div className="dataset item">
-      <h3 onClick={onSelect}>
-        <Link className="name" to={`/datasets${data.subject}`}>{data.title ? data.title : "unnamed dataset"}</Link>
+      <h3>
+        <Link className="name" onClick={onSelect} to={data.path ? `/datasets${data.path}` : undefined}>{data.name || "unnamed dataset"}</Link>
       </h3>
       <p className="address">{data.path}</p>
       {/* <ul>
@@ -17,7 +18,7 @@ const DatasetItem = ({ data, onSelect }) => {
 
 DatasetItem.propTypes = {
   data: React.PropTypes.object.isRequired,
-  onSelect: React.PropTypes.func.isRequired,
+  onSelect: React.PropTypes.func,
 };
 
 DatasetItem.defaultProps = {

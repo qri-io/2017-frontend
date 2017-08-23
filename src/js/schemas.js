@@ -12,11 +12,11 @@ let result_cid = 0
 const sessionUserSchema = new Schema('session');
 const sshKeySchema = new Schema('ssh_keys', { idAttribute : 'sha256' });
 const userSchema = new Schema('users');
-const datasetSchema = new Schema('datasets', { idAttribute: 'subject' });
-const readmeSchema = new Schema('readmes', { idAttribute : 'address' });
+const datasetSchema = new Schema('datasets', { idAttribute: 'path' });
+const readmeSchema = new Schema('readmes', { idAttribute: 'address' });
 const querySchema = new Schema('queries');
-// const schemaSchema = new Schema('schemas');
 // const resultSchema = new Schema('results', { idAttribute : (result) => 'result' });
+const structuredDataSchema = new Schema('data', { idAttribute: 'path' });
 const migrationSchema = new Schema('migrations');
 const changeSchema = new Schema('changes');
 const inviteSchema = new Schema('invites');
@@ -94,6 +94,7 @@ const Schemas = {
   INVITE : inviteSchema,
   ROLE : roleSchema,
   ROLE_ARRAY: arrayOf(roleSchema),
+  STRUCTURED_DATA: structuredDataSchema
 }
 
 export default Schemas

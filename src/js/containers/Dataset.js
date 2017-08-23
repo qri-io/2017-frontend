@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import ReactMarkdown from 'react-markdown';
 
-import { downloadDataset, deleteDataset } from '../actions/dataset';
+import { downloadDataset, deleteDataset, loadDatasetData } from '../actions/dataset';
 import { setQuery, runQuery, downloadQuery } from '../actions/query';
 
-import { selectDataset } from '../selectors/dataset';
+import { selectDataset, selectDatasetData } from '../selectors/dataset';
 import { selectSessionUser } from '../selectors/session';
 // import { selectQueryById } from '../selectors/query';
 
@@ -40,21 +40,23 @@ class Dataset extends React.Component {
     // this.props.loadDatasetByAddress(this.props.address, ["fields"])
     // this.props.loadDatasetReadme(this.props.address)
     // this.props.loadDatasetChildren(this.props.address)
+    this.props.loadDatasetData(this.props.datasetRef.path);
 
     // match the address to the current namespce, unless there's already a query
-    if (this.props.dataset && this.props.dataset.default_query) {
-      this.props.setQuery(this.props.dataset.default_query);
+    if (this.props.datasetRef && this.props.datasetRef.default_query) {
+      this.props.setQuery(this.props.datasetRef.default_query);
     } else {
       this.props.setQuery({
         // address : this.props.address,
-        statement: `select * from ${this.props.address}`,
+        statement: `select * from ${this.props.datasetRef.name}`,
       });
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.address != this.props.address) {
-      this.props.loadDatasetByAddress(nextProps.address);
+    if (nextProps.path != this.props.path) {
+      this.props.loadDatasetByAddress(nextProps.path);
+      this.props.loadDatasetData(nextProps.path);
     }
 
     if (nextProps.dataset && nextProps.dataset != this.props.dataset) {
@@ -93,7 +95,7 @@ class Dataset extends React.Component {
 
   handleDeleteDataset() {
     if (confirm("are you sure you want to delete this dataset?")) {
-      this.props.deleteDataset(this.props.dataset.subject, "/");
+      this.props.deleteDataset(this.props.datasetRef.path, "/");
     }
   }
 
@@ -161,20 +163,21 @@ class Dataset extends React.Component {
     return (
       <div className="col-md-12">
         <hr className="green" />
-        <h4 className="green">Results</h4>
-        <ResultsTable results={data} onLoadMore={this.handleLoadMoreResults} />
+        <h4 className="green">Data</h4>
+        {data}
+        {/* <ResultsTable results={data} onLoadMore={this.handleLoadMoreResults} /> */}
       </div>
     );
   }
 
   renderDescription() {
-    const { dataset } = this.props;
-    if (!dataset.description) { return undefined; }
+    const { datasetRef } = this.props;
+    if (!datasetRef.dataset.description) { return undefined; }
     return (
       <div className="row">
         <section className="col-md-12">
           <hr className="blue" />
-          <p>{ dataset.description }</p>
+          <p>{ datasetRef.dataset.description }</p>
         </section>
       </div>
     );
@@ -193,12 +196,12 @@ class Dataset extends React.Component {
   }
 
   render() {
-    const { dataset, readme } = this.props;
+    const { datasetRef, readme } = this.props;
     // const path = "/" + address.replace(".", "/", -1)
     // const hasData = (dataset && (dataset.url || dataset.file || dataset.data));
     const hasData = true;
 
-    if (!dataset) {
+    if (!datasetRef) {
       return (
         <div className="dataset container">
           <p>No Dataset</p>
@@ -206,13 +209,15 @@ class Dataset extends React.Component {
       );
     }
 
+    const { dataset } = datasetRef;
+
     return (
       <div id="wrapper">
         <div className="container">
           <DatasetHeader dataset={dataset} onDelete={this.handleDeleteDataset} onDownload={this.handleDownloadDataset} />
           <div className="row">
             <div className="col-md-12">
-              {(dataset.schema && dataset.schema.fields) ? <FieldsList fields={dataset.schema.fields} /> : <p>This dataset currently has no specified fields</p> }
+              {(dataset.structure && dataset.structure.schema) ? <FieldsList fields={dataset.structure.schema.fields} /> : <p>This dataset currently has no specified fields</p> }
             </div>
           </div>
           <div className="row">
@@ -220,8 +225,10 @@ class Dataset extends React.Component {
               {this.renderEditButtons(this.props)}
             </div>
           </div>
-          {hasData ? this.renderData() : undefined }
           {readme ? this.renderReadme(readme) : this.renderDescription() }
+          <div className="row">
+            {hasData ? this.renderData() : undefined }
+          </div>
         </div>
       </div>
     );
@@ -234,7 +241,7 @@ Dataset.propTypes = {
   // path: PropTypes.string.isRequired,
 
   // the dataset model to display
-  dataset: PropTypes.object,
+  datasetRef: PropTypes.object,
   // Readme model if available
   readme: PropTypes.object,
   // default query to show if none is present
@@ -286,9 +293,10 @@ function mapStateToProps(state, ownProps) {
   return Object.assign({
     path,
 
-    dataset: selectDataset(state, path),
-    // readme : selectDatasetReadme(state, address),
-    // descendants : selectDatasetDescendants(state, address),
+    datasetRef: selectDataset(state, path),
+    data: selectDatasetData(state, path),
+    // readme: selectDatasetReadme(state, address),
+    // descendants: selectDatasetDescendants(state, address),
 
     results,
     permissions,
@@ -302,8 +310,6 @@ export default connect(mapStateToProps, {
   downloadQuery,
   downloadDataset,
   deleteDataset,
+  loadDatasetData,
   // loadDatasetReadme,
-  // loadDatasetChildren,
-
-  // loadDatasetByAddress
 })(Dataset);

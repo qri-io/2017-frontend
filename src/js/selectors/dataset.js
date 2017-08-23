@@ -36,6 +36,11 @@ export function selectDatasetByAddress(state, address) {
 	}
 }
 
+export function selectDatasetData(state, path) {
+	const data = state.entities.data[path];
+	return data ? data.data : undefined;
+}
+
 export function selectDatasetReadme(state, address) {
 	return state.entities.readmes[address];
 }
