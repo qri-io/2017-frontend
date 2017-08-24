@@ -8,7 +8,7 @@ import { loadDatasets, loadDataset } from '../actions/dataset';
 
 import TabPanel from '../components/TabPanel';
 import QueryEditor from '../components/QueryEditor';
-import ResultsTable from '../components/ResultsTable';
+import DataTable from '../components/DataTable';
 import ResultsChart from '../components/ResultsChart';
 import List from '../components/List';
 import DatasetItem from '../components/item/DatasetItem';
@@ -136,7 +136,7 @@ class Console extends React.Component {
                 labels={['Results', 'Chart', 'Datasets', 'Queries']}
                 onSelectPanel={this.handleSetBottomPanel}
                 components={[
-                  <ResultsTable results={results} onLoadMore={this.handleLoadMoreResults} />,
+                  <DataTable results={results} onLoadMore={this.handleLoadMoreResults} />,
                   <ResultsChart results={results} options={chartOptions} onOptionsChange={this.handleSetChartOptions} device={device} />,
                   <List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectDataset} />,
                   <List className="queryItem list" data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} />,

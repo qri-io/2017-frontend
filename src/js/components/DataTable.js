@@ -1,24 +1,21 @@
 import React, { PropTypes } from 'react';
 import Spinner from './Spinner';
 
-const ResultsTable = ({ results, onLoadMore }) => {
-  if (!results) {
+const DataTable = ({ data, fields, fetching, fetchedAll, error, onLoadMore }) => {
+  if (!data) {
     return <div className="resultsTable"></div>;
   }
 
-  const { fields, data, fetching, fetchedAll, error } = results;
-  // const displaySchema = fields.reduce(removeStdCols(fields, showStdCols),[])
-
   if (error) {
     return (
-      <div className="resultsTable">
+      <div className="dataTable resultsTable">
         <h5>{error}</h5>
       </div>
     );
   }
 
   return (
-    <div className="resultsTable">
+    <div className="dataTable resultsTable">
       <div className="table-responsive">
         <table className="table table-hover query-results">
           <thead><tr>{fields.map((col, i) => <th className="blue" key={i}>{col.name}</th>)}</tr></thead>
@@ -41,16 +38,18 @@ const ResultsTable = ({ results, onLoadMore }) => {
   );
 };
 
-ResultsTable.propTypes = {
-  results: PropTypes.object,
-
-  // showLoadMore: PropTypes.bool.isRequired,
+DataTable.propTypes = {
+  fields: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+  fetching: PropTypes.bool,
+  fetchedAll: PropTypes.bool,
+  showLoadMore: PropTypes.bool,
   onLoadMore: PropTypes.func,
+  error : PropTypes.string,
 };
 
-ResultsTable.defaultProps = {
-  showStdCols: false,
+DataTable.defaultProps = {
   showLoadMore: false,
 };
 
-export default ResultsTable;
+export default DataTable;

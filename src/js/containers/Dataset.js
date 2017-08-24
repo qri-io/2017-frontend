@@ -15,7 +15,7 @@ import DatasetItem from '../components/item/DatasetItem';
 import DatasetHeader from '../components/DatasetHeader';
 import FieldsList from '../components/FieldsList';
 import QueryEditor from '../components/QueryEditor';
-import ResultsTable from '../components/ResultsTable';
+import DataTable from '../components/DataTable';
 
 class Dataset extends React.Component {
   constructor(props) {
@@ -129,7 +129,7 @@ class Dataset extends React.Component {
       <div className="col-md-12">
         <hr className="green" />
         <h4 className="green">Results</h4>
-        <ResultsTable results={results} onLoadMore={this.handleLoadMoreResults} />
+        <DataTable results={results} onLoadMore={this.handleLoadMoreResults} />
       </div>
     );
   }
@@ -158,14 +158,15 @@ class Dataset extends React.Component {
   }
 
   renderData() {
-    const { data } = this.props;
-    if (!data) { return undefined; }
+    const { data, datasetRef } = this.props;
+    const { structure } = datasetRef.dataset;
+
+    if (!data || !structure) { return undefined; }
     return (
-      <div className="col-md-12">
+      <div>
         <hr className="green" />
         <h4 className="green">Data</h4>
-        {data}
-        {/* <ResultsTable results={data} onLoadMore={this.handleLoadMoreResults} /> */}
+        <DataTable fields={structure.schema.fields} data={data} fetching={false} fetchedAll={true} onLoadMore={this.handleLoadMoreResults} />
       </div>
     );
   }
@@ -227,7 +228,7 @@ class Dataset extends React.Component {
           </div>
           {readme ? this.renderReadme(readme) : this.renderDescription() }
           <div className="row">
-            {hasData ? this.renderData() : undefined }
+            {this.renderData()}
           </div>
         </div>
       </div>
