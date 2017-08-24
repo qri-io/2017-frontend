@@ -1,13 +1,14 @@
-import { push } from 'react-router-redux'
+import { push } from 'react-router-redux';
 
-import { CALL_API } from '../middleware/api'
-import { RUN_QUERY } from '../middleware/runQuery'
-import Schemas from '../schemas'
-import { setBottomPanel } from './console'
-import { addHistoryEntry } from './session'
-import { resetErrorMessage } from './app'
+import { CALL_API } from '../middleware/api';
+import { RUN_QUERY } from '../middleware/runQuery';
+import Schemas from '../schemas';
+import { setBottomPanel } from './console';
+import { addHistoryEntry } from './session';
+import { resetErrorMessage } from './app';
 
 import { selectQueryBySlug } from '../selectors/query';
+import { loadDatasetData } from './dataset';
 
 export const QUERY_SET = 'QUERY_SET'
 
@@ -18,20 +19,34 @@ export function setQuery(value) {
 	}
 }
 
+export const QUERY_SET_RESULTS = 'QUERY_SET_RESULTS';
+
+export function setQueryResults(path) {
+  return {
+    type: QUERY_SET_RESULTS,
+    value: path,
+  }
+}
+
 export const QUERY_RUN_REQUEST = 'QUERY_RUN_REQUEST'
 export const QUERY_RUN_SUCCESS = 'QUERY_RUN_SUCCESS'
 export const QUERY_RUN_FAILURE = 'QUERY_RUN_FAILURE'
 
 export function runQuery(request) {
   // add in defaults
-  request = Object.assign({
-    page : 1,
-    pageSize : 200
-  }, request);
+  // request = Object.assign({
+  //   page : 1,
+  //   pageSize : 200
+  // }, request);
+
+  const data = {
+    querySyntax: "sql",
+    queryString: request.queryString,
+  };
+
 
   return (dispatch, getState) => {
-
-    analytics.track("Submitted Query", request);
+    analytics.track("Submitted Query", data);
 
     if (!request.download) {
       dispatch(setBottomPanel(0));
@@ -39,9 +54,12 @@ export function runQuery(request) {
     
     dispatch(addHistoryEntry(request.query));
     return dispatch({
-      [RUN_QUERY]: {
+      [CALL_API]: {
         types: [ QUERY_RUN_REQUEST, QUERY_RUN_SUCCESS, QUERY_RUN_FAILURE ],
-        request,
+        endpoint: "/run",
+        method: "POST",
+        schema: Schemas.DATASET,
+        data,
       }
     }).then(action => {
       // Dismiss errors after 3.8 seconds
@@ -49,6 +67,10 @@ export function runQuery(request) {
         setTimeout(() => {
           dispatch(resetErrorMessage());
         }, 3800);
+      } else if (action.type == QUERY_RUN_SUCCESS) {
+        // console.log(action.response.result);
+        dispatch(setQueryResults(action.response.result));
+        dispatch(loadDatasetData(action.response.result));
       }
 
       return null;

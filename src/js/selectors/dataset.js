@@ -36,6 +36,23 @@ export function selectDatasetByAddress(state, address) {
 	}
 }
 
+export function selectDatasetByQueryString(state, queryString) {
+	const { datasets } = state.entities;
+	// if (datasets[id].default_query) {
+	// 	return Object.assign({}, 
+	// 		datasets[id], 
+	// 		{ default_query : selectQueryById(state, datasets[id].default_query) });
+	// } else {
+	// 	return datasets[id]
+	// }
+	const path = Object.keys(datasets).find(path => {
+		console.log(datasets[path].dataset.queryString, queryString);
+		return datasets[path].dataset.queryString == queryString;
+	});
+	// if (!path) { return undefined; }
+	return datasets[path];
+}
+
 export function selectDatasetData(state, path) {
 	const data = state.entities.data[path];
 	return data ? data.data : undefined;

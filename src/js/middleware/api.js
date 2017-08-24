@@ -41,7 +41,8 @@ function callApi(method, endpoint, schema, data, files = []) {
   } else if (data) {
     headers = {
       'Accept': 'application/json',
-      'Content-Type': ContentType,
+      // 'Content-Type': ContentType,
+      'Content-Type': 'application/json',
     },
 
     body = JSON.stringify(data);
