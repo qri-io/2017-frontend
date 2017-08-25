@@ -70,5 +70,8 @@
     "url": "github.com/qri-io/webconsole"
   },
   "author": "Brendan O'Brien",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "react-ace": "^5.2.0"
+  }
 }

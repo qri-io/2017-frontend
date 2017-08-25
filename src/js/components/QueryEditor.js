@@ -11,14 +11,15 @@ const QueryEditor = ({ query, onDownload, onRun, onChange }) => {
 
   return (
     <div className="queryEditor">
-      {/* <CodeEditor
+      <CodeEditor
         value={query.queryString}
         onChange={value => onChange({ queryString: value, address: query.address })}
-        mode="pgsql"
         completers={[datasetCompleter]}
+        width='100%'
+        height='200px'
         setOptions={{ enableBasicAutocompletion: true, enableLiveAutocompletion: true }}
-      /> */}
-      <ValidTextarea name="editor" value={query.queryString} onChange={handleChange} />
+      />
+      {/* <ValidTextarea name="editor" value={query.queryString} onChange={handleChange} /> */ }
       <button className="btn btn-primary" style={{ marginRight: 10 }} onClick={onDownload}>Download</button>
       <button className="btn btn-primary" onClick={onRun}>Run</button>
     </div>
