@@ -15,7 +15,7 @@ const QueryEditor = ({ query, onDownload, onRun, onChange }) => {
         value={query.queryString}
         onChange={value => onChange({ queryString: value, address: query.address })}
         completers={[datasetCompleter]}
-        width='100%'
+        width='940px'
         height='200px'
         setOptions={{ enableBasicAutocompletion: true, enableLiveAutocompletion: true }}
       />
