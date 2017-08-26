@@ -18,7 +18,6 @@ import QueryItem from '../components/item/QueryItem';
 
 function loadData(props) {
   props.loadDatasets(1, 100);
-  // props.loadQueryPage(1, 50);
 }
 
 class Console extends React.Component {
@@ -125,7 +124,7 @@ class Console extends React.Component {
               onSelectPanel={this.handleSetTopPanel}
               labels={['Editor', 'History']}
               components={[
-                <QueryEditor query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />,
+                <QueryEditor name="editor" query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />,
                 <List className="queryHistory list" data={queryHistory} component={QueryHistoryItem} onSelectItem={this.handleSelectHistoryEntry} />,
               ]}
             />
@@ -139,7 +138,11 @@ class Console extends React.Component {
                 labels={['Data', 'Chart', 'Datasets', 'Queries']}
                 onSelectPanel={this.handleSetBottomPanel}
                 components={[
-                  <DataTable dataset={datasetRef && datasetRef.dataset} data={data} onLoadMore={this.handleLoadMoreResults} />,
+                  <DataTable
+                    fields={datasetRef && datasetRef.dataset && datasetRef.dataset.structure && datasetRef.dataset.structure.schema.fields}
+                    data={data} 
+                    onLoadMore={this.handleLoadMoreResults}
+                  />,
                   <h3>TODO - restore results chart</h3>,
                   /* <ResultsChart options={chartOptions} onOptionsChange={this.handleSetChartOptions} layout={layout} />, */
                   <List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectDataset} />,

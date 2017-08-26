@@ -1,12 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React, { PropTypes } from 'react';
 
-const DatasetItem = ({ data, onSelect }) => {
+const DatasetItem = ({ index, data, onSelect }) => {
   const { dataset } = data;
+
+  const handleSelect = () => {
+    onSelect(index, data);
+  }
+
   return (
     <div className="dataset item">
-      <h3>
-        <Link className="name" onClick={onSelect} to={data.path ? `/datasets${data.path}` : undefined}>{data.name || "unnamed dataset"}</Link>
+      <h3 onClick={handleSelect}>
+        {data.name || "unnamed dataset"}
       </h3>
       <p className="address">{data.path}</p>
       {/* <ul>
@@ -17,8 +21,9 @@ const DatasetItem = ({ data, onSelect }) => {
 };
 
 DatasetItem.propTypes = {
-  data: React.PropTypes.object.isRequired,
-  onSelect: React.PropTypes.func,
+  index: PropTypes.number.isRequired,
+  data: PropTypes.object.isRequired,
+  onSelect: PropTypes.func.isRequired,
 };
 
 DatasetItem.defaultProps = {

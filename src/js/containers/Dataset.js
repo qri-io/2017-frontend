@@ -40,7 +40,7 @@ class Dataset extends React.Component {
     // this.props.loadDatasetByAddress(this.props.address, ["fields"])
     // this.props.loadDatasetReadme(this.props.address)
     // this.props.loadDatasetChildren(this.props.address)
-    this.props.loadDatasetData(this.props.datasetRef.path);
+    this.props.loadDatasetData(this.props.datasetRef.path, 1, 50);
 
     // match the address to the current namespce, unless there's already a query
     if (this.props.datasetRef && this.props.datasetRef.default_query) {
@@ -56,7 +56,7 @@ class Dataset extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.path != this.props.path) {
       this.props.loadDatasetByAddress(nextProps.path);
-      this.props.loadDatasetData(nextProps.path);
+      this.props.loadDatasetData(nextProps.path, 1, 50);
     }
 
     if (nextProps.dataset && nextProps.dataset != this.props.dataset) {
@@ -163,7 +163,7 @@ class Dataset extends React.Component {
 
     if (!data || !structure) { return undefined; }
     return (
-      <div>
+      <div className="col-md-12">
         <hr className="green" />
         <h4 className="green">Data</h4>
         <DataTable fields={structure.schema.fields} data={data} fetching={false} fetchedAll={true} onLoadMore={this.handleLoadMoreResults} />

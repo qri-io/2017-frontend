@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import CodeEditor from './CodeEditor';
 
 import { datasetCompleter } from '../ace/completer/datasets';
 import ValidTextarea from './form/ValidTextarea';
 
-const QueryEditor = ({ query, onDownload, onRun, onChange }) => {
+const QueryEditor = ({ name, query, onDownload, onRun, onChange }) => {
   const handleChange = (name, value) => {
     onChange({ queryString: value });
   };
@@ -12,12 +12,17 @@ const QueryEditor = ({ query, onDownload, onRun, onChange }) => {
   return (
     <div className="queryEditor">
       <CodeEditor
+        name={name}
         value={query.queryString}
         onChange={value => onChange({ queryString: value, address: query.address })}
         completers={[datasetCompleter]}
         width='940px'
         height='200px'
-        setOptions={{ enableBasicAutocompletion: true, enableLiveAutocompletion: true }}
+        setOptions={{
+          // TODO - reenable when adding back completion
+          // enableBasicAutocompletion: true,
+          // enableLiveAutocompletion: true,
+        }}
       />
       {/* <ValidTextarea name="editor" value={query.queryString} onChange={handleChange} /> */ }
       <button className="btn btn-primary" style={{ marginRight: 10 }} onClick={onDownload}>Download</button>
@@ -27,12 +32,13 @@ const QueryEditor = ({ query, onDownload, onRun, onChange }) => {
 };
 
 QueryEditor.propTypes = {
-  query: React.PropTypes.object,
-  // datasets: React.PropTypes.array,
+  name: PropTypes.string.isRequired,
+  query: PropTypes.object,
+  // datasets: PropTypes.array,
 
-  onRun: React.PropTypes.func.isRequired,
-  onDownload: React.PropTypes.func.isRequired,
-  onChange: React.PropTypes.func.isRequired,
+  onRun: PropTypes.func.isRequired,
+  onDownload: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 QueryEditor.defaultProps = {

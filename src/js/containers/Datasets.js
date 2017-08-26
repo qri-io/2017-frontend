@@ -14,7 +14,7 @@ class Datasets extends React.Component {
 		super(props);
 
 		[ 
-			'handleSelectItem',
+			'onSelectDataset',
 			'handleLoadNextPage',
 		].forEach((m) => { this[m] = this[m].bind(this); });
 	}
@@ -29,7 +29,8 @@ class Datasets extends React.Component {
 		// }
 	}
 
-	handleSelectItem(index, datasetRef) {
+	onSelectDataset(index, datasetRef) {
+		console.log(index, datasetRef);
 		this.props.push(`/datasets${datasetRef.path}`)
 	}
 
@@ -50,7 +51,7 @@ class Datasets extends React.Component {
 					</header>
 				</div>
 				<div className="row">
-					<List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectItem} />
+					<List data={datasets} component={DatasetItem} onSelectItem={this.onSelectDataset} />
 					<div className="col-md-12">
 						{ loading ? <Spinner /> : undefined }
 						{ (!loading && !fetchedAll) ? <button className="btn btn-large btn-primary" onClick={this.handleLoadNextPage}>Load More</button> : undefined }

@@ -42,7 +42,7 @@ CodeEditor.defaultProps = {
     tabSize: 2,
     cursorStart: 1,
     wrapEnabled: false,
-    enableBasicAutocompletion: false,
-    enableLiveAutocompletion: false,
+    // enableBasicAutocompletion: false,
+    // enableLiveAutocompletion: false,
   },
 };

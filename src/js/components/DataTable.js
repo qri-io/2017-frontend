@@ -1,13 +1,11 @@
 import React, { PropTypes } from 'react';
 import Spinner from './Spinner';
 
-const DataTable = ({ data, dataset, fetching, fetchedAll, error, onLoadMore }) => {
+const DataTable = ({ data, fields, fetching, fetchedAll, error, onLoadMore }) => {
 
-  if (!data || !dataset || !dataset.structure || !dataset.structure.schema) {
+  if (!data || !fields) {
     return <div className="resultsTable"></div>;
   }
-
-  const { fields } = dataset.structure.schema;
 
   if (error) {
     return (
@@ -42,8 +40,8 @@ const DataTable = ({ data, dataset, fetching, fetchedAll, error, onLoadMore }) =
 };
 
 DataTable.propTypes = {
-  dataset: PropTypes.object.isRequired,
-  data: PropTypes.array.isRequired,
+  fields: PropTypes.array,
+  data: PropTypes.array,
   fetching: PropTypes.bool,
   fetchedAll: PropTypes.bool,
   showLoadMore: PropTypes.bool,

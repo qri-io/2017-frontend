@@ -84,19 +84,21 @@ export const DATASET_DATA_REQUEST = 'DATASET_DATA_REQUEST';
 export const DATASET_DATA_SUCCESS = 'DATASET_DATA_SUCCESS';
 export const DATASET_DATA_FAILURE = 'DATASET_DATA_FAILURE';
 
-export function fetchDatasetData(path) {
-  console.log(path);
+export function fetchDatasetData(path, page = 1, pageSize = 100) {
   return {
     [CALL_API]: {
       types: [DATASET_DATA_REQUEST, DATASET_DATA_SUCCESS, DATASET_DATA_FAILURE],
       endpoint: `/data/${path}`,
       schema: Schemas.STRUCTURED_DATA,
-      path,
+      data: { page, pageSize },
     },
+    path,
+    page,
+    pageSize,
   };
 }
 
-export function loadDatasetData(path) {
+export function loadDatasetData(path, page = 1, pageSize = 100) {
   return (dispatch) => {
     // const dataset = selectDatasetByAddress(getState(), address)
     // if (dataset.schema != null) {
@@ -106,7 +108,7 @@ export function loadDatasetData(path) {
     //   return null
     // }
 
-    return dispatch(fetchDatasetData(path));
+    return dispatch(fetchDatasetData(path, page, pageSize));
   };
 }
 
@@ -343,28 +345,6 @@ export function downloadDataset(address = "") {
     },
   };
 }
-
-export const DATASET_CHILDREN_REQUEST = 'DATASET_CHILDREN_REQUEST';
-export const DATASET_CHILDREN_SUCCESS = 'DATASET_CHILDREN_SUCCESS';
-export const DATASET_CHILDREN_FAIL = 'DATASET_CHILDREN_FAIL';
-
-export function fetchDatasetChildren(address = "") {
-  return {
-    [CALL_API]: {
-      types: [DATASET_CHILDREN_REQUEST, DATASET_CHILDREN_SUCCESS, DATASET_CHILDREN_FAIL],
-      endpoint: `/datasets/children`,
-      schema: Schemas.DATASET_ARRAY,
-      data: { address },
-    },
-  };
-}
-
-export function loadDatasetChildren(address = "") {
-  return (dispatch) => {
-    return dispatch(fetchDatasetChildren(address));
-  };
-}
-
 
 export const DATASET_INIT_REQUEST = 'DATASET_INIT_REQUEST';
 export const DATASET_INIT_SUCCESS = 'DATASET_INIT_SUCCESS';

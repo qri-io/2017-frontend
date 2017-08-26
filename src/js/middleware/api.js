@@ -123,14 +123,15 @@ export default store => next => action => {
     })),
     error => {
       var msg = 'Something Bad Happened' 
-      if (error.meta && error.meta.message) {
-        msg = error.meta.message
+      console.log(error.meta.error);
+      if (error.meta && error.meta.error) {
+        msg = error.meta.error;
       }
       return next(actionWith({
         type: failureType, 
         error: msg,
-        silentError
-      }))
+        silentError,
+      }));
     }
   )
 }

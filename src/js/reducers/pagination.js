@@ -28,6 +28,10 @@ import {
 	DATASET_CHANGES_SUCCESS,
 	DATASET_CHANGES_FAIL,
 
+  DATASET_DATA_REQUEST,
+  DATASET_DATA_SUCCESS,
+  DATASET_DATA_FAILURE,
+
 } from '../actions/dataset';
 
 import { 
@@ -75,31 +79,39 @@ const pagination = combineReducers({
   }),
 
   userQueries: paginate({
-    mapActionToKey : action => action.username + ".queries",
-    types : [
+    mapActionToKey: action => action.username + ".queries",
+    types: [
       USER_QUERIES_REQUEST,
       USER_QUERIES_SUCCESS,
       USER_QUERIES_FAILURE,
     ]
   }),
 
-  datasetMigrations : paginate({
-  	mapActionToKey: action => `${action.dataset}.${action.pageSize}`,
-  	types : [
-  		DATASET_MIGRATIONS_REQUEST,
-			DATASET_MIGRATIONS_SUCCESS,
-			DATASET_MIGRATIONS_FAIL
-  	]
+  datasetData: paginate({
+    mapActionToKey: action => action.path,
+    types: [
+      DATASET_DATA_REQUEST,
+      DATASET_DATA_SUCCESS,
+      DATASET_DATA_FAILURE,
+    ],
   }),
 
-  datasetChanges : paginate({
-		mapActionToKey: action => `${action.dataset}.${action.pageSize}`,
-  	types : [
-  		DATASET_CHANGES_REQUEST,
-			DATASET_CHANGES_SUCCESS,
-			DATASET_CHANGES_FAIL
-  	]
-  }),
+  // datasetMigrations : paginate({
+  // 	mapActionToKey: action => `${action.dataset}.${action.pageSize}`,
+  // 	types : [
+  // 		DATASET_MIGRATIONS_REQUEST,
+		// 	DATASET_MIGRATIONS_SUCCESS,
+		// 	DATASET_MIGRATIONS_FAIL
+  // 	]
+  // }),
+  // datasetChanges : paginate({
+		// mapActionToKey: action => `${action.dataset}.${action.pageSize}`,
+  // 	types : [
+  // 		DATASET_CHANGES_REQUEST,
+		// 	DATASET_CHANGES_SUCCESS,
+		// 	DATASET_CHANGES_FAIL
+  // 	]
+  // }),
 
 });
 
