@@ -19,13 +19,14 @@ class Queries extends React.Component {
   }
 
   componentWillMount() {
-    this.props.loadQueryPage(this.props.nextPage);
+    // TODO - need to fix query loading
+    // this.props.loadQueryPage(this.props.nextPage);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.queries.length && !this.props.queries.length) {
       // this.props.loadQueryMigrations(nextProps.query.id);
-      this.props.loadQueryPage(this.props.nextPage);
+      // this.props.loadQueryPage(this.props.nextPage);
     }
   }
 

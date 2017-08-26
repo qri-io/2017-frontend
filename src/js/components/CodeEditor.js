@@ -1,278 +1,48 @@
-import ace from 'brace';
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { isEqual, debounce } from 'lodash';
+import brace from 'brace';
+import AceEditor from 'react-ace';
 
-import 'brace/ext/language_tools';
-import '../ace/mode/pgsql';
+import 'brace/mode/pgsql';
 import '../ace/theme/qri';
 
-const editorOptions = [
-  'minLines',
-  'maxLines',
-  'readOnly',
-  'highlightActiveLine',
-  'tabSize',
-  // 'enableBasicAutocompletion',
-  // 'enableLiveAutocompletion',
-  'enableSnippets ',
-];
-
-export default class CodeEditor extends Component {
-  constructor(props) {
-    super(props);
-    [
-      'onChange',
-      'onFocus',
-      'onBlur',
-      'onCopy',
-      'onPaste',
-      'onScroll',
-      'handleOptions',
-    ]
-    .forEach((m) => {
-      this[m] = this[m].bind(this);
-    });
-
-    this.debouncedOnChange = debounce((v) => {
-      this.props.onChange(v);
-    }, 200);
-  }
-
-  componentDidMount() {
-    const {
-      name,
-      onBeforeLoad,
-      mode,
-      theme,
-      fontSize,
-      value,
-      cursorStart,
-      showGutter,
-      wrapEnabled,
-      showPrintMargin,
-      keyboardHandler,
-      onLoad,
-      commands,
-    } = this.props;
-
-    this.editor = ace.edit(name);
-
-    if (onBeforeLoad) {
-      onBeforeLoad(ace);
-    }
-
-    const editorProps = Object.keys(this.props.editorProps);
-    for (let i = 0; i < editorProps.length; i += 1) {
-      this.editor[editorProps[i]] = this.props.editorProps[editorProps[i]];
-    }
-
-    this.editor.getSession().setMode(`ace/mode/${mode}`);
-    this.editor.setTheme(`ace/theme/${theme}`);
-    this.editor.setFontSize(fontSize);
-    this.editor.setValue(value, cursorStart);
-    this.editor.renderer.setShowGutter(showGutter);
-    this.editor.getSession().setUseWrapMode(wrapEnabled);
-    this.editor.setShowPrintMargin(showPrintMargin);
-    this.editor.on('focus', this.onFocus);
-    this.editor.on('blur', this.onBlur);
-    this.editor.on('copy', this.onCopy);
-    this.editor.on('paste', this.onPaste);
-    this.editor.on('change', this.onChange);
-    this.editor.session.on('changeScrollTop', this.onScroll);
-    this.handleOptions(this.props);
-
-
-    for (let i = 0; i < editorOptions.length; i += 1) {
-      const option = editorOptions[i];
-      this.editor.setOption(option, this.props[option]);
-    }
-
-    if (Array.isArray(commands)) {
-      commands.forEach((command) => {
-        this.editor.commands.addCommand(command);
-      });
-    }
-
-
-    if (keyboardHandler) {
-      this.editor.setKeyboardHandler(`ace/keyboard/${keyboardHandler}`);
-    }
-
-    if (onLoad) {
-      onLoad(this.editor);
-    }
-
-    if (Array.isArray(this.props.completers)) {
-      this.props.completers.forEach((compl) => {
-        this.editor.completers.push(compl);
-      });
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const oldProps = this.props;
-
-    for (let i = 0; i < editorOptions.length; i += 1) {
-      const option = editorOptions[i];
-      if (nextProps[option] !== oldProps[option]) {
-        this.editor.setOption(option, nextProps[option]);
-      }
-    }
-
-    if (nextProps.mode !== oldProps.mode) {
-      this.editor.getSession().setMode(`ace/mode/${nextProps.mode}`);
-    }
-    if (nextProps.theme !== oldProps.theme) {
-      this.editor.setTheme(`ace/theme/${nextProps.theme}`);
-    }
-    if (nextProps.fontSize !== oldProps.fontSize) {
-      this.editor.setFontSize(nextProps.fontSize);
-    }
-    if (nextProps.wrapEnabled !== oldProps.wrapEnabled) {
-      this.editor.getSession().setUseWrapMode(nextProps.wrapEnabled);
-    }
-    if (nextProps.showPrintMargin !== oldProps.showPrintMargin) {
-      this.editor.setShowPrintMargin(nextProps.showPrintMargin);
-    }
-    if (nextProps.showGutter !== oldProps.showGutter) {
-      this.editor.renderer.setShowGutter(nextProps.showGutter);
-    }
-    if (!isEqual(nextProps.setOptions, oldProps.setOptions)) {
-      this.handleOptions(nextProps);
-    }
-    if (this.editor && this.editor.getValue() !== nextProps.value) {
-      // editor.setValue is a synchronous function call, change event is emitted before setValue return.
-      this.silent = true;
-      this.editor.setValue(nextProps.value, nextProps.cursorStart);
-      this.silent = false;
-    }
-  }
-
-  componentWillUnmount() {
-    this.editor.destroy();
-    this.editor = null;
-  }
-
-  onChange() {
-    if (this.props.onChange && !this.silent) {
-      const value = this.editor.getValue();
-      this.debouncedOnChange(value);
-    }
-  }
-
-  onFocus() {
-    if (this.props.onFocus) {
-      this.props.onFocus();
-    }
-  }
-
-  onBlur() {
-    if (this.props.onBlur) {
-      this.props.onBlur();
-    }
-  }
-
-  onCopy(text) {
-    if (this.props.onCopy) {
-      this.props.onCopy(text);
-    }
-  }
-
-  onPaste(text) {
-    if (this.props.onPaste) {
-      this.props.onPaste(text);
-    }
-  }
-
-  onScroll() {
-    if (this.props.onScroll) {
-      this.props.onScroll(this.editor);
-    }
-  }
-
-  handleOptions(props) {
-    const setOptions = Object.keys(props.setOptions);
-    for (let y = 0; y < setOptions.length; y + 1) {
-      this.editor.setOption(setOptions[y], props.setOptions[setOptions[y]]);
-    }
-  }
-
+export default class CodeEditor extends React.Component {
   render() {
-    const { name, className = "editor", width, height } = this.props;
-    const divStyle = { width, height };
-    return (
-      <div className="codeEditor wrap">
-        <div id={name} className={className} style={divStyle}></div>
-      </div>
-    );
+    const { name, value, onChange, editorProps } = this.props;
+
+    return (<AceEditor
+      mode="pgsql"
+      theme="qri"
+      {...this.props}
+    />); 
   }
 }
 
 CodeEditor.propTypes = {
-  mode: PropTypes.string,
-  theme: PropTypes.string,
-  name: PropTypes.string,
-  className: PropTypes.string,
-  height: PropTypes.string,
-  width: PropTypes.string,
-  fontSize: PropTypes.number,
-  showGutter: PropTypes.bool,
-  onChange: PropTypes.func,
-  onCopy: PropTypes.func,
-  onPaste: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
-  onScroll: PropTypes.func,
+  name: PropTypes.string.isRequired,
   value: PropTypes.string,
-  onLoad: PropTypes.func,
-  onBeforeLoad: PropTypes.func,
-  // minLines: PropTypes.number,
-  // maxLines: PropTypes.number,
-  // readOnly: PropTypes.bool,
-  // highlightActiveLine: PropTypes.bool,
-  // tabSize: PropTypes.number,
-  showPrintMargin: PropTypes.bool,
-  cursorStart: PropTypes.number,
+  onChange: PropTypes.func.isRequired,
   editorProps: PropTypes.object,
-  // setOptions: PropTypes.object,
-  keyboardHandler: PropTypes.string,
-  wrapEnabled: PropTypes.bool,
-  // enableBasicAutocompletion: PropTypes.oneOfType([
-  //   PropTypes.bool,
-  //   PropTypes.array,
-  // ]),
-  // enableLiveAutocompletion: PropTypes.oneOfType([
-  //   PropTypes.bool,
-  //   PropTypes.array,
-  // ]),
-  commands: PropTypes.array,
-  completers: PropTypes.array,
 };
 
 CodeEditor.defaultProps = {
-  name: 'brace-editor',
-  className: 'editor',
-  mode: '',
-  theme: 'qri',
-  height: '',
-  width: '',
-  value: '',
-  fontSize: 14,
-  showGutter: true,
-  onChange: null,
-  onPaste: null,
-  onLoad: null,
-  onScroll: null,
-  minLines: null,
-  maxLines: null,
-  readOnly: false,
-  highlightActiveLine: true,
-  showPrintMargin: true,
-  tabSize: 4,
-  cursorStart: 1,
-  editorProps: {},
-  setOptions: {},
-  wrapEnabled: false,
-  enableBasicAutocompletion: false,
-  enableLiveAutocompletion: false,
+  editorProps: { 
+    $blockScrolling: true,
+    fontSize: 14,
+    showGutter: true,
+    onChange: null,
+    onPaste: null,
+    onLoad: null,
+    onScroll: null,
+    minLines: null,
+    maxLines: null,
+    readOnly: false,
+    highlightActiveLine: true,
+    showPrintMargin: true,
+    tabSize: 2,
+    cursorStart: 1,
+    wrapEnabled: false,
+    // enableBasicAutocompletion: false,
+    // enableLiveAutocompletion: false,
+  },
 };

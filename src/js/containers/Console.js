@@ -5,11 +5,12 @@ import { connect } from 'react-redux';
 import { setQuery, runQuery, loadQueryBySlug, loadQueryPage } from '../actions/query';
 import { setTopPanel, setBottomPanel, setChartOptions } from '../actions/console';
 import { loadDatasets, loadDataset } from '../actions/dataset';
+import { selectDatasetByQueryString } from '../selectors/dataset';
 
 import TabPanel from '../components/TabPanel';
 import QueryEditor from '../components/QueryEditor';
-import ResultsTable from '../components/ResultsTable';
-import ResultsChart from '../components/ResultsChart';
+import DataTable from '../components/DataTable';
+// import ResultsChart from '../components/ResultsChart';
 import List from '../components/List';
 import DatasetItem from '../components/item/DatasetItem';
 import QueryHistoryItem from '../components/item/QueryHistoryItem';
@@ -17,7 +18,6 @@ import QueryItem from '../components/item/QueryItem';
 
 function loadData(props) {
   props.loadDatasets(1, 100);
-  props.loadQueryPage(1, 50);
 }
 
 class Console extends React.Component {
@@ -42,24 +42,25 @@ class Console extends React.Component {
   componentWillMount() {
     loadData(this.props);
     if (this.props.slug) {
-      this.props.loadQueryBySlug(this.props.slug, [], true);
+      // this.props.loadQueryBySlug(this.props.slug, [], true);
     }
   }
 
   componentWillReceiveProps(nextProps) {
     // loadData(nextProps);
     if (nextProps.slug != this.props.slug) {
-      this.props.loadQueryBySlug(nextProps.slug, [], true);
+      // this.props.loadQueryBySlug(nextProps.slug, [], true);
       this.props.setBottomPanel(0);
     }
   }
 
   handleRunQuery(e) {
     e.preventDefault();
-    this.props.runQuery({
-      query: this.props.query,
-      page: 1,
-    });
+    // this.props.runQuery({
+    //   query: this.props.query.,
+    //   page: 1,
+    // });
+    this.props.runQuery(this.props.query);
   }
 
   handleDownloadQuery(e) {
@@ -106,13 +107,14 @@ class Console extends React.Component {
 
   handleLoadMoreResults() {
     this.props.runQuery({
-      query: this.props.query,
+      queryString: this.props.query,
       page: (this.props.results.pageCount + 1),
     });
   }
 
   render() {
-    const { queries, datasets, results, query, topPanelIndex, bottomPanelIndex, queryHistory, chartOptions, device } = this.props;
+    const { queries, datasets, datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, chartOptions, layout } = this.props;
+    
     return (
       <div id="console">
         <div className="top container">
@@ -122,7 +124,7 @@ class Console extends React.Component {
               onSelectPanel={this.handleSetTopPanel}
               labels={['Editor', 'History']}
               components={[
-                <QueryEditor query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />,
+                <QueryEditor name="editor" query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />,
                 <List className="queryHistory list" data={queryHistory} component={QueryHistoryItem} onSelectItem={this.handleSelectHistoryEntry} />,
               ]}
             />
@@ -133,11 +135,16 @@ class Console extends React.Component {
             <div className="col-md-12">
               <TabPanel
                 index={bottomPanelIndex}
-                labels={['Results', 'Chart', 'Datasets', 'Queries']}
+                labels={['Data', 'Chart', 'Datasets', 'Queries']}
                 onSelectPanel={this.handleSetBottomPanel}
                 components={[
-                  <ResultsTable results={results} onLoadMore={this.handleLoadMoreResults} />,
-                  <ResultsChart results={results} options={chartOptions} onOptionsChange={this.handleSetChartOptions} device={device} />,
+                  <DataTable
+                    fields={datasetRef && datasetRef.dataset && datasetRef.dataset.structure && datasetRef.dataset.structure.schema.fields}
+                    data={data} 
+                    onLoadMore={this.handleLoadMoreResults}
+                  />,
+                  <h3>TODO - restore results chart</h3>,
+                  /* <ResultsChart options={chartOptions} onOptionsChange={this.handleSetChartOptions} layout={layout} />, */
                   <List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectDataset} />,
                   <List className="queryItem list" data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} />,
                 ]}
@@ -163,7 +170,7 @@ Console.propTypes = {
   queryHistory: PropTypes.array,
   topPanelIndex: PropTypes.number.isRequired,
   bottomPanelIndex: PropTypes.number.isRequired,
-  device: PropTypes.object.isRequired,
+  layout: PropTypes.object.isRequired,
 
   setQuery: PropTypes.func.isRequired,
   runQuery: PropTypes.func.isRequired,
@@ -179,7 +186,13 @@ Console.defaultProps = {
 };
 
 function mapStateToProps(state, ownProps) {
-  const results = state.results[state.console.query.statement];
+  // const results = state.results[state.console.query.queryString];
+  const datasetRef = state.entities.datasets[state.console.queryResults];
+  let data;
+
+  if (datasetRef) {
+    data = state.entities.data[datasetRef.path] && state.entities.data[datasetRef.path].data;
+  }
 
   return Object.assign({}, {
     slug: ownProps.location.query.slug,
@@ -187,9 +200,12 @@ function mapStateToProps(state, ownProps) {
     queries: Object.keys(state.entities.queries).map(key => state.entities.queries[key]),
     datasets: Object.keys(state.entities.datasets).map(key => state.entities.datasets[key]),
     queryHistory: state.session.history,
-    device: state.device,
+    layout: state.layout,
 
-    results,
+    datasetRef,
+    data,
+
+    // results,
   }, state.console, ownProps);
 }
 

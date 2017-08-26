@@ -13,8 +13,8 @@ function execQuery(query, page, pageSize) {
     },
     credentials: 'include',
     body: JSON.stringify({
-      syntax: "sql",
-      statement: query.statement,
+      querySyntax: "sql",
+      queryString: query.queryString,
       page, pageSize
     }),
   })
