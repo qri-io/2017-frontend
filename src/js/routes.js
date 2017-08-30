@@ -1,6 +1,6 @@
-import React from 'react'
-import App from './containers/App'
-import Namespace from './containers/Namespace'
+import React from 'react';
+import App from './containers/App';
+import Console from './containers/Console';
 
 function errorLoading(err) {
 	console.error('Dynamic page loading failed', err);
@@ -13,7 +13,7 @@ function loadRoute(cb) {
 export default {
 	path : "/",
 	component: App,
-	indexRoute : { component : Namespace },
+	indexRoute : { component : Console },
 	// getIndexRoute(partialState, cb) {
 	// 	import('./containers/Namespace').then(loadRoute(cb)).catch(errorLoading)
 	// },
@@ -65,7 +65,7 @@ export default {
 		{
 			path: '/*',
 			getComponent(location, cb) {
-				import('./containers/DatasetsList').then(loadRoute(cb)).catch(errorLoading);
+				import('./containers/Console').then(loadRoute(cb)).catch(errorLoading);
 			},
 			// childRoutes: [
 			// 	{
