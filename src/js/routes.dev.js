@@ -12,7 +12,6 @@ import Dataset from './containers/Dataset';
 import DatasetChanges from './containers/DatasetChanges';
 import DatasetMigrations from './containers/DatasetMigrations';
 import Datasets from './containers/Datasets';
-import DatasetsList from './containers/DatasetsList';
 import EditChange from './containers/EditChange';
 import EditDataset from './containers/EditDataset';
 import Login from './containers/Login';
@@ -41,14 +40,14 @@ function loadRoute(cb) {
 export default {
 	path : "/",
 	component: App,
-	indexRoute: { component : DatasetsList }, 
+	indexRoute: { component : Console }, 
 	// getIndexRoute(partialState, cb) {
 	// 	import('./containers/Namespace').then(loadRoute(cb)).catch(errorLoading)
 	// },
 	childRoutes: [
 		{
 			path: '/browse',
-			component : DatasetsList
+			component : Datasets
 		},
 		{
 			path: '/login',
@@ -89,10 +88,6 @@ export default {
 		{
 			path: '/console',
 			component: Console
-		},
-		{
-			path: '/*',
-			component : DatasetsList
 		},
 		// {
 		// 	path: '/datasets/new',

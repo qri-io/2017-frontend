@@ -15,6 +15,7 @@ import List from '../components/List';
 import DatasetItem from '../components/item/DatasetItem';
 import QueryHistoryItem from '../components/item/QueryHistoryItem';
 import QueryItem from '../components/item/QueryItem';
+import Datasets from './Datasets';
 
 function loadData(props) {
   props.loadDatasets(1, 100);
@@ -145,7 +146,8 @@ class Console extends React.Component {
                   />,
                   <h3>TODO - restore results chart</h3>,
                   /* <ResultsChart options={chartOptions} onOptionsChange={this.handleSetChartOptions} layout={layout} />, */
-                  <List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectDataset} />,
+                  /*<List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectDataset} />, */
+                  <Datasets />,
                   <List className="queryItem list" data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} />,
                 ]}
               />
