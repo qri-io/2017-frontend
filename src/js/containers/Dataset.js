@@ -274,8 +274,7 @@ Dataset.defaultProps = {
 };
 
 function mapStateToProps(state, ownProps) {
-  // let address = ownProps.params.splat.replace(/\//gi,".")
-  const path = `/${ownProps.params.splat}`;
+  const path = ownProps.path || `/${ownProps.params.splat}`;
 
   const user = selectSessionUser(state);
   const results = state.results[state.console.query.statement];

@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import { Link } from 'react-router';
 
 import { showModal } from '../actions/app';
@@ -8,6 +7,7 @@ import { loadDatasets } from '../actions/dataset';
 import { selectAllDatasets } from '../selectors/dataset';
 
 import AddDataset from './AddDataset';
+import Dataset from './Dataset';
 
 import List from '../components/List';
 import DatasetItem from '../components/item/DatasetItem';
@@ -37,8 +37,7 @@ class DatasetsList extends React.Component {
   }
 
   onSelectDataset(index, datasetRef) {
-    // this.props.push(`/datasets${datasetRef.path}`);
-    this.props.showModal(DATASET_DETAILS_MODAL, this, datasetRef);
+    this.props.showModal(DATASET_DETAILS_MODAL, this, datasetRef, true);
   }
 
   handleLoadNextPage() {
@@ -46,14 +45,13 @@ class DatasetsList extends React.Component {
   }
 
   handleAddItem() {
-  	this.props.showModal(ADD_DATASET_MODAL, this);
-    // this.props.push('/datasets/new');
+  	this.props.showModal(ADD_DATASET_MODAL, this, {}, true);
   }
 
   modal(name, data = {}) {
   	switch (name) {
   		case DATASET_DETAILS_MODAL:
-  			return <h3>{data.dataset.title}</h3>
+  			return <Dataset path={data.path} />
   		case ADD_DATASET_MODAL:
   			return <AddDataset />
   		default:
@@ -101,8 +99,7 @@ class DatasetsList extends React.Component {
 DatasetsList.propTypes = {
   datasets: PropTypes.array.isRequired,
   nextPage: PropTypes.number.isRequired,
-  // fetchedAll: PropTypes.bool,
-  push: PropTypes.func.isRequired,
+  fetchedAll: PropTypes.bool,
   loadDatasets: PropTypes.func.isRequired,
 };
 
@@ -111,16 +108,13 @@ function mapStateToProps(state, ownProps) {
 
   return Object.assign({
     datasets: selectAllDatasets(state),
-
     loading: (pagination.popularDatasets) ? pagination.popularDatasets.isFetching : false,
     nextPage: (pagination.popularDatasets) ? (pagination.popularDatasets.pageCount + 1) : 1,
     fetchedAll: (pagination.popularDatasets) ? pagination.popularDatasets.fetchedAll : false,
-
   }, ownProps);
 }
 
 export default connect(mapStateToProps, {
-  push,
   showModal,
   loadDatasets,
 })(DatasetsList);

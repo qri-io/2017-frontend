@@ -91,7 +91,6 @@ class App extends Component {
         return (<BetaSignup onSaved={this.handleHideModal} onCancelled={this.handleHideModal} data={data} />);
       default:
         return undefined;
-
     }
   }
 
@@ -104,7 +103,7 @@ class App extends Component {
     if (this.props.modal) {
       return (
         <div id="modal-wrap">
-          <div className="modal dialog" tabIndex="-1" role="dialog" onClick={(e) => { e.stopPropagation() }}>
+          <div className={`modal dialog ${this.props.modal.large && "large"}`} tabIndex="-1" role="dialog" onClick={(e) => { e.stopPropagation() }}>
             {this.props.modal.element ? this.props.modal.element.modal(this.props.modal.name, this.props.modal.data) : undefined}
           </div>
         </div>
