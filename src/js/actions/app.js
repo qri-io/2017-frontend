@@ -13,13 +13,14 @@ export function hideMenu() {
 }
 
 export const APP_SHOW_MODAL = 'APP_SHOW_MODAL';
-export function showModal (name="", element, data) {
+export function showModal (name="", element, data, large = false) {
 	return {
 		type : APP_SHOW_MODAL,
 		modal : {
 			name,
 			element,
-			data
+			data,
+			large,
 		}
 	}
 }
