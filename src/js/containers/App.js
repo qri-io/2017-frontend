@@ -9,7 +9,7 @@ import { loadSessionUser } from '../actions/session';
 
 import { selectSessionUser } from '../selectors/session';
 
-import Navbar from '../components/Navbar';
+// import Navbar from '../components/Navbar';
 // import CommandBar from '../containers/CommandBar';
 import MainMenu from '../components/MainMenu';
 import BetaSignup from './BetaSignup';
@@ -24,7 +24,7 @@ class App extends Component {
       "handleChange",
       "handleDismissClick",
       "handleDismissMessage",
-      "handleHideMenu",
+      "handleStageClick",
       "handleMenuToggle",
       "handleGimmieInvite",
       "handleHideModal",
@@ -66,9 +66,12 @@ class App extends Component {
     e.stopPropagation();
     this.props.toggleMenu();
   }
-  handleHideMenu() {
+  handleStageClick() {
     if (this.props.showMenu) {
       this.props.hideMenu();
+    }
+    if (this.props.modal) {
+      this.props.hideModal();
     }
   }
 
@@ -88,7 +91,6 @@ class App extends Component {
         return (<BetaSignup onSaved={this.handleHideModal} onCancelled={this.handleHideModal} data={data} />);
       default:
         return undefined;
-
     }
   }
 
@@ -101,7 +103,7 @@ class App extends Component {
     if (this.props.modal) {
       return (
         <div id="modal-wrap">
-          <div className="modal dialog" tabIndex="-1" role="dialog">
+          <div className={`modal dialog ${this.props.modal.large && "large"}`} tabIndex="-1" role="dialog" onClick={(e) => { e.stopPropagation() }}>
             {this.props.modal.element ? this.props.modal.element.modal(this.props.modal.name, this.props.modal.data) : undefined}
           </div>
         </div>
@@ -148,17 +150,17 @@ class App extends Component {
   render() {
     const { children, user, showMenu, layout } = this.props;
     return (
-      <div id="app" className="stage" onClick={this.handleHideMenu}>
-        <Navbar
+      <div id="app" className="stage" onClick={this.handleStageClick}>
+        {/* <Navbar
           user={user}
           style={Object.assign({
             position: "absolute",
           }, layout.navbar)}
           onToggleMenu={this.handleMenuToggle}
           onGimmieInvite={this.handleGimmieInvite}
-        />
+        /> */}
         {/* <CommandBar /> */}
-        <MainMenu user={user} show={showMenu} onGimmieInvite={this.handleGimmieInvite} />
+        {/* <MainMenu user={user} show={showMenu} onGimmieInvite={this.handleGimmieInvite} /> */}
         {this.renderMessage()}
         <div
           className="main"

@@ -73,6 +73,7 @@
   "author": "Brendan O'Brien",
   "license": "ISC",
   "dependencies": {
+    "global": "^4.3.2",
     "react-ace": "^5.2.0"
   }
 }
