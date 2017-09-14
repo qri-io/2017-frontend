@@ -119,7 +119,7 @@ class Console extends React.Component {
     return (
       <div id="console">
         <div className="top container">
-          <div className="col-md-12">
+          <div className="col-md-12 ">
             <TabPanel
               index={topPanelIndex}
               onSelectPanel={this.handleSetTopPanel}
