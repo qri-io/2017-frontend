@@ -60,6 +60,7 @@
   },
   "scripts": {
     "develop": "NODE_ENV=development node server.js",
+    "qri": "qri server -p 3000",
     "test": "jest",
     "build": "NODE_ENV=production webpack --progress --config webpack.config.prod",
     "build:staging": "NOSE_ENV=development webpack --progress --config webpack.config.staging",
