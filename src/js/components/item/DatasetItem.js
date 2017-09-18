@@ -1,32 +1,33 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'
 
 const DatasetItem = ({ index, data, onSelect }) => {
-  const { dataset } = data;
+  // TODO dataset is assigned a value but  never used, consider depreciation
+  // const { dataset } = data
 
   const handleSelect = () => {
-    onSelect(index, data);
+    onSelect(index, data)
   }
 
   return (
-    <div className="dataset item">
+    <div className='dataset item'>
       <h3 onClick={handleSelect}>
-        {data.name || "unnamed dataset"}
+        {data.name || 'unnamed dataset'}
       </h3>
-      <p className="address">{data.path}</p>
+      <p className='address'>{data.path}</p>
       {/* <ul>
         {data.schema.fields && data.schema.fields.map((table, i) => <li key={i}>{table.name}</li>)}
       </ul> */}
     </div>
-  );
-};
+  )
+}
 
 DatasetItem.propTypes = {
   index: PropTypes.number.isRequired,
   data: PropTypes.object.isRequired,
-  onSelect: PropTypes.func.isRequired,
-};
+  onSelect: PropTypes.func.isRequired
+}
 
 DatasetItem.defaultProps = {
-};
+}
 
-export default DatasetItem;
+export default DatasetItem

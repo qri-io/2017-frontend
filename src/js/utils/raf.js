@@ -18,18 +18,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import { window } from 'global';
+import { window } from 'global'
 
 export const requestAnimationFrame = (fn, ...rest) => {
   if (window && {}.hasOwnProperty.call(window, 'cancelAnimationFrame')) {
-    window.requestAnimationFrame(fn, ...rest);
+    window.requestAnimationFrame(fn, ...rest)
   } else {
-    fn(...rest);
+    fn(...rest)
   }
-};
+}
 
 export const cancelAnimationFrame = (...args) => {
   if (window && {}.hasOwnProperty.call(window, 'cancelAnimationFrame')) {
-    window.cancelAnimationFrame(...args);
+    window.cancelAnimationFrame(...args)
   }
-};
+}

@@ -1,73 +1,73 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router'
 
-import { selectQueryBySlug } from '../selectors/query';
-import { selectUserById } from '../selectors/user';
-import { loadQueryBySlug, runQuery } from '../actions/query';
+import { selectQueryBySlug } from '../selectors/query'
+import { selectUserById } from '../selectors/user'
+import { loadQueryBySlug, runQuery } from '../actions/query'
 
 // import SqlCode from '../components/SqlCode';
-import Spinner from '../components/Spinner';
-import View from '../components/View';
+import Spinner from '../components/Spinner'
+import View from '../components/View'
 // import ValueListView from '../components/views/ValueListView';
-import QBang from '../components/QBang';
+import QBang from '../components/QBang'
 
 class Query extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
     this.state = {
-      loading: !props.query,
+      loading: !props.query
     };
 
     [
-      'handleRunQuery',
-    ].forEach((m) => { this[m] = this[m].bind(this); });
+      'handleRunQuery'
+    ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
-  componentWillMount() {
-    this.props.loadQueryBySlug(this.props.slug);
+  componentWillMount () {
+    this.props.loadQueryBySlug(this.props.slug)
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.query && this.state.loading) {
-      this.setState({ loading: false });
+      this.setState({ loading: false })
     }
   }
 
-  handleRunQuery() {
+  handleRunQuery () {
     this.props.runQuery({
       query: this.props.query,
-      page: 1,
-    });
+      page: 1
+    })
   }
 
-  renderViews() {
-    const { query, results, device } = this.props;
-    if (!query.views) { return undefined; }
+  renderViews () {
+    const { query, results, device } = this.props
+    if (!query.views) { return undefined }
     return (
-      <section className="row">
+      <section className='row'>
         {query.views.map((view, i) => {
-          return <View key={i} view={view} results={results} device={device} />;
+          return <View key={i} view={view} results={results} device={device} />
         })}
       </section>
-    );
+    )
   }
-  render() {
-    const { query, owner } = this.props;
+  render () {
+    const { query, owner } = this.props
 
     if (this.state.loading) {
-      return <Spinner />;
+      return <Spinner />
     }
 
     return (
-      <div className="page">
-        <div className="query wrapper container">
-          <header className="row">
-            <div className="col-md-10 offset-md-1">
-              <h1 className="title">{query.name}</h1>
-              <div className="infoBar">
-                <div className="item">
+      <div className='page'>
+        <div className='query wrapper container'>
+          <header className='row'>
+            <div className='col-md-10 offset-md-1'>
+              <h1 className='title'>{query.name}</h1>
+              <div className='infoBar'>
+                <div className='item'>
                   <small>Written By:</small>
                   <Link to={`/${owner.username}`} ><h5>{owner.username}</h5></Link>
                 </div>
@@ -87,12 +87,12 @@ class Query extends Component {
             </div>
           </header>
           {this.renderViews()}
-          <section className="run-button-wrap col-md-10 offset-md-1">
-            { query.views ? <a className="run" onClick={this.handleRunQuery}><QBang /></a> : undefined }
+          <section className='run-button-wrap col-md-10 offset-md-1'>
+            { query.views ? <a className='run' onClick={this.handleRunQuery}><QBang /></a> : undefined }
           </section>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -102,19 +102,19 @@ Query.propTypes = {
   results: PropTypes.object,
   device: PropTypes.object.isRequired,
 
-  loadQueryBySlug: PropTypes.func.isRequired,
-};
+  loadQueryBySlug: PropTypes.func.isRequired
+}
 
 Query.defaultProps = {
-};
+}
 
-function mapStateToProps(state, ownProps) {
-  const query = selectQueryBySlug(state, ownProps.params.slug);
-  let results, owner;
+function mapStateToProps (state, ownProps) {
+  const query = selectQueryBySlug(state, ownProps.params.slug)
+  let results, owner
 
   if (query) {
-    owner = selectUserById(state, query.owner);
-    results = state.results[query.statement];
+    owner = selectUserById(state, query.owner)
+    results = state.results[query.statement]
   }
 
   return {
@@ -123,11 +123,11 @@ function mapStateToProps(state, ownProps) {
     results,
 
     slug: ownProps.params.slug,
-    device: state.device,
-  };
+    device: state.device
+  }
 }
 
 export default connect(mapStateToProps, {
   runQuery,
-  loadQueryBySlug,
-})(Query);
+  loadQueryBySlug
+})(Query)

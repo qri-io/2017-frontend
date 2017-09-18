@@ -1,56 +1,56 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
 
-import { toConsoleQuery, loadQueryPage } from '../actions/query';
-import { selectAllQueries } from '../selectors/query';
+import { toConsoleQuery, loadQueryPage } from '../actions/query'
+import { selectAllQueries } from '../selectors/query'
 
-import List from '../components/List';
-import QueryItem from '../components/item/QueryItem';
-import Spinner from '../components/Spinner';
+import List from '../components/List'
+import QueryItem from '../components/item/QueryItem'
+import Spinner from '../components/Spinner'
 
 class Queries extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
 
     [
-      'handleSelectItem',
-    ].forEach((m) => { this[m] = this[m].bind(this); });
+      'handleSelectItem'
+    ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
-  componentWillMount() {
+  componentWillMount () {
     // TODO - need to fix query loading
     // this.props.loadQueryPage(this.props.nextPage);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.queries.length && !this.props.queries.length) {
       // this.props.loadQueryMigrations(nextProps.query.id);
       // this.props.loadQueryPage(this.props.nextPage);
     }
   }
 
-  handleSelectItem(index, query) {
+  handleSelectItem (index, query) {
     // this.props.push("/" + query.address.replace(".", "/", -1))
     // console.log(index, query);
-    this.props.toConsoleQuery(query);
+    this.props.toConsoleQuery(query)
   }
 
-  render() {
-    const { queries, loading } = this.props;
+  render () {
+    const { queries, loading } = this.props
 
     return (
-      <div className="container">
-        <header className="col-md-12">
+      <div className='container'>
+        <header className='col-md-12'>
           <h3>QUERIES</h3>
           <p>Saved <pre>select</pre>&quo;s against qri datasets</p>
         </header>
-        <div className="col-md-12">
+        <div className='col-md-12'>
           <List data={queries} component={QueryItem} onSelectItem={this.handleSelectItem} />
           { loading ? <Spinner /> : undefined }
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -62,24 +62,24 @@ Queries.propTypes = {
 
   // push: PropTypes.func.isRequired,
   loadQueryPage: PropTypes.func.isRequired,
-  toConsoleQuery: PropTypes.func.isRequired,
-};
+  toConsoleQuery: PropTypes.func.isRequired
+}
 
 Queries.defaultProps = {
-};
+}
 
-function mapStateToProps(state, ownProps) {
-  const pagination = state.pagination.popularQueries;
+function mapStateToProps (state, ownProps) {
+  const pagination = state.pagination.popularQueries
 
   return Object.assign({
     loading: (pagination.popularQueries) ? pagination.popularQueries.isFetching : false,
     nextPage: (pagination.popularQueries) ? (pagination.popularQueries.pageCount + 1) : 1,
-    queries: selectAllQueries(state),
-  }, ownProps);
+    queries: selectAllQueries(state)
+  }, ownProps)
 }
 
 export default connect(mapStateToProps, {
   push,
   loadQueryPage,
-  toConsoleQuery,
-})(Queries);
+  toConsoleQuery
+})(Queries)

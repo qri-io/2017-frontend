@@ -1,32 +1,32 @@
 /* eslint-disable react/jsx-no-bind */
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'
 
 const DropFile = ({ name, disabled, onChange }) => {
   const handleChange = (e) => {
-    onChange(name, e.target.files);
-  };
+    onChange(name, e.target.files)
+  }
 
   return (
-    <div className="uploader">
+    <div className='uploader'>
       <input
-        name="file"
-        type="file"
+        name='file'
+        type='file'
         disabled={disabled}
-        className="form-control"
+        className='form-control'
         onChange={handleChange}
       />
     </div>
-  );
-};
+  )
+}
 
 DropFile.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  disabled: PropTypes.bool,
-};
+  disabled: PropTypes.bool
+}
 
 DropFile.defaultProps = {
-  name: "file",
-};
+  name: 'file'
+}
 
-export default DropFile;
+export default DropFile

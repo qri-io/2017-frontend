@@ -18,9 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'
 
-import PureRenderComponent from './PureRenderComponent';
+import PureRenderComponent from './PureRenderComponent'
 
 export const ZOOMABLE_SVG_GROUP_EVENT_NAMES = [
   'onMouseDown',
@@ -30,15 +30,15 @@ export const ZOOMABLE_SVG_GROUP_EVENT_NAMES = [
   'onTouchEnd',
   'onTouchMove',
   'onTouchStart',
-  'onWheel',
-];
+  'onWheel'
+]
 
 /**
  * This component draws upon the patterns in https://github.com/anvaka/panzoom
  * and applies them to a simple React component that can wrap SVG children.
  */
 export default class ZoomableSVGGroup extends PureRenderComponent {
-  static get propTypes() {
+  static get propTypes () {
     return {
       width: PropTypes.number.isRequired,
       height: PropTypes.number.isRequired,
@@ -51,12 +51,12 @@ export default class ZoomableSVGGroup extends PureRenderComponent {
       onPan: PropTypes.func,
       ...ZOOMABLE_SVG_GROUP_EVENT_NAMES.reduce((obj, eventName) => ({
         ...obj,
-        [eventName]: PropTypes.func,
-      }), {}),
-    };
+        [eventName]: PropTypes.func
+      }), {})
+    }
   }
 
-  static get defaultProps() {
+  static get defaultProps () {
     return {
       disabled: false,
       // scale up or down at 6.5% of the previous size
@@ -66,13 +66,13 @@ export default class ZoomableSVGGroup extends PureRenderComponent {
       // no limit to scale
       minScale: 0,
       maxScale: Infinity,
-      onZoom() {},
-      onPan() {},
+      onZoom () {},
+      onPan () {},
       ...ZOOMABLE_SVG_GROUP_EVENT_NAMES.reduce((obj, eventName) => ({
         ...obj,
-        [eventName]() {},
-      }), {}),
-    };
+        [eventName] () {}
+      }), {})
+    }
   }
 
   /**
@@ -81,48 +81,48 @@ export default class ZoomableSVGGroup extends PureRenderComponent {
    * @param {array} matrix
    * @return {boolean} is a valid matrix
    */
-  static isValidMatrix(matrix) {
+  static isValidMatrix (matrix) {
     return matrix.length === 6 &&
-      matrix.findIndex(item => typeof item !== 'number') === -1;
+      matrix.findIndex(item => typeof item !== 'number') === -1
   }
 
   // based on the method of the same name from panzoom
   // https://github.com/anvaka/panzoom/blob/master/index.js/#L201-L204
   /* eslint-disable no-mixed-operators */
-  static getPinchZoomLength(finger1, finger2) {
+  static getPinchZoomLength (finger1, finger2) {
     return (finger1.clientX - finger2.clientX) *
       (finger1.clientX - finger2.clientX) +
       (finger1.clientY - finger2.clientY) *
-      (finger1.clientY - finger2.clientY);
+      (finger1.clientY - finger2.clientY)
   }
   /* eslint-enable no-mixed-operators */
 
-  static getTouchClientValues(event) {
+  static getTouchClientValues (event) {
     if (event.touches.length >= 2) {
       return {
         clientX: (event.touches[0].clientX + event.touches[1].clientX) / 2,
-        clientY: (event.touches[0].clientY + event.touches[1].clientY) / 2,
-      };
+        clientY: (event.touches[0].clientY + event.touches[1].clientY) / 2
+      }
     }
 
-    return event.touches[0];
+    return event.touches[0]
   }
 
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       matrix: [1, 0, 0, 1, 0, 0],
-      scale: 1,
-    };
+      scale: 1
+    }
   }
 
-  componentDidMount() {
-    this.setInitialMatrix();
+  componentDidMount () {
+    this.setInitialMatrix()
   }
 
-  setInitialMatrix() {
-    const parentSvg = this.el.ownerSVGElement;
-    const transform = parentSvg.createSVGTransform();
+  setInitialMatrix () {
+    const parentSvg = this.el.ownerSVGElement
+    const transform = parentSvg.createSVGTransform()
 
     this.setState({
       scale: 1,
@@ -132,39 +132,39 @@ export default class ZoomableSVGGroup extends PureRenderComponent {
         transform.matrix.c,
         transform.matrix.d,
         transform.matrix.e,
-        transform.matrix.f,
-      ],
-    });
+        transform.matrix.f
+      ]
+    })
   }
 
   // based on the method of the same name from panzoom
   // https://github.com/anvaka/panzoom/blob/master/index.js
-  getScaleMultiplier(delta) {
-    const { zoomSpeed } = this.props;
+  getScaleMultiplier (delta) {
+    const { zoomSpeed } = this.props
 
     if (delta > 0) {
-      return 1 - zoomSpeed;
+      return 1 - zoomSpeed
     } else if (delta < 0) {
-      return 1 + zoomSpeed;
+      return 1 + zoomSpeed
     }
 
-    return 1;
+    return 1
   }
 
   // based on the zoomTo method from the panzoom project
   // https://github.com/anvaka/panzoom/blob/master/lib/zoomTo.js
-  zoomTo(clientX, clientY, scaleMultiplier, event) {
-    const prevMatrix = this.state.matrix;
-    const prevScale = this.state.scale;
-    const scale = prevScale * scaleMultiplier;
-    const clientMatrix = this.el.ownerSVGElement.getScreenCTM();
+  zoomTo (clientX, clientY, scaleMultiplier, event) {
+    const prevMatrix = this.state.matrix
+    const prevScale = this.state.scale
+    const scale = prevScale * scaleMultiplier
+    const clientMatrix = this.el.ownerSVGElement.getScreenCTM()
 
-    const x = (clientX * clientMatrix.a) - clientMatrix.e;
-    const y = (clientY * clientMatrix.d) - clientMatrix.f;
+    const x = (clientX * clientMatrix.a) - clientMatrix.e
+    const y = (clientY * clientMatrix.d) - clientMatrix.f
 
     // guardrails for scale max and min
     if (scale > this.props.maxScale || scale < this.props.minScale) {
-      return;
+      return
     }
 
     this.setState({
@@ -175,24 +175,24 @@ export default class ZoomableSVGGroup extends PureRenderComponent {
         prevMatrix[2],
         scale,
         x - (scaleMultiplier * (x - prevMatrix[4])),
-        y - (scaleMultiplier * (y - prevMatrix[5])),
-      ],
-    }, () => this.props.onZoom(event, scale));
+        y - (scaleMultiplier * (y - prevMatrix[5]))
+      ]
+    }, () => this.props.onZoom(event, scale))
   }
 
-  panBy(clientX, clientY, event) {
-    const { width, height, panLimit } = this.props;
+  panBy (clientX, clientY, event) {
+    const { width, height, panLimit } = this.props
     const {
       matrix: prevMatrix,
       dragX: prevDragX,
       dragY: prevDragY,
-      scale,
-    } = this.state;
+      scale
+    } = this.state
 
-    const dx = clientX - prevDragX;
-    const dy = clientY - prevDragY;
-    const newX = prevMatrix[4] + dx;
-    const newY = prevMatrix[5] + dy;
+    const dx = clientX - prevDragX
+    const dy = clientY - prevDragY
+    const newX = prevMatrix[4] + dx
+    const newY = prevMatrix[5] + dy
 
     // check that we aren't passing the panLimit
     // TODO this feels a little janky in practice
@@ -200,7 +200,7 @@ export default class ZoomableSVGGroup extends PureRenderComponent {
       (Math.abs(newX / scale)) > (width * panLimit) ||
       (Math.abs(newY / scale)) > (height * panLimit)
     ) {
-      return;
+      return
     }
 
     this.setState({
@@ -212,118 +212,118 @@ export default class ZoomableSVGGroup extends PureRenderComponent {
         prevMatrix[2],
         prevMatrix[3],
         newX,
-        newY,
-      ],
-    }, () => this.props.onPan(event, newX, newY));
+        newY
+      ]
+    }, () => this.props.onPan(event, newX, newY))
   }
 
-  onMouseDown(event) {
+  onMouseDown (event) {
     if (this.state.touching) {
-      event.stopPropagation();
-      return null;
+      event.stopPropagation()
+      return null
     }
 
     // ignore non-left buttons.
     if (event.button !== 0) {
-      return null;
+      return null
     }
 
     return this.setState({
       dragging: true,
       dragX: event.clientX,
-      dragY: event.clientY,
-    });
+      dragY: event.clientY
+    })
   }
 
-  onMouseMove(event) {
+  onMouseMove (event) {
     if (this.state.touching) {
-      event.stopPropagation();
-      return null;
+      event.stopPropagation()
+      return null
     }
 
     if (!this.state.dragging) {
-      return event;
+      return event
     }
 
-    return this.panBy(event.clientX, event.clientY);
+    return this.panBy(event.clientX, event.clientY)
   }
 
-  onMouseUp(event) {
+  onMouseUp (event) {
     if (this.state.touching) {
-      event.stopPropagation();
-      return null;
+      event.stopPropagation()
+      return null
     }
 
     return this.setState({
       dragging: false,
       dragX: null,
-      dragY: null,
-    });
+      dragY: null
+    })
   }
 
-  onTouchCancel() {
+  onTouchCancel () {
     this.setState({
       touching: false,
       dragging: false,
       pinchLength: null,
       dragX: null,
-      dragY: null,
-    });
+      dragY: null
+    })
   }
 
-  onTouchEnd() {
-    this.onTouchCancel();
+  onTouchEnd () {
+    this.onTouchCancel()
   }
 
-  onTouchMove(event) {
-    event.preventDefault();
+  onTouchMove (event) {
+    event.preventDefault()
 
     if (event.touches.length >= 2) {
-      const finger1 = event.touches[0];
-      const finger2 = event.touches[1];
-      const pinchLength = ZoomableSVGGroup.getPinchZoomLength(finger1, finger2);
-      const prevPinchLength = this.state.pinchLength;
+      const finger1 = event.touches[0]
+      const finger2 = event.touches[1]
+      const pinchLength = ZoomableSVGGroup.getPinchZoomLength(finger1, finger2)
+      const prevPinchLength = this.state.pinchLength
 
-      let delta = 0;
+      let delta = 0
       if (pinchLength < prevPinchLength) {
-        delta = 1;
+        delta = 1
       } else if (pinchLength > prevPinchLength) {
-        delta = -1;
+        delta = -1
       }
 
       // use the midpoint between the fingers as the zoom origin
-      const { clientX, clientY } = ZoomableSVGGroup.getTouchClientValues(event);
-      const scaleMultiplier = this.getScaleMultiplier(delta);
+      const { clientX, clientY } = ZoomableSVGGroup.getTouchClientValues(event)
+      const scaleMultiplier = this.getScaleMultiplier(delta)
 
-      this.zoomTo(clientX, clientY, scaleMultiplier, event);
-      this.setState({ pinchLength });
+      this.zoomTo(clientX, clientY, scaleMultiplier, event)
+      this.setState({ pinchLength })
     } else {
-      this.panBy(event.touches[0].clientX, event.touches[0].clientY);
+      this.panBy(event.touches[0].clientX, event.touches[0].clientY)
     }
   }
 
-  onTouchStart(event) {
-    const { clientX: dragX, clientY: dragY } = ZoomableSVGGroup.getTouchClientValues(event);
+  onTouchStart (event) {
+    const { clientX: dragX, clientY: dragY } = ZoomableSVGGroup.getTouchClientValues(event)
 
     this.setState({
       touching: true,
       pinchLength: 0,
       dragX,
-      dragY,
-    });
+      dragY
+    })
   }
 
-  onWheel(event) {
-    const { clientX, clientY, deltaY } = event;
-    const scaleMultiplier = this.getScaleMultiplier(deltaY);
+  onWheel (event) {
+    const { clientX, clientY, deltaY } = event
+    const scaleMultiplier = this.getScaleMultiplier(deltaY)
 
     if (scaleMultiplier !== 1) {
-      event.preventDefault();
-      this.zoomTo(clientX, clientY, scaleMultiplier, event);
+      event.preventDefault()
+      this.zoomTo(clientX, clientY, scaleMultiplier, event)
     }
   }
 
-  render() {
+  render () {
     const {
       width,
       height,
@@ -337,33 +337,33 @@ export default class ZoomableSVGGroup extends PureRenderComponent {
       maxScale, panLimit, onZoom, onPan, zoomSpeed,
       /* esline-enable no-unused-vars */
       ...passthrough
-    } = this.props;
-    const { matrix, scale } = this.state;
+    } = this.props
+    const { matrix, scale } = this.state
 
     const eventHandler = eventName => (...args) => {
-      this[eventName](...args);
-      this.props[eventName](...args);
-    };
+      this[eventName](...args)
+      this.props[eventName](...args)
+    }
 
-    const zoomProps = { transform };
+    const zoomProps = { transform }
 
     if (!disabled && ZoomableSVGGroup.isValidMatrix(matrix)) {
       Object.assign(zoomProps, {
         ...ZOOMABLE_SVG_GROUP_EVENT_NAMES.reduce((obj, eventName) => ({
           ...obj,
-          [eventName]: eventHandler(eventName),
+          [eventName]: eventHandler(eventName)
         }), {}),
         style: Object.assign({}, style, {
           transformOrigin: '0 0 0',
           cursor: 'default',
-          pointerEvents: 'all',
+          pointerEvents: 'all'
         }),
-        transform: `matrix(${matrix.join(' ')}) ${transform}`,
-      });
+        transform: `matrix(${matrix.join(' ')}) ${transform}`
+      })
     }
 
     return (
-      <g ref={/* istanbul ignore next */(c) => { this.el = c; }} {...passthrough} {...zoomProps}>
+      <g ref={/* istanbul ignore next */(c) => { this.el = c }} {...passthrough} {...zoomProps}>
         <rect
           x={-1 * matrix[4]}
           y={-1 * matrix[5]}
@@ -374,6 +374,6 @@ export default class ZoomableSVGGroup extends PureRenderComponent {
         />
         {children}
       </g>
-    );
+    )
   }
 }

@@ -1,24 +1,24 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'
 
 // TODO - work in progress
 const TagInput = ({ label, name, showError, error, value, placeholder, onChange, helpText, showHelpText }) => {
   return (
-    <div className={(error && showError) ? "validFormField form-group has-error" : "validFormField form-group"}>
-      {label ? <label className="control-label" htmlFor={name}>{label}</label> : undefined }
+    <div className={(error && showError) ? 'validFormField form-group has-error' : 'validFormField form-group'}>
+      {label ? <label className='control-label' htmlFor={name}>{label}</label> : undefined }
       <input
         id={name}
         name={name}
-        type="text"
-        className="form-control"
+        type='text'
+        className='form-control'
         value={value}
         placeholder={placeholder}
-        onChange={(e) => { onChange(name, e.target.value, e); }}
+        onChange={(e) => { onChange(name, e.target.value, e) }}
       />
-      {(error != "" && showError) ? <div className="control-label">{error}</div> : undefined}
-      {(helpText && showHelpText) && <i className="help hint">{helpText}</i>}
+      {(error !== '' && showError) ? <div className='control-label'>{error}</div> : undefined}
+      {(helpText && showHelpText) && <i className='help hint'>{helpText}</i>}
     </div>
-  );
-};
+  )
+}
 
 TagInput.propTypes = {
   // required name for the field
@@ -38,14 +38,14 @@ TagInput.propTypes = {
   // short message to help the user
   helpText: PropTypes.string,
   // weather to show help text or not
-  showHelpText: PropTypes.bool,
-};
+  showHelpText: PropTypes.bool
+}
 
 TagInput.defaultProps = {
   name: undefined,
   error: undefined,
   showError: true,
-  placeholder: "",
-};
+  placeholder: ''
+}
 
-export default TagInput;
+export default TagInput

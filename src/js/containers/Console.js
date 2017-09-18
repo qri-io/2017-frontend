@@ -1,28 +1,26 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
 // import { debounce } from 'lodash';
 
-import { setQuery, runQuery, loadQueryBySlug, loadQueryPage } from '../actions/query';
-import { setTopPanel, setBottomPanel, setChartOptions } from '../actions/console';
-import { loadDatasets, loadDataset } from '../actions/dataset';
-import { selectDatasetByQueryString } from '../selectors/dataset';
+import { setQuery, runQuery, loadQueryBySlug, loadQueryPage } from '../actions/query'
+import { setTopPanel, setBottomPanel, setChartOptions } from '../actions/console'
+import { loadDatasets, loadDataset } from '../actions/dataset'
 
-import TabPanel from '../components/TabPanel';
-import QueryEditor from '../components/QueryEditor';
-import DataTable from '../components/DataTable';
-// import ResultsChart from '../components/ResultsChart';
-import List from '../components/List';
-import DatasetItem from '../components/item/DatasetItem';
-import QueryHistoryItem from '../components/item/QueryHistoryItem';
-import QueryItem from '../components/item/QueryItem';
-import Datasets from './Datasets';
+import TabPanel from '../components/TabPanel'
+import QueryEditor from '../components/QueryEditor'
+import DataTable from '../components/DataTable'
+import List from '../components/List'
 
-function loadData(props) {
-  props.loadDatasets(1, 100);
+import QueryHistoryItem from '../components/item/QueryHistoryItem'
+import QueryItem from '../components/item/QueryItem'
+import Datasets from './Datasets'
+
+function loadData (props) {
+  props.loadDatasets(1, 100)
 }
 
 class Console extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     [
       'handleRunQuery',
@@ -34,106 +32,106 @@ class Console extends React.Component {
       'handleSelectDataset',
       'handleSelectHistoryEntry',
       'handleQuerySelect',
-      'handleLoadMoreResults',
-    ].forEach((m) => { this[m] = this[m].bind(this); });
+      'handleLoadMoreResults'
+    ].forEach((m) => { this[m] = this[m].bind(this) })
 
     // this.debouncedSetQuery = debounce(props.setQuery, 200)
   }
 
-  componentWillMount() {
-    loadData(this.props);
+  componentWillMount () {
+    loadData(this.props)
     if (this.props.slug) {
       // this.props.loadQueryBySlug(this.props.slug, [], true);
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     // loadData(nextProps);
-    if (nextProps.slug != this.props.slug) {
+    if (nextProps.slug !== this.props.slug) {
       // this.props.loadQueryBySlug(nextProps.slug, [], true);
-      this.props.setBottomPanel(0);
+      this.props.setBottomPanel(0)
     }
   }
 
-  handleRunQuery(e) {
-    e.preventDefault();
+  handleRunQuery (e) {
+    e.preventDefault()
     // this.props.runQuery({
     //   query: this.props.query.,
     //   page: 1,
     // });
-    this.props.runQuery(this.props.query);
+    this.props.runQuery(this.props.query)
   }
 
-  handleDownloadQuery(e) {
-    e.preventDefault();
+  handleDownloadQuery (e) {
+    e.preventDefault()
     this.props.runQuery({
       query: this.props.query,
-      download: true,
-    });
+      download: true
+    })
   }
 
-  handleEditorChange(value) {
+  handleEditorChange (value) {
     // this.debouncedSetQuery(value);
-    this.props.setQuery(value);
+    this.props.setQuery(value)
   }
-  handleEditorAddressChange(value) {
-    this.props.setQueryAddress(value);
-  }
-
-  handleSetTopPanel(index) {
-    this.props.setTopPanel(index);
+  handleEditorAddressChange (value) {
+    this.props.setQueryAddress(value)
   }
 
-  handleSetBottomPanel(index) {
-    this.props.setBottomPanel(index);
+  handleSetTopPanel (index) {
+    this.props.setTopPanel(index)
   }
 
-  handleSetChartOptions(options) {
-    this.props.setChartOptions(options);
+  handleSetBottomPanel (index) {
+    this.props.setBottomPanel(index)
   }
 
-  handleSelectDataset(i, dataset) {
-    this.props.loadDataset(dataset.id, ['schema']);
+  handleSetChartOptions (options) {
+    this.props.setChartOptions(options)
   }
 
-  handleSelectHistoryEntry(i, query) {
-    this.props.setTopPanel(0);
-    this.props.setQuery(query);
+  handleSelectDataset (i, dataset) {
+    this.props.loadDataset(dataset.id, ['schema'])
   }
 
-  handleQuerySelect(i, query) {
-    this.props.setTopPanel(0);
-    this.props.setQuery(query);
+  handleSelectHistoryEntry (i, query) {
+    this.props.setTopPanel(0)
+    this.props.setQuery(query)
   }
 
-  handleLoadMoreResults() {
+  handleQuerySelect (i, query) {
+    this.props.setTopPanel(0)
+    this.props.setQuery(query)
+  }
+
+  handleLoadMoreResults () {
     this.props.runQuery({
       queryString: this.props.query,
-      page: (this.props.results.pageCount + 1),
-    });
+      page: (this.props.results.pageCount + 1)
+    })
   }
 
-  render() {
-    const { queries, datasets, datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, chartOptions, layout } = this.props;
-    
+  render () {
+    const { queries, datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory } = this.props
+
     return (
-      <div id="console">
-        <div className="top container">
-          <div className="col-md-12 ">
+      <div id='console'>
+        <div className='top container'>
+          <div className='col-md-12 '>
             <TabPanel
               index={topPanelIndex}
               onSelectPanel={this.handleSetTopPanel}
               labels={['Editor', 'History']}
               components={[
-                <QueryEditor name="editor" query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />,
-                <List className="queryHistory list" data={queryHistory} component={QueryHistoryItem} onSelectItem={this.handleSelectHistoryEntry} />,
+                <QueryEditor name='editor' query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />,
+                <List className='queryHistory list' data={queryHistory} component={QueryHistoryItem} onSelectItem={this.handleSelectHistoryEntry} />
               ]}
             />
           </div>
         </div>
-        <div className="bottom">
-          <div className="container">
-            <div className="col-md-12">
+        <div className='bottom'>
+          <div className='container'>
+            <div className='col-md-12'>
               <TabPanel
                 index={bottomPanelIndex}
                 labels={['Data', 'Chart', 'Datasets', 'Queries']}
@@ -141,21 +139,19 @@ class Console extends React.Component {
                 components={[
                   <DataTable
                     fields={datasetRef && datasetRef.dataset && datasetRef.dataset.structure && datasetRef.dataset.structure.schema.fields}
-                    data={data} 
+                    data={data}
                     onLoadMore={this.handleLoadMoreResults}
                   />,
                   <h3>TODO - restore results chart</h3>,
-                  /* <ResultsChart options={chartOptions} onOptionsChange={this.handleSetChartOptions} layout={layout} />, */
-                  /*<List data={datasets} component={DatasetItem} onSelectItem={this.handleSelectDataset} />, */
                   <Datasets />,
-                  <List className="queryItem list" data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} />,
+                  <List className='queryItem list' data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} />
                 ]}
               />
             </div>
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -179,21 +175,21 @@ Console.propTypes = {
   setTopPanel: PropTypes.func.isRequired,
   setBottomPanel: PropTypes.func.isRequired,
   // loadDatasets: PropTypes.func.isRequired,
-  loadDataset: PropTypes.func.isRequired,
-};
+  loadDataset: PropTypes.func.isRequired
+}
 
 Console.defaultProps = {
   hasMoreResults: false,
-  nextResultsPage: 1,
-};
+  nextResultsPage: 1
+}
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps (state, ownProps) {
   // const results = state.results[state.console.query.queryString];
-  const datasetRef = state.entities.datasets[state.console.queryResults];
-  let data;
+  const datasetRef = state.entities.datasets[state.console.queryResults]
+  let data
 
   if (datasetRef) {
-    data = state.entities.data[datasetRef.path] && state.entities.data[datasetRef.path].data;
+    data = state.entities.data[datasetRef.path] && state.entities.data[datasetRef.path].data
   }
 
   return Object.assign({}, {
@@ -205,10 +201,10 @@ function mapStateToProps(state, ownProps) {
     layout: state.layout,
 
     datasetRef,
-    data,
+    data
 
     // results,
-  }, state.console, ownProps);
+  }, state.console, ownProps)
 }
 
 export default connect(mapStateToProps, {
@@ -222,6 +218,5 @@ export default connect(mapStateToProps, {
   setChartOptions,
 
   loadDatasets,
-  loadDataset,
-})(Console);
-
+  loadDataset
+})(Console)

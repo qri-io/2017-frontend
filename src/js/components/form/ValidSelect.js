@@ -1,20 +1,20 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'
 
 const ValidSelect = (props) => {
-  const { label, name, className, options, showError, error, value, onChange, helpText, showHelpText } = props;
-  const errorClass = (error && showError) ? "has-error" : "";
+  const { label, name, className, options, showError, error, value, onChange, helpText, showHelpText } = props
+  const errorClass = (error && showError) ? 'has-error' : ''
   return (
     <div className={`validFormField form-group ${errorClass} ${className}`}>
-      {label && <label className="control-label" htmlFor={name}>{label}</label> }
-      <select id={name} name={name} className="form-control" value={value} onChange={(e) => { onChange(name, e.target.value, e); }}>
-        <option value=""></option>
+      {label && <label className='control-label' htmlFor={name}>{label}</label> }
+      <select id={name} name={name} className='form-control' value={value} onChange={(e) => { onChange(name, e.target.value, e) }}>
+        <option value='' />
         {options.map((opt, i) => <option key={i} value={opt}>{opt}</option>)}
       </select>
-      {(error != "" && showError) ? <div className="control-label">{error}</div> : undefined}
-      {(helpText && showHelpText) && <i className="help hint">{helpText}</i>}
+      {(error !== '' && showError) ? <div className='control-label'>{error}</div> : undefined}
+      {(helpText && showHelpText) && <i className='help hint'>{helpText}</i>}
     </div>
-  );
-};
+  )
+}
 
 ValidSelect.propTypes = {
   // required name for the field
@@ -34,16 +34,16 @@ ValidSelect.propTypes = {
   // short message to help the user
   helpText: PropTypes.string,
   // weather to show help text or not
-  showHelpText: PropTypes.bool,
-};
+  showHelpText: PropTypes.bool
+}
 
 ValidSelect.defaultProps = {
   name: undefined,
   error: undefined,
   showError: true,
-  placeholder: "",
-  helpText: "",
-  showHelpText: false,
-};
+  placeholder: '',
+  helpText: '',
+  showHelpText: false
+}
 
-export default ValidSelect;
+export default ValidSelect

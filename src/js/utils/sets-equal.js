@@ -25,15 +25,15 @@
  * @param {Set} setB
  * @returns {boolean} are the sets equal
  */
-export default function setsEqual(setA, setB) {
+export default function setsEqual (setA, setB) {
   if (setA.size !== setB.size) {
-    return false;
+    return false
   }
 
-  let acc = true;
+  let acc = true
   setA.forEach((a) => {
-    acc = acc && setB.has(a);
-  });
+    acc = acc && setB.has(a)
+  })
 
-  return acc;
+  return acc
 }

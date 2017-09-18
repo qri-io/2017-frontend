@@ -18,14 +18,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import { PropTypes } from 'react';
+import { PropTypes } from 'react'
 
 export const DEFAULT_SIMULATION_PROPS = {
   animate: false,
   width: 900,
   height: 600,
-  strength: {},
-};
+  strength: {}
+}
 
 export default PropTypes.shape({
   data: PropTypes.object,
@@ -42,5 +42,5 @@ export default PropTypes.shape({
   // strengths
   strength: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.func, PropTypes.number])
-  ),
-});
+  )
+})

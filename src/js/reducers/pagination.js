@@ -12,38 +12,30 @@ import {
 
   USER_ROLES_REQUEST,
   USER_ROLES_SUCCESS,
-  USER_ROLES_FAILURE,
-} from '../actions/user';
+  USER_ROLES_FAILURE
+} from '../actions/user'
 
-import { 
-	DATASETS_REQUEST, 
-	DATASETS_SUCCESS, 
-	DATASETS_FAILURE, 
-
-	DATASET_MIGRATIONS_REQUEST,
-	DATASET_MIGRATIONS_SUCCESS,
-	DATASET_MIGRATIONS_FAIL,
-
-	DATASET_CHANGES_REQUEST,
-	DATASET_CHANGES_SUCCESS,
-	DATASET_CHANGES_FAIL,
+import {
+  DATASETS_REQUEST,
+  DATASETS_SUCCESS,
+  DATASETS_FAILURE,
 
   DATASET_DATA_REQUEST,
   DATASET_DATA_SUCCESS,
-  DATASET_DATA_FAILURE,
+  DATASET_DATA_FAILURE
 
-} from '../actions/dataset';
+} from '../actions/dataset'
 
-import { 
+import {
   QUERIES_REQUEST,
   QUERIES_SUCCESS,
   QUERIES_FAILURE
-} from '../actions/query';
+} from '../actions/query'
 
 // Updates the pagination data for different actions.
 const pagination = combineReducers({
-	popularQueries: paginate({
-    mapActionToKey: action => "popularQueries",
+  popularQueries: paginate({
+    mapActionToKey: action => 'popularQueries',
     types: [
       QUERIES_REQUEST,
       QUERIES_SUCCESS,
@@ -52,7 +44,7 @@ const pagination = combineReducers({
   }),
 
   popularDatasets: paginate({
-    mapActionToKey: action => "popularDatasets",
+    mapActionToKey: action => 'popularDatasets',
     types: [
       DATASETS_REQUEST,
       DATASETS_SUCCESS,
@@ -61,29 +53,29 @@ const pagination = combineReducers({
   }),
 
   userDatasets: paginate({
-    mapActionToKey: action => action.username + ".datasets",
+    mapActionToKey: action => action.username + '.datasets',
     types: [
       USER_DATASETS_REQUEST,
       USER_DATASETS_SUCCESS,
-      USER_DATASETS_FAILURE,
+      USER_DATASETS_FAILURE
     ]
   }),
 
-  userRoles : paginate({
-    mapActionToKey: action => action.username + ".roles",
-    types : [
+  userRoles: paginate({
+    mapActionToKey: action => action.username + '.roles',
+    types: [
       USER_ROLES_REQUEST,
       USER_ROLES_SUCCESS,
-      USER_ROLES_FAILURE,
+      USER_ROLES_FAILURE
     ]
   }),
 
   userQueries: paginate({
-    mapActionToKey: action => action.username + ".queries",
+    mapActionToKey: action => action.username + '.queries',
     types: [
       USER_QUERIES_REQUEST,
       USER_QUERIES_SUCCESS,
-      USER_QUERIES_FAILURE,
+      USER_QUERIES_FAILURE
     ]
   }),
 
@@ -92,27 +84,9 @@ const pagination = combineReducers({
     types: [
       DATASET_DATA_REQUEST,
       DATASET_DATA_SUCCESS,
-      DATASET_DATA_FAILURE,
-    ],
-  }),
+      DATASET_DATA_FAILURE
+    ]
+  })
+})
 
-  // datasetMigrations : paginate({
-  // 	mapActionToKey: action => `${action.dataset}.${action.pageSize}`,
-  // 	types : [
-  // 		DATASET_MIGRATIONS_REQUEST,
-		// 	DATASET_MIGRATIONS_SUCCESS,
-		// 	DATASET_MIGRATIONS_FAIL
-  // 	]
-  // }),
-  // datasetChanges : paginate({
-		// mapActionToKey: action => `${action.dataset}.${action.pageSize}`,
-  // 	types : [
-  // 		DATASET_CHANGES_REQUEST,
-		// 	DATASET_CHANGES_SUCCESS,
-		// 	DATASET_CHANGES_FAIL
-  // 	]
-  // }),
-
-});
-
-export default pagination;
+export default pagination

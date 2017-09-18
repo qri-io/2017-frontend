@@ -8,7 +8,7 @@ export const USER_FAILURE = 'USER_FAILURE'
 
 // Fetches a single user from Github API.
 // Relies on the custom API middleware defined in ../middleware/api.js.
-function fetchUser(login) {
+function fetchUser (login) {
   return {
     [CALL_API]: {
       types: [ USER_REQUEST, USER_SUCCESS, USER_FAILURE ],
@@ -20,7 +20,7 @@ function fetchUser(login) {
 
 // Fetches a single user from Github API unless it is cached.
 // Relies on Redux Thunk middleware.
-export function loadUser(login, requiredFields = []) {
+export function loadUser (login, requiredFields = []) {
   return (dispatch, getState) => {
     const user = getState().entities.users[login]
     if (user && requiredFields.every(key => user.hasOwnProperty(key))) {
@@ -31,36 +31,36 @@ export function loadUser(login, requiredFields = []) {
   }
 }
 
-export function fetchUserByUsername(username, requiredFields=[]) {
+export function fetchUserByUsername (username, requiredFields = []) {
   return {
-    [CALL_API] : {
-      types : [ USER_REQUEST, USER_SUCCESS, USER_FAILURE ],
+    [CALL_API]: {
+      types: [ USER_REQUEST, USER_SUCCESS, USER_FAILURE ],
       endpoint: `/users?username=${username}`,
-      schema : Schemas.USER
+      schema: Schemas.USER
     }
   }
 }
 
-export function loadUserByUsername(username, requiredFields=[]) {
+export function loadUserByUsername (username, requiredFields = []) {
   return (dispatch, getState) => {
     const user = selectUserByUsername(getState(), username)
     if (user && requiredFields.every(key => user.hasOwnProperty(key))) {
       return null
     }
 
-    return dispatch(fetchUserByUsername(username));
+    return dispatch(fetchUserByUsername(username))
   }
 }
 
-export const USER_QUERIES_REQUEST = 'USER_QUERIES_REQUEST';
-export const USER_QUERIES_SUCCESS = 'USER_QUERIES_SUCCESS';
-export const USER_QUERIES_FAILURE = 'USER_QUERIES_FAILURE';
+export const USER_QUERIES_REQUEST = 'USER_QUERIES_REQUEST'
+export const USER_QUERIES_SUCCESS = 'USER_QUERIES_SUCCESS'
+export const USER_QUERIES_FAILURE = 'USER_QUERIES_FAILURE'
 
-export function fetchUserQueries(username, page=1, pageSize=30) {
+export function fetchUserQueries (username, page = 1, pageSize = 30) {
   return {
-    [CALL_API] : {
-      types : [ USER_QUERIES_REQUEST, USER_QUERIES_SUCCESS, USER_QUERIES_FAILURE ],
-      endpoint : `/users/${username}/queries`,
+    [CALL_API]: {
+      types: [ USER_QUERIES_REQUEST, USER_QUERIES_SUCCESS, USER_QUERIES_FAILURE ],
+      endpoint: `/users/${username}/queries`,
       schema: Schemas.QUERY_ARRAY
     },
     page,
@@ -69,22 +69,22 @@ export function fetchUserQueries(username, page=1, pageSize=30) {
   }
 }
 
-export function loadUserQueries(username, page=1, pageSize=30) {
+export function loadUserQueries (username, page = 1, pageSize = 30) {
   return (dispatch, getState) => {
     // TODO - prevent overfetching
-    return dispatch(fetchUserQueries(username, page, pageSize));
+    return dispatch(fetchUserQueries(username, page, pageSize))
   }
 }
 
-export const USER_DATASETS_REQUEST = 'USER_DATASETS_REQUEST';
-export const USER_DATASETS_SUCCESS = 'USER_DATASETS_SUCCESS';
-export const USER_DATASETS_FAILURE = 'USER_DATASETS_FAILURE';
+export const USER_DATASETS_REQUEST = 'USER_DATASETS_REQUEST'
+export const USER_DATASETS_SUCCESS = 'USER_DATASETS_SUCCESS'
+export const USER_DATASETS_FAILURE = 'USER_DATASETS_FAILURE'
 
-export function fetchUserDatasets(username, page=1, pageSize=30) {
+export function fetchUserDatasets (username, page = 1, pageSize = 30) {
   return {
-    [CALL_API] : {
-      types : [ USER_DATASETS_REQUEST, USER_DATASETS_SUCCESS, USER_DATASETS_FAILURE ],
-      endpoint : `/users/${username}/datasets`,
+    [CALL_API]: {
+      types: [ USER_DATASETS_REQUEST, USER_DATASETS_SUCCESS, USER_DATASETS_FAILURE ],
+      endpoint: `/users/${username}/datasets`,
       schema: Schemas.DATASET_ARRAY
     },
     page,
@@ -93,24 +93,23 @@ export function fetchUserDatasets(username, page=1, pageSize=30) {
   }
 }
 
-export function loadUserDatasets(username, page=1, pageSize=30) {
+export function loadUserDatasets (username, page = 1, pageSize = 30) {
   return (dispatch, getState) => {
     // TODO - prevent overfetching
-    return dispatch(fetchUserDatasets(username, page, pageSize));
+    return dispatch(fetchUserDatasets(username, page, pageSize))
   }
 }
 
-
-export const USER_ROLES_REQUEST = 'USER_ROLES_REQUEST';
-export const USER_ROLES_SUCCESS = 'USER_ROLES_SUCCESS';
-export const USER_ROLES_FAILURE = 'USER_ROLES_FAILURE';
-export function fetchUserRoles(username, page=1, pageSize=30) {
+export const USER_ROLES_REQUEST = 'USER_ROLES_REQUEST'
+export const USER_ROLES_SUCCESS = 'USER_ROLES_SUCCESS'
+export const USER_ROLES_FAILURE = 'USER_ROLES_FAILURE'
+export function fetchUserRoles (username, page = 1, pageSize = 30) {
   return {
-    [CALL_API] : {
-      types : [USER_ROLES_REQUEST, USER_ROLES_SUCCESS, USER_ROLES_FAILURE],
+    [CALL_API]: {
+      types: [USER_ROLES_REQUEST, USER_ROLES_SUCCESS, USER_ROLES_FAILURE],
       endpoint: `/users/roles`,
       schema: Schemas.ROLE_ARRAY,
-      data : {
+      data: {
         username,
         page,
         pageSize
@@ -122,10 +121,10 @@ export function fetchUserRoles(username, page=1, pageSize=30) {
   }
 }
 
-export function loadUserRoles(username, page=1, pageSize=30) {
+export function loadUserRoles (username, page = 1, pageSize = 30) {
   return (dispatch, getState) => {
     // const role = getState().entities.roles[id];
     // return fetchRole(id, requiredFields)
-    return dispatch(fetchUserRoles(username, page, pageSize));
+    return dispatch(fetchUserRoles(username, page, pageSize))
   }
 }

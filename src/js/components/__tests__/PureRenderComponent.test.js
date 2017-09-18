@@ -18,64 +18,64 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import React, { PropTypes } from 'react';
-import { shallow } from 'enzyme';
+import React, { PropTypes } from 'react'
+import { shallow } from 'enzyme'
 
-import PureRenderComponent from '../PureRenderComponent';
+import PureRenderComponent from '../PureRenderComponent'
 
 describe('PureRenderComponent', () => {
   class TestComponent extends PureRenderComponent {
-    constructor(props) {
-      super(props);
-      this.state = { c: 1, d: 2 };
+    constructor (props) {
+      super(props)
+      this.state = { c: 1, d: 2 }
     }
-    static get propTypes() {
+    static get propTypes () {
       return {
         a: PropTypes.string.isRequired,
         b: PropTypes.string.isRequired,
-        e: PropTypes.string,
-      };
+        e: PropTypes.string
+      }
     }
-    render() {
-      const { a } = this.props;
-      return <div>{a}</div>;
+    render () {
+      const { a } = this.props
+      return <div>{a}</div>
     }
   }
 
   it('should re-render if state changes', () => {
-    const wrapper = shallow(<TestComponent a="hello" b="world" />);
+    const wrapper = shallow(<TestComponent a='hello' b='world' />)
 
     expect(wrapper.instance().shouldComponentUpdate({
       a: 'hello',
       b: 'world',
-      e: 'testing',
+      e: 'testing'
     }, {
       c: 1,
-      d: 2,
-    })).toEqual(true);
-  });
+      d: 2
+    })).toEqual(true)
+  })
 
   it('should re-render if props change', () => {
-    const wrapper = shallow(<TestComponent a="hello" b="world" />);
+    const wrapper = shallow(<TestComponent a='hello' b='world' />)
 
     expect(wrapper.instance().shouldComponentUpdate({
       a: 'hello',
-      b: 'world',
+      b: 'world'
     }, {
       c: 1,
-      d: 3,
-    })).toEqual(true);
-  });
+      d: 3
+    })).toEqual(true)
+  })
 
   it('should not re-render otherwise', () => {
-    const wrapper = shallow(<TestComponent a="hello" b="world" />);
+    const wrapper = shallow(<TestComponent a='hello' b='world' />)
 
     expect(wrapper.instance().shouldComponentUpdate({
       a: 'hello',
-      b: 'world',
+      b: 'world'
     }, {
       c: 1,
-      d: 2,
-    })).toEqual(false);
-  });
-});
+      d: 2
+    })).toEqual(false)
+  })
+})

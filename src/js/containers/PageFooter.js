@@ -1,72 +1,71 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from 'react'
+import { connect } from 'react-redux'
 // import { Link } from 'react-router';
 
-import { newInvite, updateInvite, saveInvite } from '../actions/invite';
-import { selectLocalInviteById } from '../selectors/invite';
+import { newInvite, updateInvite, saveInvite } from '../actions/invite'
+import { selectLocalInviteById } from '../selectors/invite'
 
 // import EmailSignup from '../components/EmailSignup';
 
 class PageFooter extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
     this.state = {
-      savingInvite: false,
+      savingInvite: false
     };
 
     [
       'handleInviteChange',
-      'handleSubmitInvite',
-    ].forEach((m) => { this[m] = this[m].bind(this); });
+      'handleSubmitInvite'
+    ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
-  componentWillMount() {
+  componentWillMount () {
     if (!this.props.invite.id) {
-      this.props.newInvite();
+      this.props.newInvite()
     }
   }
 
-  handleInviteChange(name, value, e) {
-    e.preventDefault();
+  handleInviteChange (name, value, e) {
+    e.preventDefault()
     this.props.updateInvite({
-      email: value,
-    });
+      email: value
+    })
   }
 
-  handleSubmitInvite(name, value, e) {
-    e.preventDefault();
+  handleSubmitInvite (name, value, e) {
+    e.preventDefault()
     this.state = {
-      savingInvite: false,
-    };
+      savingInvite: false
+    }
 
     // this.props.saveInvite(email);
   }
 
-  render() {
+  render () {
     return (
-      <footer className="pageFooter container">
-        <div className="col-md-6">
-        </div>
+      <footer className='pageFooter container'>
+        <div className='col-md-6' />
       </footer>
-    );
+    )
   }
 }
 
 PageFooter.propTypes = {
-};
+}
 
 PageFooter.defaultProps = {
-};
+}
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
-    invite: selectLocalInviteById(state, "new") || {},
-  };
+    invite: selectLocalInviteById(state, 'new') || {}
+  }
 }
 
 export default connect(mapStateToProps, {
   newInvite,
   updateInvite,
-  saveInvite,
-})(PageFooter);
+  saveInvite
+})(PageFooter)

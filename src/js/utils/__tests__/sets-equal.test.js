@@ -18,41 +18,41 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import setsEqual from '../sets-equal';
+import setsEqual from '../sets-equal'
 
 describe('setsEqual()', () => {
   it('should return true for sets in the same order', () => {
     expect(setsEqual(
       new Set(['a', 'b', 'c']),
       new Set(['a', 'b', 'c'])
-    )).toEqual(true);
-  });
+    )).toEqual(true)
+  })
 
   it('should return true for out-of-order sets', () => {
     expect(setsEqual(
       new Set(['a', 'b', 'c']),
       new Set(['c', 'a', 'b'])
-    )).toEqual(true);
-  });
+    )).toEqual(true)
+  })
 
   it('should return false for blatantly different', () => {
     expect(setsEqual(
       new Set(['a', 'b', 'c']),
       new Set(['e', 'f', 'c'])
-    )).toEqual(false);
-  });
+    )).toEqual(false)
+  })
 
   it('should return false for left-side inclusive non-matching sets', () => {
     expect(setsEqual(
       new Set(['c', 'a', 'b', 'd']),
       new Set(['a', 'b', 'c'])
-    )).toEqual(false);
-  });
+    )).toEqual(false)
+  })
 
   it('should return false for right-side inclusive non-matching sets', () => {
     expect(setsEqual(
       new Set(['a', 'b', 'c']),
       new Set(['c', 'a', 'b', 'd'])
-    )).toEqual(false);
-  });
-});
+    )).toEqual(false)
+  })
+})

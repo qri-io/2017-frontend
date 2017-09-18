@@ -19,12 +19,12 @@ const paginate = ({ types, mapActionToKey }) => {
     isFetching: false,
     // nextPageUrl: undefined,
     pageCount: 0,
-    fetchedAll : false,
+    fetchedAll: false,
     ids: []
   }, action) => {
     switch (action.type) {
       case requestType:
-        return Object.assign({}, state, { isFetching: true });
+        return Object.assign({}, state, { isFetching: true })
       case successType:
         return Object.assign({}, state, {
           isFetching: false,
@@ -32,11 +32,11 @@ const paginate = ({ types, mapActionToKey }) => {
           // nextPageUrl: action.response.nextPageUrl,
           fetchedAll: (action.response.result.length < action.pageSize),
           pageCount: state.pageCount + 1
-        });
+        })
       case failureType:
         return Object.assign({}, state, {
           isFetching: false
-        });
+        })
       default:
         return state
     }
@@ -48,14 +48,14 @@ const paginate = ({ types, mapActionToKey }) => {
       case requestType:
       case successType:
       case failureType:
-        if (!action.page) { console.warn("expected page property for a pagainated request", action.type); }
-        if (!action.pageSize) { console.warn("expected pageSize property for a pagainated request: ", action.type); }
+        if (!action.page) { console.warn('expected page property for a pagainated request', action.type) }
+        if (!action.pageSize) { console.warn('expected pageSize property for a pagainated request: ', action.type) }
 
         const key = mapActionToKey(action)
         if (typeof key !== 'string') {
           throw new Error('Expected key to be a string.')
         }
-        return Object.assign({}, state, { 
+        return Object.assign({}, state, {
           [key]: updatePagination(state[key], action)
         })
       default:

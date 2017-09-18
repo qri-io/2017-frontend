@@ -1,24 +1,24 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'
 
 const UrlInput = (props) => {
-  const { label, name, type, showError, error, value, placeholder, onChange, helpText, showHelpText } = props;
+  const { label, name, type, showError, error, value, placeholder, onChange, helpText, showHelpText } = props
   return (
-    <div className={(error && showError) ? "validFormField form-group has-error" : "validFormField form-group"}>
-      {label ? <label className="control-label" htmlFor={name}>{label}</label> : undefined }
+    <div className={(error && showError) ? 'validFormField form-group has-error' : 'validFormField form-group'}>
+      {label ? <label className='control-label' htmlFor={name}>{label}</label> : undefined }
       <input
         id={name}
         name={name}
         type={type}
-        className="form-control"
+        className='form-control'
         value={value}
         placeholder={placeholder}
-        onChange={(e) => { onChange(name, e.target.value, e); }}
+        onChange={(e) => { onChange(name, e.target.value, e) }}
       />
-      {(error != "" && showError) ? <div className="control-label">{error}</div> : undefined}
-      {(helpText && showHelpText) && <i className="help hint">{helpText}</i>}
+      {(error !== '' && showError) ? <div className='control-label'>{error}</div> : undefined}
+      {(helpText && showHelpText) && <i className='help hint'>{helpText}</i>}
     </div>
-  );
-};
+  )
+}
 
 UrlInput.propTypes = {
   // required name for the field
@@ -40,15 +40,15 @@ UrlInput.propTypes = {
   // short message to help the user
   helpText: PropTypes.string,
   // weather to show help text or not
-  showHelpText: PropTypes.bool,
-};
+  showHelpText: PropTypes.bool
+}
 
 UrlInput.defaultProps = {
-  type: "text",
+  type: 'text',
   showError: true,
-  placeholder: "",
-  helpText: "",
-  showHelpText: false,
-};
+  placeholder: '',
+  helpText: '',
+  showHelpText: false
+}
 
-export default UrlInput;
+export default UrlInput

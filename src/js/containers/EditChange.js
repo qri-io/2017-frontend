@@ -1,93 +1,93 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
+/* globals confirm */
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
 
-import { editChange, updateChange, saveChange, deleteChange } from '../actions/change';
-import { loadDatasetByAddress } from '../actions/dataset';
-import { selectDatasetByAddress } from '../selectors/dataset';
-import { selectSessionUser } from '../selectors/session';
-import { selectLocalChangeByNumber } from '../selectors/change';
-import validateChange from '../validators/change';
+import { editChange, updateChange, saveChange, deleteChange } from '../actions/change'
+import { loadDatasetByAddress } from '../actions/dataset'
+import { selectDatasetByAddress } from '../selectors/dataset'
+import { selectSessionUser } from '../selectors/session'
+import { selectLocalChangeByNumber } from '../selectors/change'
+import validateChange from '../validators/change'
 
-import Spinner from '../components/Spinner';
-import SessionRequired from '../components/SessionRequired';
-import ValidTextarea from '../components/form/ValidTextarea';
-import SelectField from '../components/SelectField';
+import Spinner from '../components/Spinner'
+import SessionRequired from '../components/SessionRequired'
+import ValidTextarea from '../components/form/ValidTextarea'
+import SelectField from '../components/SelectField'
 
 class EditChange extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       showErrors: false,
-      loading: !props.change,
+      loading: !props.change
     };
 
     [
-      "handleChange",
-      "handleSave",
-      "handleDelete",
-    ].forEach((m) => { this[m] = this[m].bind(this); });
+      'handleChange',
+      'handleSave',
+      'handleDelete'
+    ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
-  componentWillMount() {
-    this.props.loadDatasetByAddress(this.props.address);
-    this.props.editChange(this.props.address, this.props.number);
+  componentWillMount () {
+    this.props.loadDatasetByAddress(this.props.address)
+    this.props.editChange(this.props.address, this.props.number)
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.address != this.props.address || nextProps.number != this.props.number) {
-      this.props.loadDatasetByAddress(this.props.address);
-      this.props.editChange(nextProps.address, nextProps.number);
-      this.setState({ showErrors: false, loading: !nextProps.change });
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.address !== this.props.address || nextProps.number !== this.props.number) {
+      this.props.loadDatasetByAddress(this.props.address)
+      this.props.editChange(nextProps.address, nextProps.number)
+      this.setState({ showErrors: false, loading: !nextProps.change })
     } else if (nextProps.change && this.state.loading) {
-      this.setState({ loading: false });
+      this.setState({ loading: false })
     }
   }
 
-  handleChange(name, value, e) {
-    e.preventDefault();
-    const change = Object.assign({}, this.props.change);
-    change[name] = value;
-    this.props.updateChange(change);
+  handleChange (name, value, e) {
+    e.preventDefault()
+    const change = Object.assign({}, this.props.change)
+    change[name] = value
+    this.props.updateChange(change)
   }
 
+  handleSave (e) {
+    const { change, validation } = this.props
 
-  handleSave(e) {
-    const { change, validation } = this.props;
-
-    e.preventDefault();
+    e.preventDefault()
 
     if (!validation.isValid) {
       if (!this.state.showErrors) {
-        this.setState({ showErrors: true });
+        this.setState({ showErrors: true })
       }
     } else {
-      this.props.saveChange(change);
+      this.props.saveChange(change)
     }
   }
 
-  handleDelete() {
-    if (confirm("Are you sure you want to delete this change?")) {
-      this.props.deleteChange(this.props.change.id, "/console");
+  handleDelete () {
+    if (confirm('Are you sure you want to delete this change?')) {
+      this.props.deleteChange(this.props.change.id, '/console')
     }
   }
 
-  render() {
-    const { showErrors, loading } = this.state;
-    const { user, change, dataset, validation } = this.props;
+  render () {
+    const { showErrors, loading } = this.state
+    const { user, change, dataset, validation } = this.props
 
     if (loading) {
       return (
-        <div className="editChange">
+        <div className='editChange'>
           <Spinner />
         </div>
-      );
+      )
     }
 
     if (!user) {
       return (
-        <div className="editChange">
+        <div className='editChange'>
           <SessionRequired />
         </div>
-      );
+      )
     }
 
     if (!change) {
@@ -96,34 +96,34 @@ class EditChange extends React.Component {
         <div>
           <h3>uh.... no change?</h3>
         </div>
-      );
+      )
     }
 
     return (
-      <div id="wrapper">
-        <div className="editChange container">
-          <div className="col-md-8 col-md-offset-2">
-            <form className="editChange">
+      <div id='wrapper'>
+        <div className='editChange container'>
+          <div className='col-md-8 col-md-offset-2'>
+            <form className='editChange'>
               <h3>Edit Change</h3>
-              <div className="form-group">
-                <label htmlFor="type">Type:</label>
-                <select name="type" value={change.type} onChange={(e) => { this.handleChange("type", e.target.value, e); }}>
-                  <option value="">-Choose Type-</option>
+              <div className='form-group'>
+                <label htmlFor='type'>Type:</label>
+                <select name='type' value={change.type} onChange={(e) => { this.handleChange('type', e.target.value, e) }}>
+                  <option value=''>-Choose Type-</option>
                   <option>INSERT</option>
                   <option>MODIFY</option>
                   <option>DELETE</option>
                 </select>
               </div>
-              <SelectField label="Table" name="table_name" value={change.table_name} fields={dataset.fields || []} onChange={this.handleChange} />
-              <ValidTextarea label="Description" name="description" value={change.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />
-              <ValidTextarea label="CSV Data" name="data" value={change.data} showError={showErrors} error={validation.description} onChange={this.handleChange} />
-              <button className="btn btn-large submit" disabled={(!validation.isValid && showErrors)} onClick={this.handleSave}>Save Change</button>
+              <SelectField label='Table' name='table_name' value={change.table_name} fields={dataset.fields || []} onChange={this.handleChange} />
+              <ValidTextarea label='Description' name='description' value={change.description} showError={showErrors} error={validation.description} onChange={this.handleChange} />
+              <ValidTextarea label='CSV Data' name='data' value={change.data} showError={showErrors} error={validation.description} onChange={this.handleChange} />
+              <button className='btn btn-large submit' disabled={(!validation.isValid && showErrors)} onClick={this.handleSave}>Save Change</button>
             </form>
-            <button className="btn btn-large submit" onClick={this.handleDelete}>Delete</button>
+            <button className='btn btn-large submit' onClick={this.handleDelete}>Delete</button>
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -148,23 +148,23 @@ EditChange.propTypes = {
   editChange: PropTypes.func.isRequired,
   updateChange: PropTypes.func.isRequired,
   saveChange: PropTypes.func.isRequired,
-  deleteChange: PropTypes.func.isRequired,
-};
+  deleteChange: PropTypes.func.isRequired
+}
 
 EditChange.defaultProps = {
-};
+}
 
-function mapStateToProps(state, ownProps) {
-  const address = [ownProps.params.user, ownProps.params.dataset].join(".");
-  let change = selectLocalChangeByNumber(state, address, ownProps.params.number);
+function mapStateToProps (state, ownProps) {
+  const address = [ownProps.params.user, ownProps.params.dataset].join('.')
+  let change = selectLocalChangeByNumber(state, address, ownProps.params.number)
 
   if (change && Array.isArray(change.data)) {
     const data = change.data.reduce((a, b) => {
-      const joined = a + b.join(",");
-      return `${joined}\n`;
-    }, "");
-    console.log(data);
-    change = Object.assign({}, change, { data });
+      const joined = a + b.join(',')
+      return `${joined}\n`
+    }, '')
+    console.log(data)
+    change = Object.assign({}, change, { data })
   }
 
   return Object.assign({
@@ -174,8 +174,8 @@ function mapStateToProps(state, ownProps) {
     dataset: selectDatasetByAddress(state, address),
     user: selectSessionUser(state),
     change,
-    validation: validateChange(change),
-  }, ownProps);
+    validation: validateChange(change)
+  }, ownProps)
 }
 
 export default connect(mapStateToProps, {
@@ -184,5 +184,5 @@ export default connect(mapStateToProps, {
   editChange,
   updateChange,
   saveChange,
-  deleteChange,
-})(EditChange);
+  deleteChange
+})(EditChange)
