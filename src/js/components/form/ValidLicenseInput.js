@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 
-const ValidLicenseInput = (props) => {
-  const { label, name, className, showError, error, value, onChange, helpText, showHelpText } = props
+const ValidLicenseInput = ({ label, name, className, value, showError, error, helpText, showHelpText, onChange }) => {
   const errorClass = (error && showError) ? 'has-error' : ''
   return (
     <div className={`validFormField ${errorClass} ${className}`}>
@@ -23,29 +22,30 @@ const ValidLicenseInput = (props) => {
 }
 
 ValidLicenseInput.propTypes = {
-  // required name for the field
-  name: PropTypes.string.isRequired,
   // if provided it'll create a label element to accompany the field
   label: PropTypes.string,
+  // required name for the field
+  name: PropTypes.string.isRequired,
+  // className will set on the containing div
+  className: PropTypes.string,
   // value to display in the field
   value: PropTypes.string.isRequired,
-  // an error message to displacy
-  error: PropTypes.string,
   // weather or not to actually display any passed-in errors
   showError: PropTypes.bool,
-  // change handler func. will be called with (name, value, event)
-  onChange: PropTypes.func.isRequired,
+  // an error message to displacy
+  error: PropTypes.string,
   // short message to help the user
   helpText: PropTypes.string,
   // weather to show help text or not
   showHelpText: PropTypes.bool
+  // change handler func. will be called with (name, value, event)
+  onChange: PropTypes.func.isRequired,
 }
 
 ValidLicenseInput.defaultProps = {
   name: undefined,
   error: undefined,
   showError: true,
-  placeholder: '',
   // https://project-open-data.cio.gov/open-licenses/
   value: 'http://www.usa.gov/publicdomain/label/1.0/',
   helpText: '',

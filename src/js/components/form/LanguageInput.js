@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 
-const LanguageInput = (props) => {
-  const { label, name, value, error, showError, onChange, helpText, showHelpText } = props
+const LanguageInput = ({ label, name, value, error, showError, onChange, helpText, showHelpText }) => {
   return (
     <div className={(error && showError) ? 'validFormField form-group has-error' : 'validFormField form-group'}>
       {label && <label className='control-label' htmlFor={name}>{label}</label>}
