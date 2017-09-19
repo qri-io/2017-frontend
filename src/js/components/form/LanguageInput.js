@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 
 const LanguageInput = (props) => {
-  const { label, name, showError, error, value, onChange, helpText, showHelpText } = props
+  const { label, name, value, error, showError, onChange, helpText, showHelpText } = props
   return (
     <div className={(error && showError) ? 'validFormField form-group has-error' : 'validFormField form-group'}>
       {label && <label className='control-label' htmlFor={name}>{label}</label>}
@@ -29,10 +29,10 @@ const LanguageInput = (props) => {
 }
 
 LanguageInput.propTypes = {
-  // required name for the field
-  name: PropTypes.string.isRequired,
   // if provided it'll create a label element to accompany the field
   label: PropTypes.string,
+  // required name for the field
+  name: PropTypes.string.isRequired,
   // value to display in the field
   value: PropTypes.string.isRequired,
   // an error message to displacy
@@ -51,7 +51,6 @@ LanguageInput.defaultProps = {
   name: undefined,
   error: undefined,
   showError: true,
-  placeholder: '',
   helpText: '',
   showHelpText: false
 }

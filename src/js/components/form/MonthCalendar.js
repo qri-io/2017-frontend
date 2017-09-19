@@ -85,6 +85,7 @@ class MonthCalendar extends React.Component {
   render () {
     // const { value } = this.props;
     const { displayMonth } = this.state
+    const { onMouseDown, onTouchEnd } = props
 
     let startDay = displayMonth.toString().split(' ')[0].toLowerCase()
     let offset = days[startDay]
@@ -121,7 +122,7 @@ class MonthCalendar extends React.Component {
     }
 
     return (
-      <div className='calendar cal' onMouseDown={this.props.onMouseDown} onTouchEnd={this.props.onTouchEnd}>
+      <div className='calendar cal' onMouseDown={onMouseDown} onTouchEnd={onTouchEnd}>
         <div className='header'>
           <a className='backButton ss-icon' onClick={this.onPrevMonth}>prev</a>
           <a className='nextButton ss-icon' onClick={this.onNextMonth}>next</a>
@@ -143,17 +144,16 @@ class MonthCalendar extends React.Component {
 }
 
 MonthCalendar.propTypes = {
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
   // we accept onMouseDown & onTouchEnd Handlers
   // for use in conjunction with an input field
   // to cancel events that would blur the field.
   onMouseDown: PropTypes.func,
   onTouchEnd: PropTypes.func,
-  // @todo - make this a date object
-  value: PropTypes.object.isRequired,
-  onChange: PropTypes.func,
+  value: PropTypes.instanceOf(Date).isRequired,
+  onChange: PropTypes.func.isRequired,
   // onChange handler in the form (value, name)
-  onValueChange: PropTypes.func
+  onValueChange: PropTypes.func.isRequired
 }
 
 MonthCalendar.defaultProps = {

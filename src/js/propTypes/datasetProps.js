@@ -1,43 +1,43 @@
 import { PropTypes } from 'react'
 
-export const formatProps = React.PropTypes.oneOf(['csv'])
+export const formatProps = PropTypes.oneOf(['csv'])
 
-export const typeProps = React.PropTypes.oneOf(['string', 'float'])
+export const typeProps = PropTypes.oneOf(['string', 'float'])
 
-export const formatConfigProps = React.PropTypes.shape({
-  headerRow: React.PropTypes.bool
+export const formatConfigProps = PropTypes.shape({
+  headerRow: PropTypes.bool
 })
 
-export const schemaProps = React.PropTypes.shape({
-  fields: React.PropTypes.arrayOf(
-    React.PropTypes.shape({
-      name: React.PropTypes.string,
-      type: React.PropTypes.string
+export const schemaProps = PropTypes.shape({
+  fields: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      type: PropTypes.string
     })
   )
 })
 
-export const structureProps = React.PropTypes.shape({
+export const structureProps = PropTypes.shape({
   format: formatProps,
   formatConfig: formatConfigProps,
   schema: schemaProps
 })
 
 export default PropTypes.shape({
-  dataset: React.PropTypes.shape({
-    data: React.PropTypes.string,
-    length: React.PropTypes.number,
-    query: React.PropTypes.shape({
+  dataset: PropTypes.shape({
+    data: PropTypes.string,
+    length: PropTypes.number,
+    query: PropTypes.shape({
       outputStructure: structureProps,
-      statement: React.PropTypes.string,
-      structures: React.PropTypes.objectOf(structureProps),
-      syntax: React.PropTypes.string
+      statement: PropTypes.string,
+      structures: PropTypes.objectOf(structureProps),
+      syntax: PropTypes.string
     }),
-    queryString: React.PropTypes.string,
-    resources: React.PropTypes.objectOf(React.PropTypes.string),
+    queryString: PropTypes.string,
+    resources: PropTypes.objectOf(PropTypes.string),
     structure: structureProps,
-    timestamp: React.PropTypes.string,
-    title: React.PropTypes.string
+    timestamp: PropTypes.string,
+    title: PropTypes.string
   }),
-  path: Reach.PropTypes.string
+  path: PropTypes.string
 })
