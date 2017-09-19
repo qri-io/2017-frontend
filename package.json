@@ -86,21 +86,21 @@
     "react-ace": "^5.2.0"
   },
   "standard": {
-  "ignore": [
-    "/server.js",
-    "/src/js/routes.js",
-    "/webpack.config.dev.js",
-    "/webpack.config.prod.js",
-    "/css",
-    "/dist",
-    "/scripts",
-    "/src/scss/*",
-    "/src/js/ace",
-    "/src/js/__mocks__",
-    "/src/js/components/__tests__",
-    "/src/js/selectors/__tests__",
-    "/src/js/utils/__tests__",
-    "/src/js/utils/__mocks__"
-  ]
-}
+    "ignore": [
+      "/server.js",
+      "/src/js/routes.js",
+      "/webpack.config.dev.js",
+      "/webpack.config.prod.js",
+      "/css",
+      "/dist",
+      "/scripts",
+      "/src/scss/*",
+      "/src/js/ace",
+      "/src/js/__mocks__",
+      "/src/js/components/__tests__",
+      "/src/js/selectors/__tests__",
+      "/src/js/utils/__tests__",
+      "/src/js/utils/__mocks__"
+    ]
+  }
 }
