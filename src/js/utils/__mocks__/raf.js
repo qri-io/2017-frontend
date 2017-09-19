@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-const bindFactory = fn => ({ fn });
-const unbindFactory = obj => ({ ...obj, fn: noop => noop });
+const bindFactory = fn => ({ fn })
+const unbindFactory = obj => ({ ...obj, fn: noop => noop })
 
-export const requestAnimationFrame = jest.fn((...args) => bindFactory(...args));
-export const cancelAnimationFrame = jest.fn((...args) => unbindFactory(...args));
+export const requestAnimationFrame = jest.fn((...args) => bindFactory(...args))
+export const cancelAnimationFrame = jest.fn((...args) => unbindFactory(...args))

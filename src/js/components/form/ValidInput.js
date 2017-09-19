@@ -1,24 +1,24 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'
 
 const ValidInput = (props) => {
-  const { label, name, type, showError, error, value, placeholder, onChange, helpText, showHelpText } = props;
+  const { label, name, type, showError, error, value, placeholder, onChange, helpText, showHelpText } = props
   return (
-    <div className={(error && showError) ? "validFormField form-group has-error" : "validFormField form-group"}>
-      {label && <label className="control-label" htmlFor={name}>{label}</label>}
+    <div className={(error && showError) ? 'validFormField form-group has-error' : 'validFormField form-group'}>
+      {label && <label className='control-label' htmlFor={name}>{label}</label>}
       <input
         id={name}
         name={name}
         type={type}
-        className="form-control"
+        className='form-control'
         value={value}
         placeholder={placeholder}
-        onChange={(e) => { onChange(name, e.target.value, e); }}
+        onChange={(e) => { onChange(name, e.target.value, e) }}
       />
-      {(error != "" && showError) ? <div className="control-label">{error}</div> : undefined}
-      {(helpText && showHelpText) && <i className="help hint">{helpText}</i>}
+      {(error !== '' && showError) ? <div className='control-label'>{error}</div> : undefined}
+      {(helpText && showHelpText) && <i className='help hint'>{helpText}</i>}
     </div>
-  );
-};
+  )
+}
 
 ValidInput.propTypes = {
   // required name for the field
@@ -40,17 +40,17 @@ ValidInput.propTypes = {
   // short message to help the user
   helpText: PropTypes.string,
   // weather to show help text or not
-  showHelpText: PropTypes.bool,
-};
+  showHelpText: PropTypes.bool
+}
 
 ValidInput.defaultProps = {
   name: undefined,
-  type: "text",
+  type: 'text',
   error: undefined,
   showError: true,
-  placeholder: "",
-  helpText: "",
-  showHelpText: false,
-};
+  placeholder: '',
+  helpText: '',
+  showHelpText: false
+}
 
-export default ValidInput;
+export default ValidInput

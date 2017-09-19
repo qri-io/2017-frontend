@@ -1,75 +1,74 @@
-/* globals FormData */
+/* globals FormData __BUILD__ fetch */
 import { normalize } from 'normalizr'
-import Schemas from '../schemas'
 import 'isomorphic-fetch'
 
 export const API_ROOT = `${__BUILD__.API_URL}`
 
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
-function callApi(method, endpoint, schema, data, files = []) {
-  let fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint;
-  let headers, body;
-  
+function callApi (method, endpoint, schema, data, files = []) {
+  let fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint
+  let headers, body
+
   // if files is provided, let's submit via form data
   if (files.length > 0) {
-    let fd = new FormData();
+    let fd = new FormData()
 
-    if (files.length == 1) {
-      fd.append('file', files[0]);
+    if (files.length === 1) {
+      fd.append('file', files[0])
     } else {
       files.forEach((i, f) => {
         fd.append(`file_${i}`, f)
-      });
+      })
     }
 
     Object.keys(data).forEach((key, i) => {
-      fd.append(key, data[key]);
-    });
+      fd.append(key, data[key])
+    })
 
-    body = fd;
-  } else if (data && method == "GET") {
+    body = fd
+  } else if (data && method === 'GET') {
     // add query params to GET requests listed on data
-    let addedFirst = false;
+    let addedFirst = false
     Object.keys(data).forEach((key, i) => {
-      const val = encodeURIComponent(data[key]);
-      if (val != "") {
-        fullUrl += (addedFirst) ? `&${key}=${val}` : `?${key}=${val}`;
-        addedFirst = true;
+      const val = encodeURIComponent(data[key])
+      if (val !== '') {
+        fullUrl += (addedFirst) ? `&${key}=${val}` : `?${key}=${val}`
+        addedFirst = true
       }
     })
   } else if (data) {
     headers = {
       'Accept': 'application/json',
       // 'Content-Type': ContentType,
-      'Content-Type': 'application/json',
-    },
+      'Content-Type': 'application/json'
+    }
 
-    body = JSON.stringify(data);
+    body = JSON.stringify(data)
   }
 
   return fetch(fullUrl, {
-    method : method,
+    method: method,
     credentials: 'include',
     headers,
-    body,
+    body
   })
     .then(response => {
       return response.json().then(json => ({ json, response }))
     }).then(({ json, response }) => {
       if (!response.ok) {
-        return Promise.reject(json);
-      } else if (response.status == 204) {
-        return {};
+        return Promise.reject(json)
+      } else if (response.status === 204) {
+        return {}
       }
 
-      const { data } = json;
+      const { data } = json
 
       return Object.assign({},
-        normalize(data, schema),
+        normalize(data, schema)
         // { nextPageUrl }
       )
-    });
+    })
 }
 
 // Action key that carries API call info interpreted by this Redux middleware.
@@ -84,7 +83,7 @@ export default store => next => action => {
   }
 
   let { endpoint } = callAPI
-  const { schema, types, data, files, method="GET", silentError=false } = callAPI
+  const { schema, types, data, files, method = 'GET', silentError = false } = callAPI
 
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getState())
@@ -104,7 +103,7 @@ export default store => next => action => {
     throw new Error('Expected action types to be strings.')
   }
 
-  function actionWith(data) {
+  function actionWith (data) {
     const finalAction = Object.assign({}, action, data)
     delete finalAction[CALL_API]
     return finalAction
@@ -113,7 +112,7 @@ export default store => next => action => {
   const [ requestType, successType, failureType ] = types
 
   // fire an action indicating a request has been made
-  next(actionWith({ type: requestType }));
+  next(actionWith({ type: requestType }))
 
   // make the request
   return callApi(method, endpoint, schema, data, files).then(
@@ -122,16 +121,16 @@ export default store => next => action => {
       response
     })),
     error => {
-      var msg = 'Something Bad Happened' 
-      console.log(error.meta.error);
+      var msg = 'Something Bad Happened'
+      console.log(error.meta.error)
       if (error.meta && error.meta.error) {
-        msg = error.meta.error;
+        msg = error.meta.error
       }
       return next(actionWith({
-        type: failureType, 
+        type: failureType,
         error: msg,
-        silentError,
-      }));
+        silentError
+      }))
     }
   )
 }

@@ -4,25 +4,25 @@
 
 // a list of constants for all types of things that can be selected
 export const selectionTypes = {
-	DATASET : "DATASET",
+  DATASET: 'DATASET'
 }
 
-export const SELECT = "SELECT";
+export const SELECT = 'SELECT'
 
-export function select(type, value) {
-	return { 
-		type : SELECT,
-		selection : {
-			type,
-			value,
-		}
-	}
+export function select (type, value) {
+  return {
+    type: SELECT,
+    selection: {
+      type,
+      value
+    }
+  }
 }
 
-export const DESELECT = "DESELECT";
+export const DESELECT = 'DESELECT'
 
-export function deselect() {
-	return {
-		type : DESELECT
-	}
+export function deselect () {
+  return {
+    type: DESELECT
+  }
 }

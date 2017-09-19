@@ -1,47 +1,47 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'
 
-import KeyValueInput from './KeyValueInput';
+import KeyValueInput from './KeyValueInput'
 
 export default class KeyValueForm extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
 
     [
-      "handleAddField",
-      "handleRenameField",
-      "handleRemoveField",
-      "handleSubmit",
-    ].forEach((m) => { this[m] = this[m].bind(this); });
+      'handleAddField',
+      'handleRenameField',
+      'handleRemoveField',
+      'handleSubmit'
+    ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
-  handleAddField() {
+  handleAddField () {
     // const change = { meta: Object.assign({}, this.props.data.meta, { new_field: "" }) };
     // this.props.updateMetadata({ meta: Object.assign({}, this.props.data, change) });
   }
 
-  handleRenameField(prevName, newName) {
-    const change = { meta: Object.assign({}, this.props.data.meta, { [newName]: this.props.data.meta[prevName] }) };
-    delete change.meta[prevName];
+  handleRenameField (prevName, newName) {
+    const change = { meta: Object.assign({}, this.props.data.meta, { [newName]: this.props.data.meta[prevName] }) }
+    delete change.meta[prevName]
     // this.props.updateMetadata(Object.assign({}, this.props.data, change));
   }
 
-  handleRemoveField(field) {
-    const change = { meta: Object.assign({}, this.props.data.meta) };
-    delete change.meta[field];
+  handleRemoveField (field) {
+    const change = { meta: Object.assign({}, this.props.data.meta) }
+    delete change.meta[field]
     // this.props.updateMetadata(Object.assign({}, this.props.data, change));
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.onSubmit(this.props.data, e);
+  handleSubmit (e) {
+    e.preventDefault()
+    this.props.onSubmit(this.props.data, e)
   }
 
-  render() {
-    const { data } = this.props;
+  render () {
+    const { data } = this.props
 
     return (
-      <div className="data">
-        <div className="col-md-12">
+      <div className='data'>
+        <div className='col-md-12'>
           {Object.keys(data).map((key, i) => {
             return (
               <KeyValueInput
@@ -51,12 +51,12 @@ export default class KeyValueForm extends React.Component {
                 onChangeKey={this.onChangeKey}
                 onRemove={this.onRemove}
                 onChangeValue={this.onChangeValue}
-              />);
+              />)
           })}
-          <button className="btn" onClick={this.onAddField}>Add Field</button>
+          <button className='btn' onClick={this.onAddField}>Add Field</button>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -66,5 +66,5 @@ KeyValueForm.propTypes = {
 
   // onChange: PropTypes.func.isRequired,
   // onCancel: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-};
+  onSubmit: PropTypes.func.isRequired
+}

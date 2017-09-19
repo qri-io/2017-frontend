@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'
 
 // import BarChartView from './views/BarChartView';
 // import LineChartView from './views/LineChartView';
@@ -6,7 +6,7 @@ import React, { PropTypes } from 'react';
 
 const View = ({ view, results, device }) => {
   if (!view || !view.type) {
-    return null;
+    return null
   }
 
   return (<h1>TODO - restore view</h1>)
@@ -23,15 +23,15 @@ const View = ({ view, results, device }) => {
   //   default:
   //     return <div>unrecognized view type: {view.type}</div>;
   // }
-};
+}
 
 View.propTypes = {
   device: PropTypes.object.isRequired,
   results: PropTypes.object,
-  view: PropTypes.object.isRequired,
-};
+  view: PropTypes.object.isRequired
+}
 
 View.defaultProps = {
-};
+}
 
-export default View;
+export default View

@@ -18,13 +18,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'
 
-import PureRenderComponent from './PureRenderComponent';
-import nodePropTypes from '../propTypes/node';
+import PureRenderComponent from './PureRenderComponent'
+import nodePropTypes from '../propTypes/node'
 
 export default class ForceGraphNode extends PureRenderComponent {
-  static get propTypes() {
+  static get propTypes () {
     return {
       node: nodePropTypes.isRequired,
       cx: PropTypes.number,
@@ -32,30 +32,30 @@ export default class ForceGraphNode extends PureRenderComponent {
       // these props only have an impact on the parent.
       labelStyle: PropTypes.object,
       labelClass: PropTypes.string,
-      showLabel: PropTypes.bool,
-    };
+      showLabel: PropTypes.bool
+    }
   }
 
-  static get defaultProps() {
+  static get defaultProps () {
     return {
       className: '',
       fill: '#333',
       opacity: 1,
       stroke: '#FFF',
-      strokeWidth: 1.5,
-    };
+      strokeWidth: 1.5
+    }
   }
 
-  render() {
+  render () {
     const {
       node, className, r,
       /* eslint-disable no-unused-vars */
       labelStyle, labelClass, showLabel,
       /* eslint-enable no-unused-vars */
       ...spreadable
-    } = this.props;
+    } = this.props
 
-    const { radius = 5 } = node;
+    const { radius = 5 } = node
 
     // return (
     //   <g className={`rv-force__node ${className}`}>
@@ -67,6 +67,6 @@ export default class ForceGraphNode extends PureRenderComponent {
     //   </g>
     // );
 
-    return (<circle className={`rv-force__node ${className}`} r={r || radius} {...spreadable} />);
+    return (<circle className={`rv-force__node ${className}`} r={r || radius} {...spreadable} />)
   }
 }

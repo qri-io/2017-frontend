@@ -26,20 +26,20 @@ const initialEntitiesState = {
   readmes: {},
   changes: {},
   migrations: {},
-  
+
   queries: {},
-  pagination: {},
+  pagination: {}
 }
 
 // Updates an entity cache in response to any action with response.entities.
 // see api middleware
-function entities(state = initialEntitiesState, action) {
+function entities (state = initialEntitiesState, action) {
   if (action.response && action.response.entities) {
     return merge({}, state, action.response.entities)
   }
 
   if (action.type === ActionTypes.REMOVE_MODEL) {
-    const newState = merge({}, state);
+    const newState = merge({}, state)
     newState[action.schema.getKey()] = merge({}, newState[action.schema.getKey()])
     delete newState[action.schema.getKey()][action.id]
     return newState
@@ -49,7 +49,7 @@ function entities(state = initialEntitiesState, action) {
 }
 
 // Updates error message to notify about the failed fetches.
-function errorMessage(state = null, action) {
+function errorMessage (state = null, action) {
   const { type, error, silentError } = action
 
   if (type === ActionTypes.RESET_ERROR_MESSAGE) {
@@ -61,13 +61,13 @@ function errorMessage(state = null, action) {
   return state
 }
 
-function message(state = null, action) {
+function message (state = null, action) {
   const { type, message } = action
 
   if (type === ActionTypes.RESET_MESSAGE) {
     return null
   } else if (message) {
-    return message;
+    return message
   }
 
   return state
@@ -80,12 +80,12 @@ const rootReducer = combineReducers({
   errorMessage,
   message,
 
-  session : sessionReducer,
+  session: sessionReducer,
   console: consoleReducer,
-  selection : selectionReducer,
-  layout : layoutReducer,
-  app : appReducer,
-  results : resultsReducer,
+  selection: selectionReducer,
+  layout: layoutReducer,
+  app: appReducer,
+  results: resultsReducer,
   routing
 })
 

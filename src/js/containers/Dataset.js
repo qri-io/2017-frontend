@@ -1,24 +1,25 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import ReactMarkdown from 'react-markdown';
+/* globals confirm */
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router'
+import ReactMarkdown from 'react-markdown'
 
-import { downloadDataset, deleteDataset, loadDatasetData } from '../actions/dataset';
-import { setQuery, runQuery, downloadQuery } from '../actions/query';
+import { downloadDataset, deleteDataset, loadDatasetData } from '../actions/dataset'
+import { setQuery, runQuery, downloadQuery } from '../actions/query'
 
-import { selectDataset, selectDatasetData } from '../selectors/dataset';
-import { selectSessionUser } from '../selectors/session';
+import { selectDataset, selectDatasetData } from '../selectors/dataset'
+import { selectSessionUser } from '../selectors/session'
 // import { selectQueryById } from '../selectors/query';
 
-import List from '../components/List';
-import DatasetItem from '../components/item/DatasetItem';
-import DatasetHeader from '../components/DatasetHeader';
-import FieldsList from '../components/FieldsList';
-import QueryEditor from '../components/QueryEditor';
-import DataTable from '../components/DataTable';
+import List from '../components/List'
+import DatasetItem from '../components/item/DatasetItem'
+import DatasetHeader from '../components/DatasetHeader'
+import FieldsList from '../components/FieldsList'
+import QueryEditor from '../components/QueryEditor'
+import DataTable from '../components/DataTable'
 
 class Dataset extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
 
     [
@@ -30,209 +31,210 @@ class Dataset extends React.Component {
       'handleDownloadDataset',
       'handleDeleteDataset',
       'renderChildDatasets',
-      'renderData',
-    ].forEach((m) => { this[m] = this[m].bind(this); });
+      'renderData'
+    ].forEach((m) => { this[m] = this[m].bind(this) })
 
     // this.debouncedSetQuery = debounce(props.setQuery, 200)
   }
 
-  componentWillMount() {
+  componentWillMount () {
     // this.props.loadDatasetByAddress(this.props.address, ["fields"])
     // this.props.loadDatasetReadme(this.props.address)
     // this.props.loadDatasetChildren(this.props.address)
-    this.props.loadDatasetData(this.props.datasetRef.path, 1, 50);
+    this.props.loadDatasetData(this.props.datasetRef.path, 1, 50)
 
     // match the address to the current namespce, unless there's already a query
     if (this.props.datasetRef && this.props.datasetRef.default_query) {
-      this.props.setQuery(this.props.datasetRef.default_query);
+      this.props.setQuery(this.props.datasetRef.default_query)
     } else {
       this.props.setQuery({
         // address : this.props.address,
-        statement: `select * from ${this.props.datasetRef.name}`,
-      });
+        statement: `select * from ${this.props.datasetRef.name}`
+      })
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.path != this.props.path) {
-      this.props.loadDatasetByAddress(nextProps.path);
-      this.props.loadDatasetData(nextProps.path, 1, 50);
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.path !== this.props.path) {
+      this.props.loadDatasetByAddress(nextProps.path)
+      this.props.loadDatasetData(nextProps.path, 1, 50)
     }
 
-    if (nextProps.dataset && nextProps.dataset != this.props.dataset) {
+    if (nextProps.dataset && nextProps.dataset !== this.props.dataset) {
       // this.props.setQuery(nextProps.dataset.default_query || { statement: `select * from ${nextProps.address}` });
     }
   }
 
-  handleEditorAddressChange(value) {
-    this.props.setQueryAddress(value);
+  handleEditorAddressChange (value) {
+    this.props.setQueryAddress(value)
   }
 
-  handleEditorChange(value) {
+  handleEditorChange (value) {
     // this.debouncedSetQuery(value)
-    this.props.setQuery(value);
+    this.props.setQuery(value)
   }
 
-  handleDownloadDataset(e) {
-    e.preventDefault();
-    this.props.downloadDataset(this.props.address);
+  handleDownloadDataset (e) {
+    e.preventDefault()
+    this.props.downloadDataset(this.props.address)
   }
 
-  handleRunQuery(e) {
-    e.preventDefault();
+  handleRunQuery (e) {
+    e.preventDefault()
     this.props.runQuery({
       query: this.props.query,
-      page: 1,
-    });
+      page: 1
+    })
   }
 
-  handleDownloadQuery() {
+  handleDownloadQuery () {
     this.props.runQuery({
       query: this.props.query,
-      download: true,
-    });
+      download: true
+    })
   }
 
-  handleDeleteDataset() {
-    if (confirm("are you sure you want to delete this dataset?")) {
-      this.props.deleteDataset(this.props.datasetRef.path, "/");
+  handleDeleteDataset () {
+    if (confirm('are you sure you want to delete this dataset?')) {
+      this.props.deleteDataset(this.props.datasetRef.path, '/')
     }
   }
 
-  handleLoadMoreResults() {
+  handleLoadMoreResults () {
     this.props.runQuery({
       query: this.props.query,
-      page: (this.props.results.pageCount + 1),
-    });
+      page: (this.props.results.pageCount + 1)
+    })
   }
 
-  renderEditButtons(props) {
-    const { path, permissions } = props;
+  renderEditButtons (props) {
+    const { path, permissions } = props
 
     if (permissions.migrate && permissions.change) {
       return (
         <div>
-          <Link to={`${path}/edit`}><button type="button" className="btn btn-primary" style={{ marginRight: 5 }}>Edit</button></Link>
-          <Link to={`${path}/migrations/new`}><button type="button" className="btn btn-primary" style={{ marginRight: 5 }}>New Migration</button></Link>
-          <Link to={`${path}/changes/new`}><button type="button" className="btn btn-primary" style={{ marginRight: 5 }}>New Change</button></Link>
+          <Link to={`${path}/edit`}><button type='button' className='btn btn-primary' style={{ marginRight: 5 }}>Edit</button></Link>
+          <Link to={`${path}/migrations/new`}><button type='button' className='btn btn-primary' style={{ marginRight: 5 }}>New Migration</button></Link>
+          <Link to={`${path}/changes/new`}><button type='button' className='btn btn-primary' style={{ marginRight: 5 }}>New Change</button></Link>
         </div>
-      );
+      )
     }
 
-    return undefined;
+    return undefined
   }
 
-  renderResults(props) {
-    const { results } = props;
-    if (!results) { return undefined; }
+  renderResults (props) {
+    const { results } = props
+    if (!results) { return undefined }
     return (
-      <div className="col-md-12">
-        <hr className="green" />
-        <h4 className="green">Results</h4>
+      <div className='col-md-12'>
+        <hr className='green' />
+        <h4 className='green'>Results</h4>
         <DataTable results={results} onLoadMore={this.handleLoadMoreResults} />
       </div>
-    );
+    )
   }
 
-  renderReadme(readme) {
-    if (!readme) return undefined;
+  renderReadme (readme) {
+    if (!readme) return undefined
     return (
-      <div className="row">
-        <section className="col-md-12">
+      <div className='row'>
+        <section className='col-md-12'>
           <ReactMarkdown escapeHtml source={readme.text} />
         </section>
       </div>
-    );
+    )
   }
 
-  renderQueryAndResults() {
-    const { query } = this.props;
+  renderQueryAndResults () {
+    const { query } = this.props
     return (
-      <div className="row">
-        <div className="col-md-12">
+      <div className='row'>
+        <div className='col-md-12'>
           <QueryEditor query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />
         </div>
         {this.renderResults(this.props)}
       </div>
-    );
+    )
   }
 
-  renderData() {
-    const { data, datasetRef } = this.props;
-    const { structure } = datasetRef.dataset;
+  renderData () {
+    const { data, datasetRef } = this.props
+    const { structure } = datasetRef.dataset
 
-    if (!data || !structure) { return undefined; }
+    if (!data || !structure) { return undefined }
     return (
-      <div className="col-md-12">
-        <hr className="green" />
-        <h4 className="green">Data</h4>
-        <DataTable fields={structure.schema.fields} data={data} fetching={false} fetchedAll={true} onLoadMore={this.handleLoadMoreResults} />
+      <div className='col-md-12'>
+        <hr className='green' />
+        <h4 className='green'>Data</h4>
+        <DataTable fields={structure.schema.fields} data={data} fetching={false} fetchedAll onLoadMore={this.handleLoadMoreResults} />
       </div>
-    );
+    )
   }
 
-  renderDescription() {
-    const { datasetRef } = this.props;
-    if (!datasetRef.dataset.description) { return undefined; }
+  renderDescription () {
+    const { datasetRef } = this.props
+    if (!datasetRef.dataset.description) { return undefined }
     return (
-      <div className="row">
-        <section className="col-md-12">
-          <hr className="blue" />
+      <div className='row'>
+        <section className='col-md-12'>
+          <hr className='blue' />
           <p>{ datasetRef.dataset.description }</p>
         </section>
       </div>
-    );
+    )
   }
 
-  renderChildDatasets() {
+  renderChildDatasets () {
     return (
-      <div className="row">
-        <section className="col-md-12">
-          <hr className="blue" />
+      <div className='row'>
+        <section className='col-md-12'>
+          <hr className='blue' />
           <h4>Children:</h4>
         </section>
         <List component={DatasetItem} data={this.props.descendants} />
       </div>
-    );
+    )
   }
 
-  render() {
-    const { datasetRef, readme } = this.props;
+  render () {
+    const { datasetRef, readme } = this.props
     // const path = "/" + address.replace(".", "/", -1)
     // const hasData = (dataset && (dataset.url || dataset.file || dataset.data));
-    const hasData = true;
+    // TODO hasData is assigned a value but never used, consider depreciation
+    // const hasData = true
 
     if (!datasetRef) {
       return (
-        <div className="dataset container">
+        <div className='dataset container'>
           <p>No Dataset</p>
         </div>
-      );
+      )
     }
 
-    const { dataset } = datasetRef;
+    const { dataset } = datasetRef
 
     return (
-      <div id="wrapper">
-        <div className="container">
+      <div id='wrapper'>
+        <div className='container'>
           <DatasetHeader dataset={dataset} onDelete={this.handleDeleteDataset} onDownload={this.handleDownloadDataset} />
-          <div className="row">
-            <div className="col-md-12">
+          <div className='row'>
+            <div className='col-md-12'>
               {(dataset.structure && dataset.structure.schema) ? <FieldsList fields={dataset.structure.schema.fields} /> : <p>This dataset currently has no specified fields</p> }
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-12">
+          <div className='row'>
+            <div className='col-md-12'>
               {this.renderEditButtons(this.props)}
             </div>
           </div>
           {readme ? this.renderReadme(readme) : this.renderDescription() }
-          <div className="row">
+          <div className='row'>
             {this.renderData()}
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -261,33 +263,33 @@ Dataset.propTypes = {
 
   setQuery: PropTypes.func.isRequired,
   runQuery: PropTypes.func.isRequired,
-  downloadDataset: PropTypes.func.isRequired,
+  downloadDataset: PropTypes.func.isRequired
   // loadDatasetReadme : PropTypes.func.isRequired
-};
+}
 
 Dataset.defaultProps = {
   permissions: {
     edit: false,
     migrate: false,
-    change: false,
-  },
-};
+    change: false
+  }
+}
 
-function mapStateToProps(state, ownProps) {
-  const path = ownProps.path || `/${ownProps.params.splat}`;
+function mapStateToProps (state, ownProps) {
+  const path = ownProps.path || `/${ownProps.params.splat}`
 
-  const user = selectSessionUser(state);
-  const results = state.results[state.console.query.statement];
+  const user = selectSessionUser(state)
+  const results = state.results[state.console.query.statement]
 
   let permissions = {
     edit: false,
     migrate: false,
-    change: false,
-  };
+    change: false
+  }
 
-  if (user && user.username == ownProps.params.user) {
-    permissions.migrate = true;
-    permissions.change = true;
+  if (user && user.username === ownProps.params.user) {
+    permissions.migrate = true
+    permissions.change = true
   }
 
   return Object.assign({
@@ -299,9 +301,9 @@ function mapStateToProps(state, ownProps) {
     // descendants: selectDatasetDescendants(state, address),
 
     results,
-    permissions,
+    permissions
 
-  }, state.console, ownProps);
+  }, state.console, ownProps)
 }
 
 export default connect(mapStateToProps, {
@@ -310,6 +312,6 @@ export default connect(mapStateToProps, {
   downloadQuery,
   downloadDataset,
   deleteDataset,
-  loadDatasetData,
+  loadDatasetData
   // loadDatasetReadme,
-})(Dataset);
+})(Dataset)

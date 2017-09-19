@@ -21,13 +21,13 @@
 export const window = {
   requestAnimationFrame: jest.fn(),
   cancelAnimationFrame: jest.fn(),
-  setRafSupport(newValue) {
+  setRafSupport (newValue) {
     if (newValue) {
-      this.requestAnimationFrame = jest.fn();
-      this.cancelAnimationFrame = jest.fn();
+      this.requestAnimationFrame = jest.fn()
+      this.cancelAnimationFrame = jest.fn()
     } else {
-      delete this.requestAnimationFrame;
-      delete this.cancelAnimationFrame;
+      delete this.requestAnimationFrame
+      delete this.cancelAnimationFrame
     }
-  },
-};
+  }
+}

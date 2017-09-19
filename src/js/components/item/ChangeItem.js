@@ -1,55 +1,55 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'
 
 export default class ChangeItem extends React.Component {
-  description(data) {
+  description (data) {
     if (data.description) {
-      return data.description;
+      return data.description
     }
 
     switch (data.type) {
-      case "INSERT":
-        return `insert into ${data.table_name}`;
-      case "UPDATE":
-        return `update on ${data.table_name}`;
-      case "DELETE":
-        return `delete from ${data.table_name}`;
+      case 'INSERT':
+        return `insert into ${data.table_name}`
+      case 'UPDATE':
+        return `update on ${data.table_name}`
+      case 'DELETE':
+        return `delete from ${data.table_name}`
       default:
-        return `unknown change: ${data.table_name}`;
+        return `unknown change: ${data.table_name}`
     }
   }
 
-  status(data) {
+  status (data) {
     if (!data.executed && !data.declined) {
-      return "open";
+      return 'open'
     } else if (data.declined) {
-      return "declined";
+      return 'declined'
     } else if (data.executed) {
-      return "executed";
+      return 'executed'
     }
-    return "";
+    return ''
   }
 
-  render() {
-    const { data, onSelect } = this.props;
+  render () {
+    const { data, onSelect } = this.props
 
     return (
-      <div className="change item" onClick={onSelect}>
+      <div className='change item' onClick={onSelect}>
         <hr />
-        <div className="number" style={{ float: 'left', marginRight: 20 }}>
+        <div className='number' style={{ float: 'left', marginRight: 20 }}>
           <h3>{ data.number }</h3>
         </div>
         <h4>{ this.description(data) }</h4>
-        <div className="status">
+        <div className='status'>
           <small>{ this.status(data) }</small>
         </div>
-      </div>);
+      </div>)
   }
 }
 
 ChangeItem.propTypes = {
   data: PropTypes.object.isRequired,
-  onSelect: PropTypes.func.isRequired,
-};
+  onSelect: PropTypes.func.isRequired
+}
 
 ChangeItem.defaultProps = {
-};
+}

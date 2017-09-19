@@ -1,8 +1,8 @@
-import React, { PropTypes } from 'react';
-import { Router } from 'react-router';
-import { Provider } from 'react-redux';
-import routes from '../routes.dev';
-import DevTools from './DevTools';
+import React, { PropTypes } from 'react'
+import { Router } from 'react-router'
+import { Provider } from 'react-redux'
+import routes from '../routes.dev'
+import DevTools from './DevTools'
 
 const Root = ({ store, history }) => {
   return (
@@ -12,12 +12,12 @@ const Root = ({ store, history }) => {
         <DevTools />
       </div>
     </Provider>
-  );
-};
+  )
+}
 
 Root.propTypes = {
   store: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-};
+  history: PropTypes.object.isRequired
+}
 
-export default Root;
+export default Root

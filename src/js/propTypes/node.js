@@ -18,9 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import { PropTypes } from 'react';
+import { PropTypes } from 'react'
 
 export default PropTypes.shape({
   id: PropTypes.string.isRequired,
-  radius: PropTypes.number,
-});
+  radius: PropTypes.number
+})

@@ -1,24 +1,25 @@
-import React, { PropTypes } from 'react';
-import DateInput from './DateInput';
+import React, { PropTypes } from 'react'
+import DateInput from './DateInput'
 
 const ValidDateInput = (props) => {
-  const { name, label, valid, value, placeholder, disabled, onChange, helpText, showHelpText, className, showValidation } = props;
-  let validClass = "", message;
+  const { name, label, valid, value, placeholder, disabled, onChange, helpText, showHelpText, className, showValidation } = props
+  let validClass = ''
+  let message
 
   if (showValidation) {
-    message = (valid) ? "" : message;
-    validClass = (valid) ? "valid " : "invalid ";
+    message = (valid) ? '' : message
+    validClass = (valid) ? 'valid ' : 'invalid '
   }
 
   return (
     <div className={`${validClass} ${className}`}>
-      {label && <label className="control-label" htmlFor={name}>{label}</label>}
+      {label && <label className='control-label' htmlFor={name}>{label}</label>}
       <DateInput disabled={disabled} name={name} placeholder={placeholder} value={value} onChange={onChange} />
-      <span className="message">{message}</span>
-      {(helpText && showHelpText) && <i className="help hint">{helpText}</i>}
+      <span className='message'>{message}</span>
+      {(helpText && showHelpText) && <i className='help hint'>{helpText}</i>}
     </div>
-  );
-};
+  )
+}
 
 ValidDateInput.propTypes = {
   // gotta name yo fields
@@ -40,17 +41,17 @@ ValidDateInput.propTypes = {
   // short message to help the user
   helpText: PropTypes.string,
   // weather to show help text or not
-  showHelpText: PropTypes.bool,
-};
+  showHelpText: PropTypes.bool
+}
 
 ValidDateInput.defaultProps = {
-  name: "",
+  name: '',
   value: new Date(),
-  placeholder: "",
-  className: " validTextArea field",
+  placeholder: '',
+  className: ' validTextArea field',
   showValidationIcon: false,
-  helpText: "",
-  showHelpText: false,
-};
+  helpText: '',
+  showHelpText: false
+}
 
-export default ValidDateInput;
+export default ValidDateInput

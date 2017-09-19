@@ -1,61 +1,61 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router'
 
-import { loadUserByUsername, loadUserDatasets, loadUserQueries, loadUserRoles } from '../actions/user';
-import { selectSessionUser } from '../selectors/session';
-import { selectUserByUsername } from '../selectors/user';
-import { selectUserDatasets } from '../selectors/dataset';
-import { selectUserQueries } from '../selectors/query';
-import { selectUserRoles } from '../selectors/role';
+import { loadUserByUsername, loadUserDatasets, loadUserQueries, loadUserRoles } from '../actions/user'
+import { selectSessionUser } from '../selectors/session'
+import { selectUserByUsername } from '../selectors/user'
+import { selectUserDatasets } from '../selectors/dataset'
+import { selectUserQueries } from '../selectors/query'
+import { selectUserRoles } from '../selectors/role'
 
-import List from '../components/List';
+import List from '../components/List'
 // import DatasetItem from '../components/item/DatasetItem';
 // import QueryItem from '../components/item/QueryItem';
-import RoleItem from '../components/item/RoleItem';
+import RoleItem from '../components/item/RoleItem'
 
 class User extends React.Component {
-  componentWillMount() {
-    this.props.loadUserByUsername(this.props.username);
-    this.props.loadUserRoles(this.props.username, this.props.nextPage);
+  componentWillMount () {
+    this.props.loadUserByUsername(this.props.username)
+    this.props.loadUserRoles(this.props.username, this.props.nextPage)
     // this.props.loadUserDatasets(this.props.username);
     // this.props.loadUserQueries(this.props.username);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.username != this.props.username) {
-      nextProps.loadUserByUsername(nextProps.username);
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.username !== this.props.username) {
+      nextProps.loadUserByUsername(nextProps.username)
       // nextProps.loadUserDatasets(this.props.username);
       // nextProps.loadUserQueries(this.props.username);
-      nextProps.loadUserRoles(this.props.username, this.props.nextPage);
+      nextProps.loadUserRoles(this.props.username, this.props.nextPage)
     }
   }
 
-  render() {
-    const { username, user, permissions, roles } = this.props;
+  render () {
+    const { username, user, permissions, roles } = this.props
 
     if (!user) {
       return (
-        <div className="user container">
+        <div className='user container'>
           <h3>Not Found</h3>
         </div>
-      );
+      )
     }
 
     return (
-      <div className="user container">
-        <div className="row">
-          <header className="yellow col-md-12">
-            <hr className="yellow" />
-            <h1><Link className="yellow" to={`/${user.username}`}>{user.username}</Link></h1>
-            { permissions.edit ? <Link to="/settings" >settings </Link> : undefined }
-            { permissions.edit ? <a href="/logout">logout</a> : undefined }
+      <div className='user container'>
+        <div className='row'>
+          <header className='yellow col-md-12'>
+            <hr className='yellow' />
+            <h1><Link className='yellow' to={`/${user.username}`}>{user.username}</Link></h1>
+            { permissions.edit ? <Link to='/settings' >settings </Link> : undefined }
+            { permissions.edit ? <a href='/logout'>logout</a> : undefined }
             <p>{ user.description }</p>
           </header>
         </div>
-        <div className="row">
-          <div className="roles yellow col-md-6">
-            <hr className="yellow" />
+        <div className='row'>
+          <div className='roles yellow col-md-6'>
+            <hr className='yellow' />
             <h3>{username}&apos;s roles</h3>
             <List data={roles} component={RoleItem} onSelectItem={this.handleSelectItem} />
           </div>
@@ -71,7 +71,7 @@ class User extends React.Component {
           <List data={datasets} component={DatasetItem} />
         </div> */}
       </div>
-    );
+    )
   }
 }
 
@@ -81,26 +81,26 @@ User.propTypes = {
   roles: PropTypes.array,
   permissions: PropTypes.object.isRequired,
   loadUserByUsername: PropTypes.func.isRequired,
-  loadUserRoles: PropTypes.func.isRequired,
-};
+  loadUserRoles: PropTypes.func.isRequired
+}
 
 User.defaultProps = {
-};
+}
 
-function mapStateToProps(state, ownProps) {
-  const username = ownProps.params.user;
-  const user = selectUserByUsername(state, username);
-  const rolePages = state.pagination.userRoles[`${username}.roles`];
+function mapStateToProps (state, ownProps) {
+  const username = ownProps.params.user
+  const user = selectUserByUsername(state, username)
+  const rolePages = state.pagination.userRoles[`${username}.roles`]
 
   let permissions = {
     edit: false,
-    del: false,
-  };
+    del: false
+  }
 
-  const session = selectSessionUser(state);
-  if (session && session.username == username) {
-    permissions.edit = true;
-    permissions.del = true;
+  const session = selectSessionUser(state)
+  if (session && session.username === username) {
+    permissions.edit = true
+    permissions.del = true
   }
 
   return Object.assign({
@@ -113,16 +113,16 @@ function mapStateToProps(state, ownProps) {
       roles: {
         loading: (rolePages) ? rolePages.isFetching : false,
         nextPage: (rolePages) ? (rolePages.pageCount + 1) : 1,
-        fetchedAll: (rolePages) ? rolePages.fetchedAll : false,
-      },
+        fetchedAll: (rolePages) ? rolePages.fetchedAll : false
+      }
     },
-    permissions,
-  }, ownProps);
+    permissions
+  }, ownProps)
 }
 
 export default connect(mapStateToProps, {
   loadUserByUsername,
   loadUserDatasets,
   loadUserQueries,
-  loadUserRoles,
-})(User);
+  loadUserRoles
+})(User)

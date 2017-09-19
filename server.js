@@ -1,35 +1,35 @@
-var webpack = require('webpack');
-var webpackDevMiddleware = require('webpack-dev-middleware');
-var webpackHotMiddleware = require('webpack-hot-middleware');
-var config = require('./webpack.config.dev');
+var webpack = require('webpack')
+var webpackDevMiddleware = require('webpack-dev-middleware')
+var webpackHotMiddleware = require('webpack-hot-middleware')
+var config = require('./webpack.config.dev')
 
-var app = new require('express')();
-var port = process.env.PORT || 4000;
+var app = new require('express')()
+var port = process.env.PORT || 4000
 
 var compiler
 try {
-	compiler = webpack(config);
+  compiler = webpack(config)
 } catch (err) {
-	console.log(err.message);
-	process.exit();
+  console.log(err.message)
+  process.exit()
 }
 
-app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
-app.use(webpackHotMiddleware(compiler, { path : '/__qri_io' }));
+app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }))
+app.use(webpackHotMiddleware(compiler, { path: '/__qri_io' }))
 
-app.use(function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  return next();
-});
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  return next()
+})
 
-app.get("/", function(req, res) {
-  res.sendFile(__dirname + '/index.html');
-});
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/index.html')
+})
 
-app.listen(port, function(error) {
+app.listen(port, function (error) {
   if (error) {
-    console.error(error);
+    console.error(error)
   } else {
-    console.info("==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.", port, port);
+    console.info('==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.', port, port)
   }
-});
+})

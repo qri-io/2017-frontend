@@ -1,12 +1,12 @@
-import React, { PropTypes } from 'react';
-import DateInput from './DateInput';
+import React, { PropTypes } from 'react'
+import DateInput from './DateInput'
 
 const ValidDateTimeInput = (props) => {
-  const { name, value, label, placeholder, disabled, onChange, error, showError, helpText, showHelpText, className } = props;
-  const errorClass = (error && showError) ? "has-error" : "";
+  const { name, value, label, placeholder, disabled, onChange, error, showError, helpText, showHelpText, className } = props
+  const errorClass = (error && showError) ? 'has-error' : ''
   return (
     <div className={`validFormField form-group ${className} ${errorClass}`}>
-      {label && <label className="control-label" htmlFor={name}>{label}</label>}
+      {label && <label className='control-label' htmlFor={name}>{label}</label>}
       <DateInput
         name={name}
         disabled={disabled}
@@ -14,10 +14,10 @@ const ValidDateTimeInput = (props) => {
         value={value}
         onChange={onChange}
       />
-      {(helpText && showHelpText) && <i className="help hint">{helpText}</i>}
+      {(helpText && showHelpText) && <i className='help hint'>{helpText}</i>}
     </div>
-  );
-};
+  )
+}
 
 ValidDateTimeInput.propTypes = {
   // gotta name yo fields
@@ -33,15 +33,15 @@ ValidDateTimeInput.propTypes = {
   // error text, if any
   error: PropTypes.string,
   // explicit control over weather or not to display validation
-  showError: PropTypes.bool,
-};
+  showError: PropTypes.bool
+}
 
 ValidDateTimeInput.defaultProps = {
-  name: "",
+  name: '',
   value: new Date(),
-  placeholder: "",
-  helpText: "",
-  showHelpText: false,
-};
+  placeholder: '',
+  helpText: '',
+  showHelpText: false
+}
 
-export default ValidDateTimeInput;
+export default ValidDateTimeInput

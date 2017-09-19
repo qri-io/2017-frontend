@@ -18,28 +18,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import React from 'react';
+import React from 'react'
 
-import PureRenderComponent from './PureRenderComponent';
-import linkPropTypes from '../propTypes/link';
+import PureRenderComponent from './PureRenderComponent'
+import linkPropTypes from '../propTypes/link'
 
 export default class ForceGraphLink extends PureRenderComponent {
-  static get propTypes() {
+  static get propTypes () {
     return {
-      link: linkPropTypes.isRequired,
-    };
+      link: linkPropTypes.isRequired
+    }
   }
 
-  static get defaultProps() {
+  static get defaultProps () {
     return {
       className: '',
       opacity: 0.6,
-      stroke: '#999',
-    };
+      stroke: '#999'
+    }
   }
 
-  render() {
-    const { link, strokeWidth, className, ...spreadable } = this.props;
+  render () {
+    const { link, strokeWidth, className, ...spreadable } = this.props
 
     return (
       <line
@@ -47,6 +47,6 @@ export default class ForceGraphLink extends PureRenderComponent {
         strokeWidth={strokeWidth || Math.sqrt(link.value)}
         {...spreadable}
       />
-    );
+    )
   }
 }

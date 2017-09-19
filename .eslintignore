@@ -1,0 +1,11 @@
+/server.js
+/src/routes.js
+/css
+/dist
+/scripts
+/src/scss/*
+/src/js/ace
+/src/js/__mocks__
+/src/js/utils/__mocks__
+/src/js/components/__tests__
+/src/js/selectors/__tests__

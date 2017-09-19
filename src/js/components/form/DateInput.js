@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react';
-import MonthCalendar from './MonthCalendar';
+import React, { PropTypes } from 'react'
+import MonthCalendar from './MonthCalendar'
 
 /*
  * DateInput form field.
@@ -7,79 +7,78 @@ import MonthCalendar from './MonthCalendar';
  * Uses state to track weather or not the field is focused.
  */
 
-const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 // const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 class DateInput extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
-      focused: false,
+      focused: false
     };
 
     [
-      "blur",
-      "focus",
-      "stringValue",
-      "onFocus",
-      "onBlur",
-      "onInputChange",
-      "onCalendarChange",
-      "onCalendarMouseDown",
-      "onCalendarTouchEnd",
-    ].forEach((m) => { this[m] = this[m].bind(this); });
+      'blur',
+      'focus',
+      'stringValue',
+      'onFocus',
+      'onBlur',
+      'onInputChange',
+      'onCalendarChange',
+      'onCalendarMouseDown',
+      'onCalendarTouchEnd'
+    ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
   // handlers
-  onFocus() {
-    this.setState({ focused: true });
+  onFocus () {
+    this.setState({ focused: true })
   }
-  onBlur() {
-    this.setState({ focused: false });
+  onBlur () {
+    this.setState({ focused: false })
   }
-  onInputChange(e) {
-    this.props.onChange(this.props.name, e.target.value, e);
+  onInputChange (e) {
+    this.props.onChange(this.props.name, e.target.value, e)
   }
-  onCalendarChange(date, e) {
-    this.props.onChange(this.props.name, date, e);
+  onCalendarChange (date, e) {
+    this.props.onChange(this.props.name, date, e)
     // Once the User has picked a value, close the calendar
-    this.setState({ focused: false });
+    this.setState({ focused: false })
   }
   // Cancel Blur event triggered by clicking the calendar
-  onCalendarMouseDown(e) {
-    e.preventDefault();
+  onCalendarMouseDown (e) {
+    e.preventDefault()
     // React.findDOMNode(this.refs["field"]).focus();
   }
-  onCalendarTouchEnd(e) {
-    e.stopPropagation();
+  onCalendarTouchEnd (e) {
+    e.stopPropagation()
   }
 
   // methods
-  blur() {
-    this.setState({ focused: false });
+  blur () {
+    this.setState({ focused: false })
   }
-  focus() {
-    this.setState({ focused: true });
+  focus () {
+    this.setState({ focused: true })
   }
-  stringValue(date) {
-    if (!date) { return ""; }
-    return `${months[date.getMonth()]} ${date.getDate()} ${date.getFullYear()}`;
+  stringValue (date) {
+    if (!date) { return '' }
+    return `${months[date.getMonth()]} ${date.getDate()} ${date.getFullYear()}`
   }
-
 
   // Render
-  render() {
-    const { value } = this.props;
+  render () {
+    const { value } = this.props
 
-    let stringValue = this.stringValue(value);
+    let stringValue = this.stringValue(value)
 
     return (
       <div className={this.props.className}>
         <input
           readOnly
-          ref={(el) => { this.field = el; }}
-          type="text"
-          className="form-control"
+          ref={(el) => { this.field = el }}
+          type='text'
+          className='form-control'
           onClick={this.onFocus}
           onTouchEnd={this.onFocus}
           onFocus={this.onFocus}
@@ -95,7 +94,7 @@ class DateInput extends React.Component {
             onChange={this.onCalendarChange}
           />}
       </div>
-    );
+    )
   }
 }
 
@@ -105,12 +104,12 @@ DateInput.propTypes = {
   // change handler in the form (value, name)
   onChange: PropTypes.func,
   // Should be a Date object. Defaults to today.
-  value: PropTypes.object,
-};
+  value: PropTypes.object
+}
 
 DateInput.defaultProps = {
-  className: "dateInput",
-  value: new Date(),
-};
+  className: 'dateInput',
+  value: new Date()
+}
 
-export default DateInput;
+export default DateInput

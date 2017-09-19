@@ -1,21 +1,21 @@
-'use strict';
+'use strict'
 
-var path = require('path');
-var webpack = require('webpack');
+var path = require('path')
+var webpack = require('webpack')
 
 var ENV = {
- "process.env.REACT_SYNTAX_HIGHLIGHTER_LIGHT_BUILD": true,
-  __BUILD__ : {
-    PRODUCTION : JSON.stringify(false),
-    DEVELOP : JSON.stringify(true),
-    STAGING : JSON.stringify(false),
+  'process.env.REACT_SYNTAX_HIGHLIGHTER_LIGHT_BUILD': true,
+  __BUILD__: {
+    PRODUCTION: JSON.stringify(false),
+    DEVELOP: JSON.stringify(true),
+    STAGING: JSON.stringify(false),
 
-    BASE_URL : JSON.stringify("http://localhost:3000"),
-    API_URL : JSON.stringify("http://localhost:3000"),
-    STATIC_ASSETS_URL : JSON.stringify("http://localhost:3000"),
-    SEGMENT_KEY : JSON.stringify("not_a_key"),
+    BASE_URL: JSON.stringify('http://localhost:3000'),
+    API_URL: JSON.stringify('http://localhost:3000'),
+    STATIC_ASSETS_URL: JSON.stringify('http://localhost:3000'),
+    SEGMENT_KEY: JSON.stringify('not_a_key')
   }
-};
+}
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -25,7 +25,7 @@ module.exports = {
   ],
   output: {
     // path: path.join(__dirname, 'dist'),
-    path : __dirname,
+    path: __dirname,
     filename: 'bundle.js',
     publicPath: '//localhost:4000/static/'
   },
@@ -45,16 +45,16 @@ module.exports = {
       {
         test: /\.js?$/,
         use: ['babel-loader'],
-        exclude: /node_modules/,
+        exclude: /node_modules/
       },
       {
         test: /\.scss$/,
         use: [
-          "style-loader",
-          "css-loader",
-          "sass-loader"
+          'style-loader',
+          'css-loader',
+          'sass-loader'
         ]
       }
     ]
   }
-};
+}

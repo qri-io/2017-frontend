@@ -1,22 +1,20 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
-import createLogger from 'redux-logger'
 import api from '../middleware/api'
 import runQuery from '../middleware/runQuery'
 import locals from '../middleware/locals'
-import globalDatasets from '../middleware/globalDatasets'
 import rootReducer from '../reducers'
 import DevTools from '../containers/DevTools'
 
 import { routerMiddleware } from 'react-router-redux'
 import { browserHistory } from 'react-router'
 
-export default function configureStore(preloadedState) {
+export default function configureStore (preloadedState) {
   const store = createStore(
     rootReducer,
     preloadedState,
     compose(
-      applyMiddleware(thunk, api, runQuery, locals, globalDatasets, routerMiddleware(browserHistory)/*, createLogger()*/),
+      applyMiddleware(thunk, api, runQuery, locals, routerMiddleware(browserHistory)/*, createLogger() */),
       DevTools.instrument()
     )
   )

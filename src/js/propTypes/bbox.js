@@ -1,4 +1,4 @@
-import { PropTypes } from 'react';
+import { PropTypes } from 'react'
 
 // bbox represents a css bounding box (position: :absolute")
 export default PropTypes.shape({
@@ -8,5 +8,5 @@ export default PropTypes.shape({
   left: PropTypes.number,
   bottom: PropTypes.number,
   right: PropTypes.number,
-  collapsed: PropTypes.bool,
-});
+  collapsed: PropTypes.bool
+})

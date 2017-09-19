@@ -1,8 +1,7 @@
-ace.define("ace/theme/qri",["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
-
-exports.isDark = true;
-exports.cssClass = "ace-qri";
-exports.cssText = ".ace-qri .ace_gutter {\
+ace.define('ace/theme/qri', ['require', 'exports', 'module', 'ace/lib/dom'], function (acequire, exports, module) {
+  exports.isDark = true
+  exports.cssClass = 'ace-qri'
+  exports.cssText = '.ace-qri .ace_gutter {\
 background: #2A3439;\
 color: #40515D\
 }\
@@ -101,8 +100,8 @@ color: #75715E\
 }\
 .ace-qri .ace_indent-guide {\
 background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWPQ0FD0ZXBzd/wPAAjVAoxeSgNeAAAAAElFTkSuQmCC) right repeat-y\
-}";
+}'
 
-var dom = acequire("../lib/dom");
-dom.importCssString(exports.cssText, exports.cssClass);
-});
+  var dom = acequire('../lib/dom')
+  dom.importCssString(exports.cssText, exports.cssClass)
+})

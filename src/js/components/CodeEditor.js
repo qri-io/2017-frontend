@@ -1,32 +1,22 @@
-import React, { PropTypes } from 'react';
-import { isEqual, debounce } from 'lodash';
-import brace from 'brace';
-import AceEditor from 'react-ace';
+import React, { PropTypes } from 'react'
+import AceEditor from 'react-ace'
 
-import 'brace/mode/pgsql';
-import '../ace/theme/qri';
+import 'brace/mode/pgsql'
+import '../ace/theme/qri'
 
-export default class CodeEditor extends React.Component {
-  render() {
-    const { name, value, onChange, editorProps } = this.props;
-
-    return (<AceEditor
-      mode="pgsql"
-      theme="qri"
-      {...this.props}
-    />); 
-  }
+const CodeEditor = (props) => {
+  return (<AceEditor mode='pgsql' theme='qri' {...props} />)
 }
 
 CodeEditor.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  editorProps: PropTypes.object,
-};
+  editorProps: PropTypes.object
+}
 
 CodeEditor.defaultProps = {
-  editorProps: { 
+  editorProps: {
     $blockScrolling: true,
     fontSize: 14,
     showGutter: true,
@@ -41,8 +31,10 @@ CodeEditor.defaultProps = {
     showPrintMargin: true,
     tabSize: 2,
     cursorStart: 1,
-    wrapEnabled: false,
+    wrapEnabled: false
     // enableBasicAutocompletion: false,
     // enableLiveAutocompletion: false,
-  },
-};
+  }
+}
+
+export default CodeEditor

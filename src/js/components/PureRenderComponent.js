@@ -18,11 +18,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import { Component } from 'react';
-import shallowCompare from 'react-addons-shallow-compare';
+import { Component } from 'react'
+import shallowCompare from 'react-addons-shallow-compare'
 
 export default class PureRenderComponent extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
+  shouldComponentUpdate (nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState)
   }
 }
