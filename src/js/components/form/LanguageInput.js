@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 
-const LanguageInput = ({ label, name, value, error, showError, onChange, helpText, showHelpText }) => {
+const LanguageInput = ({ label, name, value, error, showError, helpText, showHelpText, onChange }) => {
   return (
     <div className={(error && showError) ? 'validFormField form-group has-error' : 'validFormField form-group'}>
       {label && <label className='control-label' htmlFor={name}>{label}</label>}
@@ -38,12 +38,12 @@ LanguageInput.propTypes = {
   error: PropTypes.string,
   // weather or not to actually display any passed-in errors
   showError: PropTypes.bool,
-  // change handler func. will be called with (name, value, event)
-  onChange: PropTypes.func.isRequired,
   // short message to help the user
   helpText: PropTypes.string,
   // weather to show help text or not
   showHelpText: PropTypes.bool
+  // change handler func. will be called with (name, value, event)
+  onChange: PropTypes.func.isRequired,
 }
 
 LanguageInput.defaultProps = {

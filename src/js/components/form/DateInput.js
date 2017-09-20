@@ -104,7 +104,7 @@ DateInput.propTypes = {
   // change handler in the form (value, name)
   onChange: PropTypes.func.isRequired,
   // Should be a Date object. Defaults to today.
-  value: PropTypes.instanceOf(Date)
+  value: PropTypes.instanceOf(Date).isRequired
 }
 
 DateInput.defaultProps = {

@@ -34,12 +34,12 @@ UrlInput.propTypes = {
   value: PropTypes.string.isRequired,
   // placeholder text for an empty field. default: ""
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-  // change handler func. will be called with (name, value, event)
-  onChange: PropTypes.func.isRequired,
   // short message to help the user
   helpText: PropTypes.string,
   // weather to show help text or not
   showHelpText: PropTypes.bool
+  // change handler func. will be called with (name, value, event)
+  onChange: PropTypes.func.isRequired,
 }
 
 UrlInput.defaultProps = {

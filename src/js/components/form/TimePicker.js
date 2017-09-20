@@ -37,12 +37,10 @@ class TimePicker extends Component {
     return false
   }
   onClockChange (value) {
-    if (typeof this.props.onChange === 'function') {
-      this.props.onChange({
-        name: this.props.name,
-        value
-      })
-    }
+    this.props.onChange({
+      name: this.props.name,
+      value
+    })
   }
 
   // return a string representation of the time
@@ -53,9 +51,7 @@ class TimePicker extends Component {
       return ''
     }
 
-    if (typeof val === 'number') {
-      val = new Date(val)
-    }
+    val = new Date(val)
 
     let h = val.getHours()
     let ph = (h <= 12) ? 0 : 1
@@ -102,7 +98,6 @@ TimePicker.PropTypes = {
   name: PropTypes.string,
   value: PropTypes.instanceOf(Date).isRequired,
   onChange: PropTypes.func.isRequired
-
 }
 
 export default TimePicker

@@ -140,8 +140,35 @@ const MetadataForm = ({ data, validation, onChange, onCancel, onSubmit, showHelp
 }
 
 MetadataForm.propTypes = {
-  data: PropTypes.object.isRequired,
-  validation: PropTypes.object,
+  data: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    // POD metadata says theme is an array of strings,
+    // however the ValidInput component, to which it gets passed
+    // requires a string, not array of strings
+    theme: PropTypes.arrayOf(PropTypes.string).isRequired,
+    // POD metadata says keyword is an array of strings,
+    // however the TagInput component, to which it gets passed
+    // requires a string, not array of strings
+    keyword: PropTypes.arrayOf(PropTypes.string).isRequired,
+    modified: PropTypes.instanceOf(Date).isRequired,
+    issued: PropTypes.instanceOf(Date).isRequired,
+    identifier: PropTypes.string.isRequired,
+    // may be too strict:
+    // accessLevel: PropTypes.oneOf(['public', 'restricted public', 'non-public']),isRequired,
+    accessLevel: PropTypes.string.isRequired,
+    license: PropTypes.string.isRequired,
+    // POD metadata says language is an array of strings,
+    // however the UrlInput component, to which it gets passed
+    // requires a string, not array of strings
+    language: PropTypes.arrayOf(PropTypes.string),
+    landingPage: PropTypes.string.isRequired
+
+  }).isRequired,
+  validation: PropTypes.shape({
+    title: PropTypes.string,
+    description: PropTypes.string
+  }),
   showHelpText: PropTypes.bool,
 
   onChange: PropTypes.func.isRequired,

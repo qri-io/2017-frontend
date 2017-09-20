@@ -11,6 +11,9 @@ const CodeEditor = (props) => {
 CodeEditor.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
+  completers: PropTypes.arrayOf(PropTypes.object),
+  width: PropTypes.string,
+  height: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   editorProps: PropTypes.object
 }

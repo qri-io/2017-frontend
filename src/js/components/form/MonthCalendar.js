@@ -38,11 +38,7 @@ class MonthCalendar extends React.Component {
     let value = +e.target.getAttribute('data-value')
     let d = new Date(value)
 
-    if (typeof this.props.onChange === 'function') {
-      this.props.onChange(d)
-    } else if (typeof this.props.onValueChange === 'function') {
-      this.props.onValueChange(d, this.props.name)
-    }
+    this.props.onChange(d)
   }
   onPrevMonth () {
     let d = this.state.displayMonth
@@ -151,9 +147,7 @@ MonthCalendar.propTypes = {
   onMouseDown: PropTypes.func,
   onTouchEnd: PropTypes.func,
   value: PropTypes.instanceOf(Date).isRequired,
-  onChange: PropTypes.func.isRequired,
-  // onChange handler in the form (value, name)
-  onValueChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired
 }
 
 MonthCalendar.defaultProps = {
