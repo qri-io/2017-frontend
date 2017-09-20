@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { LineChart } from 'rd3'
 
 import ChartOptionsPicker from './ChartOptionsPicker'
@@ -43,7 +43,7 @@ function chartDimensions (size) {
   return { width, height }
 }
 
-const ResultsChart = ({ results, title, margins, options, onOptionsChange, device }) => {
+const ResultsChart = ({ results, title, margins, options, device, onOptionsChange }) => {
   if (!results) {
     return (
       <div>
@@ -56,21 +56,17 @@ const ResultsChart = ({ results, title, margins, options, onOptionsChange, devic
   let xIndex = options.xIndex
   let yIndex = options.yIndex
 
-  if (typeof options.x_axis === 'string') {
-    results.schema.forEach((col, i) => {
-      if (col.name === options.x_axis) {
-        xIndex = i
-      }
-    })
-  }
+  results.schema.forEach((col, i) => {
+    if (col.name === options.x_axis) {
+      xIndex = i
+    }
+  })
 
-  if (typeof options.y_axis === 'string') {
-    results.schema.forEach((col, i) => {
-      if (col.name === options.y_axis) {
-        yIndex = i
-      }
-    })
-  }
+  results.schema.forEach((col, i) => {
+    if (col.name === options.y_axis) {
+      yIndex = i
+    }
+  })
 
   if (xIndex === undefined || yIndex === undefined) {
     return (
@@ -99,10 +95,16 @@ const ResultsChart = ({ results, title, margins, options, onOptionsChange, devic
 }
 
 ResultsChart.propTypes = {
-  options: React.PropTypes.object,
+  results: PropTypes.object,
+  title: PropTypes.string,
+  margins: PropTypes.objectOf(PropTypes.number),
+  options: PropTypes.shape({
+    x_axis: PropTypes.string,
+    y_axis: PropTypes.string
+  }).isRequired,
   // size: React.PropTypes.string,
-
-  onOptionsChange: React.PropTypes.func
+  device: PropTypes.object,
+  onOptionsChange: PropTypes.func
 }
 
 ResultsChart.defaultProps = {

@@ -258,38 +258,38 @@ class GridView extends React.Component {
 GridView.propTypes = {
   // data should be an array of arrays, but can be transformed with the
   // "map" prop-func
-  data: PropTypes.array.isRequired,
+  data: PropTypes.arrayOf(propTypes.array).isRequired,
   // function to return the name of each column
-  colHeaderName: PropTypes.func,
+  colHeaderName: PropTypes.func.isRequired,
   // predicate to return the initial width of a column.
-  initialColWidth: PropTypes.func,
-  headerHeight: PropTypes.number,
-  rowHeight: PropTypes.func,
+  initialColWidth: PropTypes.func.isRequired,
+  rowHeight: PropTypes.func.isRequired,
 
   // bbox,
 
-  // show the row number
-  // showIndexColumn: PropTypes.bool,
+  headerHeight: PropTypes.number,
   // add "odd" & "even" classes rows
   zebraClasses: PropTypes.bool,
+  // show the row number
+  showIndexColumn: PropTypes.bool,
   // text to display if no data is given
   emptyText: PropTypes.string,
-  // number of columns to keep "pinned" to the left side
-  pinnedColumns: PropTypes.number,
   // should scrolling along the x axis snap to each column?
   snapColumns: PropTypes.bool,
   // width of scrollbars
   scrollBarWidth: PropTypes.number
+  // number of columns to keep "pinned" to the left side
+  pinnedColumns: PropTypes.number,
 }
 
 GridView.defaultProps = {
-  pinnedColumns: 0,
   headerHeight: 60,
   zebraClasses: true,
   showIndexColumn: true,
-  snapColumns: true,
   emptyText: 'no data to display',
+  snapColumns: true,
   scrollBarWidth: 10
+  pinnedColumns: 0,
 }
 
 export default GridView

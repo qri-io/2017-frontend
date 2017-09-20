@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { fieldsProps } from '../propTypes/datasetProps.js'
 
 const FieldsList = ({ fields }) => {
   return (
@@ -16,7 +17,7 @@ const FieldsList = ({ fields }) => {
 }
 
 FieldsList.propTypes = {
-  fields: PropTypes.array.isRequired
+  fields: fieldsProps
 }
 
 FieldsList.defaultProps = {
