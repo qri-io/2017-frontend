@@ -1,5 +1,5 @@
 /* globals __BUILD__ */
-import React from 'react'
+import React, { PropTypes } from 'react'
 
 function downloadHref (id, query, format) {
   id = encodeURIComponent(id)
@@ -24,7 +24,7 @@ const DownloadResultsButton = ({ query }) => {
 
 DownloadResultsButton.propTypes = {
   // datasetId: React.PropTypes.string,
-  query: React.PropTypes.string.isRequired
+  query: PropTypes.string.isRequired
 }
 
 DownloadResultsButton.defaultProps = {

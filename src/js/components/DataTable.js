@@ -39,13 +39,13 @@ const DataTable = ({ data, fields, fetching, fetchedAll, error, onLoadMore }) =>
 }
 
 DataTable.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.array),
   fields: PropTypes.array,
-  data: PropTypes.array,
   fetching: PropTypes.bool,
   fetchedAll: PropTypes.bool,
+  error: PropTypes.string,
   showLoadMore: PropTypes.bool,
-  onLoadMore: PropTypes.func,
-  error: PropTypes.string
+  onLoadMore: PropTypes.func
 }
 
 DataTable.defaultProps = {

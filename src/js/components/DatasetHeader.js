@@ -19,7 +19,8 @@ const DatasetHeader = ({ dataset, onDelete }) => {
 
 DatasetHeader.propTypes = {
   // dataset data model
-  dataset: PropTypes.object.isRequired
+  dataset: PropTypes.object.isRequired,
+  onDelete: PropTypes.func
 }
 
 DatasetHeader.defaultProps = {
