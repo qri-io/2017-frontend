@@ -16,7 +16,12 @@ const FieldsList = ({ fields }) => {
 }
 
 FieldsList.propTypes = {
-  fields: PropTypes.array.isRequired
+  fields: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      type: PropTypes.string
+    })
+  )
 }
 
 FieldsList.defaultProps = {
