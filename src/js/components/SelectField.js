@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react'
 // TODO - this might be really fucking broken
 export default class SelectField extends React.Component {
   render () {
-    const { label, name, value, onChange, fields } = this.props
+    const { label, name, value, fields, onChange } = this.props
     return (
       <div className='selectFieldsList form-group'>
         { label ? <label for={name} className='control-label'>{label}</label> : undefined }
@@ -19,16 +19,12 @@ export default class SelectField extends React.Component {
 }
 
 SelectField.propTypes = {
-  fields: PropTypes.array.isRequired,
-  name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string,
-
   label: PropTypes.string,
-  showError: PropTypes.bool,
-  error: PropTypes.string
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  fields: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired
 }
 
 SelectField.defaultProps = {
-  showError: false
 }

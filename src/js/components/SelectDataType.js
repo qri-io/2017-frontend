@@ -56,7 +56,14 @@ export default class SelectDataType extends React.Component {
 
 SelectDataType.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.string,
+  value: PropTypes.oneOf([
+    'integer',
+    'float',
+    'text',
+    'date',
+    'time',
+    'boolean'
+  ]),
   onChange: PropTypes.func.isRequired
 }
 

@@ -8,7 +8,8 @@ function selectFunc (fn, data, i) {
   }
 }
 
-const List = ({ data, onSelectItem, className }) => {
+const List = (props) => {
+  const { data, onSelectItem, className } = props
   return (
     <div className={className}>
       {data.map((d, i) => <props.component data={d} key={i} index={i} onSelect={selectFunc(onSelectItem, d, i)} />)}

@@ -25,9 +25,9 @@ const TabPanel = ({ index, labels = [], components, onSelectPanel }) => {
 }
 
 TabPanel.propTypes = {
+  index: PropTypes.number.isRequired,
   labels: PropTypes.array.isRequired,
   components: PropTypes.array.isRequired,
-  index: PropTypes.number.isRequired,
   onSelectPanel: PropTypes.func.isRequired
 }
 
