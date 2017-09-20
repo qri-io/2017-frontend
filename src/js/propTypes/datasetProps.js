@@ -8,13 +8,15 @@ export const formatConfigProps = PropTypes.shape({
   headerRow: PropTypes.bool
 })
 
+export const fieldsProps = PropTypes.arrayOf(
+  PropTypes.shape({
+    name: PropTypes.string,
+    type: PropTypes.string
+  })
+)
+
 export const schemaProps = PropTypes.shape({
-  fields: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      type: PropTypes.string
-    })
-  )
+  fields: fieldsProps
 })
 
 export const structureProps = PropTypes.shape({
