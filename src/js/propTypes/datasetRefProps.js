@@ -46,6 +46,6 @@ export const datasetProps = PropTypes.shape({
 
 export default PropTypes.shape({
   dataset: datasetProps.isRequired,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   path: PropTypes.string.isRequired
 })

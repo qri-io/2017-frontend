@@ -220,12 +220,8 @@ class Dataset extends React.Component {
         <div className='container'>
           <DatasetHeader datasetRef={datasetRef} onDelete={this.handleDeleteDataset} onDownload={this.handleDownloadDataset} />
           { readme ? this.renderReadme(readme) : this.renderDescription() }
-          <div className='row'>
-            <div className='col-md-12'>
-              <hr className='blue' />
-              { (dataset.structure && dataset.structure.schema) ? <FieldsList fields={dataset.structure.schema.fields} /> : <p>This dataset currently has no specified fields</p> }
-            </div>
-          </div>
+          <hr className='blue' />
+          { (dataset.structure && dataset.structure.schema) ? <FieldsList fields={dataset.structure.schema.fields} /> : <p>This dataset currently has no specified fields</p> }
           <div className='row'>
             <div className='col-md-12'>
               { this.renderEditButtons(this.props) }
