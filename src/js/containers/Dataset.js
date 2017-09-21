@@ -219,7 +219,7 @@ class Dataset extends React.Component {
     return (
       <div id='wrapper'>
         <div className='container'>
-          <DatasetHeader dataset={dataset} onDelete={this.handleDeleteDataset} onDownload={this.handleDownloadDataset} />
+          <DatasetHeader name={name} dataset={dataset} onDelete={this.handleDeleteDataset} onDownload={this.handleDownloadDataset} />
           <div className='row'>
             <div className='col-md-12'>
               {(dataset.structure && dataset.structure.schema) ? <FieldsList fields={dataset.structure.schema.fields} /> : <p>This dataset currently has no specified fields</p> }

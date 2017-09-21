@@ -7,8 +7,9 @@ const FieldsList = ({ fields }) => {
       {fields.map((field, i) => {
         return (
           <div key={i} className='field'>
-            <h5 className='name blue'>{ field.name }</h5>
+            <h5 className='name blue'>{field.title || field.name}</h5>
             <p className={`type dt-${field.type}`}>{field.type}</p>
+            { field.description ? <p className='description'>{field.description}</p> : undefined }
           </div>
         )
       })}
