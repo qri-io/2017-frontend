@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { fieldsProps } from '../propTypes/datasetProps.js'
+import { fieldsProps } from '../propTypes/datasetRefProps.js'
 
 const FieldsList = ({ fields }) => {
   return (

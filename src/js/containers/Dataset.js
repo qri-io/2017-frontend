@@ -18,6 +18,8 @@ import FieldsList from '../components/FieldsList'
 import QueryEditor from '../components/QueryEditor'
 import DataTable from '../components/DataTable'
 
+import DatasetRefProps from '../propTypes/datasetRefProps.js'
+
 class Dataset extends React.Component {
   constructor (props) {
     super(props);
@@ -212,7 +214,7 @@ class Dataset extends React.Component {
       )
     }
 
-    const { dataset } = datasetRef
+    const { name, dataset } = datasetRef
 
     return (
       <div id='wrapper'>
@@ -244,7 +246,7 @@ Dataset.propTypes = {
   // path: PropTypes.string.isRequired,
 
   // the dataset model to display
-  datasetRef: PropTypes.object,
+  datasetRef: DatasetRefProps,
   // Readme model if available
   readme: PropTypes.object,
   // default query to show if none is present

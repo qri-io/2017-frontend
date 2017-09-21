@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import Spinner from './Spinner'
-import { fieldsProps } from '../propTypes/datasetProps.js'
+import { fieldsProps } from '../propTypes/datasetRefProps.js'
 
 const DataTable = ({ data, fields, fetching, fetchedAll, error, onLoadMore }) => {
   if (!data || !fields) {

@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react'
 
+import { datasetProps } from '../propTypes/datasetRefProps.js'
+
 const DatasetHeader = ({ dataset, onDelete }) => {
   return (
     <div className='row'>
@@ -19,7 +21,7 @@ const DatasetHeader = ({ dataset, onDelete }) => {
 
 DatasetHeader.propTypes = {
   // dataset data model
-  dataset: PropTypes.object.isRequired,
+  dataset: datasetProps,
   onDelete: PropTypes.func
 }
 
