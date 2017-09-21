@@ -180,7 +180,6 @@ class Dataset extends React.Component {
     return (
       <div className='row'>
         <section className='col-md-12'>
-          <hr className='blue' />
           <p>{ datasetRef.dataset.description }</p>
         </section>
       </div>
@@ -219,20 +218,21 @@ class Dataset extends React.Component {
     return (
       <div id='wrapper'>
         <div className='container'>
-          <DatasetHeader name={name} dataset={dataset} onDelete={this.handleDeleteDataset} onDownload={this.handleDownloadDataset} />
+          <DatasetHeader datasetRef={datasetRef} onDelete={this.handleDeleteDataset} onDownload={this.handleDownloadDataset} />
+          { readme ? this.renderReadme(readme) : this.renderDescription() }
           <div className='row'>
             <div className='col-md-12'>
-              {(dataset.structure && dataset.structure.schema) ? <FieldsList fields={dataset.structure.schema.fields} /> : <p>This dataset currently has no specified fields</p> }
+              <hr className='blue' />
+              { (dataset.structure && dataset.structure.schema) ? <FieldsList fields={dataset.structure.schema.fields} /> : <p>This dataset currently has no specified fields</p> }
             </div>
           </div>
           <div className='row'>
             <div className='col-md-12'>
-              {this.renderEditButtons(this.props)}
+              { this.renderEditButtons(this.props) }
             </div>
           </div>
-          {readme ? this.renderReadme(readme) : this.renderDescription() }
           <div className='row'>
-            {this.renderData()}
+            { this.renderData() }
           </div>
         </div>
       </div>
