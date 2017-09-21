@@ -7,7 +7,9 @@ const LoadingButton = ({ loading, children, onClick }) => {
 }
 
 LoadingButton.propTypes = {
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  children: PropTypes.element,
+  onClick: PropTypes.func
 }
 
 LoadingButton.defaultProps = {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { BarChart as BC } from 'rd3'
 import ChartOptionsPicker from './ChartOptionsPicker'
 
@@ -44,7 +44,7 @@ function chartDimensions (size) {
   return { width, height }
 }
 
-const BarChart = ({ results, title, margins, options, onOptionsChange, device }) => {
+const BarChart = ({ results, title, margins, options, device, onOptionsChange }) => {
   if (!results) {
     return (
       <div>
@@ -100,9 +100,13 @@ const BarChart = ({ results, title, margins, options, onOptionsChange, device })
 }
 
 BarChart.propTypes = {
-  options: React.PropTypes.object,
+  results: PropTypes.object.isRequired,
+  title: PropTypes.string,
+  margins: PropTypes.objectOf(PropTypes.number),
+  options: PropTypes.object.isRequired,
   // size: React.PropTypes.string,
-  onOptionsChange: React.PropTypes.func
+  device: PropTypes.object.isRequired,
+  onOptionsChange: PropTypes.func
 }
 
 BarChart.defaultProps = {

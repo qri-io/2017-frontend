@@ -37,12 +37,10 @@ class TimePicker extends Component {
     return false
   }
   onClockChange (value) {
-    if (typeof this.props.onChange === 'function') {
-      this.props.onChange({
-        name: this.props.name,
-        value
-      })
-    }
+    this.props.onChange({
+      name: this.props.name,
+      value
+    })
   }
 
   // return a string representation of the time
@@ -53,9 +51,7 @@ class TimePicker extends Component {
       return ''
     }
 
-    if (typeof val === 'number') {
-      val = new Date(val)
-    }
+    val = new Date(val)
 
     let h = val.getHours()
     let ph = (h <= 12) ? 0 : 1
@@ -73,16 +69,17 @@ class TimePicker extends Component {
   render () {
     let time
     let display = this.stringValue()
+    const { value, label } = props
 
     // if (this.refs['field']) {
     //  if ($(this.refs['field']).is(':focus')) {
     if (this.state.focused) {
-      time = <Clock onMouseDown={this.onClockMouseDown} value={this.props.value} onChange={this.onClockChange} />
+      time = <Clock onMouseDown={this.onClockMouseDown} value={value} onChange={this.onClockChange} />
     }
 
     return (
       <div className='timePicker field'>
-        <label>{this.props.label}</label>
+        <label>{label}</label>
         <input
           ref={(el) => { this.field = el }}
           value={display}
@@ -99,7 +96,8 @@ class TimePicker extends Component {
 TimePicker.PropTypes = {
   label: PropTypes.string,
   name: PropTypes.string,
-  value: PropTypes.date.isRequired
+  value: PropTypes.instanceOf(Date).isRequired,
+  onChange: PropTypes.func.isRequired
 }
 
 export default TimePicker

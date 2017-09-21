@@ -53,7 +53,6 @@ TableColumnEditor.propTypes = {
   name: PropTypes.string.isRequired,
   columns: PropTypes.array.isRequired,
   // validation: PropTypes.array,
-
   onChange: PropTypes.func.isRequired
 }
 

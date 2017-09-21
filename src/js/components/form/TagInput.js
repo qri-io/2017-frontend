@@ -21,18 +21,18 @@ const TagInput = ({ label, name, showError, error, value, placeholder, onChange,
 }
 
 TagInput.propTypes = {
-  // required name for the field
-  name: PropTypes.string.isRequired,
   // if provided it'll create a label element to accompany the field
   label: PropTypes.string,
+  // required name for the field
+  name: PropTypes.string.isRequired,
+  // weather or not to actually display any passed-in errors
+  showError: PropTypes.bool,
+  // an error message to displacy
+  error: PropTypes.string,
   // value to display in the field
   value: PropTypes.string.isRequired,
   // placeholder text for an empty field. default: ""
-  placeholder: PropTypes.string,
-  // an error message to displacy
-  error: PropTypes.string,
-  // weather or not to actually display any passed-in errors
-  showError: PropTypes.bool,
+  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   // change handler func. will be called with (name, value, event)
   onChange: PropTypes.func.isRequired,
   // short message to help the user

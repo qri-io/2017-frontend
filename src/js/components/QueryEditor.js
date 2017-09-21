@@ -14,10 +14,10 @@ const QueryEditor = ({ name, query, onDownload, onRun, onChange }) => {
       <CodeEditor
         name={name}
         value={query.queryString}
-        onChange={value => onChange({ queryString: value, address: query.address })}
         completers={[datasetCompleter]}
         width='940px'
         height='200px'
+        onChange={value => onChange({ queryString: value, address: query.address })}
         // TODO - reenable when adding back completion
         // setOptions={{
         //   enableBasicAutocompletion: true,
@@ -34,7 +34,6 @@ QueryEditor.propTypes = {
   name: PropTypes.string.isRequired,
   query: PropTypes.object,
   // datasets: PropTypes.array,
-
   onRun: PropTypes.func.isRequired,
   onDownload: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired

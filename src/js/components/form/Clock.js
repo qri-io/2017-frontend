@@ -29,7 +29,9 @@ class Clock extends Component {
   // return a up-incrementer
   up (unit) {
     return (e) => {
-      let t = new Date(this.props.value)
+      const { value } = this.props
+
+      let t = new Date(value)
       e.preventDefault()
       switch (unit) {
         case 'hours':
@@ -44,16 +46,18 @@ class Clock extends Component {
         default:
           break
       }
-      t.setYear(this.props.value.getFullYear())
-      t.setMonth(this.props.value.getMonth())
-      t.setDate(this.props.value.getDate())
+      t.setYear(value.getFullYear())
+      t.setMonth(value.getMonth())
+      t.setDate(value.getDate())
       this.handleChange(t, e)
     }
   }
   // return an down-incrementer
   down (unit) {
     return (e) => {
-      let t = new Date(this.props.value)
+      const { value } = this.props
+
+      let t = new Date(value)
       e.preventDefault()
       switch (unit) {
         case 'hours':
@@ -68,18 +72,18 @@ class Clock extends Component {
         default:
           break
       }
-      t.setYear(this.props.value.getFullYear())
-      t.setMonth(this.props.value.getMonth())
-      t.setDate(this.props.value.getDate())
+      t.setYear(value.getFullYear())
+      t.setMonth(value.getMonth())
+      t.setDate(value.getDate())
       this.handleChange(t, e)
     }
   }
   // render
   render () {
-    const value = this.props.value
+    const { value, onMouseDown } = this.props
 
     return (
-      <div className='clock' onMouseDown={this.props.onMouseDown}>
+      <div className='clock' onMouseDown={onMouseDown}>
         <div className='hours segment'>
           <a onClick={this.up('hours')} onTouchEnd={this.up('hours')} className='ss-icon'>ascend</a>
           <h5>{() => {
@@ -111,11 +115,11 @@ class Clock extends Component {
 }
 
 Clock.propTypes = {
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
   // disabled: PropTypes.bool,
-  // must be a valid date object
-  value: PropTypes.object.isRequired,
-  onChange: PropTypes.func.isRequired
+  value: PropTypes.instanceOf(Date).isRequired,
+  onChange: PropTypes.func.isRequired,
+  onMouseDown: PropTypes.func
 }
 
 export default Clock

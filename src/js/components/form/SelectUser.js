@@ -28,7 +28,7 @@ SelectUser.propTypes = {
   value: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func.isRequired
 }
 
 export default SelectUser

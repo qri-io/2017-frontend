@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import Spinner from './Spinner'
+import { fieldsProps } from '../propTypes/datasetProps.js'
 
 const DataTable = ({ data, fields, fetching, fetchedAll, error, onLoadMore }) => {
   if (!data || !fields) {
@@ -39,13 +40,13 @@ const DataTable = ({ data, fields, fetching, fetchedAll, error, onLoadMore }) =>
 }
 
 DataTable.propTypes = {
-  fields: PropTypes.array,
-  data: PropTypes.array,
+  data: PropTypes.arrayOf(PropTypes.array),
+  fields: fieldsProps,
   fetching: PropTypes.bool,
   fetchedAll: PropTypes.bool,
+  error: PropTypes.string,
   showLoadMore: PropTypes.bool,
-  onLoadMore: PropTypes.func,
-  error: PropTypes.string
+  onLoadMore: PropTypes.func
 }
 
 DataTable.defaultProps = {

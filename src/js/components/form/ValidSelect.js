@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 
-const ValidSelect = (props) => {
-  const { label, name, className, options, showError, error, value, onChange, helpText, showHelpText } = props
+const ValidSelect = ({ label, name, className, options, showError, error, value, helpText, showHelpText, onChange }) => {
   const errorClass = (error && showError) ? 'has-error' : ''
   return (
     <div className={`validFormField form-group ${errorClass} ${className}`}>
@@ -17,31 +16,30 @@ const ValidSelect = (props) => {
 }
 
 ValidSelect.propTypes = {
-  // required name for the field
-  name: PropTypes.string.isRequired,
   // if provided it'll create a label element to accompany the field
   label: PropTypes.string,
-  // value to display in the field
-  value: PropTypes.string.isRequired,
+  // required name for the field
+  name: PropTypes.string.isRequired,
+  // className will set on the containing div
+  className: PropTypes.string,
   // array of option strings
-  options: PropTypes.array.isRequired,
-  // an error message to displacy
-  error: PropTypes.string,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
   // weather or not to actually display any passed-in errors
   showError: PropTypes.bool,
-  // change handler func. will be called with (name, value, event)
-  onChange: PropTypes.func.isRequired,
+  // value to display in the field
+  value: PropTypes.string.isRequired,
   // short message to help the user
   helpText: PropTypes.string,
   // weather to show help text or not
   showHelpText: PropTypes.bool
+  // change handler func. will be called with (name, value, event)
+  onChange: PropTypes.func.isRequired,
 }
 
 ValidSelect.defaultProps = {
   name: undefined,
-  error: undefined,
   showError: true,
-  placeholder: '',
+  error: undefined,
   helpText: '',
   showHelpText: false
 }

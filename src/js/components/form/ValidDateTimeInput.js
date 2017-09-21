@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react'
 import DateInput from './DateInput'
 
-const ValidDateTimeInput = (props) => {
-  const { name, value, label, placeholder, disabled, onChange, error, showError, helpText, showHelpText, className } = props
+const ValidDateTimeInput = ({ name, value, label, placeholder, disabled, error, showError, helpText, showHelpText, className, onChange }) => {
   const errorClass = (error && showError) ? 'has-error' : ''
   return (
     <div className={`validFormField form-group ${className} ${errorClass}`}>
@@ -22,10 +21,10 @@ const ValidDateTimeInput = (props) => {
 ValidDateTimeInput.propTypes = {
   // gotta name yo fields
   name: PropTypes.string.isRequired,
+  // if provided it'll create a label element to accompany the field
+  label: PropTypes.string,
   // field value
-  value: PropTypes.object,
-  // onChange in the form (value, name)
-  onChange: PropTypes.func.isRequired,
+  value: PropTypes.instanceOf(Date),
   // placeholder text
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   // enable / disable the field
@@ -34,6 +33,14 @@ ValidDateTimeInput.propTypes = {
   error: PropTypes.string,
   // explicit control over weather or not to display validation
   showError: PropTypes.bool
+  // short message to help the user
+  helpText: PropTypes.string,
+  // weather to show help text or not
+  showHelpText: PropTypes.bool
+  // className will set on the containing div
+  className: PropTypes.string,
+  // onChange in the form (value, name)
+  onChange: PropTypes.func.isRequired
 }
 
 ValidDateTimeInput.defaultProps = {

@@ -10,9 +10,9 @@ const ProgressBar = ({ total, progress, size, backgroundColor }) => {
 }
 
 ProgressBar.propTypes = {
-  size: PropTypes.string,
   total: PropTypes.number.isRequired,
   progress: PropTypes.number.isRequired,
+  size: PropTypes.string,
   backgroundColor: PropTypes.string
 }
 

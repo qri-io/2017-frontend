@@ -10,10 +10,12 @@ lowlight.registerLanguage('sql', sql)
 export default class SqlCode extends React.Component {
   render () {
     return (
+      const { title, statement, slug } = this.props
+
       <div className='sqlCode'>
-        <small>{this.props.title || 'query'}</small>
-        <small className='load'><Link to={`/console?slug=${this.props.slug}`}>load in console</Link></small>
-        <SyntaxHighlighter language='sql' style={qri}>{this.props.statement}</SyntaxHighlighter>
+        <small>{title || 'query'}</small>
+        <small className='load'><Link to={`/console?slug=${slug}`}>load in console</Link></small>
+        <SyntaxHighlighter language='sql' style={qri}>{statement}</SyntaxHighlighter>
       </div>
     )
   }

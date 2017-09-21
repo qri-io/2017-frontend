@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react'
 import DateInput from './DateInput'
 
-const ValidDateInput = (props) => {
-  const { name, label, valid, value, placeholder, disabled, onChange, helpText, showHelpText, className, showValidation } = props
+const ValidDateInput = ({ name, label, valid, value, placeholder, disabled, helpText, showHelpText, className, showValidation, onChange }) => {
   let validClass = ''
   let message
 
@@ -24,34 +23,36 @@ const ValidDateInput = (props) => {
 ValidDateInput.propTypes = {
   // gotta name yo fields
   name: PropTypes.string.isRequired,
-  // field value
-  value: PropTypes.object,
-  // onChange in the form (value, name)
-  onChange: PropTypes.func,
-  // placeholder text
-  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  // if provided it'll create a label element to accompany the field
+  label: PropTypes.string,
   // leave undefined to display no valid
   valid: PropTypes.bool,
+  // field value
+  value: PropTypes.instanceOf(Date),
+  // placeholder text
+  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   // enable / disable the field
   disabled: PropTypes.bool,
-  // className will set on the containing div
-  className: PropTypes.string,
-  // explicit control over weather or not to display validation
-  showValidation: PropTypes.bool,
   // short message to help the user
   helpText: PropTypes.string,
   // weather to show help text or not
   showHelpText: PropTypes.bool
+  // className will set on the containing div
+  className: PropTypes.string,
+  // explicit control over weather or not to display validation
+  showValidation: PropTypes.bool,
+  // onChange in the form (value, name)
+  onChange: PropTypes.func.isRequired
 }
 
 ValidDateInput.defaultProps = {
   name: '',
   value: new Date(),
   placeholder: '',
-  className: ' validTextArea field',
-  showValidationIcon: false,
   helpText: '',
-  showHelpText: false
+  showHelpText: false,
+  className: ' validTextArea field',
+  showValidationIcon: false
 }
 
 export default ValidDateInput

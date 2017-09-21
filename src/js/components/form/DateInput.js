@@ -68,12 +68,12 @@ class DateInput extends React.Component {
 
   // Render
   render () {
-    const { value } = this.props
+    const { value, className } = this.props
 
     let stringValue = this.stringValue(value)
 
     return (
-      <div className={this.props.className}>
+      <div className={className}>
         <input
           readOnly
           ref={(el) => { this.field = el }}
@@ -88,7 +88,7 @@ class DateInput extends React.Component {
         />
         {this.state.focused &&
           <MonthCalendar
-            value={this.props.value}
+            value={value}
             onMouseDown={this.onCalendarMouseDown}
             onTouchEnd={this.onCalendarTouchEnd}
             onChange={this.onCalendarChange}
@@ -102,9 +102,9 @@ DateInput.propTypes = {
   className: PropTypes.string,
   name: PropTypes.string.isRequired,
   // change handler in the form (value, name)
-  onChange: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
   // Should be a Date object. Defaults to today.
-  value: PropTypes.object
+  value: PropTypes.instanceOf(Date).isRequired
 }
 
 DateInput.defaultProps = {
