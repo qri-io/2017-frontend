@@ -14,8 +14,8 @@ CodeEditor.propTypes = {
   completers: PropTypes.arrayOf(PropTypes.object),
   width: PropTypes.string,
   height: PropTypes.string,
-  editorProps: PropTypes.object
-  onChange: PropTypes.func.isRequired,
+  editorProps: PropTypes.object,
+  onChange: PropTypes.func.isRequired
 }
 
 CodeEditor.defaultProps = {

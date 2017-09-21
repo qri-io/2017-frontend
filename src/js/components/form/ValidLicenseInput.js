@@ -37,9 +37,9 @@ ValidLicenseInput.propTypes = {
   // short message to help the user
   helpText: PropTypes.string,
   // weather to show help text or not
-  showHelpText: PropTypes.bool
+  showHelpText: PropTypes.bool,
   // change handler func. will be called with (name, value, event)
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
 }
 
 ValidLicenseInput.defaultProps = {
