@@ -11,6 +11,7 @@ import { selectDataset, selectDatasetData } from '../selectors/dataset'
 import { selectSessionUser } from '../selectors/session'
 // import { selectQueryById } from '../selectors/query';
 
+import TabPanel from '../components/TabPanel'
 import List from '../components/List'
 import DatasetItem from '../components/item/DatasetItem'
 import DatasetHeader from '../components/DatasetHeader'
@@ -22,7 +23,8 @@ import DatasetRefProps from '../propTypes/datasetRefProps.js'
 
 class Dataset extends React.Component {
   constructor (props) {
-    super(props);
+    super(props)
+    this.state = {tabIndex: 0};
 
     [
       'handleRunQuery',
@@ -32,8 +34,16 @@ class Dataset extends React.Component {
       'handleDownloadQuery',
       'handleDownloadDataset',
       'handleDeleteDataset',
+      'changeTabIndex',
+      'renderFieldsList',
+      'renderEditButtons',
+      'renderResults',
+      'renderReadme',
+      'renderQueryAndResults',
+      'renderData',
+      'renderDescription',
       'renderChildDatasets',
-      'renderData'
+      'renderTabPanel'
     ].forEach((m) => { this[m] = this[m].bind(this) })
 
     // this.debouncedSetQuery = debounce(props.setQuery, 200)
@@ -109,6 +119,18 @@ class Dataset extends React.Component {
     })
   }
 
+  changeTabIndex (index) {
+    this.setState({tabIndex: index})
+  }
+
+  renderFieldsList (dataset) {
+    if (dataset.structure && dataset.structure.schema) {
+      return (<FieldsList fields={dataset.structure.schema.fields} />)
+    } else {
+      return (<p>This dataset currently has no specified fields</p>)
+    }
+  }
+
   renderEditButtons (props) {
     const { path, permissions } = props
 
@@ -137,8 +159,8 @@ class Dataset extends React.Component {
     )
   }
 
-  renderReadme (readme) {
-    if (!readme) return undefined
+  renderReadme (readme, dataset) {
+    if (!readme) return this.renderDescription(dataset)
     return (
       <div className='row'>
         <section className='col-md-12'>
@@ -166,21 +188,22 @@ class Dataset extends React.Component {
 
     if (!data || !structure) { return undefined }
     return (
-      <div className='col-md-12'>
-        <hr className='green' />
-        <h4 className='green'>Data</h4>
-        <DataTable fields={structure.schema.fields} data={data} fetching={false} fetchedAll onLoadMore={this.handleLoadMoreResults} />
+      <div className='Row'>
+        <div className='col-md-12'>
+          <hr className='green' />
+          <h4 className='green'>Data</h4>
+          <DataTable fields={structure.schema.fields} data={data} fetching={false} fetchedAll onLoadMore={this.handleLoadMoreResults} />
+        </div>
       </div>
     )
   }
 
-  renderDescription () {
-    const { datasetRef } = this.props
-    if (!datasetRef.dataset.description) { return undefined }
+  renderDescription (dataset) {
+    if (!dataset.description) { return <p>No description given for this dataset</p> }
     return (
       <div className='row'>
         <section className='col-md-12'>
-          <p>{ datasetRef.dataset.description }</p>
+          <p>{ dataset.description }</p>
         </section>
       </div>
     )
@@ -196,6 +219,35 @@ class Dataset extends React.Component {
         <List component={DatasetItem} data={this.props.descendants} />
       </div>
     )
+  }
+
+  renderTabPanel (readme, dataset, tabIndex) {
+    if (readme || dataset.description) {
+      return (
+        <TabPanel
+          index={tabIndex}
+          labels={['Description', 'Metadata', 'Data']}
+          onSelectPanel={this.changeTabIndex}
+          components={[
+            this.renderReadme(readme, dataset),
+            this.renderFieldsList(dataset),
+            this.renderData()
+          ]}
+        />
+      )
+    } else {
+      return (
+        <TabPanel
+          index={tabIndex}
+          labels={['Metadata', 'Data']}
+          onSelectPanel={this.changeTabIndex}
+          components={[
+            this.renderFieldsList(dataset),
+            this.renderData()
+          ]}
+        />
+      )
+    }
   }
 
   render () {
@@ -214,21 +266,18 @@ class Dataset extends React.Component {
     }
 
     const { name, dataset } = datasetRef
+    const tabIndex = this.state.tabIndex
 
     return (
       <div id='wrapper'>
         <div className='container'>
           <DatasetHeader datasetRef={datasetRef} onDelete={this.handleDeleteDataset} onDownload={this.handleDownloadDataset} />
-          { readme ? this.renderReadme(readme) : this.renderDescription() }
           <hr className='blue' />
-          { (dataset.structure && dataset.structure.schema) ? <FieldsList fields={dataset.structure.schema.fields} /> : <p>This dataset currently has no specified fields</p> }
+          {this.renderTabPanel(readme, dataset, tabIndex)}
           <div className='row'>
             <div className='col-md-12'>
               { this.renderEditButtons(this.props) }
             </div>
-          </div>
-          <div className='row'>
-            { this.renderData() }
           </div>
         </div>
       </div>
