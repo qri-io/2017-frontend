@@ -1,4 +1,4 @@
-import React { PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import { BarChart as BC } from 'rd3'
 import ChartOptionsPicker from './ChartOptionsPicker'
 

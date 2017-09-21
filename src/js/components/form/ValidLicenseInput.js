@@ -32,7 +32,7 @@ ValidLicenseInput.propTypes = {
   value: PropTypes.string.isRequired,
   // weather or not to actually display any passed-in errors
   showError: PropTypes.bool,
-  // an error message to displacy
+  // an error message to display
   error: PropTypes.string,
   // short message to help the user
   helpText: PropTypes.string,

@@ -29,7 +29,7 @@ class Clock extends Component {
   // return a up-incrementer
   up (unit) {
     return (e) => {
-      const value = this.props.value
+      const { value } = this.props
 
       let t = new Date(value)
       e.preventDefault()
@@ -55,7 +55,7 @@ class Clock extends Component {
   // return an down-incrementer
   down (unit) {
     return (e) => {
-      const value = this.props.value
+      const { value } = this.props
 
       let t = new Date(value)
       e.preventDefault()
