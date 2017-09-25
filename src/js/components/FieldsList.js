@@ -35,9 +35,9 @@ export default class FieldsList extends React.Component {
           {fields.map((field, i) => {
             return (
               <div key={i} className='relative field col-md-4' onMouseEnter={descriptionTrigger(i, this.onShowDescription)} onMouseLeave={descriptionTrigger(i, this.onHideDescription)}>
-                <p className='purple absolute' >{field.title || field.name}<span className={`type dt-${field.type}`}><small>                                                                                                                                                                                                                                                                                                              {field.type}</small></span>
+                <p className='purple field-title' >{field.title || field.name}<span className={`type dt-${field.type}`}><small>                                                                                                                                                                                                                                                                                                                                                                          {field.type}</small></span>
                 </p>
-                { field.description && (i === descriptionIndex) && (field.description !== field.title) ? <p className='absolute description'>{field.description}</p> : undefined }
+                { field.description && (i === descriptionIndex) && (field.description !== field.title) ? <div className='absolute description'><div className='description-tail' />{field.description}</div> : undefined }
               </div>
             )
           })}
