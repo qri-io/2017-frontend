@@ -6,10 +6,31 @@
 		clear: both;
 	}
 	.field {
+		position: relative;
 		float: left;
 		margin-right: 15px;
 		padding-right: 10px;
 		padding-top: 6px;
 		//border-top: 1px solid $blue;
 	}
+}
+
+.absolute {
+	position: absolute;
+}
+
+.relative {
+	position: relative;
+}
+
+.description {
+	z-index: 10;
+	background: #46585f;
+	padding: 5px;
+	width: 90%;
+}
+
+.field {
+	height: 55px;
+	padding: 5px;
 }

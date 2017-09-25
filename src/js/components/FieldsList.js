@@ -7,30 +7,44 @@ function descriptionTrigger (i, fn) {
   }
 }
 
-function onMouseEnter (i) {
-  console.log('entered ' + i + '!')
-}
+export default class FieldsList extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {descriptionIndex: -1};
 
-function onMouseLeave (i) {
-  console.log('left ' + i + '!')
-}
+    [
+      'onShowDescription',
+      'onHideDescription'
+    ].forEach((m) => { this[m] = this[m].bind(this) })
+  }
 
-const FieldsList = ({ fields }) => {
-  return (
-    <div className='Row'>
-      <div className='col-md-12'>
-        {fields.map((field, i) => {
-          return (
-            <div key={i} className='field col-md-4'>
-              <p className='purple' onMouseEnter={descriptionTrigger(i, onMouseEnter)} onMouseLeave={descriptionTrigger(i, onMouseLeave)}>{field.title || field.name}<span className={`type dt-${field.type}`}><small>                                                                                                                {field.type}</small></span>
-              </p>
-              { field.description ? <p id={`description-${i}`} className='description display-none'>{field.description}</p> : undefined }
-            </div>
-          )
-        })}
+  onShowDescription (i) {
+    this.setState({ descriptionIndex: i })
+  }
+
+  onHideDescription (i) {
+    this.setState({ descriptionIndex: -1 })
+  }
+
+  render () {
+    const { fields } = this.props
+    const descriptionIndex = this.state.descriptionIndex
+    return (
+      <div className='Row'>
+        <div className='col-md-12'>
+          {fields.map((field, i) => {
+            return (
+              <div key={i} className='relative field col-md-4' onMouseEnter={descriptionTrigger(i, this.onShowDescription)} onMouseLeave={descriptionTrigger(i, this.onHideDescription)}>
+                <p className='purple absolute' >{field.title || field.name}<span className={`type dt-${field.type}`}><small>                                                                                                                                                                                                                                                                                                              {field.type}</small></span>
+                </p>
+                { field.description && (i === descriptionIndex) && (field.description !== field.title) ? <p className='absolute description'>{field.description}</p> : undefined }
+              </div>
+            )
+          })}
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 FieldsList.propTypes = {
@@ -39,5 +53,3 @@ FieldsList.propTypes = {
 
 FieldsList.defaultProps = {
 }
-
-export default FieldsList
