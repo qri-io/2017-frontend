@@ -6,6 +6,7 @@ import { setQuery, runQuery, loadQueryBySlug, loadQueryPage } from '../actions/q
 import { setTopPanel, setBottomPanel, setChartOptions } from '../actions/console'
 import { loadDatasets, loadDataset } from '../actions/dataset'
 
+import DatasetDataGrid from '../components/DatasetDataGrid'
 import TabPanel from '../components/TabPanel'
 import QueryEditor from '../components/QueryEditor'
 import DataTable from '../components/DataTable'
@@ -137,8 +138,8 @@ class Console extends React.Component {
                 labels={['Data', 'Chart', 'Datasets', 'Queries']}
                 onSelectPanel={this.handleSetBottomPanel}
                 components={[
-                  <DataTable
-                    fields={datasetRef && datasetRef.dataset && datasetRef.dataset.structure && datasetRef.dataset.structure.schema.fields}
+                  <DatasetDataGrid
+                    dataset={datasetRef && datasetRef.dataset}
                     data={data}
                     onLoadMore={this.handleLoadMoreResults}
                   />,

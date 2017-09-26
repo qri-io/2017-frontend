@@ -38,7 +38,9 @@ export const datasetProps = PropTypes.shape({
     syntax: PropTypes.string
   }),
   queryString: PropTypes.string,
-  resources: PropTypes.objectOf(PropTypes.string),
+  resources: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+  ),
   structure: structureProps,
   timestamp: PropTypes.string,
   title: PropTypes.string
