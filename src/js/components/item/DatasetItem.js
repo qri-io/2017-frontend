@@ -13,7 +13,7 @@ const DatasetItem = ({ index, data, onSelect }) => {
       <h3 onClick={handleSelect}>
         {data.name || 'unnamed dataset'}
       </h3>
-      <p className='address'>{data.path}</p>
+      <p className='address'>{(data.dataset && data.dataset.title) || ' '}</p>
       {/* <ul>
         {data.schema.fields && data.schema.fields.map((table, i) => <li key={i}>{table.name}</li>)}
       </ul> */}
