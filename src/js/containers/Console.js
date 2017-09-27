@@ -117,39 +117,33 @@ class Console extends React.Component {
 
     return (
       <div id='console'>
-        <div className='top container'>
-          <div className='col-md-12 '>
-            <TabPanel
-              index={topPanelIndex}
-              onSelectPanel={this.handleSetTopPanel}
-              labels={['Editor', 'History']}
-              components={[
-                <QueryEditor name='editor' query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />,
-                <List className='queryHistory list' data={queryHistory} component={QueryHistoryItem} onSelectItem={this.handleSelectHistoryEntry} />
-              ]}
-            />
-          </div>
+        <div className='top panel'>
+          <TabPanel
+            index={topPanelIndex}
+            onSelectPanel={this.handleSetTopPanel}
+            labels={['Editor', 'History']}
+            components={[
+              <QueryEditor name='editor' query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />,
+              <List className='queryHistory list' data={queryHistory} component={QueryHistoryItem} onSelectItem={this.handleSelectHistoryEntry} />
+            ]}
+          />
         </div>
-        <div className='bottom'>
-          <div className='container'>
-            <div className='col-md-12'>
-              <TabPanel
-                index={bottomPanelIndex}
-                labels={['Data', 'Chart', 'Datasets', 'Queries']}
-                onSelectPanel={this.handleSetBottomPanel}
-                components={[
-                  <DatasetDataGrid
-                    dataset={datasetRef && datasetRef.dataset}
-                    data={data}
-                    onLoadMore={this.handleLoadMoreResults}
-                  />,
-                  <h3>TODO - restore results chart</h3>,
-                  <Datasets />,
-                  <List className='queryItem list' data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} />
-                ]}
-              />
-            </div>
-          </div>
+        <div className='bottom panel'>
+          <TabPanel
+            index={bottomPanelIndex}
+            labels={['Data', 'Chart', 'Datasets', 'Queries']}
+            onSelectPanel={this.handleSetBottomPanel}
+            components={[
+              <DatasetDataGrid
+                dataset={datasetRef && datasetRef.dataset}
+                data={data}
+                onLoadMore={this.handleLoadMoreResults}
+              />,
+              <h3>TODO - restore results chart</h3>,
+              <Datasets skipLoad />,
+              <List className='queryItem list' data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} />
+            ]}
+          />
         </div>
       </div>
     )
