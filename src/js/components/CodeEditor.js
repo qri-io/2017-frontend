@@ -21,7 +21,7 @@ CodeEditor.propTypes = {
 CodeEditor.defaultProps = {
   editorProps: {
     $blockScrolling: true,
-    fontSize: 14,
+    fontSize: 16,
     showGutter: true,
     onChange: null,
     onPaste: null,
