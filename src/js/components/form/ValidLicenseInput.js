@@ -47,7 +47,7 @@ ValidLicenseInput.defaultProps = {
   error: undefined,
   showError: true,
   // https://project-open-data.cio.gov/open-licenses/
-  value: 'http://www.usa.gov/publicdomain/label/1.0/',
+  // value: 'http://www.usa.gov/publicdomain/label/1.0/',
   helpText: '',
   showHelpText: false
 }

@@ -347,6 +347,7 @@ input[type="month"] {
 
 textarea {
   // Textareas should really only resize vertically so they don't break their (horizontal) containers.
+  height: 200px;
   resize: vertical;
 }
 
