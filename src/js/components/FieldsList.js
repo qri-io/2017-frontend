@@ -7,6 +7,12 @@ function descriptionTrigger (i, fn) {
   }
 }
 
+function editTrigger (fn) {
+  return () => {
+    fn()
+  }
+}
+
 export default class FieldsList extends React.Component {
   constructor (props) {
     super(props)
@@ -19,7 +25,8 @@ export default class FieldsList extends React.Component {
       'onShowDescription',
       'onHideDescription',
       'onEditMetadata',
-      'onShowMetadata'
+      'onShowMetadata',
+      'renderFields'
     ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
@@ -32,45 +39,46 @@ export default class FieldsList extends React.Component {
   }
 
   onEditMetadata () {
-    this.setState( editMetadata: true )
+    this.setState({ editMetadata: true })
   }
 
   onShowMetadata () {
-    this.setState( editMetadata: false )
+    this.setState({ editMetadata: false })
   }
 
-  renderFields() {
-    if ( editMetadata ) {
+  renderFields (fields, descriptionIndex, editMetadata) {
+    if (editMetadata) {
       return (
         <p>TIME TO EDIT SOME METADATAAAA</p>
-        )
+      )
     } else {
-      fields.map((field, i) => {
-        return (
-          <div key={i} className='relative field col-md-4' onMouseEnter={descriptionTrigger(i, this.onShowDescription)} onMouseLeave={descriptionTrigger(i, this.onHideDescription)}>
-            <p className='purple field-title' >{field.title || field.name}<span className={`type dt-${field.type}`}><small>  {field.type}</small></span>
-            </p>
-            { field.description && (i === descriptionIndex) && (field.description !== field.title) ? <div className='absolute description'><div className='description-tail' />{field.description}</div> : undefined }
-          </div>
-        )
-      })
+      return (<p>Fields yay!</p>)
+      // fields.map((field, i) => {
+      //   return (
+      //     <div key={i} className='relative field col-md-4' onMouseEnter={descriptionTrigger(i, this.onShowDescription)} onMouseLeave={descriptionTrigger(i, this.onHideDescription)}>
+      //       <p className='purple field-title' >{field.title || field.name}<span className={`type dt-${field.type}`}><small>                                                                                  {field.type}</small></span>
+      //       </p>
+      //       { field.description && (i === descriptionIndex) && (field.description !== field.title) ? <div className='absolute description'><div className='description-tail' />{field.description}</div> : undefined }
+      //     </div>
+      //   )
+      // })
     }
   }
 
   render () {
     const { fields } = this.props
     const descriptionIndex = this.state.descriptionIndex
-    const showEditMetadata = this.state.showEditMetadata
+    const editMetadata = this.state.editMetadata
     return (
       <div className='wrapper'>
         <div className='Row'>
           <div className='col-md-12'>
-            { editMetadata ? <a className='right' onClick({ () => this.onShowMetadata})>Show Metadata</a> : <a className='right' onClick={ () => this.onEditMetadata}>Edit Metadata</a> }
+            { editMetadata ? <a className='right' onClick={editTrigger(this.onShowMetadata)}>Show Metadata</a> : <a className='right' onClick={editTrigger(this.onEditMetadata)}>Edit Metadata</a> }
           </div>
         </div>
         <div className='Row'>
           <div className='col-md-12'>
-            
+            {this.renderFields(fields, descriptionIndex, editMetadata)}
           </div>
         </div>
       </div>
