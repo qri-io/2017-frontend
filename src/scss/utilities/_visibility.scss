@@ -4,6 +4,10 @@
 // Visibility utilities
 //
 
+.display-none {
+  display: none;
+}
+
 .invisible {
   visibility: hidden !important;
 }

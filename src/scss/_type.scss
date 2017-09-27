@@ -23,6 +23,11 @@ h6, .h6 { font-size: $font-size-h6; }
   font-weight: $lead-font-weight;
 }
 
+.inline-block {
+  display: inline-block;
+  margin-right: 10px;
+}
+
 // Type display classes
 .display-1 {
   font-size: $display1-size;
