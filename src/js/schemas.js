@@ -22,6 +22,7 @@ const migrationSchema = new Schema('migrations')
 const changeSchema = new Schema('changes')
 const inviteSchema = new Schema('invites')
 const roleSchema = new Schema('roles')
+const metadataSchema = new Schema('metadata', { idAttribute: metadata => `${metadata.keyId}.${metadata.subject}` })
 
 querySchema.define({
   owner: userSchema
@@ -76,6 +77,10 @@ roleSchema.new = function (attrs) {
   return Object.assign({}, attrs, { id: 'new' })
 }
 
+metadataSchema.new = (attrs) => {
+  return Object.assign({}, attrs)
+}
+
 // Schemas for Github API responses.
 const Schemas = {
   SESSION_USER: sessionUserSchema,
@@ -95,7 +100,9 @@ const Schemas = {
   INVITE: inviteSchema,
   ROLE: roleSchema,
   ROLE_ARRAY: arrayOf(roleSchema),
-  STRUCTURED_DATA: structuredDataSchema
+  STRUCTURED_DATA: structuredDataSchema,
+  METADATA: metadataSchema,
+  METADATA_ARRAY: arrayOf(metadataSchema)
 }
 
 export default Schemas
