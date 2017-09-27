@@ -30,7 +30,7 @@ TagInput.propTypes = {
   // an error message to displacy
   error: PropTypes.string,
   // value to display in the field
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   // placeholder text for an empty field. default: ""
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   // change handler func. will be called with (name, value, event)

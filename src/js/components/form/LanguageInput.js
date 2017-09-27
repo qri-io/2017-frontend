@@ -33,7 +33,7 @@ LanguageInput.propTypes = {
   // required name for the field
   name: PropTypes.string.isRequired,
   // value to display in the field
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   // an error message to displacy
   error: PropTypes.string,
   // weather or not to actually display any passed-in errors

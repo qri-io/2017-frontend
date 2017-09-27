@@ -31,7 +31,7 @@ UrlInput.propTypes = {
   // an error message to displacy
   error: PropTypes.string,
   // value to display in the field
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   // placeholder text for an empty field. default: ""
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   // short message to help the user

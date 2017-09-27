@@ -27,7 +27,7 @@ ValidSelect.propTypes = {
   // weather or not to actually display any passed-in errors
   showError: PropTypes.bool,
   // value to display in the field
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   // short message to help the user
   helpText: PropTypes.string,
   // weather to show help text or not
