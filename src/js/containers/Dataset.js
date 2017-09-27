@@ -226,11 +226,12 @@ class Dataset extends React.Component {
       return (
         <TabPanel
           index={tabIndex}
-          labels={['Description', 'Metadata', 'Data']}
+          labels={['Description', 'Fields', 'Data']}
           onSelectPanel={this.changeTabIndex}
           components={[
             this.renderReadme(readme, dataset),
             this.renderFieldsList(dataset),
+            // this.renderMetadata(dataset),
             this.renderData()
           ]}
         />
@@ -243,6 +244,7 @@ class Dataset extends React.Component {
           onSelectPanel={this.changeTabIndex}
           components={[
             this.renderFieldsList(dataset),
+            // this.renderMetadata(dataset),
             this.renderData()
           ]}
         />
@@ -265,7 +267,7 @@ class Dataset extends React.Component {
       )
     }
 
-    const { name, dataset } = datasetRef
+    const { dataset } = datasetRef
     const tabIndex = this.state.tabIndex
 
     return (

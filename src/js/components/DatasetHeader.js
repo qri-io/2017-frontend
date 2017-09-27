@@ -9,8 +9,9 @@ const DatasetHeader = ({ datasetRef, onDelete }) => {
     <div className='row'>
       <header className='blue page-header col-md-12'>
         <hr className='blue' />
-        <a className='green right' href={`/downloads/package?path=${path}`}>Download</a>
-        { onDelete && <a className='red right' onClick={onDelete}>Delete&nbsp;</a> }
+        <a className='green right' href={`/downloads/package?path=${path}`}>| Download</a>
+        { onDelete && <a className='red right' onClick={onDelete}>| Delete&nbsp;</a> }
+        <a className='green right'>Edit Metadata&nbsp;</a>
         <h1 className='inline-block'>{ name }</h1>
         { dataset.title ? <h4 className='inline-block dt-string'>{ dataset.title }</h4> : undefined }
         <p className='path dt-string'>{ path }</p>
