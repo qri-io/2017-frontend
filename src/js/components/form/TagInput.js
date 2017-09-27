@@ -32,7 +32,7 @@ TagInput.propTypes = {
   // value to display in the field
   value: PropTypes.string.isRequired,
   // placeholder text for an empty field. default: ""
-  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   // change handler func. will be called with (name, value, event)
   onChange: PropTypes.func.isRequired,
   // short message to help the user
