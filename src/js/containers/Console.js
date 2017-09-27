@@ -6,6 +6,7 @@ import { setQuery, runQuery, loadQueryBySlug, loadQueryPage } from '../actions/q
 import { setTopPanel, setBottomPanel, setChartOptions } from '../actions/console'
 import { loadDatasets, loadDataset } from '../actions/dataset'
 
+import DatasetDataGrid from '../components/DatasetDataGrid'
 import TabPanel from '../components/TabPanel'
 import QueryEditor from '../components/QueryEditor'
 import DataTable from '../components/DataTable'
@@ -112,43 +113,64 @@ class Console extends React.Component {
   }
 
   render () {
-    const { queries, datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory } = this.props
+    const { queries, datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout } = this.props
+    const { main } = layout
+
+    const topBox = {
+      top: main.top,
+      left: 0,
+      width: main.width,
+      height: main.height * 0.4
+    }
+
+    const bottomBox = {
+      top: main.height * 0.4,
+      left: 0,
+      width: main.width,
+      height: main.height * 0.6
+    }
 
     return (
       <div id='console'>
-        <div className='top container'>
-          <div className='col-md-12 '>
-            <TabPanel
-              index={topPanelIndex}
-              onSelectPanel={this.handleSetTopPanel}
-              labels={['Editor', 'History']}
-              components={[
-                <QueryEditor name='editor' query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />,
-                <List className='queryHistory list' data={queryHistory} component={QueryHistoryItem} onSelectItem={this.handleSelectHistoryEntry} />
-              ]}
-            />
-          </div>
+        <div className='top panel'>
+          <TabPanel
+            index={topPanelIndex}
+            onSelectPanel={this.handleSetTopPanel}
+            labels={['Editor', 'History']}
+            bounds={topBox}
+            components={[
+              <div className='panel'>
+                <QueryEditor bounds={topBox} name='editor' query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />
+              </div>,
+              <div className='panel'>
+                <List bounds={topBox} className='queryHistory list' data={queryHistory} component={QueryHistoryItem} onSelectItem={this.handleSelectHistoryEntry} />
+              </div>
+            ]}
+          />
         </div>
-        <div className='bottom'>
-          <div className='container'>
-            <div className='col-md-12'>
-              <TabPanel
-                index={bottomPanelIndex}
-                labels={['Data', 'Chart', 'Datasets', 'Queries']}
-                onSelectPanel={this.handleSetBottomPanel}
-                components={[
-                  <DataTable
-                    fields={datasetRef && datasetRef.dataset && datasetRef.dataset.structure && datasetRef.dataset.structure.schema.fields}
-                    data={data}
-                    onLoadMore={this.handleLoadMoreResults}
-                  />,
-                  <h3>TODO - restore results chart</h3>,
-                  <Datasets />,
-                  <List className='queryItem list' data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} />
-                ]}
-              />
-            </div>
-          </div>
+        <div className='bottom panel'>
+          <TabPanel
+            index={bottomPanelIndex}
+            labels={['Data', 'Chart', 'Datasets', 'Queries']}
+            onSelectPanel={this.handleSetBottomPanel}
+            components={[
+              <DatasetDataGrid
+                dataset={datasetRef && datasetRef.dataset}
+                data={data}
+                onLoadMore={this.handleLoadMoreResults}
+                bounds={bottomBox}
+              />,
+              <div className='panel'>
+                <h3>TODO - restore results chart</h3>
+              </div>,
+              <div className='panel'>
+                <Datasets skipLoad bounds={bottomBox} />
+              </div>,
+              <div className='panel'>
+                <List className='queryItem list' data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} bounds={bottomBox} />
+              </div>
+            ]}
+          />
         </div>
       </div>
     )

@@ -26,7 +26,9 @@ class DatasetsList extends React.Component {
   }
 
   componentWillMount () {
-    this.props.loadDatasets(this.props.nextPage)
+    if (!this.props.skipLoad) {
+      this.props.loadDatasets(this.props.nextPage)
+    }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -73,23 +75,10 @@ class DatasetsList extends React.Component {
     return (
       <div id='wrapper'>
         <header>
-          <div className='container'>
-            <div className='row'>
-              <div className='col-md-12'>
-                <button onClick={this.handleAddItem} className='btn btn-primary right'>Add</button>
-                <h1>Datasets</h1>
-                <hr />
-              </div>
-            </div>
-          </div>
+          <button onClick={this.handleAddItem} className='btn btn-primary right'>Add</button>
+          <hr />
         </header>
-        <div className='container'>
-          <div className='row'>
-            <div className='col-md-12'>
-              <List data={datasets} component={DatasetItem} onSelectItem={this.onSelectDataset} />
-            </div>
-          </div>
-        </div>
+        <List data={datasets} component={DatasetItem} onSelectItem={this.onSelectDataset} />
       </div>
     )
   }
@@ -99,14 +88,20 @@ DatasetsList.propTypes = {
   datasets: PropTypes.array.isRequired,
   nextPage: PropTypes.number.isRequired,
   fetchedAll: PropTypes.bool,
-  loadDatasets: PropTypes.func.isRequired
+  loadDatasets: PropTypes.func.isRequired,
+  skipLoad: PropTypes.bool
+}
+
+DatasetsList.defaultProps = {
+  skipLoad: false
 }
 
 function mapStateToProps (state, ownProps) {
   const pagination = state.pagination.popularDatasets
 
   return Object.assign({
-    datasets: selectAllDatasets(state),
+    // TODO - horrible hack to remove "unnnamed dataset" entries from display
+    datasets: selectAllDatasets(state).filter((ref) => ref.name != ''),
     loading: (pagination.popularDatasets) ? pagination.popularDatasets.isFetching : false,
     nextPage: (pagination.popularDatasets) ? (pagination.popularDatasets.pageCount + 1) : 1,
     fetchedAll: (pagination.popularDatasets) ? pagination.popularDatasets.fetchedAll : false
