@@ -81,7 +81,7 @@ class MonthCalendar extends React.Component {
   render () {
     // const { value } = this.props;
     const { displayMonth } = this.state
-    const { onMouseDown, onTouchEnd } = props
+    const { onMouseDown, onTouchEnd } = this.props
 
     let startDay = displayMonth.toString().split(' ')[0].toLowerCase()
     let offset = days[startDay]
