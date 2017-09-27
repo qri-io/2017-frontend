@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 
 import DatasetRefProps from '../propTypes/datasetRefProps.js'
 
-const DatasetHeader = ({ datasetRef, onDelete }) => {
+const DatasetHeader = ({ datasetRef, onDelete, onEditMetadata }) => {
   const { name, path, dataset } = datasetRef
 
   return (
@@ -11,7 +11,7 @@ const DatasetHeader = ({ datasetRef, onDelete }) => {
         <hr className='blue' />
         <a className='green right' href={`/downloads/package?path=${path}`}>| Download</a>
         { onDelete && <a className='red right' onClick={onDelete}>| Delete&nbsp;</a> }
-        <a className='green right'>Edit Metadata&nbsp;</a>
+        <a className='green right' onClick={onEditMetadata}>Edit Metadata&nbsp;</a>
         <h1 className='inline-block'>{ name }</h1>
         { dataset.title ? <h4 className='inline-block dt-string'>{ dataset.title }</h4> : undefined }
         <p className='path dt-string'>{ path }</p>
@@ -24,7 +24,8 @@ const DatasetHeader = ({ datasetRef, onDelete }) => {
 DatasetHeader.propTypes = {
   // dataset data model
   datasetRef: DatasetRefProps,
-  onDelete: PropTypes.func
+  onDelete: PropTypes.func,
+  onEditMetadata: PropTypes.func
 }
 
 DatasetHeader.defaultProps = {

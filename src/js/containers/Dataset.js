@@ -19,12 +19,17 @@ import FieldsList from '../components/FieldsList'
 import QueryEditor from '../components/QueryEditor'
 import DataTable from '../components/DataTable'
 
+import MetadataEditor from '../containers/MetadataEditor.js'
+
 import DatasetRefProps from '../propTypes/datasetRefProps.js'
 
 class Dataset extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {tabIndex: 0};
+    this.state = {
+      tabIndex: 0,
+      editMetadata: false
+    };
 
     [
       'handleRunQuery',
@@ -35,6 +40,7 @@ class Dataset extends React.Component {
       'handleDownloadDataset',
       'handleDeleteDataset',
       'changeTabIndex',
+      'changeEditMetadata',
       'renderFieldsList',
       'renderEditButtons',
       'renderResults',
@@ -123,6 +129,9 @@ class Dataset extends React.Component {
     this.setState({tabIndex: index})
   }
 
+  changeEditMetadata () {
+    this.state.editMetadata ? this.setState({editMetadata: false}) : this.setState({editMetadata: true})
+  }
   renderFieldsList (dataset) {
     if (dataset.structure && dataset.structure.schema) {
       return (<FieldsList fields={dataset.structure.schema.fields} />)
@@ -268,20 +277,22 @@ class Dataset extends React.Component {
     }
 
     const { dataset } = datasetRef
-    const tabIndex = this.state.tabIndex
+    const { tabIndex, editMetadata } = this.state
 
     return (
       <div id='wrapper'>
-        <div className='container'>
-          <DatasetHeader datasetRef={datasetRef} onDelete={this.handleDeleteDataset} onDownload={this.handleDownloadDataset} />
-          <hr className='blue' />
-          {this.renderTabPanel(readme, dataset, tabIndex)}
-          <div className='row'>
-            <div className='col-md-12'>
-              { this.renderEditButtons(this.props) }
+        {
+          editMetadata ? <div className='container'><MetadataEditor datasetRef={datasetRef} /></div> : <div className='container'>
+            <DatasetHeader datasetRef={datasetRef} onDelete={this.handleDeleteDataset} onDownload={this.handleDownloadDataset} onEditMetadata={this.changeEditMetadata} />
+            <hr className='blue' />
+            {this.renderTabPanel(readme, dataset, tabIndex)}
+            <div className='row'>
+              <div className='col-md-12'>
+                { this.renderEditButtons(this.props) }
+              </div>
             </div>
           </div>
-        </div>
+        }
       </div>
     )
   }
