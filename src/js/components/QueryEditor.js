@@ -3,7 +3,7 @@ import CodeEditor from './CodeEditor'
 
 import { datasetCompleter } from '../ace/completer/datasets'
 
-const QueryEditor = ({ name, query, onDownload, onRun, onChange }) => {
+const QueryEditor = ({ name, query, onDownload, onRun, onChange, bounds }) => {
   // TODO handleChange no longer used, consider depreciation
   // const handleChange = (name, value) => {
   //   onChange({ queryString: value })
@@ -15,8 +15,8 @@ const QueryEditor = ({ name, query, onDownload, onRun, onChange }) => {
         name={name}
         value={query.queryString}
         completers={[datasetCompleter]}
-        width='940px'
-        height='200px'
+        width={`${bounds.width - 40}px`}
+        height={`${bounds.height - 80}px`}
         onChange={value => onChange({ queryString: value, address: query.address })}
         // TODO - reenable when adding back completion
         // setOptions={{
@@ -36,7 +36,8 @@ QueryEditor.propTypes = {
   // datasets: PropTypes.array,
   onRun: PropTypes.func.isRequired,
   onDownload: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  bounds: PropTypes.object
 }
 
 QueryEditor.defaultProps = {

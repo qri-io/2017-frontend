@@ -100,7 +100,8 @@ function mapStateToProps (state, ownProps) {
   const pagination = state.pagination.popularDatasets
 
   return Object.assign({
-    datasets: selectAllDatasets(state),
+    // TODO - horrible hack to remove "unnnamed dataset" entries from display
+    datasets: selectAllDatasets(state).filter((ref) => ref.name != ''),
     loading: (pagination.popularDatasets) ? pagination.popularDatasets.isFetching : false,
     nextPage: (pagination.popularDatasets) ? (pagination.popularDatasets.pageCount + 1) : 1,
     fetchedAll: (pagination.popularDatasets) ? pagination.popularDatasets.fetchedAll : false
