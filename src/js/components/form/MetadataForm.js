@@ -34,7 +34,7 @@ const MetadataForm = ({ data, validation, onChange, onCancel, onSubmit, showHelp
 
   return (
     <div className='metadata form'>
-      { meta.title ? <ValidInput
+      <ValidInput
         name='title'
         label='Title'
         helpText='Human-readable name of the asset. Should be in plain English and include sufficient detail to facilitate search and discovery.'
@@ -42,7 +42,7 @@ const MetadataForm = ({ data, validation, onChange, onCancel, onSubmit, showHelp
         value={meta.title}
         error={validation.title}
         onChange={onChange}
-      /> : undefined }
+      />
       <ValidTextarea
         name='description'
         label='Description'
@@ -55,7 +55,7 @@ const MetadataForm = ({ data, validation, onChange, onCancel, onSubmit, showHelp
       <TagInput
         name='theme'
         label='Category'
-        helpText='Main thematic category of the dataset'
+        helpText='Main thematic categories of the dataset, use commas to seperate'
         showHelpText={showHelpText}
         value={meta.theme}
         onChange={onChange}
@@ -63,7 +63,7 @@ const MetadataForm = ({ data, validation, onChange, onCancel, onSubmit, showHelp
       <TagInput
         name='keyword'
         label='Tags'
-        helpText='Tags (or keywords) help users discover this dataset; please include terms that would be used by technical and non-technical users'
+        helpText='Tags (or keywords) help users discover this dataset; please include terms that would be used by technical and non-technical users. Please use commas to seperate'
         showHelpText={showHelpText}
         value={meta.keyword}
         onChange={onChange}
