@@ -7,9 +7,10 @@ import MetadataForm from '../components/form/MetadataForm'
 
 import { newMetadata, editMetadata, updateMetadata, cancelMetadataEdit, saveMetadata, loadMetadata } from '../actions/metadata'
 import { selectLocalMetadata, selectMetadata } from '../selectors/metadata'
+import { newDataset } from '../actions/dataset'
 import { selectDefaultKeyId } from '../selectors/keys'
 
-import { datasetProps } from '../propTypes/datasetRefProps'
+import DatasetRefProps from '../propTypes/datasetRefProps'
 
 class MetadataEditor extends React.Component {
   constructor (props) {
@@ -30,7 +31,8 @@ class MetadataEditor extends React.Component {
   }
 
   componentWillMount () {
-    this.props.newMetadata(this.props.metadata, this.props.path)
+    const { name, path, dataset } = this.props.datasetRef
+    this.props.newDataset({name: name, path: path}, dataset)
   }
 
   // componentWillReceiveProps (nextProps) {
@@ -67,7 +69,7 @@ class MetadataEditor extends React.Component {
   }
 
   render () {
-    const { metadata } = this.props
+    const { dataset } = this.props.datasetRef
     // const { savedMetadata, metadata, sessionKeyId } = this.props
     const { showHelp } = this.state
 
@@ -91,7 +93,7 @@ class MetadataEditor extends React.Component {
       <div className='metadata editor col-md-12'>
         <a className='helpToggle right' onClick={this.handleToggleHelp}>{showHelp ? 'hide help' : 'show help' }</a>
         <MetadataForm
-          data={metadata}
+          data={dataset}
           onChange={this.handleChange}
           onCancel={this.handleCancel}
           onSubmit={this.handleSave}
@@ -107,9 +109,9 @@ MetadataEditor.propTypes = {
   // sessionKeyId: PropTypes.string,
   // subjectHash: PropTypes.string.isRequired,
 
-  metadata: datasetProps,
+  datasetRef: DatasetRefProps,
   // savedMetadata: PropTypes.object,
-  path: PropTypes.string,
+  newDataset: PropTypes.func.isRequired,
   newMetadata: PropTypes.func.isRequired,
   editMetadata: PropTypes.func.isRequired,
   updateMetadata: PropTypes.func.isRequired,
@@ -133,6 +135,7 @@ function mapStateToProps (state, ownProps) {
 }
 
 export default connect(mapStateToProps, {
+  newDataset,
   newMetadata,
   editMetadata,
   updateMetadata,

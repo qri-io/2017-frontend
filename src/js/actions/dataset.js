@@ -6,15 +6,27 @@ import { selectDatasetByAddress } from '../selectors/dataset'
 import { newLocalModel, updateLocalModel, editModel } from './locals'
 import { setMessage, resetMessage, removeModel } from './app'
 
+const blankMetadata = {
+  title: '',
+  description: '',
+  keyword: [],
+  rights: '',
+  landingPage: '',
+  theme: [],
+  identifier: '',
+  accessLevel: '',
+  language: [],
+  license: ''
+}
+
 const DATASET_NEW = 'DATASET_NEW'
-export function newDataset (attributes = {}) {
-  attributes = Object.assign({
+export function newDataset (attributes = {}, dataset = {}) {
+  const datasetRef = Object.assign({
     name: '',
-    source_url: '',
-    summary: '',
-    description: ''
+    path: '',
+    dataset: Object.assign(blankMetadata, dataset)
   }, attributes)
-  return newLocalModel(Schemas.DATASET, DATASET_NEW, attributes)
+  return newLocalModel(Schemas.DATASET, DATASET_NEW, datasetRef)
 }
 
 const DATASET_UPDATE = 'DATASET_UPDATE'
