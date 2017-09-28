@@ -52,7 +52,7 @@ const MetadataForm = ({ data, validation, onChange, onCancel, onSubmit, showHelp
         error={validation.description}
         onChange={onChange}
       />
-      <ValidInput
+      <TagInput
         name='theme'
         label='Category'
         helpText='Main thematic category of the dataset'
@@ -144,13 +144,7 @@ MetadataForm.propTypes = {
   data: PropTypes.shape({
     title: PropTypes.string.isRequired,
     description: PropTypes.string,
-    // POD metadata says theme is an array of strings,
-    // however the ValidInput component, to which it gets passed
-    // requires a string, not array of strings
     theme: PropTypes.arrayOf(PropTypes.string),
-    // POD metadata says keyword is an array of strings,
-    // however the TagInput component, to which it gets passed
-    // requires a string, not array of strings
     keyword: PropTypes.arrayOf(PropTypes.string),
     modified: PropTypes.instanceOf(Date),
     issued: PropTypes.instanceOf(Date),
@@ -162,7 +156,8 @@ MetadataForm.propTypes = {
     // POD metadata says language is an array of strings,
     // however the UrlInput component, to which it gets passed
     // requires a string, not array of strings
-    language: PropTypes.arrayOf(PropTypes.string),
+    // language: PropTypes.arrayOf(PropTypes.string),
+    language: PropTypes.string,
     landingPage: PropTypes.string
 
   }).isRequired,
