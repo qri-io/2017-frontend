@@ -22,7 +22,7 @@ const migrationSchema = new Schema('migrations')
 const changeSchema = new Schema('changes')
 const inviteSchema = new Schema('invites')
 const roleSchema = new Schema('roles')
-const metadataSchema = new Schema('metadata', { idAttribute: metadata => `${metadata.keyId}.${metadata.subject}` })
+const metadataSchema = new Schema('metadata', { idAttribute: 'path' })
 
 querySchema.define({
   owner: userSchema

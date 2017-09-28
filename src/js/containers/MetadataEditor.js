@@ -9,7 +9,7 @@ import { newMetadata, editMetadata, updateMetadata, cancelMetadataEdit, saveMeta
 import { selectLocalMetadata, selectMetadata } from '../selectors/metadata'
 import { selectDefaultKeyId } from '../selectors/keys'
 
-import DatasetRefProps from '../propTypes/datasetRefProps'
+import { datasetProps } from '../propTypes/datasetRefProps'
 
 class MetadataEditor extends React.Component {
   constructor (props) {
@@ -29,11 +29,9 @@ class MetadataEditor extends React.Component {
     ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
-  // componentWillMount () {
-  //   if (this.props.sessionKeyId) {
-  //     this.props.loadMetadata(this.props.sessionKeyId, this.props.subjectHash)
-  //   }
-  // }
+  componentWillMount () {
+    this.props.newMetadata(this.props.metadata, this.props.path)
+  }
 
   // componentWillReceiveProps (nextProps) {
   //   if (nextProps.sessionKeyId != this.props.sessionKeyId) {
@@ -50,12 +48,12 @@ class MetadataEditor extends React.Component {
   }
 
   handleChange (name, value) {
-    // const change = { meta: Object.assign({}, this.props.metadata.meta, { [name]: value }) }
-    // this.props.updateMetadata(Object.assign({}, this.props.metadata, change))
+    const change = { meta: Object.assign({}, this.props.metadata, { [name]: value }) }
+    this.props.updateMetadata(Object.assign({}, this.props.metadata, change))
   }
 
   handleCancel () {
-    // this.props.cancelMetadataEdit(this.props.metadata)
+    this.props.cancelMetadataEdit(this.props.metadata)
   }
 
   handleSave (meta) {
@@ -69,7 +67,7 @@ class MetadataEditor extends React.Component {
   }
 
   render () {
-    const { datasetRef } = this.props
+    const { metadata } = this.props
     // const { savedMetadata, metadata, sessionKeyId } = this.props
     const { showHelp } = this.state
 
@@ -93,7 +91,7 @@ class MetadataEditor extends React.Component {
       <div className='metadata editor col-md-12'>
         <a className='helpToggle right' onClick={this.handleToggleHelp}>{showHelp ? 'hide help' : 'show help' }</a>
         <MetadataForm
-          data={datasetRef.dataset}
+          data={metadata}
           onChange={this.handleChange}
           onCancel={this.handleCancel}
           onSubmit={this.handleSave}
@@ -109,9 +107,9 @@ MetadataEditor.propTypes = {
   // sessionKeyId: PropTypes.string,
   // subjectHash: PropTypes.string.isRequired,
 
-  // metadata: PropTypes.object,
+  metadata: datasetProps,
   // savedMetadata: PropTypes.object,
-  datasetRef: DatasetRefProps,
+  path: PropTypes.string,
   newMetadata: PropTypes.func.isRequired,
   editMetadata: PropTypes.func.isRequired,
   updateMetadata: PropTypes.func.isRequired,

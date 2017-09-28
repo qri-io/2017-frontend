@@ -6,23 +6,21 @@ import { selectMetadata } from '../selectors/metadata'
 import { newLocalModel, updateLocalModel, editModel, removeLocalModel } from './locals'
 
 const blankMetadata = {
-  meta: {
-    title: '',
-    description: '',
-    keyword: '',
-    rights: '',
-    landingPage: '',
-    theme: '',
-    identifier: '',
-    accessLevel: 'public',
-    language: 'english',
-    license: 'http://www.usa.gov/publicdomain/label/1.0/'
-  }
+  title: '',
+  description: '',
+  keyword: '',
+  rights: '',
+  landingPage: '',
+  theme: '',
+  identifier: '',
+  accessLevel: '',
+  language: '',
+  license: ''
 }
 
 const METADATA_NEW = 'METADATA_NEW'
-export function newMetadata (keyId, subject) {
-  return newLocalModel(Schemas.METADATA, METADATA_NEW, Object.assign({}, blankMetadata, { keyId, subject }))
+export function newMetadata (metadata, path) {
+  return newLocalModel(Schemas.METADATA, METADATA_NEW, Object.assign({}, blankMetadata, metadata, { path: path }))
 }
 
 const METADATA_EDIT = 'METADATA_EDIT'

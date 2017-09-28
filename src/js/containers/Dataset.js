@@ -282,7 +282,7 @@ class Dataset extends React.Component {
     return (
       <div id='wrapper'>
         {
-          editMetadata ? <div className='container'><MetadataEditor datasetRef={datasetRef} /></div> : <div className='container'>
+          editMetadata ? <div className='container'><MetadataEditor metadata={dataset} path={datasetRef.path} /></div> : <div className='container'>
             <DatasetHeader datasetRef={datasetRef} onDelete={this.handleDeleteDataset} onDownload={this.handleDownloadDataset} onEditMetadata={this.changeEditMetadata} />
             <hr className='blue' />
             {this.renderTabPanel(readme, dataset, tabIndex)}
