@@ -4,10 +4,13 @@ import { Link } from 'react-router'
 
 import Metadata from '../components/Metadata'
 import MetadataForm from '../components/form/MetadataForm'
+import Spinner from '../components/Spinner'
 
 import { newMetadata, editMetadata, updateMetadata, cancelMetadataEdit, saveMetadata, loadMetadata } from '../actions/metadata'
 import { selectLocalMetadata, selectMetadata } from '../selectors/metadata'
-import { newDataset } from '../actions/dataset'
+
+import { newDataset, updateDataset, loadDataset } from '../actions/dataset'
+import { selectLocalDatasetById, selectDataset } from '../selectors/dataset'
 import { selectDefaultKeyId } from '../selectors/keys'
 
 import DatasetRefProps from '../propTypes/datasetRefProps'
@@ -17,6 +20,7 @@ class MetadataEditor extends React.Component {
     super(props)
 
     this.state = {
+      loading: !(this.props.datasetRef && this.props.localDatasetRef),
       showHelp: true
     };
 
@@ -31,8 +35,25 @@ class MetadataEditor extends React.Component {
   }
 
   componentWillMount () {
-    const { name, path, dataset } = this.props.datasetRef
-    this.props.newDataset({name: name, path: path}, dataset)
+    const { path, localDatasetRef, datasetRef } = this.props
+    if (path) {
+      this.props.loadDataset(path)
+    }
+    if (!localDatasetRef && datasetRef) {
+      const { name, path, dataset } = this.props.datasetRef
+      this.props.newDataset({name: name, path: path}, dataset)
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const { path, localDatasetRef, datasetRef } = nextProps
+    if (!localDatasetRef && datasetRef) {
+      const { name, path, dataset } = nextProps.datasetRef
+      nextProps.newDataset({name: name, path: path}, dataset)
+    }
+    if (localDatasetRef && datasetRef) {
+      this.setState({ loading: false })
+    }
   }
 
   // componentWillReceiveProps (nextProps) {
@@ -50,8 +71,10 @@ class MetadataEditor extends React.Component {
   }
 
   handleChange (name, value) {
-    const change = { meta: Object.assign({}, this.props.metadata, { [name]: value }) }
-    this.props.updateMetadata(Object.assign({}, this.props.metadata, change))
+    const { dataset } = this.props.localDatasetRef
+    const updatedDataset = Object.assign(dataset, { [name]: value })
+    const change = Object.assign(this.props.localDatasetRef, { dataset: updatedDataset})
+    this.props.updateDataset(change)
   }
 
   handleCancel () {
@@ -69,49 +92,37 @@ class MetadataEditor extends React.Component {
   }
 
   render () {
-    const { dataset } = this.props.datasetRef
-    // const { savedMetadata, metadata, sessionKeyId } = this.props
-    const { showHelp } = this.state
+    if (this.state.loading) {
+      return <Spinner />
+    } else {
+      const { dataset } = this.props.localDatasetRef
+      const { showHelp } = this.state
 
-    // if (savedMetadata && !metadata) {
-    //   return (
-    //     <div className='metadata editor col-md-12'>
-    //       <Metadata metadata={savedMetadata.meta} />
-    //       {sessionKeyId ? <button className='btn btn-primary' onClick={this.handleEdit}>Edit</button> : <p><Link to='/signup'>Signup</Link> to edit metadata.</p>}
-    //     </div>
-    //   )
-    // }
-    // else if (!metadata) {
-    //   return (
-    //     <div className='metadata editor col-md-12'>
-    //       {sessionKeyId ? <button className='btn btn-primary' onClick={this.handleNew}>Add Metadata</button> : <p><Link to='/signup'>Signup</Link> to add metadata.</p>}
-    //     </div>
-    //   )
-    // }
-
-    return (
-      <div className='metadata editor col-md-12'>
-        <a className='helpToggle right' onClick={this.handleToggleHelp}>{showHelp ? 'hide help' : 'show help' }</a>
-        <MetadataForm
-          data={dataset}
-          onChange={this.handleChange}
-          onCancel={this.handleCancel}
-          onSubmit={this.handleSave}
-          showHelpText={showHelp}
-        />
-        <br />
-      </div>
-    )
+      return (
+        <div className='metadata editor col-md-12'>
+          <a className='helpToggle right' onClick={this.handleToggleHelp}>{showHelp ? 'hide help' : 'show help' }</a>
+          <MetadataForm
+            data={dataset}
+            onChange={this.handleChange}
+            onCancel={this.handleCancel}
+            onSubmit={this.handleSave}
+            showHelpText={showHelp}
+          />
+          <br />
+        </div>
+      )
+    }
   }
 }
 
 MetadataEditor.propTypes = {
-  // sessionKeyId: PropTypes.string,
-  // subjectHash: PropTypes.string.isRequired,
-
+  path: PropTypes.string.isRequired,
   datasetRef: DatasetRefProps,
-  // savedMetadata: PropTypes.object,
+  localDatasetRef: DatasetRefProps,
   newDataset: PropTypes.func.isRequired,
+  loadDataset: PropTypes.func.isRequired,
+  updateDataset: PropTypes.func.isRequired,
+
   newMetadata: PropTypes.func.isRequired,
   editMetadata: PropTypes.func.isRequired,
   updateMetadata: PropTypes.func.isRequired,
@@ -124,18 +135,19 @@ MetadataEditor.defaultProps = {
 }
 
 function mapStateToProps (state, ownProps) {
-  // const subjectHash = ownProps.subjectHash
+  const path = ownProps.path
   // const sessionKeyId = selectDefaultKeyId(state)
-
   return Object.assign({
     // sessionKeyId,
-    // savedMetadata: selectMetadata(state, sessionKeyId, subjectHash),
-    // metadata: selectLocalMetadata(state, sessionKeyId, subjectHash)
+    datasetRef: selectDataset(state, path),
+    localDatasetRef: selectLocalDatasetById(state, path)
   }, ownProps)
 }
 
 export default connect(mapStateToProps, {
   newDataset,
+  loadDataset,
+  updateDataset,
   newMetadata,
   editMetadata,
   updateMetadata,
