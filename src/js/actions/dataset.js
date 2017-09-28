@@ -2,7 +2,7 @@ import { push } from 'react-router-redux'
 
 import { CALL_API } from '../middleware/api'
 import Schemas from '../schemas'
-import { selectDatasetByAddress } from '../selectors/dataset'
+import { selectDatasetByPath } from '../selectors/dataset'
 import { newLocalModel, updateLocalModel, editModel } from './locals'
 import { setMessage, resetMessage, removeModel } from './app'
 
@@ -15,7 +15,7 @@ const blankMetadata = {
   theme: [],
   identifier: '',
   accessLevel: '',
-  language: [],
+  language: '',
   license: ''
 }
 
@@ -66,28 +66,28 @@ export const DATASET_REQUEST = 'DATASET_REQUEST'
 export const DATASET_SUCCESS = 'DATASET_SUCCESS'
 export const DATASET_FAILURE = 'DATASET_FAILURE'
 
-export function fetchDataset (address) {
+export function fetchDataset (path) {
   return {
     [CALL_API]: {
       types: [DATASET_REQUEST, DATASET_SUCCESS, DATASET_FAILURE],
-      endpoint: `/datasets?address=${address}`,
+      endpoint: `/datasets${path}`,
       schema: Schemas.DATASET,
-      address
+      path
     }
   }
 }
 
-export function loadDataset (address, requiredFields = []) {
+export function loadDataset (path, requiredFields = []) {
   return (dispatch, getState) => {
-    const dataset = selectDatasetByAddress(getState(), address)
-    if (dataset.schema != null) {
+    const datasetRef = selectDatasetByPath(getState(), path)
+    if (datasetRef.dataset.schema != null) {
       return null
     }
     // if (dataset && requiredFields.every(key => dataset.hasOwnProperty(key))) {
     //   return null
     // }
 
-    return dispatch(fetchDataset(address, requiredFields))
+    return dispatch(fetchDataset(path, requiredFields))
   }
 }
 
