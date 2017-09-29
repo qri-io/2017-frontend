@@ -15,7 +15,7 @@ const blankMetadata = {
   theme: [],
   identifier: '',
   accessLevel: '',
-  language: '',
+  language: [],
   license: ''
 }
 

@@ -4,7 +4,10 @@ const LanguageInput = ({ label, name, value, error, showError, helpText, showHel
   return (
     <div className={(error && showError) ? 'validFormField form-group has-error' : 'validFormField form-group'}>
       {label && <label className='control-label' htmlFor={name}>{label}</label>}
-      <select id={name} name={name} className='form-control' value={value} onChange={(e) => { onChange(name, e.target.value, e) }}>
+      <select id={name} name={name} className='form-control' value={value} multiple onChange={(e) => {
+        const languages = Array.from(e.target.options).filter(option => { return option.selected && option.value }).map(option => { return option.value })
+        onChange(name, languages, e)
+      }}>
         <option value=''>-unknown-</option>
         <option value='arabic'>arabic</option>
         <option value='bengali'>bengali</option>
@@ -33,7 +36,7 @@ LanguageInput.propTypes = {
   // required name for the field
   name: PropTypes.string.isRequired,
   // value to display in the field
-  value: PropTypes.string,
+  value: PropTypes.arrayOf(PropTypes.string),
   // an error message to displacy
   error: PropTypes.string,
   // weather or not to actually display any passed-in errors

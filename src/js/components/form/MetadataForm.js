@@ -156,8 +156,8 @@ MetadataForm.propTypes = {
     // POD metadata says language is an array of strings,
     // however the UrlInput component, to which it gets passed
     // requires a string, not array of strings
-    // language: PropTypes.arrayOf(PropTypes.string),
-    language: PropTypes.string,
+    language: PropTypes.arrayOf(PropTypes.string),
+    // language: PropTypes.string,
     landingPage: PropTypes.string
 
   }).isRequired,
