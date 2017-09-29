@@ -10,9 +10,18 @@ const TagInput = ({ label, name, showError, error, value, placeholder, onChange,
         name={name}
         type='text'
         className='form-control'
-        value={value}
+        value={value.join(', ')}
         placeholder={placeholder}
-        onChange={(e) => { onChange(name, e.target.value, e) }}
+        onChange={(e) => {
+          let tags = e.target.value.split(', ').map((val, i, array) => {
+            return array.length === 1 || i + 1 === array.length ? val : val.trim()
+          })
+          if (tags.length === 1 && tags[0].trim() == '') {
+            tags = []
+          }
+          onChange(name, tags, e)
+        }
+        }
       />
       {(error !== '' && showError) ? <div className='control-label'>{error}</div> : undefined}
       {(helpText && showHelpText) && <i className='help hint'>{helpText}</i>}
