@@ -6,7 +6,7 @@ class TagInput extends React.Component {
     super(props)
     this.state = { tagString: '' };
     [
-      'setTagString'
+      'handleOnChange'
     ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
@@ -14,8 +14,11 @@ class TagInput extends React.Component {
     this.setState({ tagString: this.props.value.join(', ')})
   }
 
-  setTagString (tagString) {
-    this.setState({ tagString: tagString })
+  handleOnChange (e) {
+    this.setState({ tagString: e.target.value })
+    let tags = e.target.value.trim().split(',').map(i => { return i.trim() }).filter(i => i)
+    console.log(tags)
+    this.props.onChange(this.props.name, tags, e)
   }
 
   render () {
@@ -30,13 +33,7 @@ class TagInput extends React.Component {
           className='form-control'
           value={this.state.tagString}
           placeholder={placeholder}
-          onChange={(e) => {
-            this.setTagString(e.target.value)
-            let tags = e.target.value.trim().split(', ').map(i => { return i.trim() }).filter(i => i)
-            console.log(tags)
-            onChange(name, tags, e)
-          }
-          }
+          onChange={(e) => this.handleOnChange(e)}
         />
         {(error !== '' && showError) ? <div className='control-label'>{error}</div> : undefined}
         {(helpText && showHelpText) && <i className='help hint'>{helpText}</i>}
