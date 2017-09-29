@@ -1,32 +1,48 @@
 import React, { PropTypes } from 'react'
 
 // TODO - work in progress
-const TagInput = ({ label, name, showError, error, value, placeholder, onChange, helpText, showHelpText }) => {
-  return (
-    <div className={(error && showError) ? 'validFormField form-group has-error' : 'validFormField form-group'}>
-      {label ? <label className='control-label' htmlFor={name}>{label}</label> : undefined }
-      <input
-        id={name}
-        name={name}
-        type='text'
-        className='form-control'
-        value={value.join(', ')}
-        placeholder={placeholder}
-        onChange={(e) => {
-          let tags = e.target.value.split(', ').map((val, i, array) => {
-            return array.length === 1 || i + 1 === array.length ? val : val.trim()
-          })
-          if (tags.length === 1 && tags[0].trim() == '') {
-            tags = []
+class TagInput extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = { tagString: '' };
+    [
+      'setTagString'
+    ].forEach((m) => { this[m] = this[m].bind(this) })
+  }
+
+  componentWillMount () {
+    this.setState({ tagString: this.props.value.join(', ')})
+  }
+
+  setTagString (tagString) {
+    this.setState({ tagString: tagString })
+  }
+
+  render () {
+    const { label, name, showError, error, value, placeholder, onChange, helpText, showHelpText } = this.props
+    return (
+      <div className={(error && showError) ? 'validFormField form-group has-error' : 'validFormField form-group'}>
+        {label ? <label className='control-label' htmlFor={name}>{label}</label> : undefined }
+        <input
+          id={name}
+          name={name}
+          type='text'
+          className='form-control'
+          value={this.state.tagString}
+          placeholder={placeholder}
+          onChange={(e) => {
+            this.setTagString(e.target.value)
+            let tags = e.target.value.trim().split(', ').map(i => { return i.trim() }).filter(i => i)
+            console.log(tags)
+            onChange(name, tags, e)
           }
-          onChange(name, tags, e)
-        }
-        }
-      />
-      {(error !== '' && showError) ? <div className='control-label'>{error}</div> : undefined}
-      {(helpText && showHelpText) && <i className='help hint'>{helpText}</i>}
-    </div>
-  )
+          }
+        />
+        {(error !== '' && showError) ? <div className='control-label'>{error}</div> : undefined}
+        {(helpText && showHelpText) && <i className='help hint'>{helpText}</i>}
+      </div>
+    )
+  }
 }
 
 TagInput.propTypes = {
