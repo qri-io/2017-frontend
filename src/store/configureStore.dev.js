@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
+
 import api from '../middleware/api'
 import runQuery from '../middleware/runQuery'
 import locals from '../middleware/locals'
