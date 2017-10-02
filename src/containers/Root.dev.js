@@ -1,23 +1,15 @@
 import React, { PropTypes } from 'react'
 import { Router } from 'react-router'
+import { ConnectedRouter } from 'react-router-redux'
 import { Provider } from 'react-redux'
-import routes from '../routes.dev'
-import DevTools from './DevTools'
+import Routes from '../routes.dev'
 
-const Root = ({ store, history }) => {
+export default function Root ({ store, history }) {
   return (
     <Provider store={store}>
-      <div>
-        <Router history={history} routes={routes} />
-        <DevTools />
-      </div>
+      <ConnectedRouter history={history}>
+        <Routes />
+      </ConnectedRouter>
     </Provider>
   )
 }
-
-Root.propTypes = {
-  store: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
-}
-
-export default Root

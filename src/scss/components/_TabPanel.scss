@@ -1,8 +1,10 @@
-.tabPanel {
-	header {
+.tab_panel {
+
+	.header {
+		font-weight: bold;
 		padding: 15px 20px;
 
-		.tab {
+		a.tab {
 			text-transform: uppercase;
 			font-style: oblique;
 			font-weight: 700;

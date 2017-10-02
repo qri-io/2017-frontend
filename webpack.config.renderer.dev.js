@@ -131,7 +131,7 @@ export default merge.smart(baseConfig, {
             options: {
               modules: true,
               sourceMap: true,
-              importLoaders: 1,
+              // importLoaders: 1,
               localIdentName: '[name]__[local]__[hash:base64:5]'
             }
           },
@@ -274,9 +274,9 @@ export default merge.smart(baseConfig, {
       verbose: true,
       disableDotRule: false
     },
-    setup () {
+    before () {
       if (process.env.START_HOT) {
-        console.log('Staring Main Process...')
+        console.log('Starting Main Process...')
         spawn(
           'npm',
           ['run', 'start-main-dev'],

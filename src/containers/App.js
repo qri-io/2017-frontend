@@ -178,7 +178,7 @@ function mapStateToProps (state, ownProps) {
   return {
     message: state.message,
     errorMessage: state.errorMessage,
-    inputValue: ownProps.location.pathname.substring(1),
+    // inputValue: ownProps.location.pathname.substring(1),
     user: selectSessionUser(state),
     showMenu: state.app.showMenu,
     layout: state.layout,

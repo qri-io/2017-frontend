@@ -4,7 +4,7 @@ import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import Root from './containers/Root'
 import { configureStore, history } from './store/configureStore'
-// import './app.global.css';
+// import './app.global.css'
 import './scss/style.scss'
 
 const store = configureStore(window.data)
@@ -49,21 +49,3 @@ if (__BUILD__.PRODUCTION) {
     load () {}
   }
 }
-
-// import 'babel-polyfill'
-// import React from 'react'
-// import { render } from 'react-dom'
-// import { browserHistory } from 'react-router'
-// import { syncHistoryWithStore } from 'react-router-redux'
-// import Root from './containers/Root'
-// import configureStore from './store/configureStore'
-
-// require('../scss/style.scss')
-
-// const store = configureStore(window.data)
-// const history = syncHistoryWithStore(browserHistory, store)
-
-// render(
-//   <Root store={store} history={history} />,
-//   document.getElementById('root')
-// )

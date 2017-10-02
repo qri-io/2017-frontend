@@ -215,7 +215,7 @@ function mapStateToProps (state, ownProps) {
   }
 
   return Object.assign({}, {
-    slug: ownProps.location.query.slug,
+    // slug: ownProps.location.query.slug,
 
     queries: Object.keys(state.entities.queries).map(key => state.entities.queries[key]),
     datasets: Object.keys(state.entities.datasets).map(key => state.entities.datasets[key]),

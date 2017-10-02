@@ -13,10 +13,10 @@ function headerClassName (i, index) {
 const TabPanel = ({ index, labels = [], components, onSelectPanel }) => {
   const component = components[index]
   return (
-    <div className='tabPanel'>
-      <header>
+    <div className='tab_panel'>
+      <div className='header'>
         {labels.map((label, i) => <a className={headerClassName(i, index)} key={i} onClick={panelTrigger(i, onSelectPanel)}>{label}</a>)}
-      </header>
+      </div>
       <section>
         {component}
       </section>
