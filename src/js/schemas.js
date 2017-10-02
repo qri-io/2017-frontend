@@ -50,7 +50,7 @@ changeSchema.define({
 datasetSchema.new = function (attrs) {
   return Object.assign({
     'name': 'new dataset'
-  }, attrs, { id: 'new' })
+  }, { path: 'new' }, attrs)
 }
 
 readmeSchema.new = function (attrs) {
