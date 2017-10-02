@@ -48,6 +48,13 @@ export function setMessage (message) {
   }
 }
 
+export const SET_SEARCH_STRING = 'SET_SEARCH_STRING'
+export function setSearchString (searchString) {
+  return {
+    type: SET_SEARCH_STRING,
+    searchString
+  }
+}
 export const RESET_MESSAGE = 'RESET_MESSAGE'
 export function resetMessage () {
   return {

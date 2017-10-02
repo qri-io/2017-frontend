@@ -22,6 +22,7 @@ const migrationSchema = new Schema('migrations')
 const changeSchema = new Schema('changes')
 const inviteSchema = new Schema('invites')
 const roleSchema = new Schema('roles')
+// DEPRECIATION - no long have this concept of metadata separate from dataset
 const metadataSchema = new Schema('metadata', { idAttribute: 'path' })
 
 querySchema.define({
@@ -76,7 +77,7 @@ inviteSchema.new = function (attrs) {
 roleSchema.new = function (attrs) {
   return Object.assign({}, attrs, { id: 'new' })
 }
-
+// DEPRECIATION - no long have this concept of metadata separate from dataset
 metadataSchema.new = (attrs) => {
   return Object.assign({}, attrs)
 }
@@ -101,6 +102,7 @@ const Schemas = {
   ROLE: roleSchema,
   ROLE_ARRAY: arrayOf(roleSchema),
   STRUCTURED_DATA: structuredDataSchema,
+  // DEPRECIATION - no long have this concept of metadata separate from dataset
   METADATA: metadataSchema,
   METADATA_ARRAY: arrayOf(metadataSchema)
 }
