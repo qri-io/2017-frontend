@@ -2,24 +2,41 @@ import { push } from 'react-router-redux'
 
 import { CALL_API } from '../middleware/api'
 import Schemas from '../schemas'
-import { selectDatasetByAddress } from '../selectors/dataset'
+import { selectDatasetByPath } from '../selectors/dataset'
 import { newLocalModel, updateLocalModel, editModel } from './locals'
 import { setMessage, resetMessage, removeModel } from './app'
 
+const blankMetadata = {
+  title: '',
+  description: '',
+  keyword: [],
+  rights: '',
+  landingPage: '',
+  theme: [],
+  identifier: '',
+  accessLevel: '',
+  language: [],
+  license: ''
+}
+
 const DATASET_NEW = 'DATASET_NEW'
-export function newDataset (attributes = {}) {
-  attributes = Object.assign({
+export function newDataset (attributes = {}, dataset = {}) {
+  const datasetRef = Object.assign({
     name: '',
-    source_url: '',
-    summary: '',
-    description: ''
+    path: '',
+    dataset: Object.assign(blankMetadata, dataset)
   }, attributes)
-  return newLocalModel(Schemas.DATASET, DATASET_NEW, attributes)
+  return newLocalModel(Schemas.DATASET, DATASET_NEW, datasetRef)
 }
 
 const DATASET_UPDATE = 'DATASET_UPDATE'
 export function updateDataset (dataset) {
   return updateLocalModel(Schemas.DATASET, DATASET_UPDATE, dataset)
+}
+
+const DATASET_CANCEL_EDIT = 'DATASET_CANCEL_EDIT'
+export function cancelDatasetEdit (path) {
+  return removeLocalModel(Schemas.DATASET, DATASET_CANCEL_EDIT, path)
 }
 
 export const DATASETS_REQUEST = 'DATASETS_REQUEST'
@@ -54,28 +71,28 @@ export const DATASET_REQUEST = 'DATASET_REQUEST'
 export const DATASET_SUCCESS = 'DATASET_SUCCESS'
 export const DATASET_FAILURE = 'DATASET_FAILURE'
 
-export function fetchDataset (address) {
+export function fetchDataset (path) {
   return {
     [CALL_API]: {
       types: [DATASET_REQUEST, DATASET_SUCCESS, DATASET_FAILURE],
-      endpoint: `/datasets?address=${address}`,
+      endpoint: `/datasets${path}`,
       schema: Schemas.DATASET,
-      address
+      path
     }
   }
 }
 
-export function loadDataset (address, requiredFields = []) {
+export function loadDataset (path, requiredFields = []) {
   return (dispatch, getState) => {
-    const dataset = selectDatasetByAddress(getState(), address)
-    if (dataset.schema != null) {
+    const datasetRef = selectDatasetByPath(getState(), path)
+    if (datasetRef.dataset.schema != null) {
       return null
     }
     // if (dataset && requiredFields.every(key => dataset.hasOwnProperty(key))) {
     //   return null
     // }
 
-    return dispatch(fetchDataset(address, requiredFields))
+    return dispatch(fetchDataset(path, requiredFields))
   }
 }
 
@@ -144,19 +161,22 @@ export const DATASET_SAVE_REQUEST = 'DATASET_SAVE_REQUEST'
 export const DATASET_SAVE_SUCCESS = 'DATASET_SAVE_SUCCESS'
 export const DATASET_SAVE_FAILURE = 'DATASET_SAVE_FAILURE'
 
-export function saveDataset (dataset) {
-  if (dataset.id === 'new') {
-    return createDataset(dataset)
+export function saveDataset (datasetRef) {
+  if (datasetRef.path === 'new') {
+    return createDataset(datasetRef.dataset)
   }
 
   return (dispatch) => {
     return dispatch({
       [CALL_API]: {
         types: [DATASET_SAVE_REQUEST, DATASET_SAVE_SUCCESS, DATASET_SAVE_FAILURE],
-        endpoint: `/datasets/${dataset.id}`,
+        endpoint: `/datasets/`,
         method: 'PUT',
         schema: Schemas.DATASET,
-        data: dataset
+        data: {
+          prev: datasetRef.path,
+          changes: datasetRef.dataset
+        }
       }
     }).then((action) => {
       if (action.type === DATASET_SAVE_SUCCESS) {

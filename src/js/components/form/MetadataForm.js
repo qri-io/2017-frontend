@@ -11,6 +11,8 @@ import ValidSelect from './ValidSelect'
 import ValidLicenseInput from './ValidLicenseInput'
 import ValidDateTimeInput from './ValidDateTimeInput'
 
+import DatasetRefProps from '../../propTypes/datasetRefProps.js'
+
 // Required fields to pass POD spec:
 // √ title
 // √ description
@@ -24,11 +26,16 @@ import ValidDateTimeInput from './ValidDateTimeInput'
 // programCode
 // √ license
 
-const MetadataForm = ({ data, validation, onChange, onCancel, onSubmit, showHelpText }) => {
-  const meta = data
+// const MetadataForm = ({ data, validation, onChange, onCancel, onSubmit, showHelpText }) => {
+const MetadataForm = ({ datasetRef, validation, onChange, onCancel, onSubmit, showHelpText }) => {
+  const meta = datasetRef.dataset
   const handleSubmit = (e) => {
     e.preventDefault()
-    onSubmit(data, e)
+    onSubmit(datasetRef, e)
+  }
+  const handleCancel = (e) => {
+    e.preventDefault()
+    onCancel(datasetRef.props, e)
   }
 
   return (
@@ -51,10 +58,10 @@ const MetadataForm = ({ data, validation, onChange, onCancel, onSubmit, showHelp
         error={validation.description}
         onChange={onChange}
       />
-      <ValidInput
+      <TagInput
         name='theme'
         label='Category'
-        helpText='Main thematic category of the dataset'
+        helpText='Main thematic categories of the dataset, use commas to seperate'
         showHelpText={showHelpText}
         value={meta.theme}
         onChange={onChange}
@@ -62,7 +69,7 @@ const MetadataForm = ({ data, validation, onChange, onCancel, onSubmit, showHelp
       <TagInput
         name='keyword'
         label='Tags'
-        helpText='Tags (or keywords) help users discover this dataset; please include terms that would be used by technical and non-technical users'
+        helpText='Tags (or keywords) help users discover this dataset; please include terms that would be used by technical and non-technical users. Please use commas to seperate'
         showHelpText={showHelpText}
         value={meta.keyword}
         onChange={onChange}
@@ -133,42 +140,14 @@ const MetadataForm = ({ data, validation, onChange, onCancel, onSubmit, showHelp
         onChange={onChange}
       />
       <br />
-      <button className='btn' onClick={onCancel}>Cancel</button>
+      <button className='btn' onClick={handleCancel}>Cancel</button>
       <input className='btn btn-primary' type='submit' value='Save' onClick={handleSubmit} />
     </div>
   )
 }
 
 MetadataForm.propTypes = {
-  data: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    // POD metadata says theme is an array of strings,
-    // however the ValidInput component, to which it gets passed
-    // requires a string, not array of strings
-    theme: PropTypes.arrayOf(PropTypes.string).isRequired,
-    // POD metadata says keyword is an array of strings,
-    // however the TagInput component, to which it gets passed
-    // requires a string, not array of strings
-    keyword: PropTypes.arrayOf(PropTypes.string).isRequired,
-    modified: PropTypes.instanceOf(Date).isRequired,
-    issued: PropTypes.instanceOf(Date).isRequired,
-    identifier: PropTypes.string.isRequired,
-    // may be too strict:
-    // accessLevel: PropTypes.oneOf(['public', 'restricted public', 'non-public']),isRequired,
-    accessLevel: PropTypes.string.isRequired,
-    license: PropTypes.string.isRequired,
-    // POD metadata says language is an array of strings,
-    // however the UrlInput component, to which it gets passed
-    // requires a string, not array of strings
-    language: PropTypes.arrayOf(PropTypes.string),
-    landingPage: PropTypes.string.isRequired
-
-  }).isRequired,
-  validation: PropTypes.shape({
-    title: PropTypes.string,
-    description: PropTypes.string
-  }),
+  datasetRef: DatasetRefProps,
   showHelpText: PropTypes.bool,
 
   onChange: PropTypes.func.isRequired,
@@ -177,7 +156,10 @@ MetadataForm.propTypes = {
 }
 
 MetadataForm.defaultProps = {
-  validation: {},
+  validation: {
+    title: '',
+    description: ''
+  },
   showHelpText: false
 }
 

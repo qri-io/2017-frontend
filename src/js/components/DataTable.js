@@ -1,3 +1,5 @@
+// DEPRICATE - No longer works -> Data is now an array of objects not array of arrays
+
 import React, { PropTypes } from 'react'
 import Spinner from './Spinner'
 import { fieldsProps } from '../propTypes/datasetRefProps.js'
@@ -40,7 +42,7 @@ const DataTable = ({ data, fields, fetching, fetchedAll, error, onLoadMore }) =>
 }
 
 DataTable.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.array),
+  data: PropTypes.arrayOf(PropTypes.object),
   fields: fieldsProps,
   fetching: PropTypes.bool,
   fetchedAll: PropTypes.bool,

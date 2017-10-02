@@ -6,7 +6,7 @@ const ValidLicenseInput = ({ label, name, className, value, showError, error, he
     <div className={`validFormField ${errorClass} ${className}`}>
       {label && <label className='control-label' htmlFor={name}>{label}</label>}
       <select id={name} name={name} className='form-control' value={value} onChange={(e) => { onChange(name, e.target.value, e) }}>
-        <option value='http://www.usa.gov/publicdomain/label/1.0/'>US Public Domain</option>
+        <option value='http://www.usa.gov/publicdomain/label/1.0/'>Public Domain</option>
         <option value='https://creativecommons.org/publicdomain/zero/1.0/'>CC0 - Creative Commons Zero Public Domain Dedication</option>
         <option value='http://opendatacommons.org/licenses/pddl/1.0/'>PDDL - Open Data Commons Public Domain Dedication and Licence</option>
         <option value='http://opendatacommons.org/licenses/by/1.0/'>ODC-By - Open Data Commons Attribution License</option>
@@ -29,7 +29,7 @@ ValidLicenseInput.propTypes = {
   // className will set on the containing div
   className: PropTypes.string,
   // value to display in the field
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   // weather or not to actually display any passed-in errors
   showError: PropTypes.bool,
   // an error message to display
@@ -47,7 +47,7 @@ ValidLicenseInput.defaultProps = {
   error: undefined,
   showError: true,
   // https://project-open-data.cio.gov/open-licenses/
-  value: 'http://www.usa.gov/publicdomain/label/1.0/',
+  // value: 'http://www.usa.gov/publicdomain/label/1.0/',
   helpText: '',
   showHelpText: false
 }

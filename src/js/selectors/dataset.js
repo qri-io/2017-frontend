@@ -8,8 +8,8 @@ export function selectDataset (state, id) {
   return state.entities.datasets[id]
 }
 
-export function selectDatasetById (state, id) {
-  return state.entities.datasets[id]
+export function selectDatasetByPath (state, path) {
+  return state.entities.datasets[path]
 }
 
 export function selectUserDatasets (state, username) {

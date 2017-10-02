@@ -11,6 +11,7 @@ import { selectDataset, selectDatasetData } from '../selectors/dataset'
 import { selectSessionUser } from '../selectors/session'
 // import { selectQueryById } from '../selectors/query';
 
+import DatasetDataGrid from '../components/DatasetDataGrid'
 import TabPanel from '../components/TabPanel'
 import List from '../components/List'
 import DatasetItem from '../components/item/DatasetItem'
@@ -19,12 +20,17 @@ import FieldsList from '../components/FieldsList'
 import QueryEditor from '../components/QueryEditor'
 import DataTable from '../components/DataTable'
 
+import MetadataEditor from '../containers/MetadataEditor.js'
+
 import DatasetRefProps from '../propTypes/datasetRefProps.js'
 
 class Dataset extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {tabIndex: 0};
+    this.state = {
+      tabIndex: 0,
+      editMetadata: false
+    };
 
     [
       'handleRunQuery',
@@ -35,6 +41,7 @@ class Dataset extends React.Component {
       'handleDownloadDataset',
       'handleDeleteDataset',
       'changeTabIndex',
+      'changeEditMetadata',
       'renderFieldsList',
       'renderEditButtons',
       'renderResults',
@@ -123,6 +130,9 @@ class Dataset extends React.Component {
     this.setState({tabIndex: index})
   }
 
+  changeEditMetadata () {
+    this.state.editMetadata ? this.setState({editMetadata: false}) : this.setState({editMetadata: true})
+  }
   renderFieldsList (dataset) {
     if (dataset.structure && dataset.structure.schema) {
       return (<FieldsList fields={dataset.structure.schema.fields} />)
@@ -154,7 +164,12 @@ class Dataset extends React.Component {
       <div className='col-md-12'>
         <hr className='green' />
         <h4 className='green'>Results</h4>
-        <DataTable results={results} onLoadMore={this.handleLoadMoreResults} />
+        <DatasetDataGrid
+          dataset={datasetRef && datasetRef.dataset}
+          data={data}
+          onLoadMore={this.handleLoadMoreResults}
+          bounds={bottomBox}
+              />
       </div>
     )
   }
@@ -192,7 +207,12 @@ class Dataset extends React.Component {
         <div className='col-md-12'>
           <hr className='green' />
           <h4 className='green'>Data</h4>
-          <DataTable fields={structure.schema.fields} data={data} fetching={false} fetchedAll onLoadMore={this.handleLoadMoreResults} />
+          <DatasetDataGrid
+            dataset={datasetRef && datasetRef.dataset}
+            data={data}
+            onLoadMore={this.handleLoadMoreResults}
+                // bounds={bottomBox}
+              />
         </div>
       </div>
     )
@@ -226,11 +246,12 @@ class Dataset extends React.Component {
       return (
         <TabPanel
           index={tabIndex}
-          labels={['Description', 'Metadata', 'Data']}
+          labels={['Description', 'Fields', 'Data']}
           onSelectPanel={this.changeTabIndex}
           components={[
             this.renderReadme(readme, dataset),
             this.renderFieldsList(dataset),
+            // this.renderMetadata(dataset),
             this.renderData()
           ]}
         />
@@ -243,6 +264,7 @@ class Dataset extends React.Component {
           onSelectPanel={this.changeTabIndex}
           components={[
             this.renderFieldsList(dataset),
+            // this.renderMetadata(dataset),
             this.renderData()
           ]}
         />
@@ -265,21 +287,22 @@ class Dataset extends React.Component {
       )
     }
 
-    const { name, dataset } = datasetRef
-    const tabIndex = this.state.tabIndex
-
+    const { dataset, path } = datasetRef
+    const { tabIndex, editMetadata } = this.state
     return (
       <div id='wrapper'>
-        <div className='container'>
-          <DatasetHeader datasetRef={datasetRef} onDelete={this.handleDeleteDataset} onDownload={this.handleDownloadDataset} />
-          <hr className='blue' />
-          {this.renderTabPanel(readme, dataset, tabIndex)}
-          <div className='row'>
-            <div className='col-md-12'>
-              { this.renderEditButtons(this.props) }
+        {
+          editMetadata ? <div className='container'><MetadataEditor path={path} /></div> : <div className='container'>
+            <DatasetHeader datasetRef={datasetRef} onDelete={this.handleDeleteDataset} onDownload={this.handleDownloadDataset} onEditMetadata={this.changeEditMetadata} />
+            <hr className='blue' />
+            {this.renderTabPanel(readme, dataset, tabIndex)}
+            <div className='row'>
+              <div className='col-md-12'>
+                { this.renderEditButtons(this.props) }
+              </div>
             </div>
           </div>
-        </div>
+        }
       </div>
     )
   }
@@ -301,6 +324,7 @@ Dataset.propTypes = {
   query: PropTypes.object.isRequired,
   // results (if any)
   results: React.PropTypes.object,
+  path: PropTypes.string,
 
   // permissions stuff, will show things based on capabilities
   // permissions: PropTypes.object.isRequired,

@@ -36,7 +36,7 @@ ValidDateInput.propTypes = {
   // short message to help the user
   helpText: PropTypes.string,
   // weather to show help text or not
-  showHelpText: PropTypes.bool
+  showHelpText: PropTypes.bool,
   // className will set on the containing div
   className: PropTypes.string,
   // explicit control over weather or not to display validation

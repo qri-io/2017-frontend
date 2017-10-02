@@ -31,15 +31,15 @@ UrlInput.propTypes = {
   // an error message to displacy
   error: PropTypes.string,
   // value to display in the field
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   // placeholder text for an empty field. default: ""
-  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   // short message to help the user
   helpText: PropTypes.string,
   // weather to show help text or not
-  showHelpText: PropTypes.bool
+  showHelpText: PropTypes.bool,
   // change handler func. will be called with (name, value, event)
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
 }
 
 UrlInput.defaultProps = {
