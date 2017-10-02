@@ -11,6 +11,7 @@ import { selectDataset, selectDatasetData } from '../selectors/dataset'
 import { selectSessionUser } from '../selectors/session'
 // import { selectQueryById } from '../selectors/query';
 
+import DatasetDataGrid from '../components/DatasetDataGrid'
 import TabPanel from '../components/TabPanel'
 import List from '../components/List'
 import DatasetItem from '../components/item/DatasetItem'
@@ -163,7 +164,12 @@ class Dataset extends React.Component {
       <div className='col-md-12'>
         <hr className='green' />
         <h4 className='green'>Results</h4>
-        <DataTable results={results} onLoadMore={this.handleLoadMoreResults} />
+        <DatasetDataGrid
+          dataset={datasetRef && datasetRef.dataset}
+          data={data}
+          onLoadMore={this.handleLoadMoreResults}
+          bounds={bottomBox}
+              />
       </div>
     )
   }
@@ -201,7 +207,12 @@ class Dataset extends React.Component {
         <div className='col-md-12'>
           <hr className='green' />
           <h4 className='green'>Data</h4>
-          <DataTable fields={structure.schema.fields} data={data} fetching={false} fetchedAll onLoadMore={this.handleLoadMoreResults} />
+          <DatasetDataGrid
+            dataset={datasetRef && datasetRef.dataset}
+            data={data}
+            onLoadMore={this.handleLoadMoreResults}
+                // bounds={bottomBox}
+              />
         </div>
       </div>
     )
@@ -278,7 +289,6 @@ class Dataset extends React.Component {
 
     const { dataset, path } = datasetRef
     const { tabIndex, editMetadata } = this.state
-
     return (
       <div id='wrapper'>
         {
@@ -314,6 +324,7 @@ Dataset.propTypes = {
   query: PropTypes.object.isRequired,
   // results (if any)
   results: React.PropTypes.object,
+  path: PropTypes.string,
 
   // permissions stuff, will show things based on capabilities
   // permissions: PropTypes.object.isRequired,

@@ -34,6 +34,11 @@ export function updateDataset (dataset) {
   return updateLocalModel(Schemas.DATASET, DATASET_UPDATE, dataset)
 }
 
+const DATASET_CANCEL_EDIT = 'DATASET_CANCEL_EDIT'
+export function cancelDatasetEdit (path) {
+  return removeLocalModel(Schemas.DATASET, DATASET_CANCEL_EDIT, path)
+}
+
 export const DATASETS_REQUEST = 'DATASETS_REQUEST'
 export const DATASETS_SUCCESS = 'DATASETS_SUCCESS'
 export const DATASETS_FAILURE = 'DATASETS_FAILURE'
@@ -156,19 +161,22 @@ export const DATASET_SAVE_REQUEST = 'DATASET_SAVE_REQUEST'
 export const DATASET_SAVE_SUCCESS = 'DATASET_SAVE_SUCCESS'
 export const DATASET_SAVE_FAILURE = 'DATASET_SAVE_FAILURE'
 
-export function saveDataset (dataset) {
-  if (dataset.id === 'new') {
-    return createDataset(dataset)
+export function saveDataset (datasetRef) {
+  if (datasetRef.path === 'new') {
+    return createDataset(datasetRef.dataset)
   }
 
   return (dispatch) => {
     return dispatch({
       [CALL_API]: {
         types: [DATASET_SAVE_REQUEST, DATASET_SAVE_SUCCESS, DATASET_SAVE_FAILURE],
-        endpoint: `/datasets/${dataset.id}`,
+        endpoint: `/datasets/`,
         method: 'PUT',
         schema: Schemas.DATASET,
-        data: dataset
+        data: {
+          prev: datasetRef.path,
+          changes: datasetRef.dataset
+        }
       }
     }).then((action) => {
       if (action.type === DATASET_SAVE_SUCCESS) {

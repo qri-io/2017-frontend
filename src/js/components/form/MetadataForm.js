@@ -11,6 +11,8 @@ import ValidSelect from './ValidSelect'
 import ValidLicenseInput from './ValidLicenseInput'
 import ValidDateTimeInput from './ValidDateTimeInput'
 
+import DatasetRefProps from '../../propTypes/datasetRefProps.js'
+
 // Required fields to pass POD spec:
 // √ title
 // √ description
@@ -25,11 +27,15 @@ import ValidDateTimeInput from './ValidDateTimeInput'
 // √ license
 
 // const MetadataForm = ({ data, validation, onChange, onCancel, onSubmit, showHelpText }) => {
-const MetadataForm = ({ data, validation, onChange, onCancel, onSubmit, showHelpText }) => {
-  const meta = data
+const MetadataForm = ({ datasetRef, validation, onChange, onCancel, onSubmit, showHelpText }) => {
+  const meta = datasetRef.dataset
   const handleSubmit = (e) => {
     e.preventDefault()
-    onSubmit(data, e)
+    onSubmit(datasetRef, e)
+  }
+  const handleCancel = (e) => {
+    e.preventDefault()
+    onCancel(datasetRef.props, e)
   }
 
   return (
@@ -134,37 +140,14 @@ const MetadataForm = ({ data, validation, onChange, onCancel, onSubmit, showHelp
         onChange={onChange}
       />
       <br />
-      <button className='btn' onClick={onCancel}>Cancel</button>
+      <button className='btn' onClick={handleCancel}>Cancel</button>
       <input className='btn btn-primary' type='submit' value='Save' onClick={handleSubmit} />
     </div>
   )
 }
 
 MetadataForm.propTypes = {
-  data: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string,
-    theme: PropTypes.arrayOf(PropTypes.string),
-    keyword: PropTypes.arrayOf(PropTypes.string),
-    modified: PropTypes.instanceOf(Date),
-    issued: PropTypes.instanceOf(Date),
-    identifier: PropTypes.string,
-    // may be too strict:
-    // accessLevel: PropTypes.oneOf(['public', 'restricted public', 'non-public']),isRequired,
-    accessLevel: PropTypes.string,
-    license: PropTypes.string,
-    // POD metadata says language is an array of strings,
-    // however the UrlInput component, to which it gets passed
-    // requires a string, not array of strings
-    language: PropTypes.arrayOf(PropTypes.string),
-    // language: PropTypes.string,
-    landingPage: PropTypes.string
-
-  }).isRequired,
-  validation: PropTypes.shape({
-    title: PropTypes.string,
-    description: PropTypes.string
-  }),
+  datasetRef: DatasetRefProps,
   showHelpText: PropTypes.bool,
 
   onChange: PropTypes.func.isRequired,

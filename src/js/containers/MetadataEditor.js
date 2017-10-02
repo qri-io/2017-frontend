@@ -6,10 +6,7 @@ import Metadata from '../components/Metadata'
 import MetadataForm from '../components/form/MetadataForm'
 import Spinner from '../components/Spinner'
 
-import { newMetadata, editMetadata, updateMetadata, cancelMetadataEdit, saveMetadata, loadMetadata } from '../actions/metadata'
-import { selectLocalMetadata, selectMetadata } from '../selectors/metadata'
-
-import { newDataset, updateDataset, loadDataset } from '../actions/dataset'
+import { newDataset, updateDataset, loadDataset, saveDataset, cancelDatasetEdit } from '../actions/dataset'
 import { selectLocalDatasetById, selectDataset } from '../selectors/dataset'
 import { selectDefaultKeyId } from '../selectors/keys'
 
@@ -77,14 +74,13 @@ class MetadataEditor extends React.Component {
     this.props.updateDataset(change)
   }
 
-  handleCancel () {
-    this.props.cancelMetadataEdit(this.props.metadata)
+  handleCancel (path) {
+    // this.props.cancelDatasetEdit(path)
   }
 
-  handleSave (meta) {
-    // this.props.saveMetadata({ keyId: this.props.sessionKeyId, subject: this.props.subjectHash, meta })
-    // // TODO - this should be in a "then" clause on saveMetadata
-    // this.props.cancelMetadataEdit(this.props.metadata)
+  handleSave (localDatasetRef) {
+    this.props.saveDataset(localDatasetRef)
+    // this.props.cancelDatasetEdit(localDatasetRef.path)
   }
 
   handleToggleHelp () {
@@ -95,14 +91,12 @@ class MetadataEditor extends React.Component {
     if (this.state.loading) {
       return <Spinner />
     } else {
-      const { dataset } = this.props.localDatasetRef
       const { showHelp } = this.state
-
       return (
         <div className='metadata editor col-md-12'>
           <a className='helpToggle right' onClick={this.handleToggleHelp}>{showHelp ? 'hide help' : 'show help' }</a>
           <MetadataForm
-            data={dataset}
+            datasetRef={this.props.localDatasetRef}
             onChange={this.handleChange}
             onCancel={this.handleCancel}
             onSubmit={this.handleSave}
@@ -122,13 +116,15 @@ MetadataEditor.propTypes = {
   newDataset: PropTypes.func.isRequired,
   loadDataset: PropTypes.func.isRequired,
   updateDataset: PropTypes.func.isRequired,
+  saveDataset: PropTypes.func.isRequired,
+  cancelDatasetEdit: PropTypes.func.isRequired
 
-  newMetadata: PropTypes.func.isRequired,
-  editMetadata: PropTypes.func.isRequired,
-  updateMetadata: PropTypes.func.isRequired,
-  cancelMetadataEdit: PropTypes.func.isRequired,
-  loadMetadata: PropTypes.func.isRequired,
-  saveMetadata: PropTypes.func
+  // newMetadata: PropTypes.func.isRequired,
+  // editMetadata: PropTypes.func.isRequired,
+  // updateMetadata: PropTypes.func.isRequired,
+  // cancelMetadataEdit: PropTypes.func.isRequired,
+  // loadMetadata: PropTypes.func.isRequired,
+  // saveMetadata: PropTypes.func
 }
 
 MetadataEditor.defaultProps = {
@@ -148,10 +144,12 @@ export default connect(mapStateToProps, {
   newDataset,
   loadDataset,
   updateDataset,
-  newMetadata,
-  editMetadata,
-  updateMetadata,
-  cancelMetadataEdit,
-  loadMetadata,
-  saveMetadata
+  saveDataset,
+  cancelDatasetEdit
+  // newMetadata,
+  // editMetadata,
+  // updateMetadata,
+  // cancelMetadataEdit,
+  // loadMetadata,
+  // saveMetadata
 })(MetadataEditor)
