@@ -1,0 +1,12 @@
+.dateInput {
+  position: relative;
+  .calendar {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    z-index: 2;
+    padding: 4px 8px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.45);
+    border-radius: 3px;
+  }
+}

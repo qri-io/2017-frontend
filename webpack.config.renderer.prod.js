@@ -18,10 +18,10 @@ export default merge.smart(baseConfig, {
 
   target: 'electron-renderer',
 
-  entry: './src/index',
+  entry: './app/index',
 
   output: {
-    path: path.join(__dirname, 'src/dist'),
+    path: path.join(__dirname, 'app/dist'),
     publicPath: '../dist/',
     filename: 'renderer.prod.js'
   },
@@ -156,9 +156,9 @@ export default merge.smart(baseConfig, {
         'DEVELOP': JSON.stringify(false),
         'STAGING': JSON.stringify(false),
 
-        'BASE_URL': JSON.stringify('http://www.qri.io'),
-        'API_URL': JSON.stringify('http://www.qri.io'),
-        'STATIC_ASSETS_URL': JSON.stringify('http://static.qri.io'),
+        'BASE_URL': JSON.stringify('http://localhost:3000'),
+        'API_URL': JSON.stringify('http://localhost:3000'),
+        'STATIC_ASSETS_URL': JSON.stringify('http://localhost:3000'),
         'SEGMENT_KEY': JSON.stringify('--nope--')
       }
     }),

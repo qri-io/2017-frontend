@@ -208,7 +208,7 @@ export default merge.smart(baseConfig, {
     new webpack.LoaderOptionsPlugin({
       debug: true,
       options: {
-        context: path.resolve(process.cwd(), 'src'),
+        context: path.resolve(process.cwd(), 'app'),
         output: {
           path: path.resolve(process.cwd(), 'dll')
         }

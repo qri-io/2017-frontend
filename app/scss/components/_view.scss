@@ -1,0 +1,29 @@
+.chart.view {
+	.recharts-text {
+		fill : $slate;
+	}
+	.recharts-cartesian-axis-line {
+		stroke: $slate;
+	}
+	.recharts-cartesian-axis-tick-line {
+		stroke: $slate;
+	}
+	.recharts-bar-cursor {
+		fill: $slate;
+	}
+}
+
+.value.list.view {
+	margin-top: 2.0rem;
+	margin-bottom: 2.0rem;
+	// border-top: 1px solid $slate;
+	// border-bottom: 1px solid $slate;
+	// background: $slate;
+	border-radius: 3px;
+	padding-top: 1.0rem;
+
+	.value {
+		text-align: left;
+		color: $green;
+	}
+}

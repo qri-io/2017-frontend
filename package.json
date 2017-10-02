@@ -20,39 +20,114 @@
     "url": "https://github.com/qri-io/web/issues"
   },
   "scripts": {
-    "develop": "NODE_ENV=development node server.js",
-    "qri": "qri server -p 3000",
-    "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js",
-    "build:web": "NODE_ENV=production webpack --progress --config webpack.config.prod",
-    "build:staging": "NODE_ENV=development webpack --progress --config webpack.config.staging",
-    "build:desktop": "NODE_ENV=production webpack --progress --config webpack.config.desktop",
-    "publish": "./scripts/publish.sh",
-    
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
     "build-main": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.main.prod.js --colors",
     "build-renderer": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.prod.js --colors",
+    
     "dev": "cross-env START_HOT=1 npm run start-renderer-dev",
+    
     "lint": "eslint --cache --format=node_modules/eslint-formatter-pretty .",
     "lint-fix": "npm run lint -- --fix",
-    "lint-styles": "stylelint src/*.css src/components/*.css --syntax scss",
-    "lint-styles-fix": "stylefmt -r src/*.css src/components/*.css",
+    "lint-styles": "stylelint app/*.css app/components/*.css --syntax scss",
+    "lint-styles-fix": "stylefmt -r app/*.css app/components/*.css",
+    
     "package": "npm run build && build --publish never",
     "package-all": "npm run build && build -mwl",
     "package-linux": "npm run build && build --linux",
     "package-win": "npm run build && build --win --x64",
-    "postinstall": "concurrently \"npm run build-dll\" \"electron-builder install-app-deps\" \"node node_modules/fbjs-scripts/node/check-dev-engines.js package.json\"",
+    
     "prestart": "npm run build",
-    "start": "cross-env NODE_ENV=production electron ./src/",
-    "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron -r babel-register ./src/main.dev",
+    "postinstall": "concurrently \"npm run build-dll\" \"electron-builder install-app-deps\" \"node node_modules/fbjs-scripts/node/check-dev-engines.js package.json\"",
+    
+    "start": "cross-env NODE_ENV=production electron ./app/",
+    "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron -r babel-register ./app/main.dev",
     "start-renderer-dev": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js",
+    
     "test-all": "npm run lint && npm run build && npm run test && npm run test-e2e",
     "test-e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js e2e",
     "test-watch": "npm test -- --watch"
   },
   "browserslist": "electron 1.6",
-  "main": "server.js",
-  "dependencies": {
+  "build": {
+    "productName": "qri",
+    "appId": "org.develar.qri",
+    "files": [
+      "dist/",
+      "node_modules/",
+      "app.html",
+      "main.prod.js",
+      "main.prod.js.map",
+      "package.json"
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "AppImage"
+      ]
+    },
+    "directories": {
+      "buildResources": "resources",
+      "output": "release"
+    }
+  },
+  "standard": {
+    "ignore": [
+      "/server.js",
+      "/app/js/routes.js",
+      "/webpack.config.dev.js",
+      "/webpack.config.prod.js",
+      "/css",
+      "/dist",
+      "/scripts",
+      "/app/scss/*",
+      "/app/js/ace",
+      "/app/js/__mocks__",
+      "/app/js/components/__tests__",
+      "/app/js/selectors/__tests__",
+      "/app/js/utils/__tests__",
+      "/app/js/utils/__mocks__"
+    ]
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
+      "\\.(css|less|sass|scss)$": "identity-obj-proxy"
+    },
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "app/node_modules"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
+    "setupFiles": [
+      "./internals/scripts/CheckBuiltsExist.js"
+    ]
+  },
+   "dependencies": {
     "brace": "0.8.0",
     "electron-debug": "1.2.0",
     "devtron": "1.4.0",
@@ -126,11 +201,9 @@
     "minimist": "1.2.0",
     "node-sass": "4.5.3",
     "react-addons-test-utils": "15.6.0",
-    "react-dev-utils": "^0.5.0",
     "react-test-renderer": "15.6.1",
     "redux-logger": "3.0.6",
     "rimraf": "2.6.1",
-    "sass": "0.5.0",
     "sass-loader": "6.0.6",
     "sinon": "2.3.5",
     "spectron": "3.7.0",
@@ -149,42 +222,5 @@
     "node": ">=7.x",
     "npm": ">=4.x",
     "yarn": ">=0.21.3"
-  },
-  "standard": {
-    "ignore": [
-      "/server.js",
-      "/src/js/routes.js",
-      "/webpack.config.dev.js",
-      "/webpack.config.prod.js",
-      "/css",
-      "/dist",
-      "/scripts",
-      "/src/scss/*",
-      "/src/js/ace",
-      "/src/js/__mocks__",
-      "/src/js/components/__tests__",
-      "/src/js/selectors/__tests__",
-      "/src/js/utils/__tests__",
-      "/src/js/utils/__mocks__"
-    ]
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
-      "\\.(css|less|sass|scss)$": "identity-obj-proxy"
-    },
-    "moduleFileExtensions": [
-      "js"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "app/node_modules"
-    ],
-    "transform": {
-      "^.+\\.js$": "babel-jest"
-    },
-    "setupFiles": [
-      "./internals/scripts/CheckBuiltsExist.js"
-    ]
   }
 }

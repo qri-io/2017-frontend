@@ -1,0 +1,29 @@
+#main_menu {
+  width: 300px;
+  background: $slate;
+  box-shadow: 0 0 6px rgba(0,0,0,0.35);
+  position: fixed;
+  transition: bottom 0.15s;
+  bottom: -100%;
+  left: 0;
+  z-index: 1000;
+  a {
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+    display: block;
+    color: $green;
+    text-transform: uppercase;
+    padding: 1em;
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+  a:hover {
+    background-color: rgba(0,0,0,0.2);
+  }
+}
+
+#main_menu.hide {
+  bottom: -100%;
+}
+#main_menu.show {
+  bottom: 50px;
+}

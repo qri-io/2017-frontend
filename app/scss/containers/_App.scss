@@ -1,0 +1,12 @@
+.alert {
+	margin-bottom: 0;
+	
+	.message {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	.dismiss {
+		color: $background-text;
+		font-weight: 500;
+	}
+}

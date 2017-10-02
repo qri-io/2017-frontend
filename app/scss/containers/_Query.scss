@@ -1,0 +1,61 @@
+.query {
+	margin-top: 2.0rem;
+	margin-bottom: 4.0rem;
+
+	header {
+		margin-bottom: 1.0rem;
+
+		.title {
+			font-family: $bold-heading-font-family;
+			color : $green;
+			text-transform: uppercase;
+		}
+
+		.infoBar {
+			border-top: 1px solid $slate;
+			margin-top: 1.0rem;
+			// margin-bottom: 1.0rem;
+			&:after {
+				display: block;
+				content: "";
+				clear: both;	
+			}
+			.item {
+				float: left;
+				margin-right: 2%
+			}
+		}
+
+		.sqlCode {
+			border-bottom: 1px solid $slate;
+			margin-bottom: 1.0rem;
+		}
+	}
+
+	.run-button-wrap {
+		margin-top: 2.0rem;
+		padding-top: 1.0rem;
+
+		.run {
+			width: 30px;
+			height: 60px;
+			margin: 0 auto;
+			display: block;
+			.qBang {
+				transition: all 0.3s;
+			}
+			&:hover .qBang {
+				fill : white;
+			}
+			// color: #fff;
+			// font-family: $bold-heading-font-family;
+			// background-color: $red;
+			// border-color: $red;
+			// display: block;
+			// &:hover {
+				// background-color: $teal;
+				// border-color: $teal;
+			// }
+		}
+	}
+}

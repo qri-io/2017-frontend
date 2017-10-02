@@ -1,0 +1,248 @@
+@import "variables";
+@import "mixins";
+
+@import "normalize";
+@import "print";
+
+@import "reboot";
+@import "alert";
+@import "type";
+@import "tables";
+@import "forms";
+@import "buttons";
+@import "grid";
+@import "modal";
+
+@import "site";
+
+#content-wrapper {
+  min-height: 90%;
+}
+
+.panel {
+  background: #2A3439;
+}
+
+.logotype {
+  background: url('/svg/qri.svg') center left no-repeat;
+  display: block;
+  overflow: hidden;
+  width: 100px;
+  height: 70px;
+  text-indent: -5000px;
+}
+
+
+.logotype.large {
+  margin: 80px auto 0 0;
+}
+
+.tagline {
+  text-align: left;
+  font-family: 'Colfax-LightItalic', Helvetica, sans-serif;
+  color: #E6DB74;
+}
+
+.links {
+  margin-top: 75px;
+  text-align: center;
+}
+
+a {
+  transition: color 0.5s;
+}
+
+a:hover {
+  color: #9FFFF0;
+}
+
+#navbar {
+  position:  fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  padding: 15px 0;
+}
+
+#navbar #logotype {
+  max-width: 100px;
+  display: block;
+}
+
+#navbar #logotype img {
+  width: 80%;
+}
+
+#navbar .alpha {
+  text-align: center;
+  letter-spacing: 1px;
+  color: $slate;
+}
+
+#navbar .menu {
+  margin-top: 4px;
+  text-align: center;
+}
+
+#navbar .menu a {
+  margin-right: 10px;
+  color: #DFE2CE;
+  font-size: 18px;
+}
+
+#exec-query {
+
+}
+
+#exec-query .query {
+  width: 100%;
+}
+
+#exec-query .options {
+  margin-top: 10px;
+}
+
+#exec-query .buttons {
+  text-align: right;
+}
+
+.slash {
+  margin-left: 0.15em;
+  margin-right: 0.45em;
+  color: #999999;
+}
+
+.editor-wrap {
+  position: relative;
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  min-height: 180px;
+}
+
+#editor {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  min-height: 180px;
+  background: #2A2E2E;
+  border-radius: 3px;
+}
+
+.ace-monokai .ace_print-margin {
+  background: #2A2E2E !important;
+}
+
+.intro-blurb {
+  margin-top: 40px;
+}
+
+.intro-blurb h4 {
+  line-height: 1.5em;
+}
+
+
+.query-results .integer {
+  color: #AE81FF;
+}
+
+.query-results .text {
+  color: #E6DB74;
+}
+
+#home {
+  width: 100%;
+  height: 100%;
+  background: url('http://static.qri.io/img/home-lines.jpg') center 175% repeat-x;
+  padding-top: 6em;
+}
+
+#home .slide {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding-top: 30%;
+}
+
+#home .slide .answer {
+  margin: 10px 10px;
+  font-size: 20px;
+  color: #FA009B;
+}
+
+#home .queries.slide {
+  text-align: left;
+}
+
+a {
+  cursor: pointer;
+}
+
+.qbang {
+  margin-top: 3.0rem;
+  width: 12.0rem;
+  height: 6.0rem;
+  fill: #FA009B;
+}
+
+.hero-query {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-top: 1px solid #7A8682;
+  border-bottom: 1px solid #7A8682;
+}
+
+.hero-query .headline {
+  text-transform: uppercase;
+  font-size: 3.6rem;
+  font-family: 'Colfax-Black', Helvetica, sans-serif;
+  color: #49C797;
+}
+
+.hero-query .statement {
+  color: #A1B2BC;
+}
+
+.query .headline {
+  font-family: 'Colfax-Medium', Helvetica, sans-serif;
+  color: #A1B2BC;
+}
+
+.query .statement {
+  font-family: 'Colfax-Light', Helvetica, sans-serif;
+  color: #40515D;
+}
+
+.datasets {
+  border-bottom: 1px solid #7A8682;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+}
+
+.dataset .name {
+  font-family: 'Colfax-Medium', Helvetica, sans-serif;
+  color: #A1B2BC;
+}
+
+.dataset .statement {
+  font-family: 'Colfax-Light', Helvetica, sans-serif;
+  color: #40515D;
+}
+
+.dataset .summary {
+  color: #40515D;
+}
+
+@media (min-width: 992px) {
+  .queries {
+    // margin-top: 70px;
+  }
+  .datasets {
+    text-align: right;
+    margin-top: 120px;
+    padding-top: 60px;
+    border-right: 1px solid #7A8682;
+    border-bottom: none;
+  }
+}
