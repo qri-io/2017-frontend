@@ -1,0 +1,18 @@
+.codeEditor.wrap {
+  position: relative;
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  min-height: 180px;
+  
+  .editor {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    min-height: 180px;
+    background: #2A2E2E;
+    border-radius: 3px;
+  }
+}
+
