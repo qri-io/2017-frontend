@@ -19,7 +19,7 @@ class App extends Component {
     [
       'handleChange',
       'handleDismissClick',
-      'handleDismissMessage',
+      'handleDismissErrorClick',
       'handleStageClick',
       'handleMenuToggle',
       'handleGimmieInvite',
@@ -48,12 +48,13 @@ class App extends Component {
   handleChange (nextValue) {
     browserHistory.push(`/${nextValue}`)
   }
-  handleDismissClick (e) {
+
+  handleDismissErrorClick (e) {
     this.props.resetErrorMessage()
     e.preventDefault()
   }
 
-  handleDismissMessage (e) {
+  handleDismissClick (e) {
     this.props.resetMessage()
     e.preventDefault()
   }
@@ -114,14 +115,13 @@ class App extends Component {
     }
 
     return (
-      <div className='alert container red'>
+      <div className='alert alert-danger' role='alert'>
         <div className='row'>
-          <div className='col-md-12'>
-            <p className='message'>{errorMessage}</p>
-            <a className='dismiss' onClick={this.handleDismissClick}>Dismiss</a>
-          </div>
+          <div className='dismiss'><a onClick={this.handleDismissErrorClick}>X</a></div>
+          <div className='message'>{errorMessage}</div>
         </div>
       </div>
+
     )
   }
 
@@ -133,11 +133,10 @@ class App extends Component {
 
     return (
       <div className='alert alert-success' role='alert'>
-        <b>{message}</b>
-        {' '}
-        (<a onClick={this.handleDismissClick}>
-          Dismiss
-        </a>)
+        <div className='row'>
+          <div className='dismiss'><a onClick={this.handleDismissClick}>X</a></div>
+          <div className='message'>{message}</div>
+        </div>
       </div>
     )
   }
@@ -147,6 +146,7 @@ class App extends Component {
     return (
       <div id='app' className='stage' onClick={this.handleStageClick}>
         {this.renderMessage()}
+        {this.renderErrorMessage()}
         <div
           className='main'
           style={Object.assign({
@@ -154,7 +154,6 @@ class App extends Component {
             overflow: 'auto'
           }, layout.main)}
         >
-          {this.renderErrorMessage()}
           {children}
         </div>
         {this.renderModal()}
