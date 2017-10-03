@@ -397,7 +397,7 @@ export function runDatasetSearch (searchString, page = 1, pageSize = 50) {
       types: [DATASET_SEARCH_REQUEST, DATASET_SEARCH_SUCCESS, DATASET_SEARCH_FAILURE],
       endpoint: '/search',
       method: 'POST',
-      data: { page, pageSize, q: searchString },
+      data: { page, pageSize, query: searchString },
       schema: Schemas.DATASET_ARRAY
     },
     page,

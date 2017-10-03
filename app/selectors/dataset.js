@@ -132,3 +132,18 @@ export function treeConnections (tree) {
     return walk(acc, node, tree[node])
   }, [])
 }
+
+export function selectDatasetSearchString (state) {
+  return state.app.search.dataset ? state.app.search.dataset : ''
+}
+
+export function selectSearchedDatasets (state) {
+  const { datasets } = state.entities
+  const searchString = selectDatasetSearchString(state)
+  // if  (searchString) {
+  //   const { ids } =
+  // }
+  return Object.keys(datasets).map(id => datasets[id]).sort((a, b) => {
+    return (a.address === b.address) ? 0 : ((a.address < a.address)) ? -1 : 1
+  })
+}

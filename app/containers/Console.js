@@ -14,6 +14,7 @@ import List from '../components/List'
 
 import QueryHistoryItem from '../components/item/QueryHistoryItem'
 import QueryItem from '../components/item/QueryItem'
+import PeerItem from '../components/item/PeerItem'
 import Datasets from './Datasets'
 
 function loadData (props) {
@@ -33,6 +34,7 @@ class Console extends React.Component {
       'handleSelectDataset',
       'handleSelectHistoryEntry',
       'handleQuerySelect',
+      'handlePeerSelect',
       'handleLoadMoreResults'
     ].forEach((m) => { this[m] = this[m].bind(this) })
 
@@ -105,6 +107,10 @@ class Console extends React.Component {
     this.props.setQuery(query)
   }
 
+  handlePeerSelect (i, peer) {
+    // this doesn't do anything yet
+  }
+
   handleLoadMoreResults () {
     this.props.runQuery({
       queryString: this.props.query,
@@ -113,7 +119,7 @@ class Console extends React.Component {
   }
 
   render () {
-    const { queries, datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout } = this.props
+    const { queries, datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout, peers } = this.props
     const { main } = layout
 
     const topBox = {
@@ -151,7 +157,7 @@ class Console extends React.Component {
         <div className='bottom panel'>
           <TabPanel
             index={bottomPanelIndex}
-            labels={['Data', 'Chart', 'Datasets', 'Queries']}
+            labels={['Data', 'Chart', 'Datasets', 'Queries', 'Peers']}
             onSelectPanel={this.handleSetBottomPanel}
             components={[
               <DatasetDataGrid
@@ -168,6 +174,9 @@ class Console extends React.Component {
               </div>,
               <div className='panel'>
                 <List className='queryItem list' data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} bounds={bottomBox} />
+              </div>,
+              <div className='panel'>
+                <List className='peerItem list' data={peers} component={PeerItem} onSelectItem={this.handlePeerSelect} bounds={bottomBox} />
               </div>
             ]}
           />
@@ -182,7 +191,6 @@ Console.propTypes = {
   slug: PropTypes.string,
 
   query: PropTypes.object.isRequired,
-
   // dataset: PropTypes.array,
   queries: PropTypes.array,
   datasets: PropTypes.array,
@@ -214,16 +222,21 @@ function mapStateToProps (state, ownProps) {
     data = state.entities.data[datasetRef.path] && state.entities.data[datasetRef.path].data
   }
 
+  let peers = []
+  if (state.entities.peers) {
+    const peers = Object.keys(state.entities.peers).map(key => state.entities.queries[key])
+  }
+
   return Object.assign({}, {
     // slug: ownProps.location.query.slug,
-
     queries: Object.keys(state.entities.queries).map(key => state.entities.queries[key]),
     datasets: Object.keys(state.entities.datasets).map(key => state.entities.datasets[key]),
     queryHistory: state.session.history,
     layout: state.layout,
 
     datasetRef,
-    data
+    data,
+    peers
 
     // results,
   }, state.console, ownProps)

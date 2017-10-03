@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { debounce } from 'lodash'
 
 import { showModal } from '../actions/app'
 import { loadDatasets, setDatasetSearch, runDatasetSearch } from '../actions/dataset'
-import { selectAllDatasets, selectNoDatasets } from '../selectors/dataset'
+import { selectAllDatasets, selectNoDatasets, selectSearchedDatasets } from '../selectors/dataset'
 
 import AddDataset from './AddDataset'
 import Dataset from './Dataset'
@@ -19,7 +20,12 @@ class DatasetsList extends React.Component {
   constructor (props) {
     super(props)
     // this.state = { loading: props.datasets.length === 0 };
-    this.state = { loading: false };
+    this.state = { loading: false }
+
+    this.debounceRunDatasetSearch = debounce((searchString) =>
+      this.props.runDatasetSearch(searchString)
+    , 250);
+
     [
       'onSelectDataset',
       'handleDatasetSearch',
@@ -52,9 +58,9 @@ class DatasetsList extends React.Component {
   }
 
   handleDatasetSearch (searchString) {
-    console.log(searchString)
+    // console.log(searchString)
     this.props.setDatasetSearch(searchString)
-    this.props.runDatasetSearch(searchString)
+    this.debounceRunDatasetSearch(searchString)
   }
 
   modal (name, data = {}) {
@@ -119,7 +125,14 @@ DatasetsList.defaultProps = {
 
 function mapStateToProps (state, ownProps) {
   const pagination = state.pagination.popularDatasets
-
+  let datasets = []
+  if (state.app.search && state.app.search.dataset) {
+    // TODO - horrible hack to remove "unnnamed dataset" entries from display
+    datasets = selectSearchedDatasets(state).filter((ref) => ref.name != '')
+  } else {
+    // TODO - horrible hack to remove "unnnamed dataset" entries from display
+    datasets = selectAllDatasets(state).filter((ref) => ref.name != '')
+  }
   return Object.assign({
     // TODO - horrible hack to remove "unnnamed dataset" entries from display
     datasets: selectAllDatasets(state).filter((ref) => ref.name != ''),
