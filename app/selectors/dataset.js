@@ -23,6 +23,12 @@ export function selectUserDatasets (state, username) {
   }, [])
 }
 
+export function selectNoDatasets (state) {
+  const { pagination } = state
+  const { popularDatasets } = pagination
+  return (popularDatasets && popularDatasets.popularDatasets && popularDatasets.pageCount == 1 && popularDatasets.fetchedAll == true)
+}
+
 export function selectDatasetByAddress (state, address) {
   const { datasets } = state.entities
   const id = Object.keys(datasets).find(id => (datasets[id].address === address))

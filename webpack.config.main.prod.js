@@ -46,7 +46,7 @@ export default merge.smart(baseConfig, {
      */
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-      'process.env.DEBUG_PROD': JSON.stringify(process.env.DEBUG_PROD || 'true'),
+      'process.env.DEBUG_PROD': JSON.stringify(process.env.DEBUG_PROD || 'false'),
       __BUILD__: {
         PRODUCTION: JSON.stringify(false),
         DEVELOP: JSON.stringify(true),

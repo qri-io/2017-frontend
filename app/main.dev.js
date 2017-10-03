@@ -14,6 +14,7 @@ import { app, BrowserWindow, TouchBar, crashReporter, dialog } from 'electron'
 import MenuBuilder from './menu'
 import { spawn } from 'child_process'
 import path from 'path'
+import fetch from 'node-fetch'
 import fs from 'fs'
 
 let mainWindow = null
@@ -62,7 +63,20 @@ app.on('ready', async () => {
     await installExtensions()
   }
 
-  mainWindow = new BrowserWindow({
+  // crashReporter.start({
+  //   productName: 'qri',
+  //   companyName: 'qri.io'
+  // })
+
+  console.log('starting backend...')
+  startBackend().then(createMainWindow).catch((err) => {
+    dialog.showErrorBox('error starting qri backend', err)
+  })
+})
+
+function createMainWindow () {
+  console.log('booting app...')
+  let mainWindow = new BrowserWindow({
     show: false,
     width: 1024,
     height: 728,
@@ -88,55 +102,91 @@ app.on('ready', async () => {
 
   const menuBuilder = new MenuBuilder(mainWindow)
   menuBuilder.buildMenu()
+}
 
-  console.log('starting qri...')
+function startBackend () {
+  let started = false
+  const spawnProcess = () => {
+    if (started) { return }
+    started = true
+    console.log('starting new qri server...')
 
-  var backgroundProcess = new BrowserWindow({show: false})
-
-  const out = fs.openSync('/tmp/out.log', 'a')
-  const err = fs.openSync('/tmp/out.log', 'a')
-
-  // dialog.showErrorBox('process.env', JSON.stringify(Object.assign({}, process.env, {
-  //   PATH: '/usr/bin', IPFS_PATH: '/tmp/ipfs', QRI_PATH: '/tmp/qri'
-  // })))
-
-  const qriprocess = spawn(
-    path.resolve(`${__dirname}/../../backend/qri`),
-    ['server'],
-    {
-      shell: false,
-      env: Object.assign({}, process.env, {
-        PATH: '/usr/bin',
-        IPFS_PATH: '/tmp/ipfs',
-        QRI_PATH: '/tmp/qri'
-      }),
-      // cwd: __dirname,
-      stdio: ['ignore', out, err]
+    let out = fs.openSync('/tmp/out.log', 'a')
+    let err = fs.openSync('/tmp/out.log', 'a')
+    let backendPath = path.resolve(`${__dirname}/../../backend`)
+    let processEnv = {
+      PATH: '/usr/bin',
+      IPFS_PATH: `${backendPath}/ipfs`,
+      QRI_PATH: `${backendPath}/qri`
     }
-  )
 
-  crashReporter.start({
-    productName: 'qri',
-    companyName: 'qri.io'
-  })
+    if (process.env.NODE_ENV === 'development') {
+      // if we're in dev mode write to this process
+      out = 'inherit'
+      err = 'inherit'
+      // write to project backend path
+      backendPath = path.resolve(`${__dirname}/../backend`)
+      // overwrite processEnv to inherit settings from
+      // executing shell
+      processEnv = {}
+    }
 
-  qriprocess.on('close', (code) => {
-    dialog.showErrorBox('qri process closed', `code: ${code}`)
-  })
+    const qriprocess = spawn(
+      backendPath + '/bin/qri',
+      ['server', '--init-ipfs'],
+      {
+        shell: false,
+        env: Object.assign({}, process.env, processEnv),
+        // cwd: __dirname,
+        stdio: ['ignore', out, err]
+      }
+    )
 
-  qriprocess.on('error', (err) => {
-    // TODO - this might not work b/c not executing on
-    // main process
-    dialog.showErrorBox('qri process error', err)
-    crashReporter.start({
-      productName: 'qri',
-      companyName: 'qri.io',
-      submitURL: 'https://qri.io/url-to-submit',
-      uploadToServer: false,
-      extra: err
+    qriprocess.on('close', (code) => {
+      // dialog.showErrorBox('qri process closed', `code: ${code}`)
     })
+
+    qriprocess.on('error', (err) => {
+      // TODO - this might not work b/c not executing on
+      // main process
+      dialog.showErrorBox('qri process error', err)
+      crashReporter.start({
+        productName: 'qri',
+        companyName: 'qri.io',
+        submitURL: 'https://qri.io/url-to-submit',
+        uploadToServer: false,
+        extra: err
+      })
+    })
+  }
+
+  // continually hit server until it's ready
+  return new Promise((resolve, reject) => {
+    let timer
+    const start = new Date()
+
+    const check = () => {
+      const now = new Date()
+      if ((now.valueOf() - start.valueOf()) > 45000) {
+        clearInterval(timer)
+        reject('qri backend took too long to start 🙁')
+      }
+
+      fetch('http://localhost:3000').then(res => {
+        if (res.status === 200) {
+          clearInterval(timer)
+          resolve()
+        } else {
+          spawnProcess()
+        }
+      }).catch(err => {
+        spawnProcess()
+      })
+    }
+    check()
+    timer = setInterval(check, 2000)
   })
-})
+}
 
 const {TouchBarLabel, TouchBarButton, TouchBarSpacer} = TouchBar
 
