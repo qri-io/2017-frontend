@@ -1,8 +1,9 @@
-import { APP_TOGGLE_MENU, APP_HIDE_MENU, APP_SHOW_MODAL, APP_HIDE_MODAL } from '../actions/app'
+import { APP_TOGGLE_MENU, APP_HIDE_MENU, APP_SHOW_MODAL, APP_HIDE_MODAL, SET_SEARCH } from '../actions/app'
 
 const initialState = {
   showMenu: false,
-  modal: undefined
+  modal: undefined,
+  search: {}
 }
 
 export default function appReducer (state = initialState, action) {
@@ -15,6 +16,8 @@ export default function appReducer (state = initialState, action) {
       return Object.assign({}, state, { modal: action.modal })
     case APP_HIDE_MODAL:
       return Object.assign({}, state, { modal: undefined })
+    case SET_SEARCH:
+      return Object.assign({}, state, {search: action.search})
     // whenever the route changes, close the menu
     case '@@router/LOCATION_CHANGE':
       return Object.assign({}, state, { showMenu: false })

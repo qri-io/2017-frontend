@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 import { showModal } from '../actions/app'
-import { loadDatasets } from '../actions/dataset'
+import { loadDatasets, setDatasetSearch, runDatasetSearch } from '../actions/dataset'
 import { selectAllDatasets, selectNoDatasets } from '../selectors/dataset'
 
 import AddDataset from './AddDataset'
@@ -22,6 +22,7 @@ class DatasetsList extends React.Component {
     this.state = { loading: false };
     [
       'onSelectDataset',
+      'handleDatasetSearch',
       'handleAddItem'
     ].forEach((m) => { this[m] = this[m].bind(this) })
   }
@@ -50,6 +51,12 @@ class DatasetsList extends React.Component {
     this.props.showModal(ADD_DATASET_MODAL, this, {}, true)
   }
 
+  handleDatasetSearch (searchString) {
+    console.log(searchString)
+    this.props.setDatasetSearch(searchString)
+    this.props.runDatasetSearch(searchString)
+  }
+
   modal (name, data = {}) {
     switch (name) {
       case DATASET_DETAILS_MODAL:
@@ -63,7 +70,7 @@ class DatasetsList extends React.Component {
 
   render () {
     const { loading } = this.state
-    const { datasets } = this.props
+    const { datasets, search } = this.props
 
     if (loading) {
       return (
@@ -76,6 +83,15 @@ class DatasetsList extends React.Component {
     return (
       <div id='wrapper'>
         <header>
+          <input
+            id={'search'}
+            name={'search'}
+            type={'text'}
+            className='searchBox'
+            value={search}
+            placeholder={'search'}
+            onChange={(e) => { this.handleDatasetSearch(e.target.value) }}
+        />
           <button onClick={this.handleAddItem} className='btn btn-primary right'>Add</button>
           <hr />
         </header>
@@ -115,6 +131,8 @@ function mapStateToProps (state, ownProps) {
 }
 
 export default connect(mapStateToProps, {
+  setDatasetSearch,
+  runDatasetSearch,
   showModal,
   loadDatasets
 })(DatasetsList)
