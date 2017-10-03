@@ -1,12 +1,23 @@
 .alert {
-	margin-bottom: 0;
+  margin-bottom: 0;
+  position: fixed;
+  right: 0;
+  margin: 30px 20px;
+  overflow: auto;
+  z-index: 2;
+  min-width: 200px;
+  max-width: 40%;
+  padding: 10px 15px 10px 15px;
 	
 	.message {
-		margin-top: 0;
-		margin-bottom: 0;
+		float: left;
+		display: inline-block;
+		margin-left: 10px;
+		margin-right: 10px;
 	}
 	.dismiss {
-		color: $background-text;
-		font-weight: 500;
+		float: right;
+		display: inline-block;
+		margin: 0 10px 0 0;
 	}
 }
