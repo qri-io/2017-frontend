@@ -4,7 +4,7 @@ import { CALL_API } from '../middleware/api'
 import Schemas from '../schemas'
 import { selectDatasetByPath } from '../selectors/dataset'
 import { newLocalModel, updateLocalModel, editModel } from './locals'
-import { setMessage, resetMessage, removeModel } from './app'
+import { setMessage, resetMessage, removeModel, setSearch } from './app'
 
 const blankMetadata = {
   title: '',
@@ -380,5 +380,28 @@ export function initDataset (name, files, callback) {
         files
       }
     }).then(callback)
+  }
+}
+
+export const DATASET_SET_SEARCH = 'DATASET_SET_SEARCH'
+export function setDatasetSearch (searchString) {
+  return setSearch({ dataset: searchString })
+}
+
+export const DATASET_SEARCH_REQUEST = 'DATASET_SEARCH_REQUEST'
+export const DATASET_SEARCH_SUCCESS = 'DATASET_SEARCH_SUCCESS'
+export const DATASET_SEARCH_FAILURE = 'DATASET_SEARCH_FAILURE'
+export function runDatasetSearch (searchString, page = 1, pageSize = 50) {
+  return {
+    [CALL_API]: {
+      types: [DATASET_SEARCH_REQUEST, DATASET_SEARCH_SUCCESS, DATASET_SEARCH_FAILURE],
+      endpoint: '/search',
+      method: 'POST',
+      data: { page, pageSize, query: searchString },
+      schema: Schemas.DATASET_ARRAY
+    },
+    page,
+    pageSize,
+    searchString
   }
 }

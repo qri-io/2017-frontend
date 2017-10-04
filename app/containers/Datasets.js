@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { debounce } from 'lodash'
 
 import { showModal } from '../actions/app'
-import { loadDatasets } from '../actions/dataset'
-import { selectAllDatasets, selectNoDatasets } from '../selectors/dataset'
+import { loadDatasets, setDatasetSearch, runDatasetSearch } from '../actions/dataset'
+import { selectDatasetSearchString, selectNoDatasets, selectDatasets, selectDatasetsPageCount, selectDatasetsFetchedAll, selectDatasetsIsFetching } from '../selectors/dataset'
 
 import AddDataset from './AddDataset'
 import Dataset from './Dataset'
@@ -19,9 +20,17 @@ class DatasetsList extends React.Component {
   constructor (props) {
     super(props)
     // this.state = { loading: props.datasets.length === 0 };
-    this.state = { loading: false };
+    this.state = { loading: false }
+
+    this.debounceRunDatasetSearch = debounce((searchString) => {
+      this.setState({ loading: false })
+      searchString ? this.props.runDatasetSearch(searchString) : undefined
+    }
+    , 250);
+
     [
       'onSelectDataset',
+      'handleDatasetSearch',
       'handleAddItem'
     ].forEach((m) => { this[m] = this[m].bind(this) })
   }
@@ -50,6 +59,13 @@ class DatasetsList extends React.Component {
     this.props.showModal(ADD_DATASET_MODAL, this, {}, true)
   }
 
+  handleDatasetSearch (searchString) {
+    // console.log(searchString)
+    this.props.setDatasetSearch(searchString)
+    this.setState({ loading: true })
+    this.debounceRunDatasetSearch(searchString)
+  }
+
   modal (name, data = {}) {
     switch (name) {
       case DATASET_DETAILS_MODAL:
@@ -63,11 +79,24 @@ class DatasetsList extends React.Component {
 
   render () {
     const { loading } = this.state
-    const { datasets } = this.props
+    const { datasets, searchString } = this.props
 
     if (loading) {
       return (
-        <div className='container'>
+        <div className='wrapper'>
+          <header>
+            <input
+              id={'search'}
+              name={'search'}
+              type={'text'}
+              className='searchBox'
+              value={searchString}
+              placeholder={'search'}
+              onChange={(e) => { this.handleDatasetSearch(e.target.value) }}
+        />
+            <button onClick={this.handleAddItem} className='btn btn-primary right'>Add</button>
+            <hr />
+          </header>
           <Spinner />
         </div>
       )
@@ -76,6 +105,15 @@ class DatasetsList extends React.Component {
     return (
       <div id='wrapper'>
         <header>
+          <input
+            id={'search'}
+            name={'search'}
+            type={'text'}
+            className='searchBox'
+            value={searchString}
+            placeholder={'search'}
+            onChange={(e) => { this.handleDatasetSearch(e.target.value) }}
+        />
           <button onClick={this.handleAddItem} className='btn btn-primary right'>Add</button>
           <hr />
         </header>
@@ -90,6 +128,7 @@ class DatasetsList extends React.Component {
 }
 
 DatasetsList.propTypes = {
+  searchString: PropTypes.string,
   datasets: PropTypes.array.isRequired,
   nextPage: PropTypes.number.isRequired,
   fetchedAll: PropTypes.bool,
@@ -103,18 +142,21 @@ DatasetsList.defaultProps = {
 
 function mapStateToProps (state, ownProps) {
   const pagination = state.pagination.popularDatasets
-
+  const searchString = selectDatasetSearchString(state)
+  const paginationSection = searchString ? 'searchedDatasets' : ''
   return Object.assign({
-    // TODO - horrible hack to remove "unnnamed dataset" entries from display
-    datasets: selectAllDatasets(state).filter((ref) => ref.name != ''),
-    noDatasets: selectNoDatasets(state),
-    loading: (pagination.popularDatasets) ? pagination.popularDatasets.isFetching : false,
-    nextPage: (pagination.popularDatasets) ? (pagination.popularDatasets.pageCount + 1) : 1,
-    fetchedAll: (pagination.popularDatasets) ? pagination.popularDatasets.fetchedAll : false
+    searchString,
+    datasets: selectDatasets(state, paginationSection, searchString),
+    noDatasets: selectNoDatasets(state, paginationSection, searchString),
+    loading: selectDatasetsIsFetching(state, paginationSection, searchString),
+    nextPage: selectDatasetsPageCount(state, paginationSection, searchString) + 1,
+    fetchedAll: selectDatasetsFetchedAll(state, paginationSection, searchString)
   }, ownProps)
 }
 
 export default connect(mapStateToProps, {
+  setDatasetSearch,
+  runDatasetSearch,
   showModal,
   loadDatasets
 })(DatasetsList)

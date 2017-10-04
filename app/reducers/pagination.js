@@ -22,7 +22,11 @@ import {
 
   DATASET_DATA_REQUEST,
   DATASET_DATA_SUCCESS,
-  DATASET_DATA_FAILURE
+  DATASET_DATA_FAILURE,
+
+  DATASET_SEARCH_REQUEST,
+  DATASET_SEARCH_SUCCESS,
+  DATASET_SEARCH_FAILURE
 
 } from '../actions/dataset'
 
@@ -49,6 +53,15 @@ const pagination = combineReducers({
       DATASETS_REQUEST,
       DATASETS_SUCCESS,
       DATASETS_FAILURE
+    ]
+  }),
+
+  searchedDatasets: paginate({
+    mapActionToKey: action => action.searchString,
+    types: [
+      DATASET_SEARCH_REQUEST,
+      DATASET_SEARCH_SUCCESS,
+      DATASET_SEARCH_FAILURE
     ]
   }),
 
