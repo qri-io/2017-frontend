@@ -9,6 +9,7 @@ import { loadSessionUser } from '../actions/session'
 
 import { selectSessionUser } from '../selectors/session'
 import BetaSignup from './BetaSignup'
+import Header from '../components/Header'
 
 const BETA_SIGNUP_MODAL = 'BETA_SIGNUP_MODAL'
 
@@ -147,6 +148,10 @@ class App extends Component {
       <div id='app' className='stage' onClick={this.handleStageClick}>
         {this.renderMessage()}
         {this.renderErrorMessage()}
+        <Header style={Object.assign({
+          position: 'absolute',
+          overflow: 'auto'
+        }, layout.navbar)} />
         <div
           className='main'
           style={Object.assign({

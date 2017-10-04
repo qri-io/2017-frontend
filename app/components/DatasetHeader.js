@@ -9,7 +9,7 @@ const DatasetHeader = ({ datasetRef, onDelete, onEditMetadata }) => {
     <div className='row'>
       <header className='blue page-header col-md-12'>
         <hr className='blue' />
-        <a className='green right' href={`/downloads/package?path=${path}`}>| Download</a>
+        <span>| </span><a className='green right' download={`${name}.zip`} href={`/download/${path}`}> Download</a>
         { onDelete && <a className='red right' onClick={onDelete}>| Delete&nbsp;</a> }
         <a className='green right' onClick={onEditMetadata}>Edit Metadata&nbsp;</a>
         <h1 className='inline-block'>{ name }</h1>
