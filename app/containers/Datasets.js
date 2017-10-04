@@ -79,7 +79,7 @@ class DatasetsList extends React.Component {
 
   render () {
     const { loading } = this.state
-    const { datasets, search } = this.props
+    const { datasets, searchString } = this.props
 
     if (loading) {
       return (
@@ -90,7 +90,7 @@ class DatasetsList extends React.Component {
               name={'search'}
               type={'text'}
               className='searchBox'
-              value={search}
+              value={searchString}
               placeholder={'search'}
               onChange={(e) => { this.handleDatasetSearch(e.target.value) }}
         />
@@ -110,7 +110,7 @@ class DatasetsList extends React.Component {
             name={'search'}
             type={'text'}
             className='searchBox'
-            value={search}
+            value={searchString}
             placeholder={'search'}
             onChange={(e) => { this.handleDatasetSearch(e.target.value) }}
         />
