@@ -1,5 +1,8 @@
 import { selectQueryById } from './query'
 
+const usersDatasetsSection = 'popularDatasets'
+const usersDatasetsNode = 'popularDatasets'
+
 export function addressPath (address) {
   return '/' + address.replace(/\./gi, '/')
 }
@@ -23,11 +26,11 @@ export function selectUserDatasets (state, username) {
   }, [])
 }
 
-export function selectNoDatasets (state) {
-  const { pagination } = state
-  const { popularDatasets } = pagination
-  return (popularDatasets && popularDatasets.popularDatasets && popularDatasets.pageCount == 1 && popularDatasets.fetchedAll == true)
-}
+// export function selectNoDatasets (state) {
+//   const { pagination } = state
+//   const { popularDatasets } = pagination
+//   return (popularDatasets && popularDatasets.popularDatasets && popularDatasets.pageCount == 1 && popularDatasets.fetchedAll == true)
+// }
 
 export function selectDatasetByAddress (state, address) {
   const { datasets } = state.entities
@@ -137,13 +140,51 @@ export function selectDatasetSearchString (state) {
   return state.app.search.dataset ? state.app.search.dataset : ''
 }
 
-export function selectSearchedDatasets (state) {
+export function selectDatasets (state, section, node) {
+  if (!section && !node) {
+    section = usersDatasetsSection
+    node = usersDatasetsNode
+  }
   const { datasets } = state.entities
-  const searchString = selectDatasetSearchString(state)
-  // if  (searchString) {
-  //   const { ids } =
-  // }
-  return Object.keys(datasets).map(id => datasets[id]).sort((a, b) => {
-    return (a.address === b.address) ? 0 : ((a.address < a.address)) ? -1 : 1
-  })
+  return selectDatasetsIds(state, section, node).map(id => datasets[id])
+}
+
+export function selectDatasetsIsFetching (state, section, node) {
+  if (!section && !node) {
+    section = usersDatasetsSection
+    node = usersDatasetsNode
+  }
+  return (state.pagination[section] && state.pagination[section][node]) ? state.pagination[section][node].isFetching : false
+}
+
+export function selectDatasetsPageCount (state, section, node) {
+  if (!section && !node) {
+    section = usersDatasetsSection
+    node = usersDatasetsNode
+  }
+  return (state.pagination[section] && state.pagination[section][node]) ? state.pagination[section][node].pageCount : 0
+}
+
+export function selectDatasetsFetchedAll (state, section, node) {
+  if (!section && !node) {
+    section = usersDatasetsSection
+    node = usersDatasetsNode
+  }
+  return (state.pagination[section] && state.pagination[section][node]) ? state.pagination[section][node].fetchedAll : false
+}
+
+export function selectDatasetsIds (state, section, node) {
+  if (!section && !node) {
+    section = usersDatasetsSection
+    node = usersDatasetsNode
+  }
+  return (state.pagination[section] && state.pagination[section][node]) ? state.pagination[section][node].ids : []
+}
+
+export function selectNoDatasets (state, section, node) {
+  if (!section && !node) {
+    section = usersDatasetsSection
+    node = usersDatasetsNode
+  }
+  return (state.pagination[section] && state.pagination[section][node] && selectDatasetsPageCount(state, section, node) === 1 && selectDatasetsFetchedAll === true)
 }

@@ -56,8 +56,8 @@ const pagination = combineReducers({
     ]
   }),
 
-  searchDatasets: paginate({
-    mapActionToKey: action => 'searchedDatasets.' + action.searchString,
+  searchedDatasets: paginate({
+    mapActionToKey: action => action.searchString,
     types: [
       DATASET_SEARCH_REQUEST,
       DATASET_SEARCH_SUCCESS,
