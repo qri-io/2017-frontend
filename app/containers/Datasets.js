@@ -4,7 +4,7 @@ import { debounce } from 'lodash'
 
 import { showModal } from '../actions/app'
 import { loadDatasets, setDatasetSearch, runDatasetSearch } from '../actions/dataset'
-import { selectAllDatasets, selectDatasetSearchString, selectNoDatasets, selectDatasets, selectDatasetsPageCount, selectDatasetsFetchedAll, selectDatasetsIsFetching } from '../selectors/dataset'
+import { selectDatasetSearchString, selectNoDatasets, selectDatasets, selectDatasetsPageCount, selectDatasetsFetchedAll, selectDatasetsIsFetching } from '../selectors/dataset'
 
 import AddDataset from './AddDataset'
 import Dataset from './Dataset'
