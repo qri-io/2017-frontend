@@ -145,6 +145,7 @@
     "react-redux": "5.0.5",
     "react-router-dom": "4.1.1",
     "react-router-redux": "5.0.0-alpha.6",
+    "recharts": "1.0.0-apha.5",
     "redux": "3.7.1",
     "redux-thunk": "2.2.0",
     "source-map-support": "0.4.15"
