@@ -15,6 +15,7 @@ import List from '../components/List'
 import QueryHistoryItem from '../components/item/QueryHistoryItem'
 import QueryItem from '../components/item/QueryItem'
 import PeerItem from '../components/item/PeerItem'
+import ResultsChart from '../components/ResultsChart'
 import Datasets from './Datasets'
 
 function loadData (props) {
@@ -119,7 +120,7 @@ class Console extends React.Component {
   }
 
   render () {
-    const { queries, datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout, peers } = this.props
+    const { queries, datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout, peers, size } = this.props
     const { main } = layout
 
     const topBox = {
@@ -167,7 +168,7 @@ class Console extends React.Component {
                 bounds={bottomBox}
               />,
               <div className='panel'>
-                <h3>TODO - restore results chart</h3>
+                <ResultsChart size={size} />
               </div>,
               <div className='panel'>
                 <Datasets skipLoad bounds={bottomBox} />
@@ -189,7 +190,7 @@ class Console extends React.Component {
 Console.propTypes = {
   // query slug to load to
   slug: PropTypes.string,
-
+  size: PropTypes.string,
   query: PropTypes.object.isRequired,
   // dataset: PropTypes.array,
   queries: PropTypes.array,
@@ -226,7 +227,7 @@ function mapStateToProps (state, ownProps) {
   if (state.entities.peers) {
     const peers = Object.keys(state.entities.peers).map(key => state.entities.queries[key])
   }
-
+  const size = state.layout.size ? state.layout.size : ''
   return Object.assign({}, {
     // slug: ownProps.location.query.slug,
     queries: Object.keys(state.entities.queries).map(key => state.entities.queries[key]),
@@ -236,8 +237,8 @@ function mapStateToProps (state, ownProps) {
 
     datasetRef,
     data,
-    peers
-
+    peers,
+    size
     // results,
   }, state.console, ownProps)
 }

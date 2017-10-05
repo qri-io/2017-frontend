@@ -1,116 +1,44 @@
 import React, { PropTypes } from 'react'
-import { BarChart as BC } from 'rd3'
-import ChartOptionsPicker from './ChartOptionsPicker'
+import { BarChart as RechartsBarChart, Bar, Cell, CartesianGrid, XAxis, YAxis, Tooltip, Legend, LabelList } from 'recharts'
 
-function transformResults (schema = [], results = [], xIndex, yIndex) {
-  return [{
-    name: 'results',
-    values: results.map(row => ({
-      x: row[xIndex] || 0,
-      y: row[yIndex] || 0
-    }))
-  }]
-}
-
-// function x(row){ return row.x; }
-
-function chartDimensions (size) {
-  let width = 300
-  let height = 400
-
-  switch (size) {
-    case 'xs':
-      width = 300
-      break
-    case 'sm':
-      width = 450
-      break
-    case 'md':
-      width = 600
-      break
-    case 'lg':
-      width = 900
-      height = 400
-      break
-    case 'xl':
-      width = 1100
-      height = 500
-      break
-    default:
-      width = 300
-      break
+class BarChart extends React.Component {
+  constructor (props) {
+    super(props)
   }
 
-  return { width, height }
-}
-
-const BarChart = ({ results, title, margins, options, device, onOptionsChange }) => {
-  if (!results) {
+  render () {
+    let xAxisDataKey = 'name'
+    let yAxisDataKey = 'pv'
+    const { data, title, width, height } = this.props
     return (
-      <div>
-        <h4>No Results to Display</h4>
-      </div>
+    // <div className='bar-chart-wrapper' style={{textAlign: 'right'}}>
+      <RechartsBarChart width={width} height={height} data={data} >
+        <XAxis dataKey={xAxisDataKey} />
+        <YAxis yAxisId='a' />
+        <Legend />
+        <Tooltip wrapperStyle={{background: '#6c8088', color: '#192327'}} cursor={{fill: '#28353c'}} />
+        <CartesianGrid vertical={false} />
+        <Bar yAxisId='a' dataKey={yAxisDataKey} barSize={40} fill='#192327' />
+      </RechartsBarChart>
+    // </div>
     )
   }
-
-  const { width, height } = chartDimensions(device.size)
-  let xIndex = options.xIndex
-  let yIndex = options.yIndex
-
-  if (typeof options.x_axis === 'string') {
-    results.schema.forEach((col, i) => {
-      if (col.name === options.x_axis) {
-        xIndex = i
-      }
-    })
-  }
-
-  if (typeof options.y_axis === 'string') {
-    results.schema.forEach((col, i) => {
-      if (col.name === options.y_axis) {
-        yIndex = i
-      }
-    })
-  }
-
-  if (xIndex === undefined || yIndex === undefined) {
-    return (
-      <div className='resultsChart'>
-        { onOptionsChange ? <ChartOptionsPicker schema={results.schema} options={options} onChange={onOptionsChange} /> : undefined }
-      </div>
-    )
-  }
-
-  const data = transformResults(results.schema, results.data, xIndex, yIndex)
-
-  return (
-    <div className='resultsChart'>
-      {onOptionsChange ? <ChartOptionsPicker schema={results.schema} options={options} onChange={onOptionsChange} /> : undefined}
-      <BC
-        title={title}
-        data={data}
-        width={width}
-        height={height}
-        margins={margins}
-        axesColor='#A1B2BC'
-        fill='#FFFFFF'
-      />
-    </div>
-  )
 }
 
 BarChart.propTypes = {
-  results: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
   title: PropTypes.string,
-  margins: PropTypes.objectOf(PropTypes.number),
-  options: PropTypes.object.isRequired,
+  width: PropTypes.number,
+  height: PropTypes.number
+  // margins: PropTypes.objectOf(PropTypes.number),
+  // options: PropTypes.object.isRequired,
   // size: React.PropTypes.string,
-  device: PropTypes.object.isRequired,
-  onOptionsChange: PropTypes.func
+  // device: PropTypes.object.isRequired,
+  // onOptionsChange: PropTypes.func
 }
 
 BarChart.defaultProps = {
-  margins: { left: 80, right: 80, top: 40, bottom: 40 },
+  // margins: { left: 80, right: 80, top: 40, bottom: 40 },
   title: 'results'
 }
 
