@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 // import { debounce } from 'lodash';
 
 import { setQuery, runQuery, loadQueryBySlug, loadQueryPage } from '../actions/query'
-import { setTopPanel, setBottomPanel, setChartOptions } from '../actions/console'
+import { setTopPanel, setBottomPanel, setChartOptions, resetChartOptions } from '../actions/console'
 import { loadDatasets, loadDataset } from '../actions/dataset'
 
 import DatasetDataGrid from '../components/DatasetDataGrid'
@@ -47,6 +47,9 @@ class Console extends React.Component {
     if (this.props.slug) {
       // this.props.loadQueryBySlug(this.props.slug, [], true);
     }
+    if (!this.props.datasetRef || this.props.chartOptions.path !== this.props.datasetRef.path) {
+      this.props.resetChartOptions()
+    }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -54,6 +57,11 @@ class Console extends React.Component {
     if (nextProps.slug !== this.props.slug) {
       // this.props.loadQueryBySlug(nextProps.slug, [], true);
       this.props.setBottomPanel(0)
+    }
+    const prevPath = this.props.datasetRef && this.props.datasetRef.path
+    const nextPath = nextProps.datasetRef && nextProps.datasetRef.path
+    if (prevPath !== nextPath) {
+      this.props.resetChartOptions()
     }
   }
 
@@ -120,7 +128,7 @@ class Console extends React.Component {
   }
 
   render () {
-    const { queries, datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout, peers, size } = this.props
+    const { queries, datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout, peers, size, chartOptions } = this.props
     const { main } = layout
 
     const topBox = {
@@ -168,7 +176,7 @@ class Console extends React.Component {
                 bounds={bottomBox}
               />,
               <div className='panel'>
-                <ResultsChart size={size} />
+                <ResultsChart size={size} onOptionsChange={this.handleSetChartOptions} schema={datasetRef && datasetRef.dataset.structure.schema} data={data} chartOptions={chartOptions} />
               </div>,
               <div className='panel'>
                 <Datasets skipLoad bounds={bottomBox} />
@@ -200,6 +208,13 @@ Console.propTypes = {
   topPanelIndex: PropTypes.number.isRequired,
   bottomPanelIndex: PropTypes.number.isRequired,
   layout: PropTypes.object.isRequired,
+  chartOptions: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    xIndex: PropTypes.number,
+    yIndex: PropTypes.number,
+    path: PropTypes.string.isRequired
+  }).isRequired,
 
   setQuery: PropTypes.func.isRequired,
   runQuery: PropTypes.func.isRequired,
@@ -234,7 +249,7 @@ function mapStateToProps (state, ownProps) {
     datasets: Object.keys(state.entities.datasets).map(key => state.entities.datasets[key]),
     queryHistory: state.session.history,
     layout: state.layout,
-
+    chartOptions: state.console.chartOptions,
     datasetRef,
     data,
     peers,
@@ -252,7 +267,7 @@ export default connect(mapStateToProps, {
   setTopPanel,
   setBottomPanel,
   setChartOptions,
-
+  resetChartOptions,
   loadDatasets,
   loadDataset
 })(Console)
