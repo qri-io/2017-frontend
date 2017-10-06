@@ -1,18 +1,33 @@
 import React, { PropTypes } from 'react'
 import ReactDataGrid from 'react-data-grid'
 import { datasetProps } from '../propTypes/datasetRefProps.js'
+import Spinner from '../components/Spinner'
 
 class DatasetDataGrid extends React.Component {
   constructor (props) {
     super(props)
 
-    this.state = { sortColumn: '', sortDirection: '' };
+    this.state = { sortColumn: '', sortDirection: '', loading: false };
 
     [
       'rowGetter',
       'handleGridSort',
       'schemaColumns'
     ].forEach((m) => { this[m] = this[m].bind(this) })
+  }
+
+  componentWillMount () {
+    if (!this.props.data) {
+      this.setState({ loading: true })
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (!nextProps.data) {
+      this.setState({ loading: true })
+    } else {
+      this.setState({ loading: false })
+    }
   }
 
   schemaColumns (dataset, i) {
@@ -46,15 +61,19 @@ class DatasetDataGrid extends React.Component {
 
   render () {
     const { dataset, data, minHeight } = this.props
-
-    if (!dataset || !data) {
+    const { loading } = this.state
+    if (!dataset) {
       return (
-        <div>
-          <label>loading...</label>
+        <div className='panel'>
+          <h5>Run a query to view data</h5>
         </div>
       )
     }
-
+    if (loading) {
+      return (
+        <Spinner />
+      )
+    }
     return (
       <ReactDataGrid
         onGridSort={this.handleGridSort}
