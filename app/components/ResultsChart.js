@@ -1,9 +1,11 @@
 import React, { PropTypes } from 'react'
-import { LineChart } from 'rd3'
 
+import BarChart from '../components/BarChart.js'
 import ChartOptionsPicker from './ChartOptionsPicker'
+import { schemaProps } from '../propTypes/datasetRefProps'
 
 function transformResults (schema = [], results = [], xIndex, yIndex) {
+  console.log(results)
   return [{
     name: 'results',
     values: results.map(row => ({
@@ -43,73 +45,70 @@ function chartDimensions (size) {
   return { width, height }
 }
 
-const ResultsChart = ({ results, title, margins, options, device, onOptionsChange }) => {
-  if (!results) {
-    return (
-      <div>
-        <h4>No Results to Display</h4>
-      </div>
-    )
+class ResultsChart extends React.Component {
+  constructor (props) {
+    super(props);
+
+    [
+      'renderChart'
+    ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
-  const { width, height } = chartDimensions(device.size)
-  let xIndex = options.xIndex
-  let yIndex = options.yIndex
+  renderChart () {
+    const { data, chartOptions, size } = this.props
+    const { title, xIndex, type } = chartOptions
+    const { width, height } = chartDimensions(size)
 
-  results.schema.forEach((col, i) => {
-    if (col.name === options.x_axis) {
-      xIndex = i
+    switch (type) {
+      case 'bar':
+      default:
+        return (
+          <BarChart
+            data={data}
+            title={title}
+            width={width}
+            height={height}
+            xIndex={xIndex}
+        />
+        )
     }
-  })
+  }
 
-  results.schema.forEach((col, i) => {
-    if (col.name === options.y_axis) {
-      yIndex = i
+  render () {
+    const { schema, data, chartOptions, onOptionsChange } = this.props
+    const { title, xIndex, yIndex, type } = chartOptions
+    if (!data) {
+      return (
+        <div className='panel'>
+          <label>Run a query to view a chart</label>
+        </div>
+      )
     }
-  })
-
-  if (xIndex === undefined || yIndex === undefined) {
     return (
       <div className='resultsChart'>
-        { onOptionsChange ? <ChartOptionsPicker schema={results.schema} options={options} onChange={onOptionsChange} /> : undefined }
+        <ChartOptionsPicker schema={schema} options={chartOptions} onChange={onOptionsChange} />
+        { (yIndex !== undefined && type) ? this.renderChart() : undefined }
       </div>
     )
   }
-
-  const data = transformResults(results.schema, results.data, xIndex, yIndex)
-
-  return (
-    <div className='resultsChart'>
-      {onOptionsChange ? <ChartOptionsPicker schema={results.schema} options={options} onChange={onOptionsChange} /> : undefined}
-      <LineChart
-        title={title}
-        data={data}
-        width={width}
-        height={height}
-        margins={margins}
-        axesColor='#A1B2BC'
-        fill='#FFFFFF'
-      />
-    </div>
-  )
 }
 
 ResultsChart.propTypes = {
-  results: PropTypes.object,
-  title: PropTypes.string,
-  margins: PropTypes.objectOf(PropTypes.number),
-  options: PropTypes.shape({
-    x_axis: PropTypes.string,
-    y_axis: PropTypes.string
+  schema: schemaProps,
+  data: PropTypes.arrayOf(PropTypes.object),
+  // margins: PropTypes.objectOf(PropTypes.number),
+  chartOptions: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    xIndex: PropTypes.number,
+    yIndex: PropTypes.number,
+    path: PropTypes.string.isRequired
   }).isRequired,
-  // size: React.PropTypes.string,
-  device: PropTypes.object,
-  onOptionsChange: PropTypes.func
+  size: PropTypes.string.isRequired,
+  onOptionsChange: PropTypes.func.isRequired
 }
 
 ResultsChart.defaultProps = {
-  margins: { left: 80, right: 80, top: 40, bottom: 40 },
-  title: 'results'
 }
 
 export default ResultsChart

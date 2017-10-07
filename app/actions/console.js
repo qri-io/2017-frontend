@@ -25,3 +25,17 @@ export function setChartOptions (options) {
     value: options
   }
 }
+
+export const CONSOLE_RESET_CHART_OPTIONS = 'CONSOLE_RESET_CHART_OPTIONS'
+export function resetChartOptions () {
+  return {
+    type: CONSOLE_RESET_CHART_OPTIONS,
+    value: {
+      type: 'bar',
+      title: 'results',
+      xIndex: undefined,
+      yIndex: undefined,
+      path: ''
+    }
+  }
+}
