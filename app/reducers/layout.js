@@ -5,7 +5,7 @@ const COLLAPSED_WIDTH = 0
 const initialState = {
   size: 'xs',
   stage: { width: 100, height: 100 },
-  navbar: { width: 100, height: 30, left: 0, bottom: 0, collapsed: false },
+  navbar: { width: 100, height: 40, left: 0, bottom: 0, collapsed: false },
   commandbar: { width: 100, height: 0, left: 0, bottom: 0, collapsed: false },
   main: { width: 100, height: 100, left: 0, top: 0 },
   sidebar: { width: COLLAPSED_WIDTH, height: 100, left: 0, top: 0, collapsed: true, pct_width: 0.35 }
