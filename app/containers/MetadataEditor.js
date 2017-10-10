@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-import Metadata from '../components/Metadata'
 import MetadataForm from '../components/form/MetadataForm'
 import Spinner from '../components/Spinner'
 
