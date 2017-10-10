@@ -6,7 +6,7 @@ import { showModal } from '../actions/app'
 import { loadDatasets, setDatasetSearch, runDatasetSearch } from '../actions/dataset'
 import { selectDatasetSearchString, selectNoDatasets, selectDatasets, selectDatasetsPageCount, selectDatasetsFetchedAll, selectDatasetsIsFetching } from '../selectors/dataset'
 
-import AddDataset from './AddDataset'
+import AddDatasetContainer from './AddDataset'
 import Dataset from './Dataset'
 
 import List from '../components/List'
@@ -71,7 +71,7 @@ class DatasetsList extends React.Component {
       case DATASET_DETAILS_MODAL:
         return <Dataset path={data.path} />
       case ADD_DATASET_MODAL:
-        return <AddDataset />
+        return <AddDatasetContainer />
       default:
         return undefined
     }
