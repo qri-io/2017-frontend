@@ -6,6 +6,8 @@ import MetadataForm from '../components/form/MetadataForm'
 import Spinner from '../components/Spinner'
 
 import { newDataset, updateDataset, loadDataset, saveDataset, cancelDatasetEdit } from '../actions/dataset'
+import { hideModal } from '../actions/app'
+
 import { selectLocalDatasetById, selectDataset } from '../selectors/dataset'
 import { selectDefaultKeyId } from '../selectors/keys'
 
@@ -21,8 +23,6 @@ class MetadataEditor extends React.Component {
     };
 
     [
-      'handleNew',
-      'handleEdit',
       'handleChange',
       'handleCancel',
       'handleSave',
@@ -52,20 +52,6 @@ class MetadataEditor extends React.Component {
     }
   }
 
-  // componentWillReceiveProps (nextProps) {
-  //   if (nextProps.sessionKeyId != this.props.sessionKeyId) {
-  //     nextProps.loadMetadata(nextProps.sessionKeyId, this.props.subjectHash)
-  //   }
-  // }
-
-  handleNew () {
-    // this.props.newMetadata(this.props.sessionKeyId, this.props.subjectHash)
-  }
-
-  handleEdit () {
-    // this.props.editMetadata(this.props.savedMetadata)
-  }
-
   handleChange (name, value) {
     const { dataset } = this.props.localDatasetRef
     const updatedDataset = Object.assign(dataset, { [name]: value })
@@ -73,13 +59,14 @@ class MetadataEditor extends React.Component {
     this.props.updateDataset(change)
   }
 
-  handleCancel (path) {
-    // this.props.cancelDatasetEdit(path)
+  handleCancel () {
+    this.props.hideModal()
+    this.props.cancelDatasetEdit(this.props.path)
   }
 
   handleSave (localDatasetRef) {
     this.props.saveDataset(localDatasetRef)
-    // this.props.cancelDatasetEdit(localDatasetRef.path)
+    this.handleCancel(localDatasetRef.path)
   }
 
   handleToggleHelp () {
@@ -118,12 +105,6 @@ MetadataEditor.propTypes = {
   saveDataset: PropTypes.func.isRequired,
   cancelDatasetEdit: PropTypes.func.isRequired
 
-  // newMetadata: PropTypes.func.isRequired,
-  // editMetadata: PropTypes.func.isRequired,
-  // updateMetadata: PropTypes.func.isRequired,
-  // cancelMetadataEdit: PropTypes.func.isRequired,
-  // loadMetadata: PropTypes.func.isRequired,
-  // saveMetadata: PropTypes.func
 }
 
 MetadataEditor.defaultProps = {
@@ -131,9 +112,7 @@ MetadataEditor.defaultProps = {
 
 function mapStateToProps (state, ownProps) {
   const path = ownProps.path
-  // const sessionKeyId = selectDefaultKeyId(state)
   return Object.assign({
-    // sessionKeyId,
     datasetRef: selectDataset(state, path),
     localDatasetRef: selectLocalDatasetById(state, path)
   }, ownProps)
@@ -144,11 +123,6 @@ export default connect(mapStateToProps, {
   loadDataset,
   updateDataset,
   saveDataset,
-  cancelDatasetEdit
-  // newMetadata,
-  // editMetadata,
-  // updateMetadata,
-  // cancelMetadataEdit,
-  // loadMetadata,
-  // saveMetadata
+  cancelDatasetEdit,
+  hideModal
 })(MetadataEditor)

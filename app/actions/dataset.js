@@ -3,7 +3,7 @@ import { push } from 'react-router-redux'
 import { CALL_API } from '../middleware/api'
 import Schemas from '../schemas'
 import { selectDatasetByPath } from '../selectors/dataset'
-import { newLocalModel, updateLocalModel, editModel } from './locals'
+import { newLocalModel, updateLocalModel, removeLocalModel, editModel } from './locals'
 import { setMessage, resetMessage, removeModel, setSearch } from './app'
 
 const blankMetadata = {
@@ -36,6 +36,8 @@ export function updateDataset (dataset) {
 
 const DATASET_CANCEL_EDIT = 'DATASET_CANCEL_EDIT'
 export function cancelDatasetEdit (path) {
+  console.log('dataset_cancel_edit')
+  console.log(path)
   return removeLocalModel(Schemas.DATASET, DATASET_CANCEL_EDIT, path)
 }
 
