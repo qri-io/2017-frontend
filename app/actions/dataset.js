@@ -36,8 +36,6 @@ export function updateDataset (dataset) {
 
 const DATASET_CANCEL_EDIT = 'DATASET_CANCEL_EDIT'
 export function cancelDatasetEdit (path) {
-  console.log('dataset_cancel_edit')
-  console.log(path)
   return removeLocalModel(Schemas.DATASET, DATASET_CANCEL_EDIT, path)
 }
 
