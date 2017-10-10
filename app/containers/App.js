@@ -8,10 +8,8 @@ import { layoutResize } from '../actions/layout'
 import { loadSessionUser } from '../actions/session'
 
 import { selectSessionUser } from '../selectors/session'
-import BetaSignup from './BetaSignup'
-import Header from '../components/Header'
 
-const BETA_SIGNUP_MODAL = 'BETA_SIGNUP_MODAL'
+import Header from '../components/Header'
 
 class App extends Component {
   constructor (props) {
@@ -23,7 +21,6 @@ class App extends Component {
       'handleDismissErrorClick',
       'handleStageClick',
       'handleMenuToggle',
-      'handleGimmieInvite',
       'handleHideModal',
       'modal'
     ].forEach((m) => { this[m] = this[m].bind(this) })
@@ -73,10 +70,6 @@ class App extends Component {
     }
   }
 
-  handleGimmieInvite () {
-    this.props.hideMenu()
-    this.props.showModal(BETA_SIGNUP_MODAL, this)
-  }
   handleHideModal () {
     this.props.hideModal()
   }
@@ -84,8 +77,6 @@ class App extends Component {
   /* app implements the modal pattern as well as using it */
   modal (name, data = {}) {
     switch (name) {
-      case BETA_SIGNUP_MODAL:
-        return (<BetaSignup onSaved={this.handleHideModal} onCancelled={this.handleHideModal} data={data} />)
       default:
         return undefined
     }

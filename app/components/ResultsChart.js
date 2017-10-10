@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 
-import BarChart from '../components/BarChart.js'
+import BarChart from './BarChart.js'
 import ChartOptionsPicker from './ChartOptionsPicker'
 import { schemaProps } from '../propTypes/datasetRefProps'
 
