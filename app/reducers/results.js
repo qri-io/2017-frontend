@@ -1,5 +1,5 @@
 // TODO Brendannnnn heyyyyyo
-import { QUERY_RUN_REQUEST, QUERY_RUN_SUCCESS, QUERY_RUN_FAILURE } from '../actions/query'
+import { QUERY_RUN_REQUEST, QUERY_RUN_SUCCESS, QUERY_RUN_FAILURE } from '../constants/query'
 
 const initialState = {
 }

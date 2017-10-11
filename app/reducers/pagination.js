@@ -34,7 +34,7 @@ import {
   QUERIES_REQUEST,
   QUERIES_SUCCESS,
   QUERIES_FAILURE
-} from '../actions/query'
+} from '../constants/query'
 
 // Updates the pagination data for different actions.
 const pagination = combineReducers({

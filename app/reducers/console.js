@@ -1,4 +1,4 @@
-import { QUERY_SET, QUERY_SET_RESULTS } from '../actions/query'
+import { QUERY_SET, QUERY_SET_RESULTS } from '../constants/query'
 import { CONSOLE_SET_TOP_PANEL, CONSOLE_SET_BOTTOM_PANEL, CONSOLE_SET_CHART_OPTIONS, CONSOLE_RESET_CHART_OPTIONS } from '../constants/console'
 
 const initialState = {
