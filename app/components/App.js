@@ -5,6 +5,7 @@ import { debounce } from 'lodash'
 
 import Base from './Base'
 import Header from './Header'
+import Menu from './Menu'
 
 export default class App extends Base {
   constructor (props) {
@@ -130,6 +131,7 @@ export default class App extends Base {
 
   template (css) {
     const { children, layout } = this.props
+
     return (
       <div id='app' className='stage' onClick={this.handleStageClick}>
         {this.renderMessage(css)}
@@ -138,6 +140,7 @@ export default class App extends Base {
           position: 'absolute',
           overflow: 'auto'
         }, layout.navbar)} />
+        <Menu style={Object.assign({}, layout.sidebar)} />
         <div
           className='main'
           style={Object.assign({
