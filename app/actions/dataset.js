@@ -169,8 +169,8 @@ function createDataset (dataset) {
         data: Object.assign({}, dataset, { id: undefined, address: dataset.address })
       }
     }).then((action) => {
-      if (action.type === DATASET_CREATE_SUCCESS && action.response.entities.datasets) {
-        const ds = action.response.entities.datasets[Object.keys(action.response.entities.datasets)[0]]
+      if (action.type === DATASET_CREATE_SUCCESS && action.response.entities.namespace) {
+        const ds = action.response.entities.namespace[Object.keys(action.response.entities.namespace)[0]]
         // TODO - remove address ref
         const adr = ds.address.replace('.', '/', -1)
         const path = `/${adr}`
@@ -201,7 +201,7 @@ export function saveDataset (datasetRef) {
       }
     }).then((action) => {
       if (action.type === DATASET_SAVE_SUCCESS) {
-        const ds = action.response.entities.datasets[Object.keys(action.response.entities.datasets)[0]]
+        const ds = action.response.entities.namespace[Object.keys(action.response.entities.namespace)[0]]
         // TODO - outdated code
         const adr = ds.address.replace('.', '/', -1)
         const path = `/${adr}`
