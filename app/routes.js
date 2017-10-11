@@ -2,13 +2,13 @@
 import React from 'react'
 import { Switch, Route } from 'react-router';
 
-import App from './containers/App'
-import Console from './containers/Console'
+import AppContainer from './containers/App'
+import ConsoleContainer from './containers/Console'
 
 export default () => (
-  <App>
+  <AppContainer >
     <Switch>
-      <Route path="/" component={Console} />
+      <Route path="/" component={ConsoleContainer} />
     </Switch>
-  </App>
+  </AppContainer>
 )
