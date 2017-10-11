@@ -1,5 +1,11 @@
-
-export const LAYOUT_RESIZE = 'LAYOUT_RESIZE'
+import {
+  LAYOUT_RESIZE,
+  LAYOUT_SHOW_SIDEBAR,
+  LAYOUT_HIDE_SIDEBAR,
+  LAYOUT_HIDE_COMMANDBAR,
+  LAYOUT_SHOW_COMMANDBAR,
+  LAYOUT_SET
+} from '../constants/layout'
 
 export function layoutResize (width, height) {
   return {
@@ -8,15 +14,11 @@ export function layoutResize (width, height) {
   }
 }
 
-export const LAYOUT_SHOW_SIDEBAR = 'LAYOUT_SHOW_SIDEBAR'
-
 export function showSidebar () {
   return {
     type: LAYOUT_SHOW_SIDEBAR
   }
 }
-
-export const LAYOUT_HIDE_SIDEBAR = 'LAYOUT_HIDE_SIDEBAR'
 
 export function hideSidebar () {
   return {
@@ -24,21 +26,16 @@ export function hideSidebar () {
   }
 }
 
-export const LAYOUT_HIDE_COMMANDBAR = 'LAYOUT_HIDE_COMMANDBAR'
-
 export function hideCommandBar () {
   return {
     type: LAYOUT_HIDE_COMMANDBAR
   }
 }
 
-export const LAYOUT_SHOW_COMMANDBAR = 'LAYOUT_SHOW_COMMANDBAR'
-
 export function showCommandBar () {
 
 }
 
-export const LAYOUT_SET = 'LAYOUT_SET'
 export function setLayout ({ navbar = false, sidebar = false, commandbar = true }) {
   return {
     type: LAYOUT_SET,

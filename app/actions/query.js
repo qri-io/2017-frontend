@@ -11,7 +11,19 @@ import { resetErrorMessage } from './app'
 import { selectQueryBySlug } from '../selectors/query'
 import { loadDatasetData } from './dataset'
 
-export const QUERY_SET = 'QUERY_SET'
+import {
+  QUERY_SET,
+  QUERY_SET_RESULTS,
+  QUERY_RUN_REQUEST,
+  QUERY_RUN_SUCCESS,
+  QUERY_RUN_FAILURE,
+  QUERY_REQUEST,
+  QUERY_SUCCESS,
+  QUERY_FAILURE,
+  QUERIES_REQUEST,
+  QUERIES_SUCCESS,
+  QUERIES_FAILURE
+} from '../constants/query'
 
 export function setQuery (value) {
   return {
@@ -20,18 +32,12 @@ export function setQuery (value) {
   }
 }
 
-export const QUERY_SET_RESULTS = 'QUERY_SET_RESULTS'
-
 export function setQueryResults (path) {
   return {
     type: QUERY_SET_RESULTS,
     value: path
   }
 }
-
-export const QUERY_RUN_REQUEST = 'QUERY_RUN_REQUEST'
-export const QUERY_RUN_SUCCESS = 'QUERY_RUN_SUCCESS'
-export const QUERY_RUN_FAILURE = 'QUERY_RUN_FAILURE'
 
 export function runQuery (request) {
   // add in defaults
@@ -77,10 +83,6 @@ export function runQuery (request) {
   }
 }
 
-export const QUERY_REQUEST = 'QUERY_REQUEST'
-export const QUERY_SUCCESS = 'QUERY_SUCCESS'
-export const QUERY_FAILURE = 'QUERY_FAILURE'
-
 export function fetchQueryBySlug (slug = '') {
   return {
     [CALL_API]: {
@@ -113,10 +115,6 @@ export function loadQueryBySlug (slug = '', requiredFields = [], setOnLoad = fal
       })
   }
 }
-
-export const QUERIES_REQUEST = 'QUERIES_REQUEST'
-export const QUERIES_SUCCESS = 'QUERIES_SUCCESS'
-export const QUERIES_FAILURE = 'QUERIES_FAILURE'
 
 export function fetchQueryPage (page = 1, pageSize = 30) {
   return {

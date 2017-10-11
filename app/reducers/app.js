@@ -1,4 +1,4 @@
-import { APP_TOGGLE_MENU, APP_HIDE_MENU, APP_SHOW_MODAL, APP_HIDE_MODAL, SET_SEARCH, SET_CHART_CONFIG } from '../actions/app'
+import { APP_TOGGLE_MENU, APP_HIDE_MENU, APP_SHOW_MODAL, APP_HIDE_MODAL, SET_SEARCH, SET_CHART_CONFIG } from '../constants/app'
 
 const initialState = {
   showMenu: false,
