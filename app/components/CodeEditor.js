@@ -3,9 +3,12 @@ import AceEditor from 'react-ace'
 
 import 'brace/mode/pgsql'
 import '../ace/theme/qri'
+import Base from './Base'
 
-const CodeEditor = (props) => {
-  return (<AceEditor mode='pgsql' theme='qri' {...props} />)
+export default class CodeEditor extends Base {
+  template (css) {
+    return (<AceEditor mode='pgsql' theme='qri' {...this.props} />)
+  }
 }
 
 CodeEditor.propTypes = {
@@ -39,5 +42,3 @@ CodeEditor.defaultProps = {
     // enableLiveAutocompletion: false,
   }
 }
-
-export default CodeEditor

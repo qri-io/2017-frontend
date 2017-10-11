@@ -3,9 +3,10 @@ import React, { PropTypes } from 'react'
 import { browserHistory } from 'react-router'
 import { debounce } from 'lodash'
 
+import Base from './Base'
 import Header from './Header'
 
-export default class App extends React.Component {
+export default class App extends Base {
   constructor (props) {
     super(props);
 
@@ -111,27 +112,27 @@ export default class App extends React.Component {
     )
   }
 
-  renderMessage () {
+  renderMessage (css) {
     const { message } = this.props
     if (!message) {
       return null
     }
 
     return (
-      <div className='alert alert-success' role='alert'>
+      <div className={css('alert', 'alert-success')} role='alert'>
         <div className='row'>
-          <div className='dismiss'><a onClick={this.handleDismissClick}>X</a></div>
-          <div className='message'>{message}</div>
+          <div className={css('dismiss')}><a onClick={this.handleDismissClick}>X</a></div>
+          <div className={css('message')}>{message}</div>
         </div>
       </div>
     )
   }
 
-  render () {
+  template (css) {
     const { children, layout } = this.props
     return (
       <div id='app' className='stage' onClick={this.handleStageClick}>
-        {this.renderMessage()}
+        {this.renderMessage(css)}
         {this.renderErrorMessage()}
         <Header style={Object.assign({
           position: 'absolute',
@@ -149,6 +150,33 @@ export default class App extends React.Component {
         {this.renderModal()}
       </div>
     )
+  }
+
+  styles () {
+    return {
+      alert: {
+        marginBottom: 0,
+        position: 'fixed',
+        right: 0,
+        margin: '30px 20px',
+        overflow: 'auto',
+        zIndex: '2',
+        minWidth: '200',
+        maxWidth: '40%',
+        padding: '10px 15px 10px 15px'
+      },
+      message: {
+        float: 'left',
+        display: 'inline-block',
+        marginLeft: 10,
+        marginRight: 10
+      },
+      dismiss: {
+        float: 'right',
+        display: 'inline-block',
+        margin: '0 10px 0 0'
+      }
+    }
   }
 }
 

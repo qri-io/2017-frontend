@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react'
+
+import Base from '../Base'
 import MonthCalendar from './MonthCalendar'
 
 /*
@@ -10,7 +12,7 @@ import MonthCalendar from './MonthCalendar'
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 // const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-class DateInput extends React.Component {
+export default class DateInput extends Base {
   constructor (props) {
     super(props)
     this.state = {
@@ -67,13 +69,13 @@ class DateInput extends React.Component {
   }
 
   // Render
-  render () {
-    const { value, className } = this.props
+  template (css) {
+    const { value } = this.props
 
     let stringValue = this.stringValue(value)
 
     return (
-      <div className={className}>
+      <div className={css('dateInput')}>
         <input
           readOnly
           ref={(el) => { this.field = el }}
@@ -89,6 +91,7 @@ class DateInput extends React.Component {
         {this.state.focused &&
           <MonthCalendar
             value={value}
+            className={css('calendar')}
             onMouseDown={this.onCalendarMouseDown}
             onTouchEnd={this.onCalendarTouchEnd}
             onChange={this.onCalendarChange}
@@ -96,10 +99,26 @@ class DateInput extends React.Component {
       </div>
     )
   }
+
+  styles () {
+    return {
+      dateInput: {
+        position: 'relative'
+      },
+      calendar: {
+        position: 'absolute',
+        top: 40,
+        left: 0,
+        zIndex: '2',
+        padding: '4px 8px',
+        boxShadow: '0 0 4px rgba(0,0,0,0.45)',
+        borderRadius: 3
+      }
+    }
+  }
 }
 
 DateInput.propTypes = {
-  className: PropTypes.string,
   name: PropTypes.string.isRequired,
   // change handler in the form (value, name)
   onChange: PropTypes.func.isRequired,
@@ -108,8 +127,5 @@ DateInput.propTypes = {
 }
 
 DateInput.defaultProps = {
-  className: 'dateInput',
   value: new Date()
 }
-
-export default DateInput
