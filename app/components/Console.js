@@ -10,7 +10,7 @@ import QueryHistoryItem from './item/QueryHistoryItem'
 import QueryItem from './item/QueryItem'
 import PeerItem from './item/PeerItem'
 import ResultsChart from './ResultsChart'
-import DatasetsListContainer from '../containers/Datasets'
+import DatasetsListContainer from '../containers/DatasetsList'
 
 function loadData (props) {
   props.loadDatasets(1, 100)
