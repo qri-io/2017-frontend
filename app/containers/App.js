@@ -9,26 +9,25 @@ import { selectSessionUser } from '../selectors/session'
 
 import App from '../components/App'
 
-function mapStateToProps (state, ownProps) {
-  return {
-    message: state.message,
-    errorMessage: state.errorMessage,
-    user: selectSessionUser(state),
-    showMenu: state.app.showMenu,
-    layout: state.layout,
-
-    modal: state.app.modal
+const AppContainer = connect(
+  (state, ownProps) => {
+    return {
+      message: state.message,
+      errorMessage: state.errorMessage,
+      user: selectSessionUser(state),
+      showMenu: state.app.showMenu,
+      layout: state.layout,
+      modal: state.app.modal
+    }
+  }, {
+    resetMessage,
+    resetErrorMessage,
+    loadSessionUser,
+    layoutResize,
+    hideMenu,
+    showModal,
+    hideModal
   }
-}
-
-const AppContainer = connect(mapStateToProps, {
-  resetMessage,
-  resetErrorMessage,
-  loadSessionUser,
-  layoutResize,
-  hideMenu,
-  showModal,
-  hideModal
-})(App, 'App')
+)(App, 'App')
 
 export default AppContainer

@@ -6,44 +6,42 @@ import { loadDatasets, loadDataset } from '../actions/dataset'
 
 import Console from '../components/Console'
 
-function mapStateToProps (state, ownProps) {
-  const datasetRef = state.entities.datasets[state.console.queryResults]
-  let data
+const ConsoleContainer = connect(
+  (state, ownProps) => {
+    const datasetRef = state.entities.datasets[state.console.queryResults]
+    let data
+    if (datasetRef) {
+      data = state.entities.data[datasetRef.path] && state.entities.data[datasetRef.path].data
+    }
+    let peers = []
+    if (state.entities.peers) {
+      const peers = Object.keys(state.entities.peers).map(key => state.entities.queries[key])
+    }
+    const size = state.layout.size ? state.layout.size : ''
+    return Object.assign({}, {
+      queries: Object.keys(state.entities.queries).map(key => state.entities.queries[key]),
+      datasets: Object.keys(state.entities.datasets).map(key => state.entities.datasets[key]),
+      queryHistory: state.session.history,
+      layout: state.layout,
+      chartOptions: state.console.chartOptions,
+      datasetRef,
+      data,
+      peers,
+      size
+    }, state.console, ownProps)
+  }, {
+    setQuery,
+    runQuery,
+    loadQueryPage,
+    loadQueryBySlug,
 
-  if (datasetRef) {
-    data = state.entities.data[datasetRef.path] && state.entities.data[datasetRef.path].data
+    setTopPanel,
+    setBottomPanel,
+    setChartOptions,
+    resetChartOptions,
+    loadDatasets,
+    loadDataset
   }
-
-  let peers = []
-  if (state.entities.peers) {
-    const peers = Object.keys(state.entities.peers).map(key => state.entities.queries[key])
-  }
-  const size = state.layout.size ? state.layout.size : ''
-  return Object.assign({}, {
-    queries: Object.keys(state.entities.queries).map(key => state.entities.queries[key]),
-    datasets: Object.keys(state.entities.datasets).map(key => state.entities.datasets[key]),
-    queryHistory: state.session.history,
-    layout: state.layout,
-    chartOptions: state.console.chartOptions,
-    datasetRef,
-    data,
-    peers,
-    size
-  }, state.console, ownProps)
-}
-
-const ConsoleContainer = connect(mapStateToProps, {
-  setQuery,
-  runQuery,
-  loadQueryPage,
-  loadQueryBySlug,
-
-  setTopPanel,
-  setBottomPanel,
-  setChartOptions,
-  resetChartOptions,
-  loadDatasets,
-  loadDataset
-})(Console, 'Console')
+)(Console, 'Console')
 
 export default ConsoleContainer
