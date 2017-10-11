@@ -10,7 +10,8 @@ import QueryHistoryItem from './item/QueryHistoryItem'
 import QueryItem from './item/QueryItem'
 import PeerItem from './item/PeerItem'
 import ResultsChart from './ResultsChart'
-import DatasetsListContainer from '../containers/DatasetsList'
+import DatasetsContainer from '../containers/Datasets'
+import Spinner from './Spinner'
 
 function loadData (props) {
   props.loadDatasets(1, 100)
@@ -142,6 +143,7 @@ export default class Console extends React.Component {
     return (
       <div id='console'>
         <div className='top panel'>
+          <Spinner />
           <TabPanel
             index={topPanelIndex}
             onSelectPanel={this.handleSetTopPanel}
@@ -173,7 +175,7 @@ export default class Console extends React.Component {
                 <ResultsChart size={size} onOptionsChange={this.handleSetChartOptions} schema={datasetRef && datasetRef.dataset.structure.schema} data={data} chartOptions={chartOptions} />
               </div>,
               <div className='panel'>
-                <DatasetsListContainer skipLoad bounds={bottomBox} />
+                <DatasetsContainer skipLoad bounds={bottomBox} />
               </div>,
               <div className='panel'>
                 <List className='queryItem list' data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} bounds={bottomBox} />
