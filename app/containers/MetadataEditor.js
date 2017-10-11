@@ -7,14 +7,6 @@ import { selectLocalDatasetById, selectDataset } from '../selectors/dataset'
 
 import MetadataEditor from '../components/MetadataEditor'
 
-// function mapStateToProps (state, ownProps) {
-//   const path = ownProps.path
-//   return Object.assign({
-//     datasetRef: selectDataset(state, path),
-//     localDatasetRef: selectLocalDatasetById(state, path)
-//   }, ownProps)
-// }
-
 const MetadataEditorContainer = connect((state, ownProps) => {
   const path = ownProps.path
   return Object.assign({
