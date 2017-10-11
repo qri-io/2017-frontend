@@ -28,7 +28,7 @@ import {
   DATASET_SEARCH_SUCCESS,
   DATASET_SEARCH_FAILURE
 
-} from '../actions/dataset'
+} from '../constants/dataset'
 
 import {
   QUERIES_REQUEST,

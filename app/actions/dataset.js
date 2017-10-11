@@ -6,6 +6,50 @@ import { selectDatasetByPath } from '../selectors/dataset'
 import { newLocalModel, updateLocalModel, removeLocalModel, editModel } from './locals'
 import { setMessage, resetMessage, removeModel, setSearch } from './app'
 
+import {
+  DATASET_NEW,
+  DATASET_UPDATE,
+  DATASET_CANCEL_EDIT,
+  DATASETS_REQUEST,
+  DATASETS_SUCCESS,
+  DATASETS_FAILURE,
+  DATASET_REQUEST,
+  DATASET_SUCCESS,
+  DATASET_FAILURE,
+  DATASET_DATA_REQUEST,
+  DATASET_DATA_SUCCESS,
+  DATASET_DATA_FAILURE,
+  DATASET_CREATE_REQUEST,
+  DATASET_CREATE_SUCCESS,
+  DATASET_CREATE_FAILURE,
+  DATASET_SAVE_REQUEST,
+  DATASET_SAVE_SUCCESS,
+  DATASET_SAVE_FAILURE,
+  DATASET_DELETE_REQUEST,
+  DATASET_DELETE_SUCCESS,
+  DATASET_DELETE_FAILURE,
+  EDIT_DATASET,
+  DATASET_README_REQUEST,
+  DATASET_README_SUCCESS,
+  DATASET_README_FAILURE,
+  DATASET_MIGRATIONS_REQUEST,
+  DATASET_MIGRATIONS_SUCCESS,
+  DATASET_MIGRATIONS_FAIL,
+  DATASET_CHANGES_REQUEST,
+  DATASET_CHANGES_SUCCESS,
+  DATASET_CHANGES_FAIL,
+  DATASET_DOWNLOAD_REQUEST,
+  DATASET_DOWNLOAD_SUCCESS,
+  DATASET_DOWNLOAD_FAIL,
+  DATASET_INIT_REQUEST,
+  DATASET_INIT_SUCCESS,
+  DATASET_INIT_FAILURE,
+  DATASET_SET_SEARCH,
+  DATASET_SEARCH_REQUEST,
+  DATASET_SEARCH_SUCCESS,
+  DATASET_SEARCH_FAILURE
+} from '../constants/dataset'
+
 const blankMetadata = {
   title: '',
   description: '',
@@ -19,7 +63,6 @@ const blankMetadata = {
   license: ''
 }
 
-const DATASET_NEW = 'DATASET_NEW'
 export function newDataset (attributes = {}, dataset = {}) {
   const datasetRef = Object.assign({
     name: '',
@@ -29,19 +72,13 @@ export function newDataset (attributes = {}, dataset = {}) {
   return newLocalModel(Schemas.DATASET, DATASET_NEW, datasetRef)
 }
 
-const DATASET_UPDATE = 'DATASET_UPDATE'
 export function updateDataset (dataset) {
   return updateLocalModel(Schemas.DATASET, DATASET_UPDATE, dataset)
 }
 
-const DATASET_CANCEL_EDIT = 'DATASET_CANCEL_EDIT'
 export function cancelDatasetEdit (path) {
   return removeLocalModel(Schemas.DATASET, DATASET_CANCEL_EDIT, path)
 }
-
-export const DATASETS_REQUEST = 'DATASETS_REQUEST'
-export const DATASETS_SUCCESS = 'DATASETS_SUCCESS'
-export const DATASETS_FAILURE = 'DATASETS_FAILURE'
 
 export function fetchDatasets (page = 1, pageSize = 30) {
   return {
@@ -67,10 +104,6 @@ export function loadDatasets (page = 1, pageSize = 30) {
   }
 }
 
-export const DATASET_REQUEST = 'DATASET_REQUEST'
-export const DATASET_SUCCESS = 'DATASET_SUCCESS'
-export const DATASET_FAILURE = 'DATASET_FAILURE'
-
 export function fetchDataset (path) {
   return {
     [CALL_API]: {
@@ -95,10 +128,6 @@ export function loadDataset (path, requiredFields = []) {
     return dispatch(fetchDataset(path, requiredFields))
   }
 }
-
-export const DATASET_DATA_REQUEST = 'DATASET_DATA_REQUEST'
-export const DATASET_DATA_SUCCESS = 'DATASET_DATA_SUCCESS'
-export const DATASET_DATA_FAILURE = 'DATASET_DATA_FAILURE'
 
 export function fetchDatasetData (path, page = 1, pageSize = 100) {
   return {
@@ -128,10 +157,6 @@ export function loadDatasetData (path, page = 1, pageSize = 100) {
   }
 }
 
-export const DATASET_CREATE_REQUEST = 'DATASET_CREATE_REQUEST'
-export const DATASET_CREATE_SUCCESS = 'DATASET_CREATE_SUCCESS'
-export const DATASET_CREATE_FAILURE = 'DATASET_CREATE_FAILURE'
-
 // TODO - old code.
 function createDataset (dataset) {
   return (dispatch) => {
@@ -156,10 +181,6 @@ function createDataset (dataset) {
     })
   }
 }
-
-export const DATASET_SAVE_REQUEST = 'DATASET_SAVE_REQUEST'
-export const DATASET_SAVE_SUCCESS = 'DATASET_SAVE_SUCCESS'
-export const DATASET_SAVE_FAILURE = 'DATASET_SAVE_FAILURE'
 
 export function saveDataset (datasetRef) {
   if (datasetRef.path === 'new') {
@@ -193,10 +214,6 @@ export function saveDataset (datasetRef) {
     })
   }
 }
-
-export const DATASET_DELETE_REQUEST = 'DATASET_DELETE_REQUEST'
-export const DATASET_DELETE_SUCCESS = 'DATASET_DELETE_SUCCESS'
-export const DATASET_DELETE_FAILURE = 'DATASET_DELETE_FAILURE'
 
 export function deleteDataset (id, redirectUrl = '') {
   return (dispatch) => {
@@ -254,8 +271,6 @@ export function loadDatasetByAddress (address, requiredFields = []) {
   }
 }
 
-export const EDIT_DATASET = 'DATASET_EDIT'
-
 export function editDataset (address) {
   return (dispatch, getState) => {
     const dataset = selectDatasetByAddress(getState(), address)
@@ -273,10 +288,6 @@ export function editDataset (address) {
     return dispatch(editModel(Schemas.DATASET, EDIT_DATASET, dataset))
   }
 }
-
-export const DATASET_README_REQUEST = 'DATASET_README_REQUEST'
-export const DATASET_README_SUCCESS = 'DATASET_README_SUCCESS'
-export const DATASET_README_FAILURE = 'DATASET_README_FAILURE'
 
 // TODO - outdated code. dont' use until updated.
 export function fetchDatasetReadme (address) {
@@ -300,10 +311,6 @@ export function loadDatasetReadme (address) {
   }
 }
 
-export const DATASET_MIGRATIONS_REQUEST = 'DATASET_MIGRATIONS_REQUEST'
-export const DATASET_MIGRATIONS_SUCCESS = 'DATASET_MIGRATIONS_SUCCESS'
-export const DATASET_MIGRATIONS_FAIL = 'DATASET_MIGRATIONS_FAIL'
-
 // TODO - outdated code. dont' use until updated.
 export function fetchDatasetMigrations (datasetId, page = 1, pageSize = 50) {
   return {
@@ -323,10 +330,6 @@ export function loadDatasetMigrations (datasetId, page = 1, pageSize = 50) {
     return dispatch(fetchDatasetMigrations(datasetId, page, pageSize))
   }
 }
-
-export const DATASET_CHANGES_REQUEST = 'DATASET_CHANGES_REQUEST'
-export const DATASET_CHANGES_SUCCESS = 'DATASET_CHANGES_SUCCESS'
-export const DATASET_CHANGES_FAIL = 'DATASET_CHANGES_FAIL'
 
 // TODO - outdated code. dont' use until updated.
 export function fetchDatasetChanges (datasetId, page = 1, pageSize = 50) {
@@ -349,10 +352,6 @@ export function loadDatasetChanges (datasetId, page = 1, pageSize = 50) {
   }
 }
 
-export const DATASET_DOWNLOAD_REQUEST = 'DATASET_DOWNLOAD_REQUEST'
-export const DATASET_DOWNLOAD_SUCCESS = 'DATASET_DOWNLOAD_SUCCESS'
-export const DATASET_DOWNLOAD_FAIL = 'DATASET_DOWNLOAD_FAIL'
-
 export function downloadDataset (address = '') {
   return {
     [CALL_API]: {
@@ -363,10 +362,6 @@ export function downloadDataset (address = '') {
     }
   }
 }
-
-export const DATASET_INIT_REQUEST = 'DATASET_INIT_REQUEST'
-export const DATASET_INIT_SUCCESS = 'DATASET_INIT_SUCCESS'
-export const DATASET_INIT_FAILURE = 'DATASET_INIT_FAILURE'
 
 export function initDataset (name, files, callback) {
   return (dispatch) => {
@@ -383,14 +378,10 @@ export function initDataset (name, files, callback) {
   }
 }
 
-export const DATASET_SET_SEARCH = 'DATASET_SET_SEARCH'
 export function setDatasetSearch (searchString) {
   return setSearch({ dataset: searchString })
 }
 
-export const DATASET_SEARCH_REQUEST = 'DATASET_SEARCH_REQUEST'
-export const DATASET_SEARCH_SUCCESS = 'DATASET_SEARCH_SUCCESS'
-export const DATASET_SEARCH_FAILURE = 'DATASET_SEARCH_FAILURE'
 export function runDatasetSearch (searchString, page = 1, pageSize = 50) {
   return {
     [CALL_API]: {
