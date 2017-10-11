@@ -6,9 +6,28 @@ import { setMessage, resetMessage } from './app'
 import { updateLocalModel, editModel } from './locals'
 import { selectSessionUser } from '../selectors/session'
 
-export const SESSION_USER_REQUEST = 'SESSION_USER_REQUEST'
-export const SESSION_USER_SUCCESS = 'SESSION_USER_SUCCESS'
-export const SESSION_USER_FAILURE = 'SESSION_USER_FAILURE'
+import {
+  SESSION_USER_REQUEST,
+  SESSION_USER_SUCCESS,
+  SESSION_USER_FAILURE,
+  EDIT_SESSION_USER,
+  SAVE_SESSION_USER_REQUEST,
+  SAVE_SESSION_USER_SUCCESS,
+  SAVE_SESSION_USER_FAILURE,
+  SESSION_LOGIN_REQUEST,
+  SESSION_LOGIN_SUCCESS,
+  SESSION_LOGIN_FAILURE,
+  SESSION_ADD_HISTORY_ENTRY,
+  SESSION_SSH_KEYS_REQUEST,
+  SESSION_SSH_KEYS_SUCCESS,
+  SESSION_SSH_KEYS_FAILURE,
+  SESSION_CREATE_SSH_KEY_REQUEST,
+  SESSION_CREATE_SSH_KEY_SUCCESS,
+  SESSION_CREATE_SSH_KEY_FAILURE,
+  SESSION_DELETE_SSH_KEY_REQUEST,
+  SESSION_DELETE_SSH_KEY_SUCCESS,
+  SESSION_DELETE_SSH_KEY_FAILURE
+} from '../constants/session'
 
 // Fetches a single user from Github API.
 // Relies on the custom API middleware defined in ../middleware/api.js.
@@ -34,8 +53,6 @@ export function loadSessionUser () {
     return dispatch(fetchSessionUser())
   }
 }
-
-export const EDIT_SESSION_USER = 'EDIT_SESSION_USER'
 export function editSessionUser () {
   return (dispatch, getState) => {
     const user = selectSessionUser(getState())
@@ -51,10 +68,6 @@ const SESSION_USER_UPDATE = 'SESSION_USER_UPDATE'
 export function updateSessionUser (user) {
   return updateLocalModel(Schemas.SESSION_USER, SESSION_USER_UPDATE, user)
 }
-
-export const SAVE_SESSION_USER_REQUEST = 'SAVE_SESSION_USER_REQUEST'
-export const SAVE_SESSION_USER_SUCCESS = 'SAVE_SESSION_USER_SUCCESS'
-export const SAVE_SESSION_USER_FAILURE = 'SAVE_SESSION_USER_FAILURE'
 
 export function saveSessionUser (user) {
   return (dispatch, setState) => {
@@ -80,10 +93,6 @@ export function saveSessionUser (user) {
   }
 }
 
-export const SESSION_LOGIN_REQUEST = 'SESSION_LOGIN_REQUEST'
-export const SESSION_LOGIN_SUCCESS = 'SESSION_LOGIN_SUCCESS'
-export const SESSION_LOGIN_FAILURE = 'SESSION_LOGIN_FAILURE'
-
 export function loginUser (username, password) {
   return {
     [CALL_API]: {
@@ -96,18 +105,12 @@ export function loginUser (username, password) {
   }
 }
 
-export const SESSION_ADD_HISTORY_ENTRY = 'SESSION_ADD_HISTORY_ENTRY'
-
 export function addHistoryEntry (query) {
   return {
     type: SESSION_ADD_HISTORY_ENTRY,
     value: query
   }
 }
-
-export const SESSION_SSH_KEYS_REQUEST = 'SESSION_SSH_KEYS_REQUEST'
-export const SESSION_SSH_KEYS_SUCCESS = 'SESSION_SSH_KEYS_SUCCESS'
-export const SESSION_SSH_KEYS_FAILURE = 'SESSION_SSH_KEYS_FAILURE'
 
 export function fetchSshKeys () {
   return {
@@ -129,10 +132,6 @@ export function loadSshKeys () {
     return dispatch(fetchSshKeys())
   }
 }
-
-export const SESSION_CREATE_SSH_KEY_REQUEST = 'SESSION_CREATE_SSH_KEY_REQUEST'
-export const SESSION_CREATE_SSH_KEY_SUCCESS = 'SESSION_CREATE_SSH_KEY_SUCCESS'
-export const SESSION_CREATE_SSH_KEY_FAILURE = 'SESSION_CREATE_SSH_KEY_FAILURE'
 
 export function createSshKey (name = '', key = '') {
   return (dispatch, getState) => {
@@ -157,10 +156,6 @@ export function createSshKey (name = '', key = '') {
     })
   }
 }
-
-export const SESSION_DELETE_SSH_KEY_REQUEST = 'SESSION_DELETE_SSH_KEY_REQUEST'
-export const SESSION_DELETE_SSH_KEY_SUCCESS = 'SESSION_DELETE_SSH_KEY_SUCCESS'
-export const SESSION_DELETE_SSH_KEY_FAILURE = 'SESSION_DELETE_SSH_KEY_FAILURE'
 
 export function deleteSshKey (name = '', sha = '') {
   return (dispatch, getState) => {
