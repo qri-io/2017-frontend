@@ -5,13 +5,13 @@ import { initDataset } from '../actions/dataset'
 
 import AddDataset from '../components/AddDataset'
 
-function mapStateToProps (state, ownProps) {
-  return Object.assign({}, state.console, ownProps)
+const AddDatasetContainer = connect(
+	(state, ownProps) => {
+	  return Object.assign({}, state.console, ownProps)
+}, {
+	  initDataset,
+	  push
 }
-
-const AddDatasetContainer = connect(mapStateToProps, {
-  initDataset,
-  push
-})(AddDataset)
+)(AddDataset)
 
 export default AddDatasetContainer

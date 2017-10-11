@@ -49,9 +49,9 @@ export default class AddDataset extends React.Component {
             <div className='col-md-8 offset-md-2'>
               <h1>Add a Dataset</h1>
               <hr />
-              <ValidInput type='text' name='name' label='varname' value={dataset.name} onChange={this.handleChange} />
+              <ValidInput type='text' name='name' label='Dataset Name' value={dataset.name} onChange={this.handleChange} />
               <DropFile name='files' onChange={this.handleChange} />
-              <LoadingButton loading={loading} onClick={this.handleSubmit}>Add Dataset</LoadingButton>
+              <LoadingButton loading={loading} onClick={this.handleSubmit}><span>Add Dataset</span></LoadingButton>
               <hr />
             </div>
           </div>
