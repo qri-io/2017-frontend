@@ -2,20 +2,6 @@ import { combineReducers } from 'redux'
 import paginate from './paginate'
 
 import {
-  USER_QUERIES_REQUEST,
-  USER_QUERIES_SUCCESS,
-  USER_QUERIES_FAILURE,
-
-  USER_DATASETS_REQUEST,
-  USER_DATASETS_SUCCESS,
-  USER_DATASETS_FAILURE,
-
-  USER_ROLES_REQUEST,
-  USER_ROLES_SUCCESS,
-  USER_ROLES_FAILURE
-} from '../actions/user'
-
-import {
   DATASETS_REQUEST,
   DATASETS_SUCCESS,
   DATASETS_FAILURE,
@@ -62,33 +48,6 @@ const pagination = combineReducers({
       DATASET_SEARCH_REQUEST,
       DATASET_SEARCH_SUCCESS,
       DATASET_SEARCH_FAILURE
-    ]
-  }),
-
-  userDatasets: paginate({
-    mapActionToKey: action => action.username + '.datasets',
-    types: [
-      USER_DATASETS_REQUEST,
-      USER_DATASETS_SUCCESS,
-      USER_DATASETS_FAILURE
-    ]
-  }),
-
-  userRoles: paginate({
-    mapActionToKey: action => action.username + '.roles',
-    types: [
-      USER_ROLES_REQUEST,
-      USER_ROLES_SUCCESS,
-      USER_ROLES_FAILURE
-    ]
-  }),
-
-  userQueries: paginate({
-    mapActionToKey: action => action.username + '.queries',
-    types: [
-      USER_QUERIES_REQUEST,
-      USER_QUERIES_SUCCESS,
-      USER_QUERIES_FAILURE
     ]
   }),
 
