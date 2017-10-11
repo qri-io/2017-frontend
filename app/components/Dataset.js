@@ -16,7 +16,7 @@ import FieldsList from './FieldsList'
 import QueryEditor from './QueryEditor'
 import DataTable from './DataTable'
 
-import MetadataEditor from '../containers/MetadataEditor'
+import MetadataEditorContainer from '../containers/MetadataEditor'
 
 import DatasetRefProps from '../propTypes/datasetRefProps'
 
@@ -288,7 +288,7 @@ export default class Dataset extends React.Component {
     return (
       <div id='wrapper'>
         {
-          editMetadata ? <div className='container'><MetadataEditor path={path} /></div> : <div className='container'>
+          editMetadata ? <div className='container'><MetadataEditorContainer path={path} /></div> : <div className='container'>
             <DatasetHeader datasetRef={datasetRef} onDelete={this.handleDeleteDataset} onDownload={this.handleDownloadDataset} onEditMetadata={this.changeEditMetadata} />
             <hr className='blue' />
             {this.renderTabPanel(readme, dataset, tabIndex)}
