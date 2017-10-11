@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 
+import Base from './Base'
 import DatasetDataGrid from './DatasetDataGrid'
 import TabPanel from './TabPanel'
 import QueryEditor from './QueryEditor'
@@ -11,13 +12,12 @@ import QueryItem from './item/QueryItem'
 import PeerItem from './item/PeerItem'
 import ResultsChart from './ResultsChart'
 import DatasetsContainer from '../containers/Datasets'
-import Spinner from './Spinner'
 
 function loadData (props) {
   props.loadDatasets(1, 100)
 }
 
-export default class Console extends React.Component {
+export default class Console extends Base {
   constructor (props) {
     super(props);
     [
@@ -122,7 +122,7 @@ export default class Console extends React.Component {
     })
   }
 
-  render () {
+  template (css) {
     const { queries, datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout, peers, size, chartOptions } = this.props
     const { main } = layout
 
@@ -142,8 +142,7 @@ export default class Console extends React.Component {
 
     return (
       <div id='console'>
-        <div className='top panel'>
-          <Spinner />
+        <div className={css('top')}>
           <TabPanel
             index={topPanelIndex}
             onSelectPanel={this.handleSetTopPanel}
@@ -188,6 +187,14 @@ export default class Console extends React.Component {
         </div>
       </div>
     )
+  }
+
+  styles () {
+    return {
+      top: {
+        paddingBottom: 20
+      }
+    }
   }
 }
 

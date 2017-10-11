@@ -103,14 +103,14 @@ export default class Datasets extends Base {
       <div id='wrapper'>
         <header>
           <input
-            id={'search'}
-            name={'search'}
-            type={'text'}
-            className='searchBox'
+            id='search'
+            name='search'
+            type='text'
+            className={css('searchBox')}
             value={searchString}
-            placeholder={'search'}
+            placeholder='search'
             onChange={(e) => { this.handleDatasetSearch(e.target.value) }}
-        />
+          />
           <button onClick={this.handleAddItem} className='btn btn-primary right'>Add</button>
           <hr />
         </header>
@@ -121,6 +121,24 @@ export default class Datasets extends Base {
           emptyComponent={<p>No Datasets</p>} />
       </div>
     )
+  }
+
+  styles () {
+    return {
+      searchBox: {
+        display: 'inline-block',
+        width: '50%',
+        fontSize: '1rem',
+        lineHeight: '1.25',
+        color: '#55595c',
+        backgroundColor: '#fff',
+        border: '0.5px solid rgba(0, 0, 0, 0.15)',
+        overflow: 'auto',
+        borderRadius: '0.25rem',
+        marginBottom: 10,
+        paddingLeft: 8
+      }
+    }
   }
 }
 
