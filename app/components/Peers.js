@@ -122,7 +122,7 @@ export default class Peers extends Base {
 Peers.propTypes = {
   searchString: PropTypes.string,
   peers: PropTypes.array.isRequired,
-  nextPage: PropTypes.number.isRequired,
+  // nextPage: PropTypes.number.isRequired,
   fetchedAll: PropTypes.bool,
   loadPeers: PropTypes.func.isRequired,
   skipLoad: PropTypes.bool
