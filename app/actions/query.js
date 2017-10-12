@@ -64,7 +64,7 @@ export function runQuery (request) {
         types: [ QUERY_RUN_REQUEST, QUERY_RUN_SUCCESS, QUERY_RUN_FAILURE ],
         endpoint: '/run',
         method: 'POST',
-        schema: Schemas.DATASET,
+        schema: Schemas.QUERY,
         data
       }
     }).then(action => {

@@ -24,8 +24,8 @@ import {
 
 // Updates the pagination data for different actions.
 const pagination = combineReducers({
-  popularQueries: paginate({
-    mapActionToKey: action => 'popularQueries',
+  queryHistory: paginate({
+    mapActionToKey: action => 'queryHistory',
     types: [
       QUERIES_REQUEST,
       QUERIES_SUCCESS,

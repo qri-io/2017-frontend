@@ -38,6 +38,7 @@ export default class Console extends Base {
 
   componentWillMount () {
     loadData(this.props)
+    this.props.loadQueryPage()
     if (this.props.slug) {
       // this.props.loadQueryBySlug(this.props.slug, [], true);
     }
@@ -66,6 +67,7 @@ export default class Console extends Base {
     //   page: 1,
     // });
     this.props.runQuery(this.props.query)
+    this.props.loadQueryPage()
   }
 
   handleDownloadQuery (e) {
@@ -102,12 +104,12 @@ export default class Console extends Base {
 
   handleSelectHistoryEntry (i, query) {
     this.props.setTopPanel(0)
-    this.props.setQuery(query)
+    this.props.setQuery(query.dataset)
   }
 
   handleQuerySelect (i, query) {
     this.props.setTopPanel(0)
-    this.props.setQuery(query)
+    this.props.setQuery(query.dataset)
   }
 
   handlePeerSelect (i, peer) {
@@ -152,7 +154,7 @@ export default class Console extends Base {
                 <QueryEditor bounds={topBox} name='editor' query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />
               </div>,
               <div className='panel'>
-                <List bounds={topBox} className='queryHistory list' data={queryHistory} component={QueryHistoryItem} onSelectItem={this.handleSelectHistoryEntry} />
+                <List bounds={topBox} className='queryHistory list' data={queries} component={QueryItem} onSelectItem={this.handleSelectHistoryEntry} />
               </div>
             ]}
           />
@@ -221,6 +223,7 @@ Console.propTypes = {
   setTopPanel: PropTypes.func.isRequired,
   setBottomPanel: PropTypes.func.isRequired,
   // loadDatasets: PropTypes.func.isRequired,
+  loadQueryPage: PropTypes.func.isRequired,
   loadDataset: PropTypes.func.isRequired
 }
 
