@@ -1,0 +1,32 @@
+#commandBar {
+	background: $slate;
+	z-index: 1001;
+	display: flex;
+	box-shadow: 0 0 12px rgba(0,0,0,0.25);
+
+	.menu {
+		flex: 1 1;
+		display: block;
+		background: url("https://static.qri.io/svg/menu.svg") center center no-repeat;
+		&:hover {
+			color: white;
+		}
+	}
+
+	.commandLine {
+		flex: 8 1;
+		background: $dark-slate;
+		color: $tope;
+		padding: 0.5em 1em;
+		border: none;
+		box-shadow: none;
+		font-family: courier, monospace;
+		outline: none;
+	}
+
+	.go {
+		flex: 1 1;
+		display: block;
+		background: url("https://static.qri.io/svg/execute.svg") center center no-repeat;
+	}
+}

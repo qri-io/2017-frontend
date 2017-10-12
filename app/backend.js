@@ -101,9 +101,6 @@ export default class Backend extends EventEmitter {
 
   destroy () {
     console.log('killing backend process')
-    if (!this.backend) {
-      return
-    }
     try {
       this.backend.kill()
     } catch (err) {

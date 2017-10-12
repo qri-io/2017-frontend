@@ -7,7 +7,6 @@ import ReactMarkdown from 'react-markdown'
 import { downloadDataset, deleteDataset, loadDatasetData } from '../actions/dataset'
 import { setQuery, runQuery, downloadQuery } from '../actions/query'
 
-import Base from './Base'
 import DatasetDataGrid from './DatasetDataGrid'
 import TabPanel from './TabPanel'
 import List from './List'
@@ -21,7 +20,7 @@ import MetadataEditorContainer from '../containers/MetadataEditor'
 
 import DatasetRefProps from '../propTypes/datasetRefProps'
 
-export default class Dataset extends Base {
+export default class Dataset extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -269,7 +268,7 @@ export default class Dataset extends Base {
     }
   }
 
-  template (css) {
+  render () {
     const { datasetRef, readme } = this.props
     // const path = "/" + address.replace(".", "/", -1)
     // const hasData = (dataset && (dataset.url || dataset.file || dataset.data));
@@ -306,6 +305,10 @@ export default class Dataset extends Base {
 }
 
 Dataset.propTypes = {
+  // username.dataset address for this dataset, should
+  // be derived from url params
+  // path: PropTypes.string.isRequired,
+
   // the dataset model to display
   datasetRef: DatasetRefProps,
   // Readme model if available
@@ -319,9 +322,16 @@ Dataset.propTypes = {
   results: React.PropTypes.object,
   path: PropTypes.string,
 
+  // permissions stuff, will show things based on capabilities
+  // permissions: PropTypes.object.isRequired,
+
+  // action to load a dataset from passed-in address
+  // loadDatasetByAddress : PropTypes.func.isRequired,
+
   setQuery: PropTypes.func.isRequired,
   runQuery: PropTypes.func.isRequired,
   downloadDataset: PropTypes.func.isRequired
+  // loadDatasetReadme : PropTypes.func.isRequired
 }
 
 Dataset.defaultProps = {
