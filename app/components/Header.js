@@ -1,11 +1,24 @@
-/* globals __BUILD__ */
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 
-const Header = ({ user, style }) => {
-  return (
-    <div id='header' style={style} />
-  )
+import Base from './Base'
+
+export default class Header extends Base {
+  template (css) {
+    const { style } = this.props
+
+    return (
+      <div id='header' className={css('header')} style={style} />
+    )
+  }
+
+  styles () {
+    return {
+      header: {
+        '-webkit-app-region': 'drag'
+      }
+    }
+  }
 }
 
 Header.propTypes = {
@@ -15,5 +28,3 @@ Header.propTypes = {
 
 Header.defaultProps = {
 }
-
-export default Header
