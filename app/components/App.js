@@ -134,7 +134,7 @@ export default class App extends Base {
     const { children, layout, palette } = this.props
 
     return (
-      <div id='app' className={css('app')} onClick={this.handleStageClick}>
+      <div className={css('app')} onClick={this.handleStageClick}>
         {this.renderMessage(css)}
         {this.renderErrorMessage(css)}
         <Header palette={palette} style={layout.navbar} />
@@ -161,7 +161,23 @@ export default class App extends Base {
         background: palette.background,
         minHeight: '100%',
         color: palette.text
+
+        // TODO - wouldn't this be nice? it'd be great to set
+        // child class selectors & not have to pass palette
+        // props everywhere.
+        // '.pal_a_bg': { background: palette.a },
+        // '.pal_b_bg': { background: palette.b },
+        // '.pal_c_bg': { background: palette.c },
+        // '.pal_d_bg': { background: palette.d },
+        // '.pal_e_bg': { background: palette.e },
+
+        // '.pal_a_text': { color: palette.a },
+        // '.pal_b_text': { color: palette.b },
+        // '.pal_c_text': { color: palette.c },
+        // '.pal_d_text': { color: palette.d },
+        // '.pal_e_text': { color: palette.e },
       },
+
       alert: {
         marginBottom: 0,
         position: 'fixed',

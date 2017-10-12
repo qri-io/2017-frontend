@@ -1,8 +1,10 @@
 /* globals confirm */
 import React, { PropTypes } from 'react'
-
 import { Link } from 'react-router'
 import ReactMarkdown from 'react-markdown'
+
+import { Palette, defaultPalette } from '../propTypes/palette'
+import DatasetRefProps from '../propTypes/datasetRefProps'
 
 import { downloadDataset, deleteDataset, loadDatasetData } from '../actions/dataset'
 import { setQuery, runQuery, downloadQuery } from '../actions/query'
@@ -18,8 +20,6 @@ import QueryEditor from './QueryEditor'
 import DataTable from './DataTable'
 
 import MetadataEditorContainer from '../containers/MetadataEditor'
-
-import DatasetRefProps from '../propTypes/datasetRefProps'
 
 export default class Dataset extends Base {
   constructor (props) {
@@ -287,7 +287,7 @@ export default class Dataset extends Base {
     const { dataset, path } = datasetRef
     const { tabIndex, editMetadata } = this.state
     return (
-      <div id='wrapper'>
+      <div className={css('wrap')}>
         {
           editMetadata ? <div className='container'><MetadataEditorContainer path={path} /></div> : <div className='container'>
             <DatasetHeader datasetRef={datasetRef} onDelete={this.handleDeleteDataset} onDownload={this.handleDownloadDataset} onEditMetadata={this.changeEditMetadata} />
@@ -302,6 +302,16 @@ export default class Dataset extends Base {
         }
       </div>
     )
+  }
+
+  styles (props) {
+    const { palette } = this.props
+    return {
+      wrap: {
+        paddingLeft: 20,
+        paddingRight: 20
+      }
+    }
   }
 }
 
@@ -321,7 +331,8 @@ Dataset.propTypes = {
 
   setQuery: PropTypes.func.isRequired,
   runQuery: PropTypes.func.isRequired,
-  downloadDataset: PropTypes.func.isRequired
+  downloadDataset: PropTypes.func.isRequired,
+  palette: Palette
 }
 
 Dataset.defaultProps = {
@@ -329,5 +340,6 @@ Dataset.defaultProps = {
     edit: false,
     migrate: false,
     change: false
-  }
+  },
+  palette: defaultPalette
 }

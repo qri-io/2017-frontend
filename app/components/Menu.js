@@ -6,8 +6,10 @@ import Base from './Base'
 
 export default class Menu extends Base {
   template (css) {
+    const { style } = this.props
+
     return (
-      <div className={css('menu')} {...Object.assign({}, this.props, {palette: undefined})}>
+      <div className={css('menu')} style={style}>
         <div className={css('items')}>
           <Link className={css('item')} to='/'>navigateright</Link>
           <Link className={css('item')} to='/datasets'>layers</Link>

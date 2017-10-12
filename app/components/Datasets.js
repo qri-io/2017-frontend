@@ -77,11 +77,11 @@ export default class Datasets extends Base {
 
   template (css) {
     const { loading } = this.state
-    const { datasets, searchString } = this.props
+    const { datasets, searchString, palette } = this.props
 
     if (loading) {
       return (
-        <div className='wrapper'>
+        <div className={css('wrap')}>
           <header>
             <input
               id={'search'}
@@ -119,12 +119,15 @@ export default class Datasets extends Base {
           data={datasets}
           component={DatasetItem}
           onSelectItem={this.onSelectDataset}
-          emptyComponent={<p>No Datasets</p>} />
+          emptyComponent={<p>No Datasets</p>}
+          palette={palette} />
       </div>
     )
   }
 
   styles (props) {
+    const { palette } = this.props
+
     return {
       wrap: {
         paddingLeft: 20,
