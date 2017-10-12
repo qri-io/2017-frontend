@@ -23,7 +23,6 @@ export default class QueryEditor extends Base {
         //   enableLiveAutocompletion: true
         // }}
       />
-        <button className='btn btn-primary' style={{ marginRight: 10 }} onClick={onDownload}>Download</button>
         <button className='btn btn-primary' onClick={onRun}>Run</button>
       </div>
     )

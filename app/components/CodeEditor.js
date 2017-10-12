@@ -7,7 +7,7 @@ import Base from './Base'
 
 export default class CodeEditor extends Base {
   template (css) {
-    return (<AceEditor mode='pgsql' theme='qri' {...this.props} />)
+    return (<AceEditor mode='pgsql' theme='qri' {...this.props} {...this.props.editorProps} />)
   }
 }
 
@@ -33,11 +33,11 @@ CodeEditor.defaultProps = {
     minLines: null,
     maxLines: null,
     readOnly: false,
-    highlightActiveLine: true,
     showPrintMargin: true,
     tabSize: 2,
     cursorStart: 1,
-    wrapEnabled: false
+    wrapEnabled: false,
+    highlightActiveLine: false
     // enableBasicAutocompletion: false,
     // enableLiveAutocompletion: false,
   }
