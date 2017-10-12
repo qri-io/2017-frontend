@@ -32,7 +32,7 @@ export default class Menu extends Base {
         fontFamily: 'SSPika',
         display: 'block',
         textAlign: 'center',
-        fontSize: 24,
+        fontSize: 20,
         marginTop: 10
       }
     }

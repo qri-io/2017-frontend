@@ -9,7 +9,6 @@ import List from './List'
 
 import QueryHistoryItem from './item/QueryHistoryItem'
 import QueryItem from './item/QueryItem'
-import PeerItem from './item/PeerItem'
 import ResultsChart from './ResultsChart'
 import DatasetsContainer from '../containers/Datasets'
 
@@ -161,7 +160,7 @@ export default class Console extends Base {
         <div className='bottom panel'>
           <TabPanel
             index={bottomPanelIndex}
-            labels={['Data', 'Chart', 'Datasets', 'Queries', 'Peers']}
+            labels={['Data', 'Chart', 'Datasets']}
             onSelectPanel={this.handleSetBottomPanel}
             components={[
               <DatasetDataGrid
@@ -175,12 +174,6 @@ export default class Console extends Base {
               </div>,
               <div className='panel'>
                 <DatasetsContainer skipLoad bounds={bottomBox} />
-              </div>,
-              <div className='panel'>
-                <List className='queryItem list' data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} bounds={bottomBox} />
-              </div>,
-              <div className='panel'>
-                <List className='peerItem list' data={peers} component={PeerItem} onSelectItem={this.handlePeerSelect} bounds={bottomBox} />
               </div>
             ]}
           />

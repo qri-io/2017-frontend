@@ -1,6 +1,6 @@
 import React from 'react'
 
-import List from '../List'
+import List from './List'
 import DatasetItem from './item/DatasetItem'
 import UserItem from './item/UserItem'
 import ValidInput from './form/ValidInput'
@@ -36,7 +36,7 @@ const Stylesheet = () => {
           </div>
         </div>
       </div>
-      <div className='container'>
+      {/* <div className='container'>
         <div className='row'>
           <header className='col-md-12'>
             <hr className='red' />
@@ -100,7 +100,7 @@ const Stylesheet = () => {
             <FieldsList fields={this.props.fields} />
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
@@ -136,3 +136,5 @@ Stylesheet.defaultProps = {
     { 'name': 'qri', 'address': 'qri', 'file': 'stats.csv', 'fields': [{ 'name': 'name', 'type': 'string' }, { 'name': 'value', 'type': 'float' }], 'description': 'a service for coordinating datasets' }
   ]
 }
+
+export default Stylesheet

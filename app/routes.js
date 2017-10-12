@@ -6,6 +6,8 @@ import AppContainer from './containers/App'
 import ConsoleContainer from './containers/Console'
 import DatasetsContainer from './containers/Datasets'
 import PeersContainer from './containers/Peers'
+import SettingsContainer from './containers/Settings'
+import Stylesheet from './components/Stylesheet'
 
 export default () => (
   <AppContainer>
@@ -13,6 +15,8 @@ export default () => (
       <Route exact path="/" component={ConsoleContainer} />
       <Route path="/datasets" component={DatasetsContainer} />
       <Route path="/peers" component={PeersContainer} />
+      <Route path="/settings" component={SettingsContainer} />
+      <Route path="/stylesheet" component={Stylesheet} />
     </Switch>
   </AppContainer>
 )
