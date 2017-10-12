@@ -1,12 +1,15 @@
 /* globals confirm */
 import React, { PropTypes } from 'react'
-
 import { Link } from 'react-router'
 import ReactMarkdown from 'react-markdown'
+
+import { Palette, defaultPalette } from '../propTypes/palette'
+import DatasetRefProps from '../propTypes/datasetRefProps'
 
 import { downloadDataset, deleteDataset, loadDatasetData } from '../actions/dataset'
 import { setQuery, runQuery, downloadQuery } from '../actions/query'
 
+import Base from './Base'
 import DatasetDataGrid from './DatasetDataGrid'
 import TabPanel from './TabPanel'
 import List from './List'
@@ -18,9 +21,7 @@ import DataTable from './DataTable'
 
 import MetadataEditorContainer from '../containers/MetadataEditor'
 
-import DatasetRefProps from '../propTypes/datasetRefProps'
-
-export default class Dataset extends React.Component {
+export default class Dataset extends Base {
   constructor (props) {
     super(props)
     this.state = {
@@ -268,7 +269,7 @@ export default class Dataset extends React.Component {
     }
   }
 
-  render () {
+  template (css) {
     const { datasetRef, readme } = this.props
     // const path = "/" + address.replace(".", "/", -1)
     // const hasData = (dataset && (dataset.url || dataset.file || dataset.data));
@@ -286,7 +287,7 @@ export default class Dataset extends React.Component {
     const { dataset, path } = datasetRef
     const { tabIndex, editMetadata } = this.state
     return (
-      <div id='wrapper'>
+      <div className={css('wrap')}>
         {
           editMetadata ? <div className='container'><MetadataEditorContainer path={path} /></div> : <div className='container'>
             <DatasetHeader datasetRef={datasetRef} onDelete={this.handleDeleteDataset} onDownload={this.handleDownloadDataset} onEditMetadata={this.changeEditMetadata} />
@@ -302,13 +303,19 @@ export default class Dataset extends React.Component {
       </div>
     )
   }
+
+  styles (props) {
+    const { palette } = this.props
+    return {
+      wrap: {
+        paddingLeft: 20,
+        paddingRight: 20
+      }
+    }
+  }
 }
 
 Dataset.propTypes = {
-  // username.dataset address for this dataset, should
-  // be derived from url params
-  // path: PropTypes.string.isRequired,
-
   // the dataset model to display
   datasetRef: DatasetRefProps,
   // Readme model if available
@@ -322,16 +329,10 @@ Dataset.propTypes = {
   results: React.PropTypes.object,
   path: PropTypes.string,
 
-  // permissions stuff, will show things based on capabilities
-  // permissions: PropTypes.object.isRequired,
-
-  // action to load a dataset from passed-in address
-  // loadDatasetByAddress : PropTypes.func.isRequired,
-
   setQuery: PropTypes.func.isRequired,
   runQuery: PropTypes.func.isRequired,
-  downloadDataset: PropTypes.func.isRequired
-  // loadDatasetReadme : PropTypes.func.isRequired
+  downloadDataset: PropTypes.func.isRequired,
+  palette: Palette
 }
 
 Dataset.defaultProps = {
@@ -339,5 +340,6 @@ Dataset.defaultProps = {
     edit: false,
     migrate: false,
     change: false
-  }
+  },
+  palette: defaultPalette
 }

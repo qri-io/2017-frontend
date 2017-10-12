@@ -20,11 +20,11 @@ const configureStore = (initialState) => {
   middleware.push(thunk, api, runQuery, locals)
 
   // Logging Middleware
-  const logger = createLogger({
-    level: 'info',
-    collapsed: true
-  })
-  middleware.push(logger)
+  // const logger = createLogger({
+  //   level: 'info',
+  //   collapsed: true
+  // })
+  // middleware.push(logger)
 
   // Router Middleware
   const router = routerMiddleware(history)

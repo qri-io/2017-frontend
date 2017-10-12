@@ -1,33 +1,54 @@
 import React, { PropTypes } from 'react'
-import CodeEditor from './CodeEditor'
 
+import Base from './Base'
+import CodeEditor from './CodeEditor'
 import { datasetCompleter } from '../ace/completer/datasets'
 
-const QueryEditor = ({ name, query, onDownload, onRun, onChange, bounds }) => {
-  // TODO handleChange no longer used, consider depreciation
-  // const handleChange = (name, value) => {
-  //   onChange({ queryString: value })
-  // }
+export default class QueryEditor extends Base {
+  template (css) {
+    const { name, query, onDownload, onRun, onChange, bounds } = this.props
 
-  return (
-    <div className='queryEditor'>
-      <CodeEditor
-        name={name}
-        value={query.queryString}
-        completers={[datasetCompleter]}
-        width={`${bounds.width - 40}px`}
-        height={`${bounds.height - 80}px`}
-        onChange={value => onChange({ queryString: value, address: query.address })}
+    return (
+      <div className={css('wrap')}>
+        <CodeEditor
+          name={name}
+          value={query.queryString}
+          completers={[datasetCompleter]}
+          width={`${bounds.width - 40}px`}
+          height={`${bounds.height - 80}px`}
+          onChange={value => onChange({ queryString: value, address: query.address })}
         // TODO - reenable when adding back completion
         // setOptions={{
         //   enableBasicAutocompletion: true,
         //   enableLiveAutocompletion: true
         // }}
       />
-      <button className='btn btn-primary' style={{ marginRight: 10 }} onClick={onDownload}>Download</button>
-      <button className='btn btn-primary' onClick={onRun}>Run</button>
-    </div>
-  )
+        <button className='btn btn-primary' onClick={onRun}>Run</button>
+      </div>
+    )
+  }
+
+  style () {
+    return {
+      wrap: {
+        zIndex: '0',
+        position: 'relative',
+        width: '100%',
+        marginTop: 15,
+        marginBottom: 15,
+        minHeight: 180
+      },
+      'codeEditor.wrap .editor': {
+        position: absolute,
+        top: '0',
+        right: '0',
+        left: '0',
+        minHeight: '180',
+        background: '#2A2E2E',
+        borderRadius: 3
+      }
+    }
+  }
 }
 
 QueryEditor.propTypes = {
@@ -45,5 +66,3 @@ QueryEditor.defaultProps = {
     queryString: ''
   }
 }
-
-export default QueryEditor

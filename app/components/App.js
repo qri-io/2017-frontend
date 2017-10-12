@@ -3,9 +3,13 @@ import React, { PropTypes } from 'react'
 import { browserHistory } from 'react-router'
 import { debounce } from 'lodash'
 
-import Header from './Header'
+import { Palette, defaultPalette } from '../propTypes/palette'
 
-export default class App extends React.Component {
+import Base from './Base'
+import Header from './Header'
+import Menu from './Menu'
+
+export default class App extends Base {
   constructor (props) {
     super(props);
 
@@ -94,49 +98,47 @@ export default class App extends React.Component {
     return undefined
   }
 
-  renderErrorMessage () {
+  renderErrorMessage (css) {
     const { errorMessage } = this.props
     if (!errorMessage) {
       return null
     }
 
     return (
-      <div className='alert alert-danger' role='alert'>
+      <div className={css('alert', 'danger')} role='alert'>
         <div className='row'>
           <div className='dismiss'><a onClick={this.handleDismissErrorClick}>X</a></div>
           <div className='message'>{errorMessage}</div>
         </div>
       </div>
-
     )
   }
 
-  renderMessage () {
+  renderMessage (css) {
     const { message } = this.props
     if (!message) {
       return null
     }
 
     return (
-      <div className='alert alert-success' role='alert'>
+      <div className={css('alert', 'success')} role='alert'>
         <div className='row'>
-          <div className='dismiss'><a onClick={this.handleDismissClick}>X</a></div>
-          <div className='message'>{message}</div>
+          <div className={css('dismiss')}><a onClick={this.handleDismissClick}>X</a></div>
+          <div className={css('message')}>{message}</div>
         </div>
       </div>
     )
   }
 
-  render () {
-    const { children, layout } = this.props
+  template (css) {
+    const { children, layout, palette } = this.props
+
     return (
-      <div id='app' className='stage' onClick={this.handleStageClick}>
-        {this.renderMessage()}
-        {this.renderErrorMessage()}
-        <Header style={Object.assign({
-          position: 'absolute',
-          overflow: 'auto'
-        }, layout.navbar)} />
+      <div className={css('app')} onClick={this.handleStageClick}>
+        {this.renderMessage(css)}
+        {this.renderErrorMessage(css)}
+        <Header palette={palette} style={layout.navbar} />
+        <Menu palette={palette} style={layout.sidebar} />
         <div
           className='main'
           style={Object.assign({
@@ -150,6 +152,62 @@ export default class App extends React.Component {
       </div>
     )
   }
+
+  styles (props) {
+    const { palette } = this.props
+
+    return {
+      app: {
+        background: palette.background,
+        minHeight: '100%',
+        color: palette.text
+
+        // TODO - wouldn't this be nice? it'd be great to set
+        // child class selectors & not have to pass palette
+        // props everywhere.
+        // '.pal_a_bg': { background: palette.a },
+        // '.pal_b_bg': { background: palette.b },
+        // '.pal_c_bg': { background: palette.c },
+        // '.pal_d_bg': { background: palette.d },
+        // '.pal_e_bg': { background: palette.e },
+
+        // '.pal_a_text': { color: palette.a },
+        // '.pal_b_text': { color: palette.b },
+        // '.pal_c_text': { color: palette.c },
+        // '.pal_d_text': { color: palette.d },
+        // '.pal_e_text': { color: palette.e },
+      },
+
+      alert: {
+        marginBottom: 0,
+        position: 'fixed',
+        right: 0,
+        margin: '30px 20px',
+        overflow: 'auto',
+        zIndex: '2',
+        minWidth: '200',
+        maxWidth: '40%',
+        padding: '10px 15px 10px 15px'
+      },
+      danger: {
+        background: palette.d
+      },
+      success: {
+        background: palette.c
+      },
+      message: {
+        float: 'left',
+        display: 'inline-block',
+        marginLeft: 10,
+        marginRight: 10
+      },
+      dismiss: {
+        float: 'right',
+        display: 'inline-block',
+        margin: '0 10px 0 0'
+      }
+    }
+  }
 }
 
 App.propTypes = {
@@ -159,5 +217,10 @@ App.propTypes = {
 
   resetErrorMessage: PropTypes.func.isRequired,
   resetMessage: PropTypes.func.isRequired,
-  hideMenu: PropTypes.func.isRequired
+  hideMenu: PropTypes.func.isRequired,
+  palette: Palette
+}
+
+App.defaultProps = {
+  palette: defaultPalette
 }

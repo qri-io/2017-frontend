@@ -1,5 +1,5 @@
 html, body, #root, #app {
-  min-height: 100%;
+  height: 100%;
 }
 
 .bg-green { background: $green; }
@@ -37,10 +37,6 @@ header > hr {
   margin-top: 0;
 }
 
-#content-wrapper, #root {
-  min-height: 90%;
-}
-
 .wrapper, .page {
   min-height: 100%
 }
@@ -72,10 +68,6 @@ a {
 a:hover {
   text-decoration: none;
   color: #9FFFF0;
-}
-
-.address {
-  color: $orange;
 }
 
 .right {

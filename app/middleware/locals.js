@@ -27,7 +27,6 @@ export default store => next => action => {
   }
   if (!attributes) {
     // TODO - warnings
-
   }
 
   function actionWith (data) {
