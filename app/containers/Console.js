@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { setQuery, runQuery, loadQueryBySlug, loadQueryPage } from '../actions/query'
+import { setQuery, runQuery, loadQueryBySlug, loadQueries } from '../actions/query'
 import { setTopPanel, setBottomPanel, setChartOptions, resetChartOptions } from '../actions/console'
 import { loadDatasets, loadDataset } from '../actions/dataset'
 
@@ -32,7 +32,7 @@ const ConsoleContainer = connect(
   }, {
     setQuery,
     runQuery,
-    loadQueryPage,
+    loadQueries,
     loadQueryBySlug,
 
     setTopPanel,

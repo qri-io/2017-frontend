@@ -116,7 +116,7 @@ export function loadQueryBySlug (slug = '', requiredFields = [], setOnLoad = fal
   }
 }
 
-export function fetchQueryPage (page = 1, pageSize = 30) {
+export function fetchQueries (page = 1, pageSize = 30) {
   return {
     [CALL_API]: {
       types: [QUERIES_REQUEST, QUERIES_SUCCESS, QUERIES_FAILURE],
@@ -129,10 +129,10 @@ export function fetchQueryPage (page = 1, pageSize = 30) {
   }
 }
 
-export function loadQueryPage (page = 1, pageSize = 30) {
+export function loadQueries (page = 1, pageSize = 30) {
   return (dispatch, getState) => {
     // TODO - check pagination
-    return dispatch(fetchQueryPage(page, pageSize))
+    return dispatch(fetchQueries(page, pageSize))
   }
 }
 

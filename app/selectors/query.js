@@ -1,5 +1,7 @@
-
 import { selectUserByUsername } from './user'
+
+const usersQueriesSection = 'popularQueries'
+const usersQueriesNode = 'popularQueries'
 
 export function selectQueryById (state, id) {
   return state.entities.queries[id]
@@ -53,4 +55,45 @@ export function selectAllQueries (state) {
   return Object.keys(queries).map(id => queries[id]).sort((a, b) => {
     return (a.address === b.address) ? 0 : ((a.address < a.address)) ? -1 : 1
   })
+}
+
+export function selectQueries (state, section, node) {
+  if (!section && !node) {
+    section = usersQueriesSection
+    node = usersQueriesNode
+  }
+  const { queries } = state.entities
+  return selectQueriesIds(state, section, node).map(id => queries[id])
+}
+
+export function selectQueriesIsFetching (state, section, node) {
+  if (!section && !node) {
+    section = usersQueriesSection
+    node = usersQueriesNode
+  }
+  return (state.pagination[section] && state.pagination[section][node]) ? state.pagination[section][node].isFetching : false
+}
+
+export function selectQueriesPageCount (state, section, node) {
+  if (!section && !node) {
+    section = usersQueriesSection
+    node = usersQueriesNode
+  }
+  return (state.pagination[section] && state.pagination[section][node]) ? state.pagination[section][node].pageCount : 0
+}
+
+export function selectQueriesFetchedAll (state, section, node) {
+  if (!section && !node) {
+    section = usersQueriesSection
+    node = usersQueriesNode
+  }
+  return (state.pagination[section] && state.pagination[section][node]) ? state.pagination[section][node].fetchedAll : false
+}
+
+export function selectQueriesIds (state, section, node) {
+  if (!section && !node) {
+    section = usersQueriesSection
+    node = usersQueriesNode
+  }
+  return (state.pagination[section] && state.pagination[section][node]) ? state.pagination[section][node].ids : []
 }
