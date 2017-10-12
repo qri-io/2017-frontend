@@ -5,7 +5,7 @@ import Base from './Base'
 export default class Settings extends Base {
   template (css) {
     return (
-      <div>
+      <div className={css('wrap')}>
         <header>
           <h1>Settings</h1>
           <hr />
@@ -15,7 +15,10 @@ export default class Settings extends Base {
   }
   styles () {
     return {
-
+      wrap: {
+        paddingLeft: 20,
+        paddingRight: 20
+      }
     }
   }
 }

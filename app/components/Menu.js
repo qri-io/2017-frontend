@@ -1,12 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import { Palette, defaultPalette } from '../propTypes/palette'
 import Base from './Base'
 
 export default class Menu extends Base {
   template (css) {
     return (
-      <div className={css('menu')} {...this.props}>
+      <div className={css('menu')} {...Object.assign({}, this.props, {palette: undefined})}>
         <div className={css('items')}>
           <Link className={css('item')} to='/'>navigateright</Link>
           <Link className={css('item')} to='/datasets'>layers</Link>
@@ -18,7 +19,9 @@ export default class Menu extends Base {
     )
   }
 
-  styles () {
+  styles (props) {
+    const { palette } = this.props
+
     return {
       menu: {
         position: 'absolute',
@@ -33,8 +36,25 @@ export default class Menu extends Base {
         display: 'block',
         textAlign: 'center',
         fontSize: 20,
-        marginTop: 10
+        marginTop: 10,
+        color: palette.text,
+        ':active': {
+          color: palette.a,
+          textDecoation: 'none'
+        },
+        ':hover': {
+          color: palette.a,
+          textDecoation: 'none'
+        }
       }
     }
   }
+}
+
+Menu.propTypes = {
+  palette: Palette
+}
+
+Menu.defaultProps = {
+  palette: defaultPalette
 }

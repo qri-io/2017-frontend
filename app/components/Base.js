@@ -2,24 +2,24 @@ import React from 'react'
 import {StyleSheet, css} from 'aphrodite-simple'
 
 export default class Component extends React.PureComponent {
-  constructor () {
-    super()
-    this.styles_ = this.createStyleSheet()
+  constructor (props) {
+    super(props)
+    this.styles_ = this.createStyleSheet(props)
     this.cssHelper = this.cssHelper.bind(this)
   }
 
-  createStyleSheet () {
+  createStyleSheet (props) {
     if (!this.styles) {
       return {}
     }
 
-    const styles = this.styles()
+    const styles = this.styles(props)
 
     if (typeof styles !== 'object') {
       throw new TypeError('Component `styles` returns a non-object')
     }
 
-    return StyleSheet.create(this.styles())
+    return StyleSheet.create(this.styles(props))
   }
 
   // wrap aphrodite's css helper for two reasons:

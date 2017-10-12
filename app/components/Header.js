@@ -15,6 +15,8 @@ export default class Header extends Base {
   styles () {
     return {
       header: {
+        position: 'absolute',
+        overflow: 'auto',
         '-webkit-app-region': 'drag'
       }
     }

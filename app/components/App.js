@@ -3,6 +3,8 @@ import React, { PropTypes } from 'react'
 import { browserHistory } from 'react-router'
 import { debounce } from 'lodash'
 
+import { Palette, defaultPalette } from '../propTypes/palette'
+
 import Base from './Base'
 import Header from './Header'
 import Menu from './Menu'
@@ -96,20 +98,19 @@ export default class App extends Base {
     return undefined
   }
 
-  renderErrorMessage () {
+  renderErrorMessage (css) {
     const { errorMessage } = this.props
     if (!errorMessage) {
       return null
     }
 
     return (
-      <div className='alert alert-danger' role='alert'>
+      <div className={css('alert', 'danger')} role='alert'>
         <div className='row'>
           <div className='dismiss'><a onClick={this.handleDismissErrorClick}>X</a></div>
           <div className='message'>{errorMessage}</div>
         </div>
       </div>
-
     )
   }
 
@@ -120,7 +121,7 @@ export default class App extends Base {
     }
 
     return (
-      <div className={css('alert', 'alert-success')} role='alert'>
+      <div className={css('alert', 'success')} role='alert'>
         <div className='row'>
           <div className={css('dismiss')}><a onClick={this.handleDismissClick}>X</a></div>
           <div className={css('message')}>{message}</div>
@@ -130,17 +131,14 @@ export default class App extends Base {
   }
 
   template (css) {
-    const { children, layout } = this.props
+    const { children, layout, palette } = this.props
 
     return (
-      <div id='app' className='stage' onClick={this.handleStageClick}>
+      <div id='app' className={css('app')} onClick={this.handleStageClick}>
         {this.renderMessage(css)}
-        {this.renderErrorMessage()}
-        <Header style={Object.assign({
-          position: 'absolute',
-          overflow: 'auto'
-        }, layout.navbar)} />
-        <Menu style={Object.assign({}, layout.sidebar)} />
+        {this.renderErrorMessage(css)}
+        <Header palette={palette} style={layout.navbar} />
+        <Menu palette={palette} style={layout.sidebar} />
         <div
           className='main'
           style={Object.assign({
@@ -155,8 +153,15 @@ export default class App extends Base {
     )
   }
 
-  styles () {
+  styles (props) {
+    const { palette } = this.props
+
     return {
+      app: {
+        background: palette.background,
+        minHeight: '100%',
+        color: palette.text
+      },
       alert: {
         marginBottom: 0,
         position: 'fixed',
@@ -167,6 +172,12 @@ export default class App extends Base {
         minWidth: '200',
         maxWidth: '40%',
         padding: '10px 15px 10px 15px'
+      },
+      danger: {
+        background: palette.d
+      },
+      success: {
+        background: palette.c
       },
       message: {
         float: 'left',
@@ -190,5 +201,10 @@ App.propTypes = {
 
   resetErrorMessage: PropTypes.func.isRequired,
   resetMessage: PropTypes.func.isRequired,
-  hideMenu: PropTypes.func.isRequired
+  hideMenu: PropTypes.func.isRequired,
+  palette: Palette
+}
+
+App.defaultProps = {
+  palette: defaultPalette
 }

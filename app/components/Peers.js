@@ -82,7 +82,7 @@ export default class Peers extends Base {
     }
 
     return (
-      <div id='wrapper'>
+      <div className={css('wrap')}>
         <header>
           <h1>Peers</h1>
           <hr />
@@ -98,6 +98,10 @@ export default class Peers extends Base {
 
   styles () {
     return {
+      wrap: {
+        paddingLeft: 20,
+        paddingRight: 20
+      },
       searchBox: {
         display: 'inline-block',
         width: '50%',

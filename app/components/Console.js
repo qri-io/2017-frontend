@@ -140,7 +140,7 @@ export default class Console extends Base {
     }
 
     return (
-      <div id='console'>
+      <div className={css('wrap')}>
         <div className={css('top')}>
           <TabPanel
             index={topPanelIndex}
@@ -184,6 +184,10 @@ export default class Console extends Base {
 
   styles () {
     return {
+      wrap: {
+        paddingLeft: 20,
+        paddingRight: 20
+      },
       top: {
         paddingBottom: 20
       }

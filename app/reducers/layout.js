@@ -1,4 +1,5 @@
 import { LAYOUT_RESIZE, LAYOUT_SHOW_SIDEBAR, LAYOUT_HIDE_SIDEBAR } from '../constants/layout'
+import { defaultPalette } from '../propTypes/palette'
 
 const COLLAPSED_WIDTH = 0
 
@@ -7,7 +8,8 @@ const initialState = {
   stage: { width: 100, height: 100 },
   navbar: { width: 100, height: 40, left: 0, bottom: 0, collapsed: false },
   main: { width: 100, height: 100, left: 0, top: 0 },
-  sidebar: { width: 80, height: 100, left: 0, top: 0, collapsed: false }
+  sidebar: { width: 80, height: 100, left: 0, top: 0, collapsed: false },
+  theme: defaultPalette
 }
 
 export default function layoutReducer (state = initialState, action) {

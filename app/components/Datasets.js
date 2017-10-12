@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { debounce } from 'lodash'
+import { Palette, defaultPalette } from '../propTypes/palette'
 
 import Base from './Base'
 
@@ -100,7 +101,7 @@ export default class Datasets extends Base {
     }
 
     return (
-      <div id='wrapper'>
+      <div className={css('wrap')}>
         <header>
           <input
             id='search'
@@ -123,8 +124,12 @@ export default class Datasets extends Base {
     )
   }
 
-  styles () {
+  styles (props) {
     return {
+      wrap: {
+        paddingLeft: 20,
+        paddingRight: 20
+      },
       searchBox: {
         display: 'inline-block',
         width: '50%',
@@ -148,9 +153,11 @@ Datasets.propTypes = {
   nextPage: PropTypes.number.isRequired,
   fetchedAll: PropTypes.bool,
   loadDatasets: PropTypes.func.isRequired,
-  skipLoad: PropTypes.bool
+  skipLoad: PropTypes.bool,
+  palette: Palette
 }
 
 Datasets.defaultProps = {
-  skipLoad: false
+  skipLoad: false,
+  palette: defaultPalette
 }
