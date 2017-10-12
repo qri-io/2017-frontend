@@ -12,7 +12,7 @@ export default class Header extends Base {
     )
   }
 
-  style () {
+  styles () {
     return {
       header: {
         '-webkit-app-region': 'drag'
