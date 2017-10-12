@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 
-import Base from './Base'
 import DatasetDataGrid from './DatasetDataGrid'
 import TabPanel from './TabPanel'
 import QueryEditor from './QueryEditor'
@@ -9,14 +8,15 @@ import List from './List'
 
 import QueryHistoryItem from './item/QueryHistoryItem'
 import QueryItem from './item/QueryItem'
+import PeerItem from './item/PeerItem'
 import ResultsChart from './ResultsChart'
-import DatasetsContainer from '../containers/Datasets'
+import DatasetsListContainer from '../containers/DatasetsList'
 
 function loadData (props) {
   props.loadDatasets(1, 100)
 }
 
-export default class Console extends Base {
+export default class Console extends React.Component {
   constructor (props) {
     super(props);
     [
@@ -121,7 +121,7 @@ export default class Console extends Base {
     })
   }
 
-  template (css) {
+  render () {
     const { queries, datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout, peers, size, chartOptions } = this.props
     const { main } = layout
 
@@ -141,7 +141,7 @@ export default class Console extends Base {
 
     return (
       <div id='console'>
-        <div className={css('top')}>
+        <div className='top panel'>
           <TabPanel
             index={topPanelIndex}
             onSelectPanel={this.handleSetTopPanel}
@@ -160,7 +160,7 @@ export default class Console extends Base {
         <div className='bottom panel'>
           <TabPanel
             index={bottomPanelIndex}
-            labels={['Data', 'Chart', 'Datasets']}
+            labels={['Data', 'Chart', 'Datasets', 'Queries', 'Peers']}
             onSelectPanel={this.handleSetBottomPanel}
             components={[
               <DatasetDataGrid
@@ -173,21 +173,19 @@ export default class Console extends Base {
                 <ResultsChart size={size} onOptionsChange={this.handleSetChartOptions} schema={datasetRef && datasetRef.dataset.structure.schema} data={data} chartOptions={chartOptions} />
               </div>,
               <div className='panel'>
-                <DatasetsContainer skipLoad bounds={bottomBox} />
+                <DatasetsListContainer skipLoad bounds={bottomBox} />
+              </div>,
+              <div className='panel'>
+                <List className='queryItem list' data={queries} component={QueryItem} onSelectItem={this.handleQuerySelect} bounds={bottomBox} />
+              </div>,
+              <div className='panel'>
+                <List className='peerItem list' data={peers} component={PeerItem} onSelectItem={this.handlePeerSelect} bounds={bottomBox} />
               </div>
             ]}
           />
         </div>
       </div>
     )
-  }
-
-  styles () {
-    return {
-      top: {
-        paddingBottom: 20
-      }
-    }
   }
 }
 

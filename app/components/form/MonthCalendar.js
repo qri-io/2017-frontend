@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import Base from '../Base'
 
 /*
  *
@@ -11,7 +10,7 @@ import Base from '../Base'
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 const days = { sun: 0, mon: 1, tue: 2, wed: 3, thu: 4, fri: 5, sat: 6 }
 
-export default class MonthCalendar extends Base {
+class MonthCalendar extends React.Component {
   constructor (props) {
     super(props)
 
@@ -79,7 +78,7 @@ export default class MonthCalendar extends Base {
   }
 
   // Render
-  template (css) {
+  render () {
     // const { value } = this.props;
     const { displayMonth } = this.state
     const { onMouseDown, onTouchEnd } = this.props
@@ -119,15 +118,15 @@ export default class MonthCalendar extends Base {
     }
 
     return (
-      <div className={css('calendar', 'cal')} onMouseDown={onMouseDown} onTouchEnd={onTouchEnd}>
-        <div className={css('header')}>
+      <div className='calendar cal' onMouseDown={onMouseDown} onTouchEnd={onTouchEnd}>
+        <div className='header'>
           <a className='backButton ss-icon' onClick={this.onPrevMonth}>prev</a>
           <a className='nextButton ss-icon' onClick={this.onNextMonth}>next</a>
           <h5 className='month'>{this.monthString(displayMonth)}</h5>
           <p className='year'>{displayMonth.getFullYear()}</p>
           <hr />
         </div>
-        <table className={css('dates')}>
+        <table className='dates'>
           <thead>
             <tr>
               <th>S</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th>
@@ -137,46 +136,6 @@ export default class MonthCalendar extends Base {
         </table>
       </div>
     )
-  }
-
-  styles () {
-    return {
-      calendar: {
-        width: 300,
-        background: '#192327'
-      },
-      header: {
-        background: 'transparent',
-        boxShadow: 'none',
-        '.backButton': {
-          float: 'left'
-        },
-        '.month': {
-          textAlign: 'center'
-        },
-        '.year': {
-          textAlign: 'center'
-        },
-        '.nextButton': {
-          float: 'right'
-        }
-      },
-      dates: {
-        width: '100%',
-        'td, th': {
-          textAlign: center,
-          minWidth: 28,
-          minHeight: 28,
-          color: 'rgb(60,60,60)'
-        },
-        '.current': {
-          color: 'rgb(180,180,180)'
-        },
-        '.selected': {
-          color: 'rgb(200,0,0)'
-        }
-      }
-    }
   }
 }
 
@@ -195,3 +154,5 @@ MonthCalendar.defaultProps = {
   name: 'calendar',
   value: new Date()
 }
+
+export default MonthCalendar

@@ -1,12 +1,11 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import Base from './Base'
 import DropFile from './form/DropFile'
 import ValidInput from './form/ValidInput'
 import LoadingButton from './chrome/LoadingButton'
 
-export default class AddDataset extends Base {
+export default class AddDataset extends React.Component {
   constructor (props) {
     super(props)
 
@@ -40,15 +39,15 @@ export default class AddDataset extends Base {
     })
   }
 
-  template (css) {
+  render () {
     const { loading, dataset } = this.state
 
     return (
-      <div className={css('wrap')}>
+      <div id='wrapper' className='page'>
         <div className='container'>
           <div className='row'>
             <div className='col-md-8 offset-md-2'>
-              <h1 className={css('wrap')}>Add a Dataset</h1>
+              <h1>Add a Dataset</h1>
               <hr />
               <ValidInput type='text' name='name' label='Dataset Name' value={dataset.name} onChange={this.handleChange} />
               <DropFile name='files' onChange={this.handleChange} />

@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import Base from './Base'
 
 function panelTrigger (i, fn) {
   return () => {
@@ -7,50 +6,22 @@ function panelTrigger (i, fn) {
   }
 }
 
-export default class TabPanel extends Base {
-  template (css) {
-    const { index, labels = [], components, onSelectPanel } = this.props
-    const component = components[index]
+function headerClassName (i, index) {
+  return (i === index) ? 'current tab' : 'tab'
+}
 
-    return (
-      <div>
-        <div className={css('header')}>
-          {labels.map((label, i) => {
-            return (
-              <a
-                key={i}
-                className={css('tab', i === index && 'currentTab')}
-                onClick={panelTrigger(i, onSelectPanel)}>{label}</a>
-            )
-          }
-          )}
-        </div>
-        <section>
-          {component}
-        </section>
+const TabPanel = ({ index, labels = [], components, onSelectPanel }) => {
+  const component = components[index]
+  return (
+    <div className='tab_panel'>
+      <div className='header'>
+        {labels.map((label, i) => <a className={headerClassName(i, index)} key={i} onClick={panelTrigger(i, onSelectPanel)}>{label}</a>)}
       </div>
-    )
-  }
-
-  styles () {
-    return {
-      header: {
-        fontWeight: 'bold',
-        padding: '15px 20px'
-      },
-      tab: {
-        textTransform: 'uppercase',
-        fontStyle: 'oblique',
-        fontWeight: '700',
-        margin: '2px 20px 2px 0',
-        opacity: '0.25',
-        fontSize: 18
-      },
-      currentTab: {
-        opacity: '1'
-      }
-    }
-  }
+      <section>
+        {component}
+      </section>
+    </div>
+  )
 }
 
 TabPanel.propTypes = {
@@ -59,3 +30,5 @@ TabPanel.propTypes = {
   components: PropTypes.array.isRequired,
   onSelectPanel: PropTypes.func.isRequired
 }
+
+export default TabPanel

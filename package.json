@@ -125,7 +125,6 @@
     ]
   },
   "dependencies": {
-    "aphrodite-simple": "0.4.1",
     "brace": "0.8.0",
     "devtron": "1.4.0",
     "electron-debug": "1.2.0",

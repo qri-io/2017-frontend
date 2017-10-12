@@ -6,8 +6,9 @@ const initialState = {
   size: 'xs',
   stage: { width: 100, height: 100 },
   navbar: { width: 100, height: 40, left: 0, bottom: 0, collapsed: false },
+  commandbar: { width: 100, height: 0, left: 0, bottom: 0, collapsed: false },
   main: { width: 100, height: 100, left: 0, top: 0 },
-  sidebar: { width: 80, height: 100, left: 0, top: 0, collapsed: false }
+  sidebar: { width: COLLAPSED_WIDTH, height: 100, left: 0, top: 0, collapsed: true, pct_width: 0.35 }
 }
 
 export default function layoutReducer (state = initialState, action) {
@@ -24,7 +25,7 @@ export default function layoutReducer (state = initialState, action) {
 }
 
 function layout (state) {
-  const { stage, navbar, sidebar } = state
+  const { stage, navbar, sidebar, commandbar } = state
 
   return {
     size: sizeClass(state.stage.width),
@@ -36,20 +37,26 @@ function layout (state) {
       top: 0,
       collapsed: navbar.collapsed
     },
+    commandbar: {
+      width: stage.width,
+      height: commandbar.height,
+      left: 0,
+      bottom: 0,
+      collapsed: commandbar.collapsed
+    },
     main: {
-      width: sidebar.collapsed ? stage.width - COLLAPSED_WIDTH : stage.width - sidebar.width,
-      height: stage.height - navbar.height,
+      width: sidebar.collapsed ? stage.width - COLLAPSED_WIDTH : stage.width * (1 - sidebar.pct_width),
+      height: stage.height - navbar.height - commandbar.height,
       top: navbar.height,
-      left: sidebar.collapsed ? stage.width - COLLAPSED_WIDTH : sidebar.width
+      left: 0
     },
     sidebar: {
       width: sidebar.collapsed ? COLLAPSED_WIDTH : stage.width * sidebar.pct_width,
-      height: stage.height,
-      width: sidebar.width,
-      left: 0,
+      height: stage.height - navbar.height,
+      left: sidebar.collapsed ? stage.width - COLLAPSED_WIDTH : stage.width * (1 - sidebar.pct_width),
       top: 0,
-      collapsed: sidebar.collapsed
-      // pct_width: sidebar.pct_width
+      collapsed: sidebar.collapsed,
+      pct_width: sidebar.pct_width
     }
   }
 }

@@ -1,0 +1,16 @@
+#console {
+	.queryHistory {
+		height: 200px;
+		overflow-y: auto;
+	}
+
+	.top {
+		padding-bottom: 20px;
+	}
+	
+	.bottom {
+		background: $slate;
+		// padding-top: 20px;
+		// padding-bottom: 80px;
+	}
+}
