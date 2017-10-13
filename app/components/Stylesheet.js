@@ -30,8 +30,8 @@ const Stylesheet = () => {
             Phasellus cursus, felis eu aliquet maximus, neque lorem egestas est, eu varius nulla sapien vitae tellus.</p>
           </div>
           <div className='col-md-6'>
-            <ValidInput type='text' name='input' label='valid input' value='input' showValidation={false} validation='blah' />
-            <ValidInput type='text' name='input' label='invalid input' value='input' showValidation error='blah' />
+            <ValidInput type='text' name='input' label='valid input' value='input' showValidation={false} validation='blah' onChange={() => undefined} />
+            <ValidInput type='text' name='input' label='invalid input' value='input' showValidation error='blah' onChange={() => undefined} />
             <button className='btn btn-primary'>Primary Button</button>
           </div>
         </div>

@@ -4,8 +4,8 @@ const QueryItem = ({ data, onSelect }) => {
   return (
     <div className='queryItem' onClick={onSelect}>
       <hr />
-      <h5 className='title'>{data.headline || data.name || 'unnamed query'}</h5>
-      <small>{data.statement}</small>
+      <h5 className='title'>{data.name || data.dataset.queryString || 'unnamed query'}</h5>
+      <p><i>{data.path}</i></p>
     </div>
   )
 }

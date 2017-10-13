@@ -7,7 +7,6 @@ import { datasetCompleter } from '../ace/completer/datasets'
 export default class QueryEditor extends Base {
   template (css) {
     const { name, query, onDownload, onRun, onChange, bounds } = this.props
-
     return (
       <div className={css('wrap')}>
         <CodeEditor
@@ -15,7 +14,7 @@ export default class QueryEditor extends Base {
           value={query.queryString}
           completers={[datasetCompleter]}
           width={`${bounds.width - 40}px`}
-          height={`${bounds.height - 80}px`}
+          height={`${bounds.height - 95}px`}
           onChange={value => onChange({ queryString: value, address: query.address })}
         // TODO - reenable when adding back completion
         // setOptions={{

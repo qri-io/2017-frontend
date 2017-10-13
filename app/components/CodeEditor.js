@@ -7,7 +7,9 @@ import Base from './Base'
 
 export default class CodeEditor extends Base {
   template (css) {
-    return (<AceEditor mode='pgsql' theme='qri' {...this.props} {...this.props.editorProps} />)
+    return (<AceEditor mode='pgsql' theme='qri'
+      {...Object.assign({}, this.props.editorProps, this.props)}
+      />)
   }
 }
 

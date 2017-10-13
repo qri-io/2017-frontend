@@ -9,7 +9,7 @@ function selectFunc (fn, data, i) {
 }
 
 const List = (props) => {
-  const { data, onSelectItem, className, emptyComponent } = props
+  const { data, onSelectItem, className, emptyComponent, style } = props
   if (!data || data.length === 0) {
     if (emptyComponent) {
       return (
@@ -21,7 +21,7 @@ const List = (props) => {
     return <div className={className} />
   }
   return (
-    <div className={className}>
+    <div className={className} style={style}>
       {data.map((d, i) => <props.component data={d} key={i} index={i} onSelect={selectFunc(onSelectItem, d, i)} />)}
     </div>
   )

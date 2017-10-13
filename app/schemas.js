@@ -13,9 +13,9 @@ import { Schema, arrayOf } from 'normalizr'
 const sessionUserSchema = new Schema('session')
 const sshKeySchema = new Schema('ssh_keys', { idAttribute: 'sha256' })
 const userSchema = new Schema('users')
-const datasetSchema = new Schema('datasets', { idAttribute: 'path' })
+const datasetSchema = new Schema('namespace', { idAttribute: 'path' })
 const readmeSchema = new Schema('readmes', { idAttribute: 'address' })
-const querySchema = new Schema('queries')
+const querySchema = new Schema('queries', { idAttribute: 'path' })
 // const resultSchema = new Schema('results', { idAttribute : (result) => 'result' });
 const structuredDataSchema = new Schema('data', { idAttribute: 'path' })
 const migrationSchema = new Schema('migrations')

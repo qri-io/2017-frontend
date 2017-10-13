@@ -21,7 +21,7 @@ const initialEntitiesState = {
   users: {},
   roles: {},
 
-  datasets: {},
+  namespace: {},
   data: {},
   readmes: {},
   changes: {},

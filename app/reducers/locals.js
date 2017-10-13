@@ -3,7 +3,7 @@ import * as ActionTypes from '../actions/app'
 const initialState = {
   invites: {},
   queries: {},
-  datasets: {},
+  namespace: {},
   migrations: {},
   changes: {},
   roles: {}

@@ -8,17 +8,17 @@ export function addressPath (address) {
 }
 
 export function selectDataset (state, id) {
-  return state.entities.datasets[id]
+  return state.entities.namespace[id]
 }
 
 export function selectDatasetByPath (state, path) {
-  return state.entities.datasets[path]
+  return state.entities.namespace[path]
 }
 
 export function selectUserDatasets (state, username) {
-  const { datasets } = state.entities
-  return Object.keys(datasets).reduce((sets, id) => {
-    const ds = datasets[id]
+  const { namespace } = state.entities
+  return Object.keys(namespace).reduce((sets, id) => {
+    const ds = namespace[id]
     if (ds.address.split('.')[0] === username) {
       sets.push(ds)
     }
@@ -27,33 +27,33 @@ export function selectUserDatasets (state, username) {
 }
 
 export function selectDatasetByAddress (state, address) {
-  const { datasets } = state.entities
-  const id = Object.keys(datasets).find(id => (datasets[id].address === address))
+  const { namespace } = state.entities
+  const id = Object.keys(namespace).find(id => (namespace[id].address === address))
   if (!id) { return undefined }
-  if (datasets[id].default_query) {
+  if (namespace[id].default_query) {
     return Object.assign({},
-      datasets[id],
-      { default_query: selectQueryById(state, datasets[id].default_query) })
+      namespace[id],
+      { default_query: selectQueryById(state, namespace[id].default_query) })
   } else {
-    return datasets[id]
+    return namespace[id]
   }
 }
 
 export function selectDatasetByQueryString (state, queryString) {
-  const { datasets } = state.entities
-  // if (datasets[id].default_query) {
+  const { namespace } = state.entities
+  // if (namespace[id].default_query) {
   //   return Object.assign({},
-  //     datasets[id],
-  //     { default_query : selectQueryById(state, datasets[id].default_query) });
+  //     namespace[id],
+  //     { default_query : selectQueryById(state, namespace[id].default_query) });
   // } else {
-  //   return datasets[id]
+  //   return namespace[id]
   // }
-  const path = Object.keys(datasets).find(path => {
-    console.log(datasets[path].dataset.queryString, queryString)
-    return datasets[path].dataset.queryString === queryString
+  const path = Object.keys(namespace).find(path => {
+    console.log(namespace[path].dataset.queryString, queryString)
+    return namespace[path].dataset.queryString === queryString
   })
   // if (!path) { return undefined; }
-  return datasets[path]
+  return namespace[path]
 }
 
 export function selectDatasetData (state, path) {
@@ -66,18 +66,18 @@ export function selectDatasetReadme (state, address) {
 }
 
 export function selectDatasetDescendants (state, address) {
-  const { datasets } = state.entities
-  return Object.keys(datasets).filter((adr) => adr.includes(address) && adr !== address).map(adr => { return datasets[adr] })
+  const { namespace } = state.entities
+  return Object.keys(namespace).filter((adr) => adr.includes(address) && adr !== address).map(adr => { return namespace[adr] })
 }
 
 export function selectLocalDatasetByAddress (state, address) {
-  const { datasets } = state.locals
-  const id = Object.keys(datasets).find(id => (datasets[id].address === address))
-  return id ? datasets[id] : undefined
+  const { namespace } = state.locals
+  const id = Object.keys(namespace).find(id => (namespace[id].address === address))
+  return id ? namespace[id] : undefined
 }
 
 export function selectLocalDatasetById (state, id) {
-  return state.locals.datasets[id]
+  return state.locals.namespace[id]
 }
 
 export function selectDatasetChanges (state, datasetId) {
@@ -86,16 +86,16 @@ export function selectDatasetChanges (state, datasetId) {
 }
 
 export function selectAllDatasets (state) {
-  const { datasets } = state.entities
-  return Object.keys(datasets).map(id => datasets[id]).sort((a, b) => {
+  const { namespace } = state.entities
+  return Object.keys(namespace).map(id => namespace[id]).sort((a, b) => {
     return (a.address === b.address) ? 0 : ((a.address < a.address)) ? -1 : 1
   })
 }
 
 // generate an object-of-objects that maps the address space without overlaps
 export function selectDatasetTree (state) {
-  const { datasets } = state.entities
-  return Object.keys(datasets).reduce((acc, adr, i) => {
+  const { namespace } = state.entities
+  return Object.keys(namespace).reduce((acc, adr, i) => {
     adr.split('.').reduce((acc, el) => {
       acc[el] || (acc[el] = { })
       return acc[el]
@@ -139,8 +139,8 @@ export function selectDatasets (state, section, node) {
     section = usersDatasetsSection
     node = usersDatasetsNode
   }
-  const { datasets } = state.entities
-  return selectDatasetsIds(state, section, node).map(id => datasets[id])
+  const { namespace } = state.entities
+  return selectDatasetsIds(state, section, node).map(id => namespace[id])
 }
 
 export function selectDatasetsIsFetching (state, section, node) {

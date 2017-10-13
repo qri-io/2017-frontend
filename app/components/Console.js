@@ -5,12 +5,10 @@ import DatasetDataGrid from './DatasetDataGrid'
 import TabPanel from './TabPanel'
 import QueryEditor from './QueryEditor'
 import DataTable from './DataTable'
-import List from './List'
 
-import QueryHistoryItem from './item/QueryHistoryItem'
-import QueryItem from './item/QueryItem'
 import ResultsChart from './ResultsChart'
 import DatasetsContainer from '../containers/Datasets'
+import QueriesContainer from '../containers/Queries'
 
 function loadData (props) {
   props.loadDatasets(1, 100)
@@ -27,8 +25,6 @@ export default class Console extends Base {
       'handleSetBottomPanel',
       'handleSetChartOptions',
       'handleSelectDataset',
-      'handleSelectHistoryEntry',
-      'handleQuerySelect',
       'handlePeerSelect',
       'handleLoadMoreResults'
     ].forEach((m) => { this[m] = this[m].bind(this) })
@@ -38,6 +34,7 @@ export default class Console extends Base {
 
   componentWillMount () {
     loadData(this.props)
+    this.props.loadQueries()
     if (this.props.slug) {
       // this.props.loadQueryBySlug(this.props.slug, [], true);
     }
@@ -66,6 +63,7 @@ export default class Console extends Base {
     //   page: 1,
     // });
     this.props.runQuery(this.props.query)
+    this.props.loadQueries()
   }
 
   handleDownloadQuery (e) {
@@ -100,16 +98,6 @@ export default class Console extends Base {
     this.props.loadDataset(dataset.id, ['schema'])
   }
 
-  handleSelectHistoryEntry (i, query) {
-    this.props.setTopPanel(0)
-    this.props.setQuery(query)
-  }
-
-  handleQuerySelect (i, query) {
-    this.props.setTopPanel(0)
-    this.props.setQuery(query)
-  }
-
   handlePeerSelect (i, peer) {
     // this doesn't do anything yet
   }
@@ -122,21 +110,23 @@ export default class Console extends Base {
   }
 
   template (css) {
-    const { queries, datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout, peers, size, chartOptions } = this.props
+    const { datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout, peers, size, chartOptions } = this.props
     const { main } = layout
 
     const topBox = {
       top: main.top,
       left: 0,
       width: main.width,
-      height: main.height * 0.4
+      height: main.height * 0.4,
+      overflow: 'auto'
     }
 
     const bottomBox = {
       top: main.height * 0.4,
       left: 0,
       width: main.width,
-      height: main.height * 0.6
+      height: main.height * 0.6,
+      overflow: 'auto'
     }
 
     return (
@@ -152,7 +142,7 @@ export default class Console extends Base {
                 <QueryEditor bounds={topBox} name='editor' query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />
               </div>,
               <div className='panel'>
-                <List bounds={topBox} className='queryHistory list' data={queryHistory} component={QueryHistoryItem} onSelectItem={this.handleSelectHistoryEntry} />
+                <QueriesContainer skipLoad bounds={topBox} />
               </div>
             ]}
           />
@@ -221,6 +211,7 @@ Console.propTypes = {
   setTopPanel: PropTypes.func.isRequired,
   setBottomPanel: PropTypes.func.isRequired,
   // loadDatasets: PropTypes.func.isRequired,
+  loadQueries: PropTypes.func.isRequired,
   loadDataset: PropTypes.func.isRequired
 }
 
