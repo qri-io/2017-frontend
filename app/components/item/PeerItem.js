@@ -3,9 +3,9 @@ import React, { PropTypes } from 'react'
 const PeerItem = ({ data, onSelect }) => {
   return (
     <div className='peerItem' onClick={onSelect}>
+      <h5 className='title'>{data.username || 'unnamed peer'}</h5>
+      <small>{data.id}</small>
       <hr />
-      <h5 className='title'>{data.name || 'unnamed query'}</h5>
-      <small>{data.statement}</small>
     </div>
   )
 }

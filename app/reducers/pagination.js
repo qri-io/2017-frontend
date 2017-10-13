@@ -22,6 +22,12 @@ import {
   QUERIES_FAILURE
 } from '../constants/query'
 
+import {
+  PEERS_REQUEST,
+  PEERS_SUCCESS,
+  PEERS_FAILURE
+} from '../constants/peers'
+
 // Updates the pagination data for different actions.
 const pagination = combineReducers({
   popularQueries: paginate({
@@ -42,6 +48,15 @@ const pagination = combineReducers({
     ]
   }),
 
+  popularPeers: paginate({
+    mapActionToKey: action => 'popularPeers',
+    types: [
+      PEERS_REQUEST,
+      PEERS_SUCCESS,
+      PEERS_FAILURE
+    ]
+  }),
+
   searchedDatasets: paginate({
     mapActionToKey: action => action.searchString,
     types: [
@@ -59,6 +74,7 @@ const pagination = combineReducers({
       DATASET_DATA_FAILURE
     ]
   })
+
 })
 
 export default pagination

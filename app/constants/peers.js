@@ -1,0 +1,4 @@
+
+export const PEERS_REQUEST = 'PEERS_REQUEST'
+export const PEERS_SUCCESS = 'PEERS_SUCCESS'
+export const PEERS_FAILURE = 'PEERS_FAILURE'
