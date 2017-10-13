@@ -43,6 +43,7 @@ export default class Queries extends Base {
   template (css) {
     const { loading } = this.state
     const { queries, searchString, palette, bounds } = this.props
+    // 57 is the run button height, should these things be saved and pulled from the state tree?
     let height = bounds.height - 57
     bounds.height = height
     if (loading) {
