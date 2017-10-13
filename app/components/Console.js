@@ -25,7 +25,6 @@ export default class Console extends Base {
       'handleSetBottomPanel',
       'handleSetChartOptions',
       'handleSelectDataset',
-      'handlePeerSelect',
       'handleLoadMoreResults'
     ].forEach((m) => { this[m] = this[m].bind(this) })
 
@@ -98,10 +97,6 @@ export default class Console extends Base {
     this.props.loadDataset(dataset.id, ['schema'])
   }
 
-  handlePeerSelect (i, peer) {
-    // this doesn't do anything yet
-  }
-
   handleLoadMoreResults () {
     this.props.runQuery({
       queryString: this.props.query,
@@ -110,7 +105,7 @@ export default class Console extends Base {
   }
 
   template (css) {
-    const { datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout, peers, size, chartOptions } = this.props
+    const { datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout, size, chartOptions } = this.props
     const { main } = layout
 
     const topBox = {
@@ -150,7 +145,7 @@ export default class Console extends Base {
         <div className='bottom panel'>
           <TabPanel
             index={bottomPanelIndex}
-            labels={['Data', 'Chart', 'Datasets']}
+            labels={['Data', 'Chart', 'Datasets' ]}
             onSelectPanel={this.handleSetBottomPanel}
             components={[
               <DatasetDataGrid

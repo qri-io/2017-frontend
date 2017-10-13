@@ -14,8 +14,8 @@ export default class DatasetItem extends Base {
     }
 
     return (
-      <div className='dataset item'>
-        <b onClick={handleSelect} className={css('name')}>{data.name || <i>unnamed dataset</i>}</b>
+      <div className='dataset item' onClick={handleSelect}>
+        <b className={css('name')}>{data.name || <i>unnamed dataset</i>}</b>
         <h3>{(data.dataset && data.dataset.title) || <i>untitled dataset</i>}</h3>
         <p>{data.path}</p>
         {/* <ul>
