@@ -11,7 +11,6 @@ export default class TabPanel extends Base {
   template (css) {
     const { index, labels = [], components, onSelectPanel } = this.props
     const component = components[index]
-
     return (
       <div>
         <div className={css('header')}>

@@ -6,7 +6,7 @@ const QueryItem = ({ data, onSelect }) => {
     <div className='queryItem' onClick={onSelect}>
       <hr />
       <h5 className='title'>{query.name || query.dataset.queryString || 'unnamed query'}</h5>
-      <small>{query.path}</small>
+      <p><i>{query.path}</i></p>
     </div>
   )
 }

@@ -117,14 +117,16 @@ export default class Console extends Base {
       top: main.top,
       left: 0,
       width: main.width,
-      height: main.height * 0.4
+      height: main.height * 0.4,
+      overflow: 'auto'
     }
 
     const bottomBox = {
       top: main.height * 0.4,
       left: 0,
       width: main.width,
-      height: main.height * 0.6
+      height: main.height * 0.6,
+      overflow: 'auto'
     }
 
     return (
@@ -140,7 +142,7 @@ export default class Console extends Base {
                 <QueryEditor bounds={topBox} name='editor' query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />
               </div>,
               <div className='panel'>
-                <QueriesContainer skipLoad bounds={bottomBox} />
+                <QueriesContainer skipLoad bounds={topBox} />
               </div>
             ]}
           />
