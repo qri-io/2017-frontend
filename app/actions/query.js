@@ -70,9 +70,9 @@ export function runQuery (request) {
     }).then(action => {
       // Dismiss errors after 3.8 seconds
       if (action.type === QUERY_RUN_FAILURE) {
-        setTimeout(() => {
-          dispatch(resetErrorMessage())
-        }, 3800)
+        // setTimeout(() => {
+        //   dispatch(resetErrorMessage())
+        // }, 3800)
       } else if (action.type === QUERY_RUN_SUCCESS) {
         dispatch(setQueryResults(action.response.result))
         dispatch(loadDatasetData(action.response.result, 1, 100))
