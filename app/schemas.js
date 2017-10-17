@@ -18,6 +18,7 @@ const readmeSchema = new Schema('readmes', { idAttribute: 'address' })
 const querySchema = new Schema('queries', { idAttribute: 'path' })
 const peerSchema = new Schema('peers', { idAttribute: 'id'})
 // const resultSchema = new Schema('results', { idAttribute : (result) => 'result' });
+const peerNamespaceSchema = new Schema('peerNamespace', {idAttribute: 'path'})
 const structuredDataSchema = new Schema('data', { idAttribute: 'path' })
 const migrationSchema = new Schema('migrations')
 const changeSchema = new Schema('changes')
@@ -78,6 +79,10 @@ peerSchema.new = function (attrs) {
   return Object.assign({}, { id: 'new' }, attrs)
 }
 
+peerNamespaceSchema.new = function (attrs) {
+  return Object.assign({}, { id: 'new'}, attrs)
+}
+
 inviteSchema.new = function (attrs) {
   return Object.assign({}, attrs, { id: 'new' })
 }
@@ -108,6 +113,8 @@ const Schemas = {
   QUERY_ARRAY: arrayOf(querySchema),
   PEER: peerSchema,
   PEER_ARRAY: arrayOf(peerSchema),
+  PEER_NAMESPACE: peerNamespaceSchema,
+  PEER_NAMESPACE_ARRAY: arrayOf(peerNamespaceSchema),
   INVITE: inviteSchema,
   ROLE: roleSchema,
   ROLE_ARRAY: arrayOf(roleSchema),

@@ -26,6 +26,8 @@ const initialEntitiesState = {
   readmes: {},
   changes: {},
   migrations: {},
+  peerNamespace: {},
+  peers: {},
 
   queries: {},
   pagination: {}

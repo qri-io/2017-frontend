@@ -35,6 +35,7 @@ export default class Dataset extends Base {
       'handleDownloadDataset',
       'handleDeleteDataset',
       'handleGoBack',
+      'handleAddDataset',
       'changeTabIndex',
       'handleEditMetadata',
       'renderFieldsList',
@@ -125,7 +126,12 @@ export default class Dataset extends Base {
     this.props.goBack()
   }
 
+  handleAddDataset (path, name, peer) {
+    return peer ? () => this.props.addDataset(path, name) : undefined
+  }
+
   changeTabIndex (index) {
+    this.setState({ tabIndex: index })
   }
 
   handleEditMetadata (path) {
@@ -272,7 +278,7 @@ export default class Dataset extends Base {
   }
 
   template (css) {
-    const { datasetRef, readme } = this.props
+    const { datasetRef, readme, peer } = this.props
     // const path = "/" + address.replace(".", "/", -1)
     // const hasData = (dataset && (dataset.url || dataset.file || dataset.data));
     // TODO hasData is assigned a value but never used, consider depreciation
@@ -285,11 +291,11 @@ export default class Dataset extends Base {
       )
     }
 
-    const { dataset, path } = datasetRef
+    const { dataset, path, name } = datasetRef
     const { tabIndex, editMetadata } = this.state
     return (
       <div className={css('wrap')} >
-        <DatasetHeader datasetRef={datasetRef} onClickDelete={this.handleDeleteDataset} onClickExport={this.handleDownloadDataset} onClickEdit={this.handleEditMetadata(path)} onGoBack={this.handleGoBack} />
+        <DatasetHeader datasetRef={datasetRef} onClickDelete={this.handleDeleteDataset} onClickExport={this.handleDownloadDataset} onClickEdit={this.handleEditMetadata(path)} onGoBack={this.handleGoBack} onClickAdd={this.handleAddDataset(path, name, peer)} />
         <TabPanel
           index={tabIndex}
           labels={['Info', 'Fields', 'Data', 'Queries', 'History']}

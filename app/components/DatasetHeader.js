@@ -9,7 +9,7 @@ import Base from './Base'
 
 export default class DatasetHeader extends Base {
   template (css) {
-    const { datasetRef, onClickExport, onClickEdit, onClickDelete, onGoBack } = this.props
+    const { datasetRef, onClickExport, onClickEdit, onClickDelete, onClickAdd, onGoBack } = this.props
     const { name, path, dataset } = datasetRef
     return (
       <div className='wrapper'>
@@ -18,6 +18,7 @@ export default class DatasetHeader extends Base {
           onClickExport={onClickExport}
           onClickEdit={onClickEdit}
           onClickDelete={onClickDelete}
+          onClickAdd={onClickAdd}
         />
         <div className=''>
           <DatasetItem data={datasetRef} link={false} />
@@ -40,6 +41,7 @@ DatasetHeader.propTypes = {
   onClickExport: PropTypes.func,
   onClickEdit: PropTypes.func,
   onClickDelete: PropTypes.func,
+  onClickAdd: PropTypes.func,
   palette: Palette
 }
 

@@ -1,7 +1,7 @@
 /* globals confirm */
 import { connect } from 'react-redux'
 
-import { downloadDataset, deleteDataset, loadDatasetData } from '../actions/dataset'
+import { downloadDataset, deleteDataset, loadDatasetData, addDataset } from '../actions/dataset'
 import { setQuery, runQuery, downloadQuery } from '../actions/query'
 
 import { selectDataset, selectDatasetData } from '../selectors/dataset'
@@ -25,9 +25,11 @@ const DatasetContainer = connect(
       permissions.migrate = true
       permissions.change = true
     }
+    const { datasetRef, peer } = selectDataset(state, path)
     return Object.assign({
       path,
-      datasetRef: selectDataset(state, path),
+      datasetRef,
+      peer,
       data: selectDatasetData(state, path),
       results,
       permissions,
@@ -40,6 +42,7 @@ const DatasetContainer = connect(
     downloadQuery,
     downloadDataset,
     deleteDataset,
+    addDataset,
     loadDatasetData
   }
 )(Dataset, 'Dataset')

@@ -47,7 +47,10 @@ import {
   DATASET_SET_SEARCH,
   DATASET_SEARCH_REQUEST,
   DATASET_SEARCH_SUCCESS,
-  DATASET_SEARCH_FAILURE
+  DATASET_SEARCH_FAILURE,
+  DATASET_ADD_REQUEST,
+  DATASET_ADD_SUCCESS,
+  DATASET_ADD_FAILURE
 } from '../constants/dataset'
 
 const blankMetadata = {
@@ -394,5 +397,17 @@ export function runDatasetSearch (searchString, page = 1, pageSize = 50) {
     page,
     pageSize,
     searchString
+  }
+}
+
+export function addDataset (path, name) {
+  return {
+    [CALL_API]: {
+      types: [DATASET_ADD_REQUEST, DATASET_ADD_SUCCESS, DATASET_ADD_FAILURE],
+      endpoint: `/add${path}?name=${name}`,
+      method: 'POST',
+      data: {},
+      schema: Schemas.DATASET
+    }
   }
 }

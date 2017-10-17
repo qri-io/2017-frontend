@@ -25,7 +25,10 @@ import {
 import {
   PEERS_REQUEST,
   PEERS_SUCCESS,
-  PEERS_FAILURE
+  PEERS_FAILURE,
+  PEER_NAMESPACE_REQUEST,
+  PEER_NAMESPACE_SUCCESS,
+  PEER_NAMESPACE_FAILURE
 } from '../constants/peers'
 
 // Updates the pagination data for different actions.
@@ -54,6 +57,15 @@ const pagination = combineReducers({
       PEERS_REQUEST,
       PEERS_SUCCESS,
       PEERS_FAILURE
+    ]
+  }),
+
+  peerNamespace: paginate({
+    mapActionToKey: action => action.path,
+    types: [
+      PEER_NAMESPACE_REQUEST,
+      PEER_NAMESPACE_SUCCESS,
+      PEER_NAMESPACE_FAILURE
     ]
   }),
 
