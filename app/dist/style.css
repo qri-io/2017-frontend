@@ -309,14 +309,14 @@ a {
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px; }
 
-a:not([href]):not([tabindex]) {
+/*a:not([href]):not([tabindex]) {
   color: inherit;
   text-decoration: none; }
   a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover {
     color: inherit;
     text-decoration: none; }
   a:not([href]):not([tabindex]):focus {
-    outline: none; }
+    outline: none; }*/
 
 pre {
   margin-top: 0;
@@ -517,7 +517,7 @@ h6, .h6 {
   font-weight: 300; }
 
 hr {
-  margin-top: 1rem;
+  /*margin-top: 1rem;*/
   margin-bottom: 1rem;
   border: 0;
   border-top: 0.5px solid rgba(0, 0, 0, 0.1); }

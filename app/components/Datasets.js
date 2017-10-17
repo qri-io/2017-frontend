@@ -5,13 +5,11 @@ import { Palette, defaultPalette } from '../propTypes/palette'
 import Base from './Base'
 
 import AddDatasetContainer from '../containers/AddDataset'
-import DatasetContainer from '../containers/Dataset'
 
 import List from './List'
 import DatasetItem from './item/DatasetItem'
 import Spinner from './Spinner'
 
-const DATASET_DETAILS_MODAL = 'DATASET_DETAILS_MODAL'
 const ADD_DATASET_MODAL = 'ADD_DATASET_MODAL'
 
 export default class Datasets extends Base {
@@ -66,8 +64,6 @@ export default class Datasets extends Base {
 
   modal (name, data = {}) {
     switch (name) {
-      case DATASET_DETAILS_MODAL:
-        return <DatasetContainer path={data.path} />
       case ADD_DATASET_MODAL:
         return <AddDatasetContainer />
       default:
@@ -78,7 +74,6 @@ export default class Datasets extends Base {
   template (css) {
     const { loading } = this.state
     const { datasets, searchString, palette } = this.props
-
     if (loading) {
       return (
         <div className={css('wrap')}>
@@ -120,18 +115,23 @@ export default class Datasets extends Base {
           component={DatasetItem}
           onSelectItem={this.onSelectDataset}
           emptyComponent={<p>No Datasets</p>}
-          palette={palette} />
+          palette={palette}
+          />
       </div>
     )
   }
 
   styles (props) {
-    const { palette } = this.props
-
+    const { palette, padding } = this.props
+    let paddingLeft, paddingRight = 0
+    if (padding) {
+      paddingLeft = 20
+      paddingRight = 20
+    }
     return {
       wrap: {
-        paddingLeft: 20,
-        paddingRight: 20
+        paddingLeft: paddingRight,
+        paddingRight: paddingRight
       },
       searchBox: {
         display: 'inline-block',
@@ -157,10 +157,12 @@ Datasets.propTypes = {
   fetchedAll: PropTypes.bool,
   loadDatasets: PropTypes.func.isRequired,
   skipLoad: PropTypes.bool,
+  padding: PropTypes.bool.isRequired,
   palette: Palette
 }
 
 Datasets.defaultProps = {
   skipLoad: false,
-  palette: defaultPalette
+  palette: defaultPalette,
+  padding: true
 }

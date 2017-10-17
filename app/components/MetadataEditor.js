@@ -2,10 +2,12 @@ import React, { PropTypes } from 'react'
 
 import MetadataForm from './form/MetadataForm'
 import Spinner from './Spinner'
+import NavBar from './NavBar'
+import Base from './Base'
 
 import DatasetRefProps from '../propTypes/datasetRefProps'
 
-export default class MetadataEditor extends React.Component {
+export default class MetadataEditor extends Base {
   constructor (props) {
     super(props)
 
@@ -18,7 +20,9 @@ export default class MetadataEditor extends React.Component {
       'handleChange',
       'handleCancel',
       'handleSave',
-      'handleToggleHelp'
+      'handleClickShowHelp',
+      'handleClickHideHelp',
+      'handleGoBack'
     ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
@@ -52,7 +56,7 @@ export default class MetadataEditor extends React.Component {
   }
 
   handleCancel () {
-    this.props.hideModal()
+    this.props.goBack()
     this.props.cancelDatasetEdit(this.props.path)
   }
 
@@ -61,18 +65,28 @@ export default class MetadataEditor extends React.Component {
     this.handleCancel(localDatasetRef.path)
   }
 
-  handleToggleHelp () {
-    this.setState({ showHelp: !this.state.showHelp })
+  handleClickShowHelp () {
+    this.setState({ showHelp: true })
   }
 
-  render () {
+  handleClickHideHelp () {
+    this.setState({ showHelp: false })
+  }
+
+  handleGoBack () {
+    console.log(this.props.goBack)
+    this.props.goBack()
+  }
+
+  template (css) {
     if (this.state.loading) {
       return <Spinner />
     } else {
+      const { datasetRef } = this.props
       const { showHelp } = this.state
       return (
-        <div className='metadata editor col-md-12'>
-          <a className='helpToggle right' onClick={this.handleToggleHelp}>{showHelp ? 'hide help' : 'show help' }</a>
+        <div className={`metadata editor ${css('wrap')}`}>
+          <NavBar onGoBack={this.handleGoBack} onClickHideHelp={showHelp ? this.handleClickHideHelp : undefined} onClickShowHelp={showHelp ? undefined : this.handleClickShowHelp} />
           <MetadataForm
             datasetRef={this.props.localDatasetRef}
             onChange={this.handleChange}
@@ -85,6 +99,16 @@ export default class MetadataEditor extends React.Component {
       )
     }
   }
+
+  styles (props) {
+    const { palette } = props
+    return {
+      wrap: {
+        paddingLeft: 20,
+        paddingRight: 20
+      }
+    }
+  }
 }
 
 MetadataEditor.propTypes = {
@@ -95,7 +119,8 @@ MetadataEditor.propTypes = {
   loadDataset: PropTypes.func.isRequired,
   updateDataset: PropTypes.func.isRequired,
   saveDataset: PropTypes.func.isRequired,
-  cancelDatasetEdit: PropTypes.func.isRequired
+  cancelDatasetEdit: PropTypes.func.isRequired,
+  goBack: PropTypes.func.isRequired
 
 }
 

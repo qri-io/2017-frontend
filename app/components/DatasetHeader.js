@@ -1,34 +1,53 @@
 import React, { PropTypes } from 'react'
 
 import DatasetRefProps from '../propTypes/datasetRefProps.js'
+import DatasetItem from './item/DatasetItem'
+import NavBar from './NavBar.js'
 
-const DatasetHeader = ({ datasetRef, onDelete, onEditMetadata }) => {
-  const { name, path, dataset } = datasetRef
+import { Palette, defaultPalette } from '../propTypes/palette'
+import Base from './Base'
 
-  return (
-    <div className='row'>
-      <header className='blue page-header col-md-12'>
-        <hr className='blue' />
-        <span>| </span><a className='green right' download={`${name}.zip`} href={`/download/${path}`}> Download</a>
-        { onDelete && <a className='red right' onClick={onDelete}>| Delete&nbsp;</a> }
-        <a className='green right' onClick={onEditMetadata}>Edit Metadata&nbsp;</a>
-        <h1 className='inline-block'>{ name }</h1>
-        { dataset.title ? <h4 className='inline-block dt-string'>{ dataset.title }</h4> : undefined }
-        <p className='path dt-string'>{ path }</p>
-        { dataset.sourceUrl ? <p><span>| <a href={dataset.sourceUrl} rel='noopener noreferrer' target='_blank'>{ dataset.sourceUrl }</a></span></p> : undefined }
-      </header>
-    </div>
-  )
+export default class DatasetHeader extends Base {
+  template (css) {
+    const { datasetRef, onClickExport, onClickEdit, onClickDelete, onGoBack } = this.props
+    const { name, path, dataset } = datasetRef
+    return (
+      <div className='wrapper'>
+        <NavBar
+          onGoBack={onGoBack}
+          onClickExport={onClickExport}
+          onClickEdit={onClickEdit}
+          onClickDelete={onClickDelete}
+        />
+        <div className=''>
+          <DatasetItem data={datasetRef} link={false} />
+        </div>
+      </div>
+    )
+  }
+
+  styles (props) {
+    const { palette } = props
+    return {
+    }
+  }
 }
 
 DatasetHeader.propTypes = {
   // dataset data model
   datasetRef: DatasetRefProps,
-  onDelete: PropTypes.func,
-  onEditMetadata: PropTypes.func
+  onGoBack: PropTypes.func,
+  onClickExport: PropTypes.func,
+  onClickEdit: PropTypes.func,
+  onClickDelete: PropTypes.func,
+  palette: Palette
 }
 
 DatasetHeader.defaultProps = {
+  palette: defaultPalette
 }
 
-export default DatasetHeader
+// &nbsp;
+        // <a className='blue right' download={`${name}.zip`} href={`/download/${path}`}> Download </a>
+        // { onDelete && <a className='blue right' onClick={onDelete}> Delete </a> }
+        // <a className='blue right' onClick={onEditMetadata}> Edit </a>

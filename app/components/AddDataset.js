@@ -9,11 +9,11 @@ import LoadingButton from './chrome/LoadingButton'
 export default class AddDataset extends Base {
   constructor (props) {
     super(props)
-
+    console.log('in constructor')
     this.state = {
       loading: false,
       dataset: {
-        name: '',
+        name: 'movies',
         files: undefined
       }
     };
@@ -24,13 +24,19 @@ export default class AddDataset extends Base {
     ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
-  handleChange (name, value) {
+  handleChange (name, value, e) {
+    console.log('in handlechnage')
+    console.log('before setState')
+    console.log(this.state.dataset)
     this.setState(Object.assign({}, this.state, {
-      dataset: Object.assign(this.state.dataset, { [name]: value })
+      dataset: Object.assign(this.state.dataset, { name: 'WOOO' })
     }))
+    console.log('after setState')
+    console.log(this.state.dataset)
   }
 
   handleSubmit (e) {
+    console.log('In handle submit')
     const { dataset } = this.state
     e.preventDefault()
     this.setState({ loading: true })
@@ -42,7 +48,7 @@ export default class AddDataset extends Base {
 
   template (css) {
     const { loading, dataset } = this.state
-
+    console.log('in template')
     return (
       <div className={css('wrap')}>
         <div className='container'>

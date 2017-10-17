@@ -19,14 +19,11 @@ import FieldsList from './FieldsList'
 import QueryEditor from './QueryEditor'
 import DataTable from './DataTable'
 
-import MetadataEditorContainer from '../containers/MetadataEditor'
-
 export default class Dataset extends Base {
   constructor (props) {
     super(props)
     this.state = {
-      tabIndex: 0,
-      editMetadata: false
+      tabIndex: 0
     };
 
     [
@@ -37,8 +34,9 @@ export default class Dataset extends Base {
       'handleDownloadQuery',
       'handleDownloadDataset',
       'handleDeleteDataset',
+      'handleGoBack',
       'changeTabIndex',
-      'changeEditMetadata',
+      'handleEditMetadata',
       'renderFieldsList',
       'renderEditButtons',
       'renderResults',
@@ -123,13 +121,17 @@ export default class Dataset extends Base {
     })
   }
 
-  changeTabIndex (index) {
-    this.setState({tabIndex: index})
+  handleGoBack () {
+    this.props.goBack()
   }
 
-  changeEditMetadata () {
-    this.state.editMetadata ? this.setState({editMetadata: false}) : this.setState({editMetadata: true})
+  changeTabIndex (index) {
   }
+
+  handleEditMetadata (path) {
+    return () => this.props.history.push(`/edit/${path.slice(6, -13)}`)
+  }
+
   renderFieldsList (dataset) {
     if (dataset.structure && dataset.structure.schema) {
       return (<FieldsList fields={dataset.structure.schema.fields} />)
@@ -200,7 +202,7 @@ export default class Dataset extends Base {
 
     if (!data || !structure) { return undefined }
     return (
-      <div className='Row'>
+      <div className='row'>
         <div className='col-md-12'>
           <hr className='green' />
           <h4 className='green'>Data</h4>
@@ -243,7 +245,7 @@ export default class Dataset extends Base {
       return (
         <TabPanel
           index={tabIndex}
-          labels={['Description', 'Fields', 'Data']}
+          labels={['Info', 'Fields', 'Data', 'Queries', 'History']}
           onSelectPanel={this.changeTabIndex}
           components={[
             this.renderReadme(readme, dataset),
@@ -275,7 +277,6 @@ export default class Dataset extends Base {
     // const hasData = (dataset && (dataset.url || dataset.file || dataset.data));
     // TODO hasData is assigned a value but never used, consider depreciation
     // const hasData = true
-
     if (!datasetRef) {
       return (
         <div className='dataset container'>
@@ -287,25 +288,31 @@ export default class Dataset extends Base {
     const { dataset, path } = datasetRef
     const { tabIndex, editMetadata } = this.state
     return (
-      <div className={css('wrap')}>
-        {
-          editMetadata ? <div className='container'><MetadataEditorContainer path={path} /></div> : <div className='container'>
-            <DatasetHeader datasetRef={datasetRef} onDelete={this.handleDeleteDataset} onDownload={this.handleDownloadDataset} onEditMetadata={this.changeEditMetadata} />
-            <hr className='blue' />
-            {this.renderTabPanel(readme, dataset, tabIndex)}
-            <div className='row'>
-              <div className='col-md-12'>
-                { this.renderEditButtons(this.props) }
-              </div>
-            </div>
+      <div className={css('wrap')} >
+        <DatasetHeader datasetRef={datasetRef} onClickDelete={this.handleDeleteDataset} onClickExport={this.handleDownloadDataset} onClickEdit={this.handleEditMetadata(path)} onGoBack={this.handleGoBack} />
+        <TabPanel
+          index={tabIndex}
+          labels={['Info', 'Fields', 'Data', 'Queries', 'History']}
+          onSelectPanel={this.changeTabIndex}
+          components={[
+            this.renderReadme(readme, dataset),
+            this.renderFieldsList(dataset),
+            // this.renderMetadata(dataset),
+            this.renderData()
+          ]}
+        />
+        {/* this.renderTabPanel(readme, dataset, tabIndex) */}
+        <div className='wrapper'>
+          <div className='col-md-12'>
+            { this.renderEditButtons(this.props) }
           </div>
-        }
+        </div>
       </div>
     )
   }
 
   styles (props) {
-    const { palette } = this.props
+    const { palette } = props
     return {
       wrap: {
         paddingLeft: 20,
@@ -328,7 +335,7 @@ Dataset.propTypes = {
   // results (if any)
   results: React.PropTypes.object,
   path: PropTypes.string,
-
+  goBack: PropTypes.func.isRequired,
   setQuery: PropTypes.func.isRequired,
   runQuery: PropTypes.func.isRequired,
   downloadDataset: PropTypes.func.isRequired,

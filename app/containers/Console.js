@@ -19,6 +19,8 @@ const ConsoleContainer = connect(
       queryHistory: state.session.history,
       layout: state.layout,
       chartOptions: state.console.chartOptions,
+      history: ownProps.history,
+      goBack: ownProps.history.goBack,
       datasetRef,
       data,
       size

@@ -158,7 +158,7 @@ export default class Console extends Base {
                 <ResultsChart size={size} onOptionsChange={this.handleSetChartOptions} schema={datasetRef && datasetRef.dataset.structure.schema} data={data} chartOptions={chartOptions} />
               </div>,
               <div className='panel'>
-                <DatasetsContainer skipLoad bounds={bottomBox} />
+                <DatasetsContainer skipLoad bounds={bottomBox} padding={false} goBack={this.handleGoBack} />
               </div>
             ]}
           />
