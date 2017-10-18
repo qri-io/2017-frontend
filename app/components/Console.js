@@ -196,6 +196,7 @@ Console.propTypes = {
   chartOptions: PropTypes.shape({
     type: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    xTitle: PropTypes.string,
     xIndex: PropTypes.number,
     yIndex: PropTypes.number,
     path: PropTypes.string.isRequired

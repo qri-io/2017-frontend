@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 
 import BarChart from './BarChart.js'
+import LineChart from './LineChart.js'
 import ChartOptionsPicker from './ChartOptionsPicker'
 import { schemaProps } from '../propTypes/datasetRefProps'
 
@@ -56,10 +57,20 @@ class ResultsChart extends React.Component {
 
   renderChart () {
     const { data, chartOptions, size } = this.props
-    const { title, xIndex, type } = chartOptions
+    const { title, xTitle, type } = chartOptions
     const { width, height } = chartDimensions(size)
 
     switch (type) {
+      case 'line':
+        return (
+          <LineChart
+            data={data}
+            title={title}
+            width={width}
+            height={height}
+            xTitle={xTitle}
+        />
+        )
       case 'bar':
       default:
         return (
@@ -68,7 +79,7 @@ class ResultsChart extends React.Component {
             title={title}
             width={width}
             height={height}
-            xIndex={xIndex}
+            xTitle={xTitle}
         />
         )
     }
@@ -76,7 +87,7 @@ class ResultsChart extends React.Component {
 
   render () {
     const { schema, data, chartOptions, onOptionsChange } = this.props
-    const { title, xIndex, yIndex, type } = chartOptions
+    const { title, xTitle, xIndex, yIndex, type } = chartOptions
     if (!data) {
       return (
         <div className='panel'>
@@ -87,7 +98,7 @@ class ResultsChart extends React.Component {
     return (
       <div className='resultsChart'>
         <ChartOptionsPicker schema={schema} options={chartOptions} onChange={onOptionsChange} />
-        { (yIndex !== undefined && type) ? this.renderChart() : undefined }
+        { (xIndex !== undefined && yIndex !== undefined && type) ? this.renderChart() : undefined }
       </div>
     )
   }

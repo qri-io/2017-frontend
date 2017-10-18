@@ -7,10 +7,10 @@ class BarChart extends React.Component {
   }
 
   render () {
-    const { data, title, width, height, xIndex } = this.props
+    const { data, title, width, height, xTitle } = this.props
     return (
       <RechartsBarChart width={width} height={height} data={data} >
-        <XAxis dataKey={xIndex} />
+        <XAxis dataKey={xTitle} />
         <YAxis yAxisId='a' />
         <Legend />
         <Tooltip wrapperStyle={{background: '#6c8088', color: '#192327'}} cursor={{fill: '#28353c'}} />
@@ -26,7 +26,7 @@ BarChart.propTypes = {
   title: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  xIndex: PropTypes.number
+  xTitle: PropTypes.string.isRequired
 }
 
 BarChart.defaultProps = {
