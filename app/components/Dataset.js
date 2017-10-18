@@ -23,7 +23,8 @@ export default class Dataset extends Base {
   constructor (props) {
     super(props)
     this.state = {
-      tabIndex: 0
+      tabIndex: 0,
+      loading: true
     };
 
     [
@@ -36,6 +37,7 @@ export default class Dataset extends Base {
       'handleDeleteDataset',
       'handleGoBack',
       'handleAddDataset',
+      'handleSetLoadingData',
       'changeTabIndex',
       'handleEditMetadata',
       'renderFieldsList',
@@ -138,6 +140,10 @@ export default class Dataset extends Base {
     return () => this.props.history.push(`/edit/${path.slice(6, -13)}`)
   }
 
+  handleSetLoadingData (loading) {
+    this.setState({ loading: loading })
+  }
+
   renderFieldsList (dataset) {
     if (dataset.structure && dataset.structure.schema) {
       return (<FieldsList fields={dataset.structure.schema.fields} />)
@@ -204,6 +210,7 @@ export default class Dataset extends Base {
 
   renderData () {
     const { data, datasetRef } = this.props
+    const { loading } = this.state
     const { structure } = datasetRef.dataset
 
     if (!data || !structure) { return undefined }
@@ -216,6 +223,8 @@ export default class Dataset extends Base {
             dataset={datasetRef && datasetRef.dataset}
             data={data}
             onLoadMore={this.handleLoadMoreResults}
+            onSetLoadingData={this.handleSetLoadingData}
+            loading={loading}
                 // bounds={bottomBox}
               />
         </div>

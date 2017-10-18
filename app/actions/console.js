@@ -2,7 +2,8 @@ import {
   CONSOLE_SET_TOP_PANEL,
   CONSOLE_SET_BOTTOM_PANEL,
   CONSOLE_SET_CHART_OPTIONS,
-  CONSOLE_RESET_CHART_OPTIONS
+  CONSOLE_RESET_CHART_OPTIONS,
+  CONSOLE_SET_DATA_LOADING
 } from '../constants/console'
 
 export function setTopPanel (index) {
@@ -37,5 +38,12 @@ export function resetChartOptions () {
       path: '',
       xTitle: ''
     }
+  }
+}
+
+export function setLoadingData (loading) {
+  return {
+    type: CONSOLE_SET_DATA_LOADING,
+    value: loading
   }
 }

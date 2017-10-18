@@ -7,7 +7,7 @@ class DatasetDataGrid extends React.Component {
   constructor (props) {
     super(props)
 
-    this.state = { sortColumn: '', sortDirection: '', loading: false };
+    this.state = { sortColumn: '', sortDirection: '' };
 
     [
       'rowGetter',
@@ -17,16 +17,14 @@ class DatasetDataGrid extends React.Component {
   }
 
   componentWillMount () {
-    if (!this.props.data) {
-      this.setState({ loading: true })
+    if (this.props.loading && this.props.data) {
+      this.props.onSetLoadingData(false)
     }
   }
 
   componentWillReceiveProps (nextProps) {
-    if (!nextProps.data) {
-      this.setState({ loading: true })
-    } else {
-      this.setState({ loading: false })
+    if (this.props.loading && !this.props.data && nextProps.data) {
+      this.props.onSetLoadingData(false)
     }
   }
 
@@ -60,8 +58,7 @@ class DatasetDataGrid extends React.Component {
   }
 
   render () {
-    const { dataset, data, minHeight } = this.props
-    const { loading } = this.state
+    const { dataset, data, minHeight, loading } = this.props
     if (!dataset) {
       return (
         <div className='panel'>
@@ -88,7 +85,8 @@ class DatasetDataGrid extends React.Component {
 DatasetDataGrid.propTypes = {
   dataset: datasetProps,
   data: PropTypes.arrayOf(PropTypes.object),
-  minHeight: PropTypes.number
+  minHeight: PropTypes.number,
+  loading: PropTypes.bool.isRequired
 }
 
 DatasetDataGrid.defaultProps = {

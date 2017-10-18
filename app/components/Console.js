@@ -17,7 +17,9 @@ function loadData (props) {
 export default class Console extends Base {
   constructor (props) {
     super(props);
+
     [
+      'handleSetLoadingData',
       'handleRunQuery',
       'handleDownloadQuery',
       'handleEditorChange',
@@ -55,12 +57,19 @@ export default class Console extends Base {
     }
   }
 
+  handleSetLoadingData (loading) {
+    console.log(`in handleSetLoadingData set loading ${loading}`)
+    this.props.setLoadingData(loading)
+  }
+
   handleRunQuery (e) {
     e.preventDefault()
     // this.props.runQuery({
     //   query: this.props.query.,
     //   page: 1,
     // });
+    this.props.setLoadingData(true)
+    console.log('in handleRunQuery setLoadingData true')
     this.props.runQuery(this.props.query)
     this.props.loadQueries()
   }
@@ -105,7 +114,7 @@ export default class Console extends Base {
   }
 
   template (css) {
-    const { datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout, size, chartOptions } = this.props
+    const { datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout, size, chartOptions, loadingData } = this.props
     const { main } = layout
 
     const topBox = {
@@ -134,7 +143,8 @@ export default class Console extends Base {
             bounds={topBox}
             components={[
               <div className='panel'>
-                <QueryEditor bounds={topBox} name='editor' query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />
+                <QueryEditor bounds={topBox} name='editor' query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange}
+                />
               </div>,
               <div className='panel'>
                 <QueriesContainer skipLoad bounds={topBox} />
@@ -153,6 +163,8 @@ export default class Console extends Base {
                 data={data}
                 onLoadMore={this.handleLoadMoreResults}
                 bounds={bottomBox}
+                loading={loadingData}
+                onSetLoadingData={this.handleSetLoadingData}
               />,
               <div className='panel'>
                 <ResultsChart size={size} onOptionsChange={this.handleSetChartOptions} schema={datasetRef && datasetRef.dataset.structure.schema} data={data} chartOptions={chartOptions} />
