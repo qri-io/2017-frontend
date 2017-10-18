@@ -77,15 +77,29 @@ export default class AddDataset extends Base {
               <hr />
               <ValidInput type='text' name='name' label='Dataset Name' value={dataset.name} onChange={this.handleChange} />
               <DropFile name='files' onChange={this.handleChange} />
-              <LoadingButton loading={loading} onClick={this.handleSubmit}><span>Add Dataset</span></LoadingButton>
+              <LoadingButton className={css('button')} loading={loading} onClick={this.handleSubmit}><span>Add Dataset</span></LoadingButton>
               { loading ? <Spinner /> : undefined}
-              { message ? <div><h4 /><p>{message}</p></div> : undefined}
+              { message ? <div className={css('message')}><p>{message}</p></div> : undefined}
               <hr />
             </div>
           </div>
         </div>
       </div>
     )
+  }
+
+  styles (props) {
+    return {
+      button: {
+        marginTop: '10px'
+      },
+      message: {
+        marginTop: '10px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        width: '40%'
+      }
+    }
   }
 }
 
