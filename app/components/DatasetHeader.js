@@ -48,8 +48,3 @@ DatasetHeader.propTypes = {
 DatasetHeader.defaultProps = {
   palette: defaultPalette
 }
-
-// &nbsp;
-        // <a className='blue right' download={`${name}.zip`} href={`/download/${path}`}> Download </a>
-        // { onDelete && <a className='blue right' onClick={onDelete}> Delete </a> }
-        // <a className='blue right' onClick={onEditMetadata}> Edit </a>

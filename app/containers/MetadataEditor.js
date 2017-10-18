@@ -1,7 +1,5 @@
 import { connect } from 'react-redux'
 
-// import { createHashHistory } from 'history'
-
 import { newDataset, updateDataset, loadDataset, saveDataset, cancelDatasetEdit } from '../actions/dataset'
 import { hideModal } from '../actions/app'
 
@@ -14,7 +12,6 @@ const MetadataEditorContainer = connect(
     const path = `/ipfs/${ownProps.match.params.id}/dataset.json`
     console.log('in metadataeditor container')
     console.log(ownProps)
-    // const history = createHashHistory()
     return Object.assign({
       path,
       datasetRef: selectDataset(state, path),
