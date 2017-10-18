@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import merge from 'lodash/merge'
 import { routerReducer as routing } from 'react-router-redux'
 
-import * as ActionTypes from '../actions/app'
+import * as ActionTypes from '../constants/app'
 
 import pagination from './pagination'
 import sessionReducer from './session'
@@ -26,6 +26,8 @@ const initialEntitiesState = {
   readmes: {},
   changes: {},
   migrations: {},
+  peerNamespace: {},
+  peers: {},
 
   queries: {},
   pagination: {}

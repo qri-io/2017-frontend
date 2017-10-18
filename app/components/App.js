@@ -107,8 +107,8 @@ export default class App extends Base {
     return (
       <div className={css('alert', 'danger')} role='alert'>
         <div className='row'>
-          <div className='dismiss'><a onClick={this.handleDismissErrorClick}>X</a></div>
-          <div className='message'>{errorMessage}</div>
+          <div className={css('dismiss')}><a onClick={this.handleDismissErrorClick}>X</a></div>
+          <div className={css('message')}>{errorMessage}</div>
         </div>
       </div>
     )

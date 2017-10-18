@@ -12,8 +12,8 @@ export default class TabPanel extends Base {
     const { index, labels = [], components, onSelectPanel } = this.props
     const component = components[index]
     return (
-      <div>
-        <div className={css('header')}>
+      <div className='wrapper'>
+        <div className={`${css('header')}`}>
           {labels.map((label, i) => {
             return (
               <a
@@ -24,9 +24,10 @@ export default class TabPanel extends Base {
           }
           )}
         </div>
-        <section>
+        <hr className={css('black')} />
+        <div className='wrapper'>
           {component}
-        </section>
+        </div>
       </div>
     )
   }
@@ -35,18 +36,24 @@ export default class TabPanel extends Base {
     return {
       header: {
         fontWeight: 'bold',
-        padding: '15px 20px'
+        padding: '15px 20px 0px 0px'
       },
       tab: {
-        textTransform: 'uppercase',
-        fontStyle: 'oblique',
+        //  textTransform: 'uppercase',
+        // fontStyle: 'oblique',
         fontWeight: '700',
         margin: '2px 20px 2px 0',
         opacity: '0.25',
         fontSize: 18
       },
       currentTab: {
-        opacity: '1'
+        opacity: '1',
+        // Need to generalize this, ask Brendon
+        color: '#89DDFF'
+      },
+      black: {
+        'border-top': '1px solid #000000',
+        'margin-top': 0
       }
     }
   }

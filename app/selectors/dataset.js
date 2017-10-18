@@ -8,7 +8,13 @@ export function addressPath (address) {
 }
 
 export function selectDataset (state, id) {
-  return state.entities.namespace[id]
+  let datasetRef = state.entities.namespace[id]
+  let peer = false
+  if (!datasetRef) {
+    datasetRef = state.entities.peerNamespace[id]
+    peer = true
+  }
+  return { datasetRef, peer }
 }
 
 export function selectDatasetByPath (state, path) {
@@ -180,7 +186,7 @@ export function selectNoDatasets (state, section, node) {
     section = usersDatasetsSection
     node = usersDatasetsNode
   }
-  return (state.pagination[section] && state.pagination[section][node] && selectDatasetsPageCount(state, section, node) === 1 && selectDatasetsFetchedAll === true)
+  return (state.pagination[section] && state.pagination[section][node] && selectDatasetsPageCount(state, section, node) === 1 && selectDatasetsFetchedAll(state, section, node) === true)
 }
 
 // Older version

@@ -1,8 +1,7 @@
 /* globals confirm */
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
 
-import { downloadDataset, deleteDataset, loadDatasetData } from '../actions/dataset'
+import { downloadDataset, deleteDataset, loadDatasetData, addDataset } from '../actions/dataset'
 import { setQuery, runQuery, downloadQuery } from '../actions/query'
 
 import { selectDataset, selectDatasetData } from '../selectors/dataset'
@@ -12,11 +11,11 @@ import Dataset from '../components/Dataset'
 
 const DatasetContainer = connect(
   (state, ownProps) => {
-    const path = ownProps.path || `/${ownProps.params.splat}`
-
+    // console.log(ownProps.match.params)
+    // const path = ownProps.path || `/${ownProps.params.splat}`
+    const path = `/ipfs/${ownProps.match.params.id}/dataset.json`
     const user = selectSessionUser(state)
     const results = state.results[state.console.query.statement]
-
     let permissions = {
       edit: false,
       migrate: false,
@@ -26,12 +25,16 @@ const DatasetContainer = connect(
       permissions.migrate = true
       permissions.change = true
     }
+    const { datasetRef, peer } = selectDataset(state, path)
     return Object.assign({
       path,
-      datasetRef: selectDataset(state, path),
+      datasetRef,
+      peer,
       data: selectDatasetData(state, path),
       results,
-      permissions
+      permissions,
+      history: ownProps.history,
+      goBack: ownProps.history.goBack
     }, state.console, ownProps)
   }, {
     setQuery,
@@ -39,6 +42,7 @@ const DatasetContainer = connect(
     downloadQuery,
     downloadDataset,
     deleteDataset,
+    addDataset,
     loadDatasetData
   }
 )(Dataset, 'Dataset')

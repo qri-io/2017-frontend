@@ -20,14 +20,13 @@ export default class Peers extends Base {
 
     [
       'onSelectPeer',
-      'handlePeerSearch',
-      'handleAddItem'
+      'handlePeerSearch'
     ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
   componentWillMount () {
     if (!this.props.skipLoad) {
-      // this.props.loadPeers(this.props.nextPage)
+      this.props.loadPeers(this.props.nextPage)
     }
   }
 
@@ -37,20 +36,16 @@ export default class Peers extends Base {
     }
   }
 
-  onSelectPeer (index, datasetRef) {
-    this.props.showModal(DATASET_DETAILS_MODAL, this, datasetRef, true)
+  onSelectPeer (index, peerRef) {
+    console.log('Peer selected')
+    // this.props.showModal(DATASET_DETAILS_MODAL, this, datasetRef, true)
   }
 
   handleLoadNextPage () {
-    // this.props.loadPeers(this.props.nextPage)
-  }
-
-  handleAddItem () {
-    this.props.showModal(ADD_DATASET_MODAL, this, {}, true)
+    this.props.loadPeers(this.props.nextPage)
   }
 
   handlePeerSearch (searchString) {
-    // console.log(searchString)
     this.props.setPeerSearch(searchString)
     this.setState({ loading: true })
     this.debounceRunPeerSearch(searchString)
@@ -64,7 +59,7 @@ export default class Peers extends Base {
       return (
         <div className='wrapper'>
           <header>
-            <input
+            {/* <input
               id={'search'}
               name={'search'}
               type={'text'}
@@ -72,8 +67,7 @@ export default class Peers extends Base {
               value={searchString}
               placeholder={'search'}
               onChange={(e) => { this.handlePeerSearch(e.target.value) }}
-            />
-            <button onClick={this.handleAddItem} className='btn btn-primary right'>Add</button>
+            /> */}
             <hr />
           </header>
           <Spinner />

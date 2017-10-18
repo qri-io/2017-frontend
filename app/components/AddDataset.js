@@ -9,7 +9,6 @@ import LoadingButton from './chrome/LoadingButton'
 export default class AddDataset extends Base {
   constructor (props) {
     super(props)
-
     this.state = {
       loading: false,
       dataset: {
@@ -24,9 +23,9 @@ export default class AddDataset extends Base {
     ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
-  handleChange (name, value) {
+  handleChange (name, value, e) {
     this.setState(Object.assign({}, this.state, {
-      dataset: Object.assign(this.state.dataset, { [name]: value })
+      dataset: Object.assign(this.state.dataset, { name: 'WOOO' })
     }))
   }
 
@@ -42,7 +41,6 @@ export default class AddDataset extends Base {
 
   template (css) {
     const { loading, dataset } = this.state
-
     return (
       <div className={css('wrap')}>
         <div className='container'>

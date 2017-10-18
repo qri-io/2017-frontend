@@ -16,13 +16,19 @@ const userSchema = new Schema('users')
 const datasetSchema = new Schema('namespace', { idAttribute: 'path' })
 const readmeSchema = new Schema('readmes', { idAttribute: 'address' })
 const querySchema = new Schema('queries', { idAttribute: 'path' })
+const peerSchema = new Schema('peers', { idAttribute: 'id'})
 // const resultSchema = new Schema('results', { idAttribute : (result) => 'result' });
+const peerNamespaceSchema = new Schema('peerNamespace', {idAttribute: 'path'})
 const structuredDataSchema = new Schema('data', { idAttribute: 'path' })
 const migrationSchema = new Schema('migrations')
 const changeSchema = new Schema('changes')
 const inviteSchema = new Schema('invites')
 const roleSchema = new Schema('roles')
 const metadataSchema = new Schema('metadata', { idAttribute: 'path' })
+
+peerSchema.define({
+  owner: userSchema
+})
 
 querySchema.define({
   owner: userSchema
@@ -69,6 +75,14 @@ querySchema.new = function (attrs) {
   return Object.assign({}, attrs, { id: 'new' })
 }
 
+peerSchema.new = function (attrs) {
+  return Object.assign({}, { id: 'new' }, attrs)
+}
+
+peerNamespaceSchema.new = function (attrs) {
+  return Object.assign({}, { id: 'new'}, attrs)
+}
+
 inviteSchema.new = function (attrs) {
   return Object.assign({}, attrs, { id: 'new' })
 }
@@ -97,6 +111,10 @@ const Schemas = {
   CHANGE_ARRAY: arrayOf(changeSchema),
   QUERY: querySchema,
   QUERY_ARRAY: arrayOf(querySchema),
+  PEER: peerSchema,
+  PEER_ARRAY: arrayOf(peerSchema),
+  PEER_NAMESPACE: peerNamespaceSchema,
+  PEER_NAMESPACE_ARRAY: arrayOf(peerNamespaceSchema),
   INVITE: inviteSchema,
   ROLE: roleSchema,
   ROLE_ARRAY: arrayOf(roleSchema),

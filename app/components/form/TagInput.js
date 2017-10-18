@@ -17,7 +17,6 @@ class TagInput extends React.Component {
   handleOnChange (e) {
     this.setState({ tagString: e.target.value })
     let tags = e.target.value.trim().split(',').map(i => { return i.trim() }).filter(i => i)
-    console.log(tags)
     this.props.onChange(this.props.name, tags, e)
   }
 

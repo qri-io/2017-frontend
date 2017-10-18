@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { setQuery, runQuery, loadQueryBySlug, loadQueries } from '../actions/query'
 import { setTopPanel, setBottomPanel, setChartOptions, resetChartOptions } from '../actions/console'
 import { loadDatasets, loadDataset } from '../actions/dataset'
-
 import Console from '../components/Console'
 
 const ConsoleContainer = connect(
@@ -13,10 +12,6 @@ const ConsoleContainer = connect(
     if (datasetRef) {
       data = state.entities.data[datasetRef.path] && state.entities.data[datasetRef.path].data
     }
-    let peers = []
-    if (state.entities.peers) {
-      const peers = Object.keys(state.entities.peers).map(key => state.entities.queries[key])
-    }
     const size = state.layout.size ? state.layout.size : ''
     return Object.assign({}, {
       queries: Object.keys(state.entities.queries).map(key => state.entities.queries[key]).reverse(),
@@ -24,9 +19,10 @@ const ConsoleContainer = connect(
       queryHistory: state.session.history,
       layout: state.layout,
       chartOptions: state.console.chartOptions,
+      history: ownProps.history,
+      goBack: ownProps.history.goBack,
       datasetRef,
       data,
-      peers,
       size
     }, state.console, ownProps)
   }, {
