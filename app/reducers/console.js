@@ -13,8 +13,9 @@ const initialState = {
   queryResults: '',
 
   chartOptions: {
-    type: 'bar',
+    type: '',
     title: 'results',
+    xTitle: '',
     xIndex: undefined,
     yIndex: undefined,
     path: ''

@@ -30,11 +30,12 @@ export function resetChartOptions () {
   return {
     type: CONSOLE_RESET_CHART_OPTIONS,
     value: {
-      type: 'bar',
+      type: '',
       title: 'results',
       xIndex: undefined,
       yIndex: undefined,
-      path: ''
+      path: '',
+      xTitle: ''
     }
   }
 }

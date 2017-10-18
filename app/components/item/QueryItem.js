@@ -1,21 +1,39 @@
 import React, { PropTypes } from 'react'
 
-const QueryItem = ({ data, onSelect }) => {
-  return (
-    <div className='queryItem' onClick={onSelect}>
-      <hr />
-      <h5 className='title'>{data.name || data.dataset.queryString || 'unnamed query'}</h5>
-      <p><i>{data.path}</i></p>
-    </div>
-  )
+import Base from '../Base'
+import { Palette, defaultPalette } from '../../propTypes/palette'
+
+export default class QueryItem extends Base {
+  constructor (props) {
+    super(props)
+  }
+
+  template (css) {
+    const { data, onSelect } = this.props
+	  return (
+  <div className='queryItem' onClick={onSelect}>
+    <hr />
+    <h5 className={`title ${css('color')}`}>{data.name || data.dataset.queryString || 'unnamed query'}</h5>
+    <p><i>{data.path}</i></p>
+  </div>
+	  )
+  }
+  styles (props) {
+  	const { palette } = props
+  	return {
+  		color: {
+  			color: palette.a
+  		}
+  	}
+  }
 }
 
 QueryItem.propTypes = {
   data: PropTypes.object.isRequired,
-  onSelect: PropTypes.func.isRequired
+  onSelect: PropTypes.func.isRequired,
+  palette: Palette
 }
 
 QueryItem.defaultProps = {
+  palette: defaultPalette
 }
-
-export default QueryItem
