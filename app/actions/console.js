@@ -34,7 +34,8 @@ export function resetChartOptions () {
       title: 'results',
       xIndex: undefined,
       yIndex: undefined,
-      path: ''
+      path: '',
+      xTitle: ''
     }
   }
 }
