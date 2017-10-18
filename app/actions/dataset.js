@@ -374,10 +374,17 @@ export function initDataset (name, files, callback) {
         endpoint: '/datasets',
         method: 'POST',
         schema: Schemas.DATASET,
+        silentError: true,
         data: { name },
         files
       }
-    }).then(callback)
+    }).then(action => {
+      if (action.type === DATASET_INIT_SUCCESS) {
+        callback()
+      } else {
+        callback(action.error)
+      }
+    })
   }
 }
 
