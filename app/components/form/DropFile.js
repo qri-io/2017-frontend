@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { PropTypes } from 'react'
 
-const DropFile = ({ name, disabled, onChange }) => {
+const DropFile = ({ name, disabled, onChange, value }) => {
   const handleChange = (e) => {
-    onChange(name, e.target.files)
+    onChange(name, e.target.files, e)
   }
 
   return (

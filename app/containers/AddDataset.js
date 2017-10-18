@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import { initDataset } from '../actions/dataset'
+import { initDataset, loadDatasets } from '../actions/dataset'
 
 import AddDataset from '../components/AddDataset'
 
@@ -10,6 +10,7 @@ const AddDatasetContainer = connect(
 	  return Object.assign({}, state.console, ownProps)
 }, {
 	  initDataset,
+	  loadDatasets,
 	  push
 }
 )(AddDataset)
