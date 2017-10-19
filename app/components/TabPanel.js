@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react'
 import Base from './Base'
 
+import { Palette, defaultPalette } from '../propTypes/palette'
+
 function panelTrigger (i, fn) {
   return () => {
     fn(i)
@@ -33,6 +35,7 @@ export default class TabPanel extends Base {
   }
 
   styles () {
+    const { palette } = this.props
     return {
       header: {
         fontWeight: 'bold',
@@ -52,7 +55,7 @@ export default class TabPanel extends Base {
         color: '#89DDFF'
       },
       black: {
-        'border-top': '1px solid #000000',
+        'border-top': `1px solid ${palette.overlay}`,
         'margin-top': 0
       }
     }
@@ -63,5 +66,10 @@ TabPanel.propTypes = {
   index: PropTypes.number.isRequired,
   labels: PropTypes.array.isRequired,
   components: PropTypes.array.isRequired,
-  onSelectPanel: PropTypes.func.isRequired
+  onSelectPanel: PropTypes.func.isRequired,
+  palette: Palette
+}
+
+TabPanel.defaultProps = {
+  palette: defaultPalette
 }

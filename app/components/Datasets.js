@@ -82,7 +82,7 @@ export default class Datasets extends Base {
               id={'search'}
               name={'search'}
               type={'text'}
-              className='searchBox'
+              className={css('searchBox')}
               value={searchString}
               placeholder={'search'}
               onChange={(e) => { this.handleDatasetSearch(e.target.value) }}

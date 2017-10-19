@@ -79,7 +79,7 @@ class DatasetDataGrid extends React.Component {
     if (!dataset) {
       return (
         <div className='panel'>
-          <h5>Run a query to view data</h5>
+          <label>Run a query to view data</label>
         </div>
       )
     }

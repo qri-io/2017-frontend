@@ -22,6 +22,8 @@ export default class Peer extends Base {
     };
 
     [
+      'changeTabIndex',
+      'renderPeerDatasets',
       'handleGoBack'
     ].forEach((m) => { this[m] = this[m].bind(this) })
   }
@@ -44,22 +46,43 @@ export default class Peer extends Base {
     this.props.goBack()
   }
 
-  template (css) {
-    const { peer, namespace, palette } = this.props
+  changeTabIndex (index) {
+    this.setState({tabIndex: index})
+  }
+
+  renderPeerDatasets () {
+    const { namespace, palette } = this.props
     const { loading } = this.state
-    return (
-      <div className={css('wrap')}>
-        <NavBar onGoBack={this.handleGoBack} />
-        <PeerItem data={peer} />
-        { loading ? <Spinner />
-        : <List
+    if (loading) {
+      return <Spinner />
+    } else {
+      return (
+        <List
           data={namespace}
           component={DatasetItem}
           // onSelectItem={this.onSelectDataset}
           emptyComponent={<p>No Datasets</p>}
           palette={palette}
           />
-        }
+      )
+    }
+  }
+
+  template (css) {
+    const { peer } = this.props
+    const { tabIndex } = this.state
+    return (
+      <div className={css('wrap')}>
+        <NavBar onGoBack={this.handleGoBack} />
+        <PeerItem data={peer} />
+        <TabPanel
+          index={tabIndex}
+          labels={['Datasets']}
+          onSelectPanel={this.changeTabIndex}
+          components={[
+            this.renderPeerDatasets()
+          ]}
+          />
       </div>
     )
   }
