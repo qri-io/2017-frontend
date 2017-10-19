@@ -12,7 +12,7 @@ export default class Queries extends Base {
   constructor (props) {
     super(props)
     // this.state = { loading: props.Queries.length === 0 };
-    this.state = { loading: false };
+    this.state = { loading: true };
 
     [
       'onSelectQuery'
@@ -20,13 +20,15 @@ export default class Queries extends Base {
   }
 
   componentWillMount () {
-    if (!this.props.skipLoad) {
+    if (!this.props.queries) {
       this.props.loadQueries(this.props.nextPage)
+    } else {
+      this.setState({ loading: false })
     }
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.Queries.length > 0 && this.props.Queries.length === 0) {
+    if (this.state.loading && nextProps.queries.length > 0 && this.props.queries.length === 0) {
       this.setState({ loading: false })
     }
   }

@@ -4,7 +4,7 @@ import { push } from 'react-router-redux'
 import { CALL_API } from '../middleware/api'
 
 import Schemas from '../schemas'
-import { setBottomPanel } from './console'
+import { setBottomPanel, setLoadingData } from './console'
 import { addHistoryEntry } from './session'
 import { resetErrorMessage } from './app'
 
@@ -55,9 +55,8 @@ export function runQuery (request) {
     analytics.track('Submitted Query', data)
 
     if (!request.download) {
-      dispatch(setBottomPanel(0))
+      // dispatch(setBottomPanel(0))
     }
-
     dispatch(addHistoryEntry(request.query))
     return dispatch({
       [CALL_API]: {

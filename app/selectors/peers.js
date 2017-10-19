@@ -58,7 +58,7 @@ export function selectPeerById (state, path) {
 }
 
 export function selectNoPeerNamespace (state, path) {
-  return (state.pagination.peerNamespace && state.pagination.peerNamespace[path] && selectPeerNamespacePageCount(state, path) === 1 && selectPeerNamespaceFetchedAll(state, path) === true)
+  return (state.pagination.peerNamespace && state.pagination.peerNamespace[path] && !(selectPeerNamespaceIsFetching(state, path) || selectPeerNamespaceIds(state, path).length))
 }
 export function selectPeerNamespaceIsFetching (state, path) {
   return (state.pagination.peerNamespace && state.pagination.peerNamespace[path]) ? state.pagination.peerNamespace[path].isFetching : false

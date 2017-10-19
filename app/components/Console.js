@@ -58,7 +58,6 @@ export default class Console extends Base {
   }
 
   handleSetLoadingData (loading) {
-    console.log(`in handleSetLoadingData set loading ${loading}`)
     this.props.setLoadingData(loading)
   }
 
@@ -71,6 +70,7 @@ export default class Console extends Base {
     this.props.setLoadingData(true)
     console.log('in handleRunQuery setLoadingData true')
     this.props.runQuery(this.props.query)
+    this.props.setBottomPanel(0)
     this.props.loadQueries()
   }
 

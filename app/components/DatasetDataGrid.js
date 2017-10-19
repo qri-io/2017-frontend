@@ -3,6 +3,12 @@ import ReactDataGrid from 'react-data-grid'
 import { datasetProps } from '../propTypes/datasetRefProps.js'
 import Spinner from '../components/Spinner'
 
+function timeout (duration = 0) {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, duration)
+  })
+}
+
 class DatasetDataGrid extends React.Component {
   constructor (props) {
     super(props)
@@ -18,14 +24,20 @@ class DatasetDataGrid extends React.Component {
 
   componentWillMount () {
     if (this.props.loading && this.props.data) {
-      this.props.onSetLoadingData(false)
+      timeout(1000).then(() => {
+        this.props.onSetLoadingData(false)
+      })
     }
   }
 
   componentWillReceiveProps (nextProps) {
-    if (this.props.loading && !this.props.data && nextProps.data) {
+    if (this.props.loading && nextProps.data) {
       this.props.onSetLoadingData(false)
     }
+  }
+
+  shouldComponentUpdate () {
+    return true
   }
 
   schemaColumns (dataset, i) {
@@ -58,17 +70,17 @@ class DatasetDataGrid extends React.Component {
   }
 
   render () {
-    const { dataset, data, minHeight, loading } = this.props
+    if (this.props.loading) {
+      return (
+        <Spinner />
+      )
+    }
+    const { dataset, data, minHeight } = this.props
     if (!dataset) {
       return (
         <div className='panel'>
           <h5>Run a query to view data</h5>
         </div>
-      )
-    }
-    if (loading) {
-      return (
-        <Spinner />
       )
     }
     return (
