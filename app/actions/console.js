@@ -4,7 +4,8 @@ import {
   CONSOLE_SET_CHART_OPTIONS,
   CONSOLE_RESET_CHART_OPTIONS,
   CONSOLE_SET_DATA_LOADING,
-  CONSOLE_SET_DATA_LOADING_ERROR
+  CONSOLE_SET_DATA_LOADING_ERROR,
+  CONSOLE_SET_DATASETS_MESSAGE
 } from '../constants/console'
 
 export function setTopPanel (index) {
@@ -50,9 +51,15 @@ export function setLoadingData (loading) {
 }
 
 export function setLoadingDataError (error) {
-  console.log(`called setLoadingDataError: ${error}`)
   return {
     type: CONSOLE_SET_DATA_LOADING_ERROR,
+    value: error
+  }
+}
+
+export function setDatasetsMessage (error) {
+  return {
+    type: CONSOLE_SET_DATASETS_MESSAGE,
     value: error
   }
 }

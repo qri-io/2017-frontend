@@ -16,7 +16,7 @@ export default class Datasets extends Base {
   constructor (props) {
     super(props)
     // this.state = { loading: props.datasets.length === 0 };
-    this.state = { loading: false }
+    this.state = { loading: true, message: 'No Datasets', error: false }
 
     this.debounceRunDatasetSearch = debounce((searchString) => {
       this.setState({ loading: false })
@@ -27,18 +27,17 @@ export default class Datasets extends Base {
     [
       'onSelectDataset',
       'handleDatasetSearch',
+      'handleLoadDatasetsError',
       'handleAddItem'
     ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
   componentWillMount () {
-    if (!this.props.skipLoad) {
-      this.props.loadDatasets(this.props.nextPage)
-    }
+    this.props.loadDatasets(this.handleLoadDatasetsError, this.props.nextPage)
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.datasets.length > 0 && this.props.datasets.length === 0 || nextProps.noDatasets) {
+    if (this.state.loading && this.state.error || nextProps.datasets.length) {
       this.setState({ loading: false })
     }
   }
@@ -47,8 +46,18 @@ export default class Datasets extends Base {
     this.props.showModal(DATASET_DETAILS_MODAL, this, datasetRef, true)
   }
 
+  handleLoadDatasetsError (error) {
+    console.log('in handleLoadDatasetsError')
+    if (error) {
+      console.log('in error handleloaddatasets error')
+      this.setState({message: 'There was an error loading your Datasets. Please try again by refreshing the page.', error: true})
+    } else {
+      console.log('in else handleloaddatasets error')
+      this.setState({message: 'No Datasets', error: false})
+    }
+  }
   handleLoadNextPage () {
-    this.props.loadDatasets(this.props.nextPage)
+    this.props.loadDatasets(this.handleLoadDatasetsError, this.props.nextPage)
   }
 
   handleAddItem () {
@@ -72,7 +81,7 @@ export default class Datasets extends Base {
   }
 
   template (css) {
-    const { loading } = this.state
+    const { loading, message } = this.state
     const { datasets, searchString, palette } = this.props
     if (loading) {
       return (
@@ -114,7 +123,7 @@ export default class Datasets extends Base {
           data={datasets}
           component={DatasetItem}
           onSelectItem={this.onSelectDataset}
-          emptyComponent={<p>No Datasets</p>}
+          emptyComponent={<p>{message}</p>}
           palette={palette}
           />
       </div>

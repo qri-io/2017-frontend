@@ -1,5 +1,5 @@
 import { QUERY_SET, QUERY_SET_RESULTS, QUERY_RESET_RESULTS } from '../constants/query'
-import { CONSOLE_SET_TOP_PANEL, CONSOLE_SET_BOTTOM_PANEL, CONSOLE_SET_CHART_OPTIONS, CONSOLE_RESET_CHART_OPTIONS, CONSOLE_SET_DATA_LOADING, CONSOLE_SET_DATA_LOADING_ERROR } from '../constants/console'
+import { CONSOLE_SET_TOP_PANEL, CONSOLE_SET_BOTTOM_PANEL, CONSOLE_SET_CHART_OPTIONS, CONSOLE_RESET_CHART_OPTIONS, CONSOLE_SET_DATA_LOADING, CONSOLE_SET_DATA_LOADING_ERROR, CONSOLE_SET_DATASETS_MESSAGE } from '../constants/console'
 
 const initialState = {
   topPanelIndex: 0,
@@ -7,6 +7,7 @@ const initialState = {
   loadingData: false,
   loadingDataError: '',
   runButton: true,
+  datasetsMessage: 'No Datasets',
 
   query: {
     address: '',
@@ -45,8 +46,8 @@ export default function consoleReducer (state = initialState, action) {
       return Object.assign({}, state, { loadingData: action.value })
     case CONSOLE_SET_DATA_LOADING_ERROR:
       return Object.assign({}, state, { loadingDataError: action.value })
-    // case CONSOLE_SET_RUN_BUTTON:
-    //   return Object.assign({}, )
+    case CONSOLE_SET_DATASETS_MESSAGE:
+      return Object.assign({}, state, { datasetsMessage: action.value })
   }
 
   return state

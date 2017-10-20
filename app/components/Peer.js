@@ -18,7 +18,8 @@ export default class Peer extends Base {
     super(props)
     this.state = {
       tabIndex: 0,
-      loading: true
+      loading: true,
+      message: 'Peer has no Datasets'
     };
 
     [
@@ -30,7 +31,15 @@ export default class Peer extends Base {
 
   componentWillMount () {
     if (!this.props.namespace.length) {
-      this.props.loadPeerNamespace(this.props.path, this.props.nextPage)
+      this.props.loadPeerNamespace(this.props.path, this.props.nextPage, 30, (error) => {
+        let message = 'Peer has no Datasets'
+        if (error && error.toString() === 'routing: not found') {
+          message = 'Peer is not currently connected'
+        } else if (error) {
+          message = 'Error loading Peer Datasets. Check console for more info.'
+        }
+        this.setState({message: message})
+      })
     } else {
       this.setState({loading: false})
     }
@@ -52,7 +61,7 @@ export default class Peer extends Base {
 
   renderPeerDatasets () {
     const { namespace, palette } = this.props
-    const { loading } = this.state
+    const { loading, message } = this.state
     if (loading) {
       return <Spinner />
     } else {
@@ -61,7 +70,7 @@ export default class Peer extends Base {
           data={namespace}
           component={DatasetItem}
           // onSelectItem={this.onSelectDataset}
-          emptyComponent={<p>No Datasets</p>}
+          emptyComponent={<p>{message}</p>}
           palette={palette}
           />
       )

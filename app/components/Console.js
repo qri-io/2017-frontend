@@ -10,8 +10,8 @@ import ResultsChart from './ResultsChart'
 import DatasetsContainer from '../containers/Datasets'
 import QueriesContainer from '../containers/Queries'
 
-function loadData (props) {
-  props.loadDatasets(1, 100)
+function loadData (callback, props) {
+  props.loadDatasets(callback, 1, 100)
 }
 
 export default class Console extends Base {
@@ -19,6 +19,7 @@ export default class Console extends Base {
     super(props);
 
     [
+      // 'handleSetDatasetMessage'
       'handleSetLoadingData',
       'handleRunQuery',
       'handleDownloadQuery',
@@ -34,7 +35,7 @@ export default class Console extends Base {
   }
 
   componentWillMount () {
-    loadData(this.props)
+    // loadData(this.props.setDatasetsMessage, this.props)
     this.props.loadQueries()
     if (this.props.slug) {
       // this.props.loadQueryBySlug(this.props.slug, [], true);
