@@ -67,9 +67,13 @@ export default class Console extends Base {
     //   query: this.props.query.,
     //   page: 1,
     // });
+    console.log(this.props.query)
     this.props.setLoadingData(true)
-    console.log('in handleRunQuery setLoadingData true')
-    this.props.runQuery(this.props.query)
+    this.props.resetQueryResults()
+    this.props.runQuery(this.props.query, (error) => {
+      this.props.setLoadingDataError(error)
+      this.props.setLoadingData(false)
+    })
     this.props.setBottomPanel(0)
     this.props.loadQueries()
   }
@@ -107,14 +111,18 @@ export default class Console extends Base {
   }
 
   handleLoadMoreResults () {
+    this.props.resetQueryResults()
     this.props.runQuery({
       queryString: this.props.query,
       page: (this.props.results.pageCount + 1)
+    }, (error) => {
+      this.props.setLoadingDataError(error)
+      this.props.setLoadingData(false)
     })
   }
 
   template (css) {
-    const { datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout, size, chartOptions, loadingData } = this.props
+    const { datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout, size, chartOptions, loadingData, loadingDataError } = this.props
     const { main } = layout
 
     const topBox = {
@@ -164,6 +172,7 @@ export default class Console extends Base {
                 onLoadMore={this.handleLoadMoreResults}
                 bounds={bottomBox}
                 loading={loadingData}
+                error={loadingDataError}
                 onSetLoadingData={this.handleSetLoadingData}
               />,
               <div className='panel'>

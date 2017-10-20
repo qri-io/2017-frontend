@@ -21,7 +21,8 @@ export default class Dataset extends Base {
     super(props)
     this.state = {
       tabIndex: 0,
-      loading: true
+      loading: true,
+      error: false
     };
 
     [
@@ -44,12 +45,17 @@ export default class Dataset extends Base {
     // this.props.loadDatasetByAddress(this.props.address, ["fields"])
     // this.props.loadDatasetReadme(this.props.address)
     // this.props.loadDatasetChildren(this.props.address)
-    this.props.loadDatasetData(this.props.datasetRef.path)
+    this.props.loadDatasetData(this.props.datasetRef.path, (error) => {
+      this.setState({loading: false, error: error})
+    })
   }
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.path !== this.props.path) {
-      this.props.loadDatasetData(nextProps.path)
+      this.props.loadDatasetData(nextProps.path,
+        (error) => {
+          this.setState({loading: false, error: error})
+        })
     }
   }
 
@@ -68,7 +74,10 @@ export default class Dataset extends Base {
     this.props.runQuery({
       query: this.props.query,
       page: (this.props.results.pageCount + 1)
-    })
+    }, (error) => {
+      this.setState({loading: false, error: error})
+    }
+    )
   }
 
   handleGoBack () {
@@ -113,7 +122,7 @@ export default class Dataset extends Base {
 
   renderData () {
     const { data, datasetRef } = this.props
-    const { loading } = this.state
+    const { loading, error } = this.state
     const { structure } = datasetRef.dataset
     // console.log('rendering data')
     // if (!data || !structure) {
@@ -127,6 +136,7 @@ export default class Dataset extends Base {
         onLoadMore={this.handleLoadMoreResults}
         onSetLoadingData={this.handleSetLoadingData}
         loading={loading}
+        error={error}
                 // bounds={bottomBox}
               />
     )

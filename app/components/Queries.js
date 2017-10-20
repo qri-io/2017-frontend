@@ -12,7 +12,7 @@ export default class Queries extends Base {
   constructor (props) {
     super(props)
     // this.state = { loading: props.Queries.length === 0 };
-    this.state = { loading: true };
+    this.state = { loading: true, error: false };
 
     [
       'onSelectQuery'
@@ -43,7 +43,7 @@ export default class Queries extends Base {
   }
 
   template (css) {
-    const { loading } = this.state
+    const { loading, error } = this.state
     const { queries, searchString, palette, bounds } = this.props
     // 57 is the run button height, should these things be saved and pulled from the state tree?
     let height = bounds.height - 57

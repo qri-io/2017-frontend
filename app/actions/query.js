@@ -14,6 +14,7 @@ import { loadDatasetData } from './dataset'
 import {
   QUERY_SET,
   QUERY_SET_RESULTS,
+  QUERY_RESET_RESULTS,
   QUERY_RUN_REQUEST,
   QUERY_RUN_SUCCESS,
   QUERY_RUN_FAILURE,
@@ -39,7 +40,14 @@ export function setQueryResults (path) {
   }
 }
 
-export function runQuery (request) {
+export function resetQueryResults () {
+  return {
+    type: QUERY_RESET_RESULTS,
+    value: ''
+  }
+}
+
+export function runQuery (request, callback) {
   // add in defaults
   // request = Object.assign({
   //   page : 1,
@@ -68,13 +76,13 @@ export function runQuery (request) {
       }
     }).then(action => {
       // Dismiss errors after 3.8 seconds
+      console.log('in runQuery')
+      console.log(action.type)
       if (action.type === QUERY_RUN_FAILURE) {
-        // setTimeout(() => {
-        //   dispatch(resetErrorMessage())
-        // }, 3800)
+        callback(action.error)
       } else if (action.type === QUERY_RUN_SUCCESS) {
         dispatch(setQueryResults(action.response.result))
-        dispatch(loadDatasetData(action.response.result, 1, 100))
+        dispatch(loadDatasetData(action.response.result, 1, 100, callback))
       }
 
       return null

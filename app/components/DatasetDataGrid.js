@@ -31,7 +31,11 @@ class DatasetDataGrid extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (this.props.loading && nextProps.data) {
+    if (nextProps.loading && nextProps.error) {
+      this.props.onSetLoadingData(false)
+    } else if (!nextProps.loading && !this.props.loading && !nextProps.data) {
+      this.props.onSetLoadingData(true)
+    } else if (nextProps.loading && this.props.loading && nextProps.data) {
       this.props.onSetLoadingData(false)
     }
   }
@@ -76,6 +80,13 @@ class DatasetDataGrid extends React.Component {
       )
     }
     const { dataset, data, minHeight } = this.props
+    if (this.props.error) {
+      return (
+        <div className='panel'>
+          <label>Error loading data</label>
+        </div>
+      )
+    }
     if (!dataset) {
       return (
         <div className='panel'>
@@ -97,8 +108,10 @@ class DatasetDataGrid extends React.Component {
 DatasetDataGrid.propTypes = {
   dataset: datasetProps,
   data: PropTypes.arrayOf(PropTypes.object),
+  onLoadMore: PropTypes.func,
   minHeight: PropTypes.number,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.string
 }
 
 DatasetDataGrid.defaultProps = {
