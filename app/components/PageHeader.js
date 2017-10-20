@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react'
 import { Palette, defaultPalette } from '../propTypes/palette'
 import Base from './Base'
 
-export default class NavBar extends Base {
+export default class PageHeader extends Base {
   template (css) {
     const { onGoBack } = this.props
     return (
@@ -41,7 +41,7 @@ export default class NavBar extends Base {
   }
 }
 
-NavBar.propTypes = {
+PageHeader.propTypes = {
   onGoBack: PropTypes.func.isRequired,
   onClickAdd: PropTypes.func,
   onClickDownload: PropTypes.func,
@@ -52,6 +52,6 @@ NavBar.propTypes = {
   onClickHideHelp: PropTypes.func
 }
 
-NavBar.defaultProps = {
+PageHeader.defaultProps = {
   palette: defaultPalette
 }

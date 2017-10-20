@@ -4,7 +4,7 @@ import { Palette, defaultPalette } from '../propTypes/palette'
 import DatasetRefProps from '../propTypes/datasetRefProps'
 import PeerProps from '../propTypes/peer'
 
-import NavBar from './NavBar'
+import PageHeader from './PageHeader'
 import PeerItem from './item/PeerItem'
 import TabPanel from './TabPanel'
 import List from './List'
@@ -73,7 +73,7 @@ export default class Peer extends Base {
     const { tabIndex } = this.state
     return (
       <div className={css('wrap')}>
-        <NavBar onGoBack={this.handleGoBack} />
+        <PageHeader onGoBack={this.handleGoBack} />
         <PeerItem data={peer} />
         <TabPanel
           index={tabIndex}

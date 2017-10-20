@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 
 import DatasetRefProps from '../propTypes/datasetRefProps.js'
 import DatasetItem from './item/DatasetItem'
-import NavBar from './NavBar.js'
+import PageHeader from './PageHeader.js'
 
 import { Palette, defaultPalette } from '../propTypes/palette'
 import Base from './Base'
@@ -13,7 +13,7 @@ export default class DatasetHeader extends Base {
     const { name, path, dataset } = datasetRef
     return (
       <div className='wrapper'>
-        <NavBar
+        <PageHeader
           onGoBack={onGoBack}
           onClickExport={onClickExport}
           onClickEdit={onClickEdit}
