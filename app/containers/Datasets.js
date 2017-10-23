@@ -16,7 +16,7 @@ const DatasetsContainer = connect(
       datasets: selectDatasets(state, paginationSection, searchString),
       noDatasets: selectNoDatasets(state, paginationSection, searchString),
       loading: selectDatasetsIsFetching(state, paginationSection, searchString),
-      nextPage: selectDatasetsPageCount(state, paginationSection, searchString) + 1,
+      nextPage: selectDatasetsPageCount(state, paginationSection, searchString),
       fetchedAll: selectDatasetsFetchedAll(state, paginationSection, searchString)
     }, ownProps)
   }, {

@@ -76,13 +76,11 @@ export function runQuery (request, callback) {
       }
     }).then(action => {
       // Dismiss errors after 3.8 seconds
-      console.log('in runQuery')
-      console.log(action.type)
       if (action.type === QUERY_RUN_FAILURE) {
         callback(action.error)
       } else if (action.type === QUERY_RUN_SUCCESS) {
         dispatch(setQueryResults(action.response.result))
-        dispatch(loadDatasetData(action.response.result, 1, 100, callback))
+        dispatch(loadDatasetData(action.response.result, callback))
       }
 
       return null

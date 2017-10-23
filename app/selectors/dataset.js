@@ -9,12 +9,10 @@ export function addressPath (address) {
 
 export function selectDataset (state, id) {
   let datasetRef = state.entities.namespace[id]
-  let peer = false
   if (!datasetRef) {
-    datasetRef = state.entities.peerNamespace[id]
-    peer = true
+    datasetRef = Object.assign(state.entities.peerNamespace[id], {peer: true})
   }
-  return { datasetRef, peer }
+  return datasetRef
 }
 
 export function selectDatasetByPath (state, path) {

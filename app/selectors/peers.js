@@ -1,3 +1,5 @@
+import { selectDataset } from './dataset.js'
+
 const usersPeersSection = 'popularPeers'
 const usersPeersNode = 'popularPeers'
 
@@ -49,7 +51,7 @@ export function selectPeerNamespaceIds (state, path) {
 
 export function selectPeerNamespace (state, path) {
   const { peerNamespace } = state.entities
-  return selectPeerNamespaceIds(state, path).map(id => peerNamespace[id])
+  return selectPeerNamespaceIds(state, path).map(id => selectDataset(state, id))
 }
 
 export function selectPeerById (state, path) {

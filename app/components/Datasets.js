@@ -47,12 +47,9 @@ export default class Datasets extends Base {
   }
 
   handleLoadDatasetsError (error) {
-    console.log('in handleLoadDatasetsError')
     if (error) {
-      console.log('in error handleloaddatasets error')
       this.setState({message: 'There was an error loading your Datasets. Please try again by refreshing the page.', error: true})
     } else {
-      console.log('in else handleloaddatasets error')
       this.setState({message: 'No Datasets', error: false})
     }
   }

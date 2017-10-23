@@ -68,7 +68,6 @@ export default class Console extends Base {
     //   query: this.props.query.,
     //   page: 1,
     // });
-    console.log(this.props.query)
     this.props.setLoadingData(true)
     this.props.resetQueryResults()
     this.props.runQuery(this.props.query, (error) => {
