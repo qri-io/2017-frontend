@@ -439,7 +439,6 @@ export function addDataset (path, name) {
     }).then(action => {
       if (action.type === DATASET_ADD_SUCCESS) {
         alert('Peer dataset added to your local datasets!')
-        loadDatasets()
       } else {
         console.log(`DATASET_ADD_FAILURE: ${action.error}`)
         alert('Error adding this dataset to your local datasets')
