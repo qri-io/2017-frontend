@@ -46,11 +46,13 @@ class DatasetDataGrid extends React.Component {
 
   schemaColumns (dataset, i) {
     return dataset.structure.schema.fields.map((f) => {
+      console.log(f)
       return {
         key: f.name,
-        name: f.name
+        name: f.name,
         // locked: true
         // sortable: true
+        resizable: true
       }
     })
   }
@@ -79,7 +81,9 @@ class DatasetDataGrid extends React.Component {
         <Spinner />
       )
     }
-    const { dataset, data, minHeight } = this.props
+    const { dataset, data, bounds } = this.props
+    const height = bounds.height - 100
+    const width = bounds.width - 40
     if (this.props.error) {
       return (
         <div className='panel'>
@@ -94,13 +98,18 @@ class DatasetDataGrid extends React.Component {
         </div>
       )
     }
+    console.log(data)
     return (
       <ReactDataGrid
         onGridSort={this.handleGridSort}
         columns={this.schemaColumns(dataset)}
         rowGetter={this.rowGetter}
         rowsCount={data.length}
-        minHeight={minHeight} />
+        rowHeight={50}
+        headerRowHeight={50}
+        minHeight={height}
+        winWidth={width}
+        />
     )
   }
 }

@@ -18,7 +18,8 @@ const DatasetContainer = connect(
       datasetRef: selectDataset(state, path),
       data: selectDatasetData(state, path),
       history: ownProps.history,
-      goBack: ownProps.history.goBack
+      goBack: ownProps.history.goBack,
+      bounds: state.layout.main
     }, state.console, ownProps)
   }, {
     setQuery,
