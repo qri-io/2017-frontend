@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 
 import MetadataForm from './form/MetadataForm'
 import Spinner from './Spinner'
-import NavBar from './NavBar'
+import PageHeader from './PageHeader'
 import Base from './Base'
 
 import DatasetRefProps from '../propTypes/datasetRefProps'
@@ -86,7 +86,7 @@ export default class MetadataEditor extends Base {
       const { showHelp } = this.state
       return (
         <div className={`metadata editor ${css('wrap')}`}>
-          <NavBar onGoBack={this.handleGoBack} onClickHideHelp={showHelp ? this.handleClickHideHelp : undefined} onClickShowHelp={showHelp ? undefined : this.handleClickShowHelp} />
+          <PageHeader onGoBack={this.handleGoBack} onClickHideHelp={showHelp ? this.handleClickHideHelp : undefined} onClickShowHelp={showHelp ? undefined : this.handleClickShowHelp} />
           <MetadataForm
             datasetRef={this.props.localDatasetRef}
             onChange={this.handleChange}

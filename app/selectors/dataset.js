@@ -67,6 +67,11 @@ export function selectDatasetData (state, path) {
   return data ? data.data : undefined
 }
 
+export function selectDatasetDataIsFetching (state, path) {
+  const data = state.pagination && state.pagination.datasetData && state.pagination.datasetData[path]
+  return data ? data.isFetching : false
+}
+
 export function selectDatasetReadme (state, address) {
   return state.entities.readmes[address]
 }

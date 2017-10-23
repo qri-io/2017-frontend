@@ -36,7 +36,8 @@ export function fetchPeerNamespace (path, page = 1, pageSize = 30) {
       types: [PEER_NAMESPACE_REQUEST, PEER_NAMESPACE_SUCCESS, PEER_NAMESPACE_FAILURE],
       endpoint: `/peernamespace/${path}`,
       data: { path, page, pageSize },
-      schema: Schemas.PEER_NAMESPACE_ARRAY
+      schema: Schemas.PEER_NAMESPACE_ARRAY,
+      silentError: true
     },
     page,
     pageSize,
@@ -44,9 +45,17 @@ export function fetchPeerNamespace (path, page = 1, pageSize = 30) {
   }
 }
 
-export function loadPeerNamespace (path, page = 1, pageSize = 30) {
+export function loadPeerNamespace (path, page = 1, pageSize = 30, callback) {
   return (dispatch, getState) => {
     // TODO - check pagination
     return dispatch(fetchPeerNamespace(path, page, pageSize))
+    .then(action => {
+      if (action.type === PEER_NAMESPACE_FAILURE && typeof callback === 'function') {
+        console.log(`PEER_NAMESPACE_FAILURE: ${action.error}`)
+        callback(action.error)
+      } else {
+        callback()
+      }
+    })
   }
 }

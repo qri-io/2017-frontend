@@ -10,14 +10,17 @@ import ResultsChart from './ResultsChart'
 import DatasetsContainer from '../containers/Datasets'
 import QueriesContainer from '../containers/Queries'
 
-function loadData (props) {
-  props.loadDatasets(1, 100)
+function loadData (callback, props) {
+  props.loadDatasets(callback, 1, 100)
 }
 
 export default class Console extends Base {
   constructor (props) {
     super(props);
+
     [
+      // 'handleSetDatasetMessage'
+      'handleSetLoadingData',
       'handleRunQuery',
       'handleDownloadQuery',
       'handleEditorChange',
@@ -32,7 +35,7 @@ export default class Console extends Base {
   }
 
   componentWillMount () {
-    loadData(this.props)
+    // loadData(this.props.setDatasetsMessage, this.props)
     this.props.loadQueries()
     if (this.props.slug) {
       // this.props.loadQueryBySlug(this.props.slug, [], true);
@@ -55,13 +58,24 @@ export default class Console extends Base {
     }
   }
 
+  handleSetLoadingData (loading) {
+    this.props.setLoadingData(loading)
+  }
+
   handleRunQuery (e) {
     e.preventDefault()
     // this.props.runQuery({
     //   query: this.props.query.,
     //   page: 1,
     // });
-    this.props.runQuery(this.props.query)
+    console.log(this.props.query)
+    this.props.setLoadingData(true)
+    this.props.resetQueryResults()
+    this.props.runQuery(this.props.query, (error) => {
+      this.props.setLoadingDataError(error)
+      this.props.setLoadingData(false)
+    })
+    this.props.setBottomPanel(0)
     this.props.loadQueries()
   }
 
@@ -98,14 +112,18 @@ export default class Console extends Base {
   }
 
   handleLoadMoreResults () {
+    this.props.resetQueryResults()
     this.props.runQuery({
       queryString: this.props.query,
       page: (this.props.results.pageCount + 1)
+    }, (error) => {
+      this.props.setLoadingDataError(error)
+      this.props.setLoadingData(false)
     })
   }
 
   template (css) {
-    const { datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout, size, chartOptions } = this.props
+    const { datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout, size, chartOptions, loadingData, loadingDataError } = this.props
     const { main } = layout
 
     const topBox = {
@@ -134,7 +152,8 @@ export default class Console extends Base {
             bounds={topBox}
             components={[
               <div className='panel'>
-                <QueryEditor bounds={topBox} name='editor' query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />
+                <QueryEditor bounds={topBox} name='editor' query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange}
+                />
               </div>,
               <div className='panel'>
                 <QueriesContainer skipLoad bounds={topBox} />
@@ -153,6 +172,9 @@ export default class Console extends Base {
                 data={data}
                 onLoadMore={this.handleLoadMoreResults}
                 bounds={bottomBox}
+                loading={loadingData}
+                error={loadingDataError}
+                onSetLoadingData={this.handleSetLoadingData}
               />,
               <div className='panel'>
                 <ResultsChart size={size} onOptionsChange={this.handleSetChartOptions} schema={datasetRef && datasetRef.dataset.structure.schema} data={data} chartOptions={chartOptions} />

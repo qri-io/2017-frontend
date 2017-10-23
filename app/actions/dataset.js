@@ -89,21 +89,31 @@ export function fetchDatasets (page = 1, pageSize = 30) {
       types: [DATASETS_REQUEST, DATASETS_SUCCESS, DATASETS_FAILURE],
       endpoint: '/datasets',
       data: { page, pageSize },
-      schema: Schemas.DATASET_ARRAY
+      schema: Schemas.DATASET_ARRAY,
+      silentError: true
     },
     page,
     pageSize
   }
 }
 
-export function loadDatasets (page = 1, pageSize = 30) {
+export function loadDatasets (callback = () => {}, page = 1, pageSize = 30) {
   return (dispatch) => {
     // const dataset = selectDatasetById(getState(), )
     // if (user && requiredFields.every(key => user.hasOwnProperty(key))) {
     //   return null
     // }
 
-    return dispatch(fetchDatasets(page, pageSize))
+    return dispatch(
+      fetchDatasets(page, pageSize)
+      ).then(action => {
+        if (action.type === 'DATASETS_FAILURE' && typeof callback === 'function') {
+          console.log(`DATASET_FAILURE: ${action.error}`)
+          callback(action.error)
+        } else {
+          callback()
+        }
+      })
   }
 }
 
@@ -136,7 +146,7 @@ export function fetchDatasetData (path, page = 1, pageSize = 100) {
   return {
     [CALL_API]: {
       types: [DATASET_DATA_REQUEST, DATASET_DATA_SUCCESS, DATASET_DATA_FAILURE],
-      endpoint: `/data/${path}`,
+      endpoint: `/data${path}`,
       schema: Schemas.STRUCTURED_DATA,
       data: { page, pageSize }
     },
@@ -146,7 +156,7 @@ export function fetchDatasetData (path, page = 1, pageSize = 100) {
   }
 }
 
-export function loadDatasetData (path, page = 1, pageSize = 100) {
+export function loadDatasetData (path, page = 1, pageSize = 100, callback) {
   return (dispatch) => {
     // const dataset = selectDatasetByAddress(getState(), address)
     // if (dataset.schema != null) {
@@ -156,7 +166,15 @@ export function loadDatasetData (path, page = 1, pageSize = 100) {
     //   return null
     // }
 
-    return dispatch(fetchDatasetData(path, page, pageSize))
+    return dispatch(
+      fetchDatasetData(path, page, pageSize)
+    ).then(action => {
+      if (action.type === DATASET_DATA_FAILURE && typeof callback === 'function') {
+        callback(action.error)
+      } else {
+        callback()
+      }
+    })
   }
 }
 
@@ -382,6 +400,7 @@ export function initDataset (name, files, callback) {
       if (action.type === DATASET_INIT_SUCCESS) {
         callback()
       } else {
+        console.log(`DATASET_INIT_FAILURE: ${action.error}`)
         callback(action.error)
       }
     })

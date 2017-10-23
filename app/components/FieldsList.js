@@ -37,10 +37,10 @@ export default class FieldsList extends Base {
           {
             fields.map((field, i) => {
               return (
-                <div key={i} className='relative field col-md-4' onMouseEnter={descriptionTrigger(i, this.onShowDescription)} onMouseLeave={descriptionTrigger(i, this.onHideDescription)}>
-                  <p className='purple field-title' >{field.title || field.name}<span className={`type dt-${field.type}`}><small>                                                                                                                                                                                                {field.type}</small></span>
+                <div key={i} className={`${css('relative')} ${css('field')} col-md-4`} onMouseEnter={descriptionTrigger(i, this.onShowDescription)} onMouseLeave={descriptionTrigger(i, this.onHideDescription)}>
+                  <p className={`purple ${css('fieldTitle')}`} >{field.name}<span className={`type dt-${field.type}`}><small>                                                                                                                                                                                                                                                                                {field.type}</small></span>
                   </p>
-                  { field.description && (i === descriptionIndex) && (field.description !== field.title) ? <div className='absolute description'><div className='description-tail' />{field.description}</div> : undefined }
+                  { field.description && (i === descriptionIndex) && (field.description !== field.title) ? <div className='absolute description' ><div className='description-tail'>{field.description}</div></div> : undefined }
                 </div>
               )
             })

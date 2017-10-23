@@ -6,9 +6,6 @@ import ReactMarkdown from 'react-markdown'
 import { Palette, defaultPalette } from '../propTypes/palette'
 import DatasetRefProps from '../propTypes/datasetRefProps'
 
-import { downloadDataset, deleteDataset, loadDatasetData } from '../actions/dataset'
-import { setQuery, runQuery, downloadQuery } from '../actions/query'
-
 import Base from './Base'
 import DatasetDataGrid from './DatasetDataGrid'
 import TabPanel from './TabPanel'
@@ -23,90 +20,48 @@ export default class Dataset extends Base {
   constructor (props) {
     super(props)
     this.state = {
-      tabIndex: 0
+      tabIndex: 0,
+      loading: true,
+      error: false
     };
 
     [
-      'handleRunQuery',
-      'handleEditorChange',
-      'handleEditorAddressChange',
       'handleLoadMoreResults',
-      'handleDownloadQuery',
       'handleDownloadDataset',
       'handleDeleteDataset',
       'handleGoBack',
       'handleAddDataset',
+      'handleSetLoadingData',
       'changeTabIndex',
       'handleEditMetadata',
       'renderFieldsList',
-      'renderEditButtons',
-      'renderResults',
       'renderReadme',
-      'renderQueryAndResults',
       'renderData',
-      'renderDescription',
-      'renderChildDatasets',
-      'renderTabPanel'
+      'renderDescription'
     ].forEach((m) => { this[m] = this[m].bind(this) })
-
-    // this.debouncedSetQuery = debounce(props.setQuery, 200)
   }
 
   componentWillMount () {
     // this.props.loadDatasetByAddress(this.props.address, ["fields"])
     // this.props.loadDatasetReadme(this.props.address)
     // this.props.loadDatasetChildren(this.props.address)
-    this.props.loadDatasetData(this.props.datasetRef.path, 1, 50)
-
-    // match the address to the current namespce, unless there's already a query
-    if (this.props.datasetRef && this.props.datasetRef.default_query) {
-      this.props.setQuery(this.props.datasetRef.default_query)
-    } else {
-      this.props.setQuery({
-        // address : this.props.address,
-        statement: `select * from ${this.props.datasetRef.name}`
-      })
-    }
+    this.props.loadDatasetData(this.props.datasetRef.path, (error) => {
+      this.setState({loading: false, error: error})
+    })
   }
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.path !== this.props.path) {
-      this.props.loadDatasetByAddress(nextProps.path)
-      this.props.loadDatasetData(nextProps.path, 1, 50)
+      this.props.loadDatasetData(nextProps.path,
+        (error) => {
+          this.setState({loading: false, error: error})
+        })
     }
-
-    if (nextProps.dataset && nextProps.dataset !== this.props.dataset) {
-      // this.props.setQuery(nextProps.dataset.default_query || { statement: `select * from ${nextProps.address}` });
-    }
-  }
-
-  handleEditorAddressChange (value) {
-    this.props.setQueryAddress(value)
-  }
-
-  handleEditorChange (value) {
-    // this.debouncedSetQuery(value)
-    this.props.setQuery(value)
   }
 
   handleDownloadDataset (e) {
     e.preventDefault()
     this.props.downloadDataset(this.props.address)
-  }
-
-  handleRunQuery (e) {
-    e.preventDefault()
-    this.props.runQuery({
-      query: this.props.query,
-      page: 1
-    })
-  }
-
-  handleDownloadQuery () {
-    this.props.runQuery({
-      query: this.props.query,
-      download: true
-    })
   }
 
   handleDeleteDataset () {
@@ -119,7 +74,10 @@ export default class Dataset extends Base {
     this.props.runQuery({
       query: this.props.query,
       page: (this.props.results.pageCount + 1)
-    })
+    }, (error) => {
+      this.setState({loading: false, error: error})
+    }
+    )
   }
 
   handleGoBack () {
@@ -131,11 +89,16 @@ export default class Dataset extends Base {
   }
 
   changeTabIndex (index) {
+    index === 2 ? this.setState({loading: true}) : undefined
     this.setState({ tabIndex: index })
   }
 
   handleEditMetadata (path) {
     return () => this.props.history.push(`/edit/${path.slice(6, -13)}`)
+  }
+
+  handleSetLoadingData (loading) {
+    this.setState({ loading: loading })
   }
 
   renderFieldsList (dataset) {
@@ -144,39 +107,6 @@ export default class Dataset extends Base {
     } else {
       return (<p>This dataset currently has no specified fields</p>)
     }
-  }
-
-  renderEditButtons (props) {
-    const { path, permissions } = props
-
-    if (permissions.migrate && permissions.change) {
-      return (
-        <div>
-          <Link to={`${path}/edit`}><button type='button' className='btn btn-primary' style={{ marginRight: 5 }}>Edit</button></Link>
-          <Link to={`${path}/migrations/new`}><button type='button' className='btn btn-primary' style={{ marginRight: 5 }}>New Migration</button></Link>
-          <Link to={`${path}/changes/new`}><button type='button' className='btn btn-primary' style={{ marginRight: 5 }}>New Change</button></Link>
-        </div>
-      )
-    }
-
-    return undefined
-  }
-
-  renderResults (props) {
-    const { results } = props
-    if (!results) { return undefined }
-    return (
-      <div className='col-md-12'>
-        <hr className='green' />
-        <h4 className='green'>Results</h4>
-        <DatasetDataGrid
-          dataset={datasetRef && datasetRef.dataset}
-          data={data}
-          onLoadMore={this.handleLoadMoreResults}
-          bounds={bottomBox}
-              />
-      </div>
-    )
   }
 
   renderReadme (readme, dataset) {
@@ -190,91 +120,33 @@ export default class Dataset extends Base {
     )
   }
 
-  renderQueryAndResults () {
-    const { query } = this.props
-    return (
-      <div className='row'>
-        <div className='col-md-12'>
-          <QueryEditor query={query} onRun={this.handleRunQuery} onDownload={this.handleDownloadQuery} onChange={this.handleEditorChange} />
-        </div>
-        {this.renderResults(this.props)}
-      </div>
-    )
-  }
-
   renderData () {
     const { data, datasetRef } = this.props
+    const { loading, error } = this.state
     const { structure } = datasetRef.dataset
-
-    if (!data || !structure) { return undefined }
+    // console.log('rendering data')
+    // if (!data || !structure) {
+    //   console.log('in renderdata, no data or no structure')
+    //   return undefined
+    // }
     return (
-      <div className='row'>
-        <div className='col-md-12'>
-          <hr className='green' />
-          <h4 className='green'>Data</h4>
-          <DatasetDataGrid
-            dataset={datasetRef && datasetRef.dataset}
-            data={data}
-            onLoadMore={this.handleLoadMoreResults}
+      <DatasetDataGrid
+        dataset={datasetRef && datasetRef.dataset}
+        data={data}
+        onLoadMore={this.handleLoadMoreResults}
+        onSetLoadingData={this.handleSetLoadingData}
+        loading={loading}
+        error={error}
                 // bounds={bottomBox}
               />
-        </div>
-      </div>
     )
   }
 
   renderDescription (dataset) {
     if (!dataset.description) { return <p>No description given for this dataset</p> }
     return (
-      <div className='row'>
-        <section className='col-md-12'>
-          <p>{ dataset.description }</p>
-        </section>
-      </div>
+      <p>{ dataset.description }</p>
     )
-  }
-
-  renderChildDatasets () {
-    return (
-      <div className='row'>
-        <section className='col-md-12'>
-          <hr className='blue' />
-          <h4>Children:</h4>
-        </section>
-        <List component={DatasetItem} data={this.props.descendants} />
-      </div>
-    )
-  }
-
-  renderTabPanel (readme, dataset, tabIndex) {
-    if (readme || dataset.description) {
-      return (
-        <TabPanel
-          index={tabIndex}
-          labels={['Info', 'Fields', 'Data', 'Queries', 'History']}
-          onSelectPanel={this.changeTabIndex}
-          components={[
-            this.renderReadme(readme, dataset),
-            this.renderFieldsList(dataset),
-            // this.renderMetadata(dataset),
-            this.renderData()
-          ]}
-        />
-      )
-    } else {
-      return (
-        <TabPanel
-          index={tabIndex}
-          labels={['Metadata', 'Data']}
-          onSelectPanel={this.changeTabIndex}
-          components={[
-            this.renderFieldsList(dataset),
-            // this.renderMetadata(dataset),
-            this.renderData()
-          ]}
-        />
-      )
-    }
   }
 
   template (css) {
@@ -292,7 +164,7 @@ export default class Dataset extends Base {
     }
 
     const { dataset, path, name } = datasetRef
-    const { tabIndex, editMetadata } = this.state
+    const { tabIndex } = this.state
     return (
       <div className={css('wrap')} >
         <DatasetHeader datasetRef={datasetRef} onClickDelete={this.handleDeleteDataset} onClickExport={this.handleDownloadDataset} onClickEdit={this.handleEditMetadata(path)} onGoBack={this.handleGoBack} onClickAdd={this.handleAddDataset(path, name, peer)} />
@@ -303,16 +175,9 @@ export default class Dataset extends Base {
           components={[
             this.renderReadme(readme, dataset),
             this.renderFieldsList(dataset),
-            // this.renderMetadata(dataset),
             this.renderData()
           ]}
         />
-        {/* this.renderTabPanel(readme, dataset, tabIndex) */}
-        <div className='wrapper'>
-          <div className='col-md-12'>
-            { this.renderEditButtons(this.props) }
-          </div>
-        </div>
       </div>
     )
   }
@@ -342,17 +207,11 @@ Dataset.propTypes = {
   results: React.PropTypes.object,
   path: PropTypes.string,
   goBack: PropTypes.func.isRequired,
-  setQuery: PropTypes.func.isRequired,
   runQuery: PropTypes.func.isRequired,
   downloadDataset: PropTypes.func.isRequired,
   palette: Palette
 }
 
 Dataset.defaultProps = {
-  permissions: {
-    edit: false,
-    migrate: false,
-    change: false
-  },
   palette: defaultPalette
 }

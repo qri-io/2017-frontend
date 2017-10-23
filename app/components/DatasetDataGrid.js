@@ -3,11 +3,17 @@ import ReactDataGrid from 'react-data-grid'
 import { datasetProps } from '../propTypes/datasetRefProps.js'
 import Spinner from '../components/Spinner'
 
+function timeout (duration = 0) {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, duration)
+  })
+}
+
 class DatasetDataGrid extends React.Component {
   constructor (props) {
     super(props)
 
-    this.state = { sortColumn: '', sortDirection: '', loading: false };
+    this.state = { sortColumn: '', sortDirection: '' };
 
     [
       'rowGetter',
@@ -17,17 +23,25 @@ class DatasetDataGrid extends React.Component {
   }
 
   componentWillMount () {
-    if (!this.props.data) {
-      this.setState({ loading: true })
+    if (this.props.loading && this.props.data) {
+      timeout(1000).then(() => {
+        this.props.onSetLoadingData(false)
+      })
     }
   }
 
   componentWillReceiveProps (nextProps) {
-    if (!nextProps.data) {
-      this.setState({ loading: true })
-    } else {
-      this.setState({ loading: false })
+    if (nextProps.loading && nextProps.error) {
+      this.props.onSetLoadingData(false)
+    } else if (!nextProps.loading && !this.props.loading && !nextProps.data) {
+      this.props.onSetLoadingData(true)
+    } else if (nextProps.loading && this.props.loading && nextProps.data) {
+      this.props.onSetLoadingData(false)
     }
+  }
+
+  shouldComponentUpdate () {
+    return true
   }
 
   schemaColumns (dataset, i) {
@@ -60,18 +74,24 @@ class DatasetDataGrid extends React.Component {
   }
 
   render () {
+    if (this.props.loading) {
+      return (
+        <Spinner />
+      )
+    }
     const { dataset, data, minHeight } = this.props
-    const { loading } = this.state
-    if (!dataset) {
+    if (this.props.error) {
       return (
         <div className='panel'>
-          <h5>Run a query to view data</h5>
+          <label>Error loading data</label>
         </div>
       )
     }
-    if (loading) {
+    if (!dataset) {
       return (
-        <Spinner />
+        <div className='panel'>
+          <label>Run a query to view data</label>
+        </div>
       )
     }
     return (
@@ -88,7 +108,10 @@ class DatasetDataGrid extends React.Component {
 DatasetDataGrid.propTypes = {
   dataset: datasetProps,
   data: PropTypes.arrayOf(PropTypes.object),
-  minHeight: PropTypes.number
+  onLoadMore: PropTypes.func,
+  minHeight: PropTypes.number,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.string
 }
 
 DatasetDataGrid.defaultProps = {

@@ -19,5 +19,6 @@ export const defaultPalette = {
   b: '#F8AC31',
   c: '#B0D248',
   d: '#ED3259',
-  e: '#964C9D'
+  e: '#964C9D',
+  overlay: 'rgba(0,0,0,0.25)'
 }

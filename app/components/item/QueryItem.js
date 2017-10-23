@@ -10,21 +10,20 @@ export default class QueryItem extends Base {
 
   template (css) {
     const { data, onSelect } = this.props
-	  return (
+    return (
   <div className='queryItem' onClick={onSelect}>
-    <hr />
     <h5 className={`title ${css('color')}`}>{data.name || data.dataset.queryString || 'unnamed query'}</h5>
     <p><i>{data.path}</i></p>
   </div>
-	  )
+    )
   }
   styles (props) {
-  	const { palette } = props
-  	return {
-  		color: {
-  			color: palette.a
-  		}
-  	}
+    const { palette } = props
+    return {
+      color: {
+        color: palette.a
+      }
+    }
   }
 }
 
