@@ -12,7 +12,6 @@ export function selectDataset (state, id) {
   if (!datasetRef) {
     datasetRef = Object.assign(state.entities.peerNamespace[id], {peer: true})
   }
-  console.log(datasetRef)
   return datasetRef
 }
 

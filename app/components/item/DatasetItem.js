@@ -15,7 +15,7 @@ export default class DatasetItem extends Base {
       return (
         <div className='dataset item' >
           <Link to={{pathname: `/dataset/${path}`}} >
-            { data.peer ? undefined : <b className={css('name')}>✔ &nbsp;</b>}<b className={css('name')}>{data.name || <i>unnamed dataset</i>}</b>
+            <b className={css('name')}>{data.name || <i>unnamed dataset</i>}</b>{ data.peer ? undefined : <b className={css('name')}>&nbsp;✔</b>}
             <h3>{(data.dataset && data.dataset.title) || <i>untitled dataset</i>}</h3>
           </Link>
           <p className={css('path')}>{data.path}</p>
@@ -24,7 +24,7 @@ export default class DatasetItem extends Base {
     } else {
       return (
         <div className='dataset item' >
-          { data.peer ? undefined : <b className={css('name')}>✔ &nbsp;</b>}<b className={css('name')}>{data.name || <i>unnamed dataset</i>}</b>
+          <b className={css('name')}>{data.name || <i>unnamed dataset</i>}</b>{ data.peer ? undefined : <b className={css('name')}>&nbsp;✔</b>}
           <h3>{(data.dataset && data.dataset.title) || <i>untitled dataset</i>}</h3>
           <p className={css('path')}>{data.path}</p>
           {/* <ul>
