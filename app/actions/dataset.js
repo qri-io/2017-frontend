@@ -156,7 +156,7 @@ export function fetchDatasetData (path, page = 1, pageSize = 100) {
   }
 }
 
-export function loadDatasetData (path, page = 1, pageSize = 100, callback) {
+export function loadDatasetData (path, callback, page = 1, pageSize = 100) {
   return (dispatch) => {
     // const dataset = selectDatasetByAddress(getState(), address)
     // if (dataset.schema != null) {
@@ -427,13 +427,23 @@ export function runDatasetSearch (searchString, page = 1, pageSize = 50) {
 }
 
 export function addDataset (path, name) {
-  return {
-    [CALL_API]: {
-      types: [DATASET_ADD_REQUEST, DATASET_ADD_SUCCESS, DATASET_ADD_FAILURE],
-      endpoint: `/add${path}?name=${name}`,
-      method: 'POST',
-      data: {},
-      schema: Schemas.DATASET
-    }
+  return (dispatch) => {
+    return dispatch({
+      [CALL_API]: {
+        types: [DATASET_ADD_REQUEST, DATASET_ADD_SUCCESS, DATASET_ADD_FAILURE],
+        endpoint: `/add${path}?name=${name}`,
+        method: 'POST',
+        data: {},
+        schema: Schemas.DATASET
+      }
+    }).then(action => {
+      if (action.type === DATASET_ADD_SUCCESS) {
+        alert('Peer dataset added to your local datasets!')
+        loadDatasets()
+      } else {
+        console.log(`DATASET_ADD_FAILURE: ${action.error}`)
+        alert('Error adding this dataset to your local datasets')
+      }
+    })
   }
 }

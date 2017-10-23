@@ -80,7 +80,7 @@ export function runQuery (request, callback) {
         callback(action.error)
       } else if (action.type === QUERY_RUN_SUCCESS) {
         dispatch(setQueryResults(action.response.result))
-        dispatch(loadDatasetData(action.response.result, 1, 100, callback))
+        dispatch(loadDatasetData(action.response.result, callback))
       }
 
       return null

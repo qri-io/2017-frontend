@@ -59,14 +59,26 @@ export default class Dataset extends Base {
     }
   }
 
-  handleDownloadDataset (e) {
-    e.preventDefault()
-    this.props.downloadDataset(this.props.address)
+  handleDownloadDataset (path, peer) {
+    if (!peer) {
+      return (e) => {
+        e.preventDefault()
+        this.props.downloadDataset(path)
+      }
+    } else {
+      return undefined
+    }
   }
 
-  handleDeleteDataset () {
-    if (confirm('are you sure you want to delete this dataset?')) {
-      this.props.deleteDataset(this.props.datasetRef.path, '/')
+  handleDeleteDataset (path, peer) {
+    if (!peer) {
+      return (path) => {
+        if (confirm('are you sure you want to delete this dataset?')) {
+          this.props.deleteDataset(path, '/')
+        }
+      }
+    } else {
+      return undefined
     }
   }
 
@@ -85,7 +97,9 @@ export default class Dataset extends Base {
   }
 
   handleAddDataset (path, name, peer) {
-    return peer ? () => this.props.addDataset(path, name) : undefined
+    return peer ? () => {
+      this.props.addDataset(path, name)
+    } : undefined
   }
 
   changeTabIndex (index) {
@@ -93,8 +107,12 @@ export default class Dataset extends Base {
     this.setState({ tabIndex: index })
   }
 
-  handleEditMetadata (path) {
-    return () => this.props.history.push(`/edit/${path.slice(6, -13)}`)
+  handleEditMetadata (path, peer) {
+    if (!peer) {
+      return () => this.props.history.push(`/edit/${path.slice(6, -13)}`)
+    } else {
+      return undefined
+    }
   }
 
   handleSetLoadingData (loading) {
@@ -150,7 +168,7 @@ export default class Dataset extends Base {
   }
 
   template (css) {
-    const { datasetRef, readme, peer } = this.props
+    const { datasetRef, readme } = this.props
     // const path = "/" + address.replace(".", "/", -1)
     // const hasData = (dataset && (dataset.url || dataset.file || dataset.data));
     // TODO hasData is assigned a value but never used, consider depreciation
@@ -163,11 +181,11 @@ export default class Dataset extends Base {
       )
     }
 
-    const { dataset, path, name } = datasetRef
+    const { dataset, path, name, peer } = datasetRef
     const { tabIndex } = this.state
     return (
       <div className={css('wrap')} >
-        <DatasetHeader datasetRef={datasetRef} onClickDelete={this.handleDeleteDataset} onClickExport={this.handleDownloadDataset} onClickEdit={this.handleEditMetadata(path)} onGoBack={this.handleGoBack} onClickAdd={this.handleAddDataset(path, name, peer)} />
+        <DatasetHeader datasetRef={datasetRef} onClickDelete={this.handleDeleteDataset(path, peer)} onClickExport={this.handleDownloadDataset(path, peer)} onClickEdit={this.handleEditMetadata(path, peer)} onGoBack={this.handleGoBack} onClickAdd={this.handleAddDataset(path, name, peer)} peer={peer} />
         <TabPanel
           index={tabIndex}
           labels={['Info', 'Fields', 'Data', 'Queries', 'History']}

@@ -33,7 +33,7 @@ export default class Peer extends Base {
     if (!this.props.namespace.length) {
       this.props.loadPeerNamespace(this.props.path, this.props.nextPage, 30, (error) => {
         let message = 'Peer has no Datasets'
-        if (error && error.toString() === 'routing: not found') {
+        if (error && (error.toString() === 'routing: not found' || error.toString() === 'error sending message to peer: routing: not found')) {
           message = 'Peer is not currently connected'
         } else if (error) {
           message = 'Error loading Peer Datasets. Check console for more info.'

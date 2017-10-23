@@ -4,7 +4,7 @@ import {
   APP_SHOW_MODAL,
   APP_HIDE_MODAL,
   RESET_ERROR_MESSAGE,
-  SET_MESSAGE,
+  APP_SET_MESSAGE,
   RESET_MESSAGE,
   REMOVE_MODEL
 } from '../constants/app'
@@ -47,15 +47,19 @@ export function resetErrorMessage () {
 }
 
 export function setMessage (message) {
+  console.log('in setMessage')
+  console.log(message)
+  console.log(APP_SET_MESSAGE)
   return {
-    type: SET_MESSAGE,
-    message
+    type: APP_SET_MESSAGE,
+    message: message
   }
 }
 
 export function resetMessage () {
   return {
-    type: RESET_MESSAGE
+    type: APP_SET_MESSAGE,
+    message: ''
   }
 }
 

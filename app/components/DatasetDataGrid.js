@@ -111,7 +111,7 @@ DatasetDataGrid.propTypes = {
   onLoadMore: PropTypes.func,
   minHeight: PropTypes.number,
   loading: PropTypes.bool.isRequired,
-  error: PropTypes.string
+  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
 }
 
 DatasetDataGrid.defaultProps = {
