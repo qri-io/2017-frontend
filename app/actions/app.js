@@ -4,9 +4,10 @@ import {
   APP_SHOW_MODAL,
   APP_HIDE_MODAL,
   RESET_ERROR_MESSAGE,
-  APP_SET_MESSAGE,
+  SET_MESSAGE,
   RESET_MESSAGE,
-  REMOVE_MODEL
+  REMOVE_MODEL,
+  SET_SEARCH
 } from '../constants/app'
 
 export function toggleMenu () {
@@ -47,18 +48,15 @@ export function resetErrorMessage () {
 }
 
 export function setMessage (message) {
-  console.log('in setMessage')
-  console.log(message)
-  console.log(APP_SET_MESSAGE)
   return {
-    type: APP_SET_MESSAGE,
+    type: SET_MESSAGE,
     message: message
   }
 }
 
 export function resetMessage () {
   return {
-    type: APP_SET_MESSAGE,
+    type: SET_MESSAGE,
     message: ''
   }
 }
@@ -72,7 +70,6 @@ export function removeModel (schema, id) {
   }
 }
 
-export const SET_SEARCH = 'SET_SEARCH'
 export function setSearch (search) {
   return {
     type: SET_SEARCH,
