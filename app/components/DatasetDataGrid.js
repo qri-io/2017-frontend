@@ -46,7 +46,6 @@ class DatasetDataGrid extends React.Component {
 
   schemaColumns (dataset, i) {
     return dataset.structure.schema.fields.map((f) => {
-      console.log(f)
       return {
         key: f.name,
         name: f.name,
@@ -83,7 +82,7 @@ class DatasetDataGrid extends React.Component {
     }
     const { dataset, data, bounds } = this.props
     const height = bounds.height - 100
-    const width = bounds.width - 40
+    const width = bounds.width - 50
     if (this.props.error) {
       return (
         <div className='panel'>

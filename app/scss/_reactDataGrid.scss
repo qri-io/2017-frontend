@@ -17,7 +17,20 @@
         }
       }
 
-      .react-grid-Viewport {
+      .react-grid-Viewport { 
+        ::-webkit-scrollbar {
+          width: 5px;
+          height: 5px;
+        }
+        ::-webkit-scrollbar * {
+          background:transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+          background:$darkOverlay !important;
+        }
+        ::-webkit-scrollbar-corner {
+          background: transparent;
+        }
         .react-grid-Canvas {
               background: $appBackground;
           .react-grid-Row {
