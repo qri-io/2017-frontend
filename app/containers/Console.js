@@ -16,7 +16,7 @@ const ConsoleContainer = connect(
     return Object.assign({}, {
       loadingData: state.console.loadingData,
       loadingDataError: state.console.loadingDataError,
-      queries: Object.keys(state.entities.queries).map(key => state.entities.queries[key]).reverse(),
+      queries: Object.keys(state.entities.queries).map(key => state.entities.queries[key]),
       datasets: Object.keys(state.entities.namespace).map(key => state.entities.namespace[key]),
       queryHistory: state.session.history,
       layout: state.layout,
