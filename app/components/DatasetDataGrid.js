@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import ReactDataGrid from 'react-data-grid'
 import { datasetProps } from '../propTypes/datasetRefProps.js'
 import Spinner from '../components/Spinner'
-import defaultColumnWidth from '../utils/defaultColumnWidth'
+import defaultColumnWidths from '../utils/defaultColumnWidths'
 
 function timeout (duration = 0) {
   return new Promise((resolve, reject) => {
@@ -46,7 +46,7 @@ class DatasetDataGrid extends React.Component {
   }
 
   schemaColumns (dataset, data, i) {
-    const width = defaultColumnWidth(dataset, data)
+    const width = defaultColumnWidths(dataset, data)
     return dataset.structure.schema.fields.map((f) => {
       return {
         key: f.name,

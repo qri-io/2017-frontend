@@ -10,8 +10,8 @@ const setWeights = (avg, mode = undefined, max = undefined) => {
     weights.mode = total
     weights.max = total
   } else if (max === undefined || mode === undefined) {
-  	key = (max === undefined) ? 'max' : 'mode'
-  	val = (max === undefined) ? mode : max
+    key = (max === undefined) ? 'max' : 'mode'
+    val = (max === undefined) ? mode : max
     if (avg + val <= 100) {
       weights[key] = 100 - (avg + val)
     } else {
@@ -20,9 +20,9 @@ const setWeights = (avg, mode = undefined, max = undefined) => {
     }
   }
   if (weights.avg + weights.mode + weights.max === 100) {
-  	weights.avg = weights.avg / 100
-  	weights.mode = weights.mode / 100
-  	weights.max = weights.max / 100
+    weights.avg = weights.avg / 100
+    weights.mode = weights.mode / 100
+    weights.max = weights.max / 100
     return weights
   } else {
     console.log('The sum of the weights must equal 100')
@@ -45,17 +45,17 @@ const weightColumns = (avg, mode, max) => {
   }, 0)
   const weightedVal = (weights.avg * avg) + (weights.mode * modeMax) + (weights.max * max)
   if (weightedVal < minLength) {
-  	return minLength
+    return minLength
   }
   return weightedVal < maxLength ? Math.round(weightedVal) : maxLength
 }
 
 const reducer = (acc, row, i, data) => {
   Object.keys(row).forEach((key) => {
-  	const width = cellWidth(row[key])
-  	// create a acc[key] entry
-  	acc[key] || (acc[key] = 0)
-  	// summing all the cellWidths for that column
+    const width = cellWidth(row[key])
+    // create a acc[key] entry
+    acc[key] || (acc[key] = 0)
+    // summing all the cellWidths for that column
     acc[`_${key}Avg`] || (acc[`_${key}Avg`] = 0)
     acc[`_${key}Avg`] += width
     // counting number of entries with that column
@@ -79,17 +79,17 @@ const reducer = (acc, row, i, data) => {
   })
 
   if (i == data.length - 1) {
-  	Object.keys(acc).forEach(key => {
-  		if (key[0] != '_') {
-	  		acc[`_${key}Avg`] = acc[`_${key}Avg`] / acc[`_${key}`]
-	  		acc[key] = weightColumns(acc[`_${key}Avg`], acc[`_${key}Mode`].pop(), acc[`_${key}Max`])
-		  }
-    delete acc[`_${key}`]
-    delete acc[`_${key}Avg`]
-    delete acc[`_${key}Mode`]
-    delete acc[`_${key}ModeObj`]
-    delete acc[`_${key}Max`]
-  	})
+    Object.keys(acc).forEach(key => {
+      if (key[0] != '_') {
+        acc[`_${key}Avg`] = acc[`_${key}Avg`] / acc[`_${key}`]
+        acc[key] = weightColumns(acc[`_${key}Avg`], acc[`_${key}Mode`].pop(), acc[`_${key}Max`])
+      }
+      delete acc[`_${key}`]
+      delete acc[`_${key}Avg`]
+      delete acc[`_${key}Mode`]
+      delete acc[`_${key}ModeObj`]
+      delete acc[`_${key}Max`]
+    })
   }
   return acc
 }
@@ -97,8 +97,8 @@ const reducer = (acc, row, i, data) => {
 const initialObj = dataset => {
   let headers = {}
   dataset.structure.schema.fields.forEach(val => {
-  	const key = val.name
-  	const width = cellWidth(key.toString().length)
+    const key = val.name
+    const width = cellWidth(key.toString().length)
     headers[key] = 0
     headers[`_${key}Avg`] = width
     headers[`_${key}Max`] = width
@@ -109,12 +109,12 @@ const initialObj = dataset => {
   return headers
 }
 
-const defaultColumnWidth = (dataset, data) => {
+const defaultColumnWidths = (dataset, data) => {
   const headers = initialObj(dataset)
   return data.reduce(reducer, headers)
 }
 
-export default defaultColumnWidth
+export default defaultColumnWidths
 // const result = columnWidth(data, datasetRef)
 
 // console.log(result)
