@@ -11,10 +11,10 @@ export default class QueryItem extends Base {
   template (css) {
     const { data, onSelect } = this.props
     return (
-  <div className='queryItem' onClick={onSelect}>
-    <h5 className={`title ${css('color')}`}>{data.name || data.dataset.queryString || 'unnamed query'}</h5>
-    <p><i>{data.path}</i></p>
-  </div>
+      <div className='queryItem' onClick={onSelect}>
+        <h5 className={`title ${css('color')}`}>{data.name || (data.dataset && data.dataset.queryString) || 'unnamed query'}</h5>
+        <p><i>{data.path}</i></p>
+      </div>
     )
   }
   styles (props) {

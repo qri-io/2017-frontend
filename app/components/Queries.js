@@ -15,20 +15,23 @@ export default class Queries extends Base {
     this.state = { loading: true, error: false };
 
     [
-      'onSelectQuery'
+      'onSelectQuery',
+      'handleLoadNextPage'
     ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
   componentWillMount () {
     if (!this.props.queries) {
-      this.props.loadQueries(this.props.nextPage)
-    } else {
+      this.props.loadQueries()
+    } else if (!this.props.loading) {
       this.setState({ loading: false })
     }
   }
 
   componentWillReceiveProps (nextProps) {
-    if (this.state.loading && nextProps.queries.length > 0 && this.props.queries.length === 0) {
+    if (!this.props.queries) {
+      this.props.loadQueries()
+    } else if (this.state.loading && nextProps.queries.length > 0 && this.props.queries.length === 0) {
       this.setState({ loading: false })
     }
   }
@@ -44,7 +47,11 @@ export default class Queries extends Base {
 
   template (css) {
     const { loading, error } = this.state
-    const { queries, searchString, palette, bounds } = this.props
+    const { queries, searchString, palette, bounds, fetchedAll } = this.props
+    console.log(this.props.loading)
+    console.log(this.props.nextPage)
+    console.log(this.props.fetchedAll)
+    console.log(this.props.queries)
     // 57 is the run button height, should these things be saved and pulled from the state tree?
     let height = bounds.height - 57
     bounds.height = height
@@ -65,6 +72,10 @@ export default class Queries extends Base {
           emptyComponent={<p>No Queries</p>}
           palette={palette}
           style={bounds}
+          loading={this.props.loading}
+          fetchedAll={fetchedAll}
+          onClick={this.handleLoadNextPage}
+          type='queries'
           />
       </div>
     )
@@ -76,7 +87,8 @@ export default class Queries extends Base {
     return {
       wrap: {
         paddingLeft: 20,
-        paddingRight: 20
+        paddingRight: 20,
+        overflow: 'auto'
       },
       searchBox: {
         display: 'inline-block',
