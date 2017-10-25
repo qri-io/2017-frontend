@@ -139,7 +139,7 @@ export default class Dataset extends Base {
   }
 
   renderData () {
-    const { data, datasetRef } = this.props
+    const { data, datasetRef, bounds } = this.props
     const { loading, error } = this.state
     const { structure } = datasetRef.dataset
     // console.log('rendering data')
@@ -155,6 +155,7 @@ export default class Dataset extends Base {
         onSetLoadingData={this.handleSetLoadingData}
         loading={loading}
         error={error}
+        bounds={bounds}
                 // bounds={bottomBox}
               />
     )

@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import ReactDataGrid from 'react-data-grid'
 import { datasetProps } from '../propTypes/datasetRefProps.js'
 import Spinner from '../components/Spinner'
+import defaultColumnWidth from '../utils/defaultColumnWidth'
 
 function timeout (duration = 0) {
   return new Promise((resolve, reject) => {
@@ -44,13 +45,16 @@ class DatasetDataGrid extends React.Component {
     return true
   }
 
-  schemaColumns (dataset, i) {
+  schemaColumns (dataset, data, i) {
+    const width = defaultColumnWidth(dataset, data)
     return dataset.structure.schema.fields.map((f) => {
       return {
         key: f.name,
-        name: f.name
+        name: f.name,
         // locked: true
         // sortable: true
+        resizable: true,
+        width: width[f.name]
       }
     })
   }
@@ -79,7 +83,9 @@ class DatasetDataGrid extends React.Component {
         <Spinner />
       )
     }
-    const { dataset, data, minHeight } = this.props
+    const { dataset, data, bounds } = this.props
+    const height = bounds.height - 100
+    const width = bounds.width - 50
     if (this.props.error) {
       return (
         <div className='panel'>
@@ -97,10 +103,14 @@ class DatasetDataGrid extends React.Component {
     return (
       <ReactDataGrid
         onGridSort={this.handleGridSort}
-        columns={this.schemaColumns(dataset)}
+        columns={this.schemaColumns(dataset, data)}
         rowGetter={this.rowGetter}
         rowsCount={data.length}
-        minHeight={minHeight} />
+        rowHeight={50}
+        headerRowHeight={50}
+        minHeight={height}
+        winWidth={width}
+        />
     )
   }
 }

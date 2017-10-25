@@ -2415,7 +2415,7 @@ input[type="button"].btn-block {
         border-bottom: 1px solid #272727;
         color: #ABCAD6; }
     .react-grid-Container .react-grid-Main .react-grid-Grid .react-grid-Viewport .react-grid-Canvas {
-      background-color: #253238; }
+      /*background-color: #253238;*/ }
       .react-grid-Container .react-grid-Main .react-grid-Grid .react-grid-Viewport .react-grid-Canvas .react-grid-Row .react-grid-Cell {
         background-color: #253238;
         border-right: 1px solid #272727;
