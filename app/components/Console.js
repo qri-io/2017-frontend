@@ -58,6 +58,10 @@ export default class Console extends Base {
     }
   }
 
+  shouldComponentUpdate () {
+    return true
+  }
+
   handleSetLoadingData (loading) {
     this.props.setLoadingData(loading)
   }
@@ -122,28 +126,10 @@ export default class Console extends Base {
   }
 
   template (css) {
-    const { datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, layout, size, chartOptions, loadingData, loadingDataError } = this.props
-    const { main } = layout
-
-    const topBox = {
-      top: main.top,
-      left: 0,
-      width: main.width,
-      height: main.height * 0.4,
-      overflow: 'auto'
-    }
-
-    const bottomBox = {
-      top: main.height * 0.4,
-      left: 0,
-      width: main.width,
-      height: main.height * 0.6,
-      overflow: 'auto'
-    }
-
+    const { datasetRef, data, query, topPanelIndex, bottomPanelIndex, queryHistory, topBox, bottomBox, size, chartOptions, loadingData, loadingDataError } = this.props
     return (
       <div className={css('wrap')}>
-        <div className={css('top')}>
+        <div className={css('top')} style={{height: topBox.height}}>
           <TabPanel
             index={topPanelIndex}
             onSelectPanel={this.handleSetTopPanel}
@@ -160,11 +146,12 @@ export default class Console extends Base {
             ]}
           />
         </div>
-        <div className='bottom panel'>
+        <div className={css('bottom')} style={{height: bottomBox.height}}>
           <TabPanel
             index={bottomPanelIndex}
             labels={['Data', 'Chart', 'Datasets' ]}
             onSelectPanel={this.handleSetBottomPanel}
+            bounds={bottomBox}
             components={[
               <DatasetDataGrid
                 dataset={datasetRef && datasetRef.dataset}
@@ -179,7 +166,7 @@ export default class Console extends Base {
                 <ResultsChart size={size} onOptionsChange={this.handleSetChartOptions} schema={datasetRef && datasetRef.dataset.structure.schema} data={data} chartOptions={chartOptions} />
               </div>,
               <div className='panel'>
-                <DatasetsContainer skipLoad bounds={bottomBox} padding={false} goBack={this.handleGoBack} />
+                <DatasetsContainer skipLoad bounds={bottomBox} padding={false} goBack={this.handleGoBack} noHeader />
               </div>
             ]}
           />
@@ -193,10 +180,13 @@ export default class Console extends Base {
       wrap: {
         paddingLeft: 20,
         paddingRight: 20
-      },
-      top: {
-        paddingBottom: 20
       }
+      // top: {
+      //   height: this.props.topBox.height
+      // },
+      // bottom: {
+      //   height: this.props.bottomBox.height
+      // }
     }
   }
 }
@@ -213,7 +203,8 @@ Console.propTypes = {
   queryHistory: PropTypes.array,
   topPanelIndex: PropTypes.number.isRequired,
   bottomPanelIndex: PropTypes.number.isRequired,
-  layout: PropTypes.object.isRequired,
+  topBox: PropTypes.object.isRequired,
+  bottomBox: PropTypes.object.isRequired,
   chartOptions: PropTypes.shape({
     type: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,

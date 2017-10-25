@@ -169,7 +169,7 @@ export default class Dataset extends Base {
   }
 
   template (css) {
-    const { datasetRef, readme } = this.props
+    const { datasetRef, readme, topBox, bottomBox } = this.props
     // const path = "/" + address.replace(".", "/", -1)
     // const hasData = (dataset && (dataset.url || dataset.file || dataset.data));
     // TODO hasData is assigned a value but never used, consider depreciation
@@ -186,11 +186,12 @@ export default class Dataset extends Base {
     const { tabIndex } = this.state
     return (
       <div className={css('wrap')} >
-        <DatasetHeader datasetRef={datasetRef} onClickDelete={this.handleDeleteDataset(path, peer)} onClickExport={this.handleDownloadDataset(path, peer)} onClickEdit={this.handleEditMetadata(path, peer)} onGoBack={this.handleGoBack} onClickAdd={this.handleAddDataset(path, name, peer)} peer={peer} />
+        <DatasetHeader datasetRef={datasetRef} onClickDelete={this.handleDeleteDataset(path, peer)} onClickExport={this.handleDownloadDataset(path, peer)} onClickEdit={this.handleEditMetadata(path, peer)} onGoBack={this.handleGoBack} onClickAdd={this.handleAddDataset(path, name, peer)} peer={peer} bounds={topBox} />
         <TabPanel
           index={tabIndex}
           labels={['Info', 'Fields', 'Data', 'Queries', 'History']}
           onSelectPanel={this.changeTabIndex}
+          bounds={bottomBox}
           components={[
             this.renderReadme(readme, dataset),
             this.renderFieldsList(dataset),
@@ -228,6 +229,9 @@ Dataset.propTypes = {
   goBack: PropTypes.func.isRequired,
   runQuery: PropTypes.func.isRequired,
   downloadDataset: PropTypes.func.isRequired,
+  bounds: PropTypes.object.isRequired,
+  topBox: PropTypes.object.isRequired,
+  bottomBox: PropTypes.object.isRequired,
   palette: Palette
 }
 

@@ -14,7 +14,7 @@ export default class TabPanel extends Base {
     const { index, labels = [], components, onSelectPanel } = this.props
     const component = components[index]
     return (
-      <div className='wrapper'>
+      <div className={css('wrapper')}>
         <div className={`${css('header')}`}>
           {labels.map((label, i) => {
             return (
@@ -27,7 +27,7 @@ export default class TabPanel extends Base {
           )}
         </div>
         <hr className={css('black')} />
-        <div className='wrapper'>
+        <div className={css('componentWrapper')}>
           {component}
         </div>
       </div>
@@ -35,11 +35,13 @@ export default class TabPanel extends Base {
   }
 
   styles () {
-    const { palette } = this.props
+    const { palette, bounds } = this.props
+    const height = bounds.height - 59
     return {
       header: {
         fontWeight: 'bold',
-        padding: '15px 20px 0px 0px'
+        padding: '15px 20px 0px 0px',
+        height: '42px'
       },
       tab: {
         //  textTransform: 'uppercase',
@@ -57,6 +59,12 @@ export default class TabPanel extends Base {
       black: {
         'border-top': `1px solid ${palette.overlay}`,
         'margin-top': 0
+      },
+      componentWrapper: {
+        height: `${height}px`
+      },
+      wrapper: {
+        height: `${bounds.height}px`
       }
     }
   }
@@ -67,6 +75,7 @@ TabPanel.propTypes = {
   labels: PropTypes.array.isRequired,
   components: PropTypes.array.isRequired,
   onSelectPanel: PropTypes.func.isRequired,
+  bounds: PropTypes.object.isRequired,
   palette: Palette
 }
 

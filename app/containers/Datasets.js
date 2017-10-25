@@ -17,7 +17,8 @@ const DatasetsContainer = connect(
       noDatasets: selectNoDatasets(state, paginationSection, searchString),
       loading: selectDatasetsIsFetching(state, paginationSection, searchString),
       nextPage: selectDatasetsPageCount(state, paginationSection, searchString),
-      fetchedAll: selectDatasetsFetchedAll(state, paginationSection, searchString)
+      fetchedAll: selectDatasetsFetchedAll(state, paginationSection, searchString),
+      bounds: state.layout.main
     }, ownProps)
   }, {
     setDatasetSearch,
