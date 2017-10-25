@@ -373,13 +373,14 @@ export function loadDatasetChanges (datasetId, page = 1, pageSize = 50) {
   }
 }
 
-export function downloadDataset (address = '') {
+export function downloadDataset (hash = '') {
+  console.log(hash)
   return {
     [CALL_API]: {
-      types: [DATASET_CHANGES_REQUEST, DATASET_CHANGES_SUCCESS, DATASET_CHANGES_FAIL],
-      endpoint: `/datasets/package`,
-      schema: Schemas.DATASET,
-      data: { address }
+      types: [DATASET_DOWNLOAD_REQUEST, DATASET_DOWNLOAD_SUCCESS, DATASET_DOWNLOAD_FAIL],
+      endpoint: `/download${hash}`,
+      schema: Schemas.DATASET
+      // data: { hash }
     }
   }
 }
