@@ -12,6 +12,7 @@ const PeersContainer = connect(
     // const searchString = selectPeerSearchString(state)
     const paginationSection = ''
     const searchString = ''
+    const bounds = state.layout.main
     return Object.assign({
       peers: selectPeers(state, paginationSection, searchString),
       loading: selectPeersIsFetching(state, paginationSection, searchString),

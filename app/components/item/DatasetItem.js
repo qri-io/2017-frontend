@@ -10,7 +10,7 @@ export default class DatasetItem extends Base {
 
   template (css) {
     const { data, link } = this.props
-    const path = data.path.slice(6, -13)
+    const path = data && data.path && data.path.slice(6, -13)
     if (link) {
       return (
         <div className='dataset item' >

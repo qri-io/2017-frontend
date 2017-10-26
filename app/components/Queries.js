@@ -86,8 +86,6 @@ export default class Queries extends Base {
 
     return {
       wrap: {
-        paddingLeft: 20,
-        paddingRight: 20,
         overflow: 'auto'
       },
       searchBox: {

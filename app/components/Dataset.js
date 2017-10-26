@@ -119,16 +119,16 @@ export default class Dataset extends Base {
     this.setState({ loading: loading })
   }
 
-  renderFieldsList (dataset) {
+  renderFieldsList (css, bottomBox, dataset) {
     if (dataset.structure && dataset.structure.schema) {
-      return (<FieldsList fields={dataset.structure.schema.fields} />)
+      return (<div className={css('overflow')} style={{ height: `${bottomBox.height - 79}` }}><FieldsList fields={dataset.structure.schema.fields} /></div>)
     } else {
       return (<p>This dataset currently has no specified fields</p>)
     }
   }
 
-  renderReadme (readme, dataset) {
-    if (!readme) return this.renderDescription(dataset)
+  renderReadme (css, bottomBox, readme, dataset) {
+    if (!readme) return this.renderDescription(css, bottomBox, dataset)
     return (
       <div className='row'>
         <section className='col-md-12'>
@@ -138,7 +138,7 @@ export default class Dataset extends Base {
     )
   }
 
-  renderData () {
+  renderData (bottomBox) {
     const { data, datasetRef, bounds } = this.props
     const { loading, error } = this.state
     const { structure } = datasetRef.dataset
@@ -155,16 +155,16 @@ export default class Dataset extends Base {
         onSetLoadingData={this.handleSetLoadingData}
         loading={loading}
         error={error}
-        bounds={bounds}
+        bounds={bottomBox}
                 // bounds={bottomBox}
               />
     )
   }
 
-  renderDescription (dataset) {
+  renderDescription (css, bottomBox, dataset) {
     if (!dataset.description) { return <p>No description given for this dataset</p> }
     return (
-      <p>{ dataset.description }</p>
+      <div className={css('overflow')} style={{ height: `${bottomBox.height - 79}` }}><p>{ dataset.description }</p></div>
     )
   }
 
@@ -193,9 +193,9 @@ export default class Dataset extends Base {
           onSelectPanel={this.changeTabIndex}
           bounds={bottomBox}
           components={[
-            this.renderReadme(readme, dataset),
-            this.renderFieldsList(dataset),
-            this.renderData()
+            this.renderReadme(css, bottomBox, readme, dataset),
+            this.renderFieldsList(css, bottomBox, dataset),
+            this.renderData(bottomBox)
           ]}
         />
       </div>
@@ -208,6 +208,9 @@ export default class Dataset extends Base {
       wrap: {
         paddingLeft: 20,
         paddingRight: 20
+      },
+      overflow: {
+        overflow: 'auto'
       }
     }
   }

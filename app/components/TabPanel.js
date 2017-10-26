@@ -11,10 +11,10 @@ function panelTrigger (i, fn) {
 
 export default class TabPanel extends Base {
   template (css) {
-    const { index, labels = [], components, onSelectPanel } = this.props
+    const { index, labels = [], components, onSelectPanel, bounds } = this.props
     const component = components[index]
     return (
-      <div className={css('wrapper')}>
+      <div className={css('wrapper')} style={{height: `${bounds.height}px`}}>
         <div className={`${css('header')}`}>
           {labels.map((label, i) => {
             return (
@@ -27,7 +27,7 @@ export default class TabPanel extends Base {
           )}
         </div>
         <hr className={css('black')} />
-        <div className={css('componentWrapper')}>
+        <div className={css('componentWrapper')} style={{height: `${bounds.height - 59}px`}}>
           {component}
         </div>
       </div>
@@ -35,8 +35,7 @@ export default class TabPanel extends Base {
   }
 
   styles () {
-    const { palette, bounds } = this.props
-    const height = bounds.height - 59
+    const { palette } = this.props
     return {
       header: {
         fontWeight: 'bold',
@@ -61,10 +60,7 @@ export default class TabPanel extends Base {
         'margin-top': 0
       },
       componentWrapper: {
-        height: `${height}px`
-      },
-      wrapper: {
-        height: `${bounds.height}px`
+        overflow: 'auto'
       }
     }
   }
