@@ -2,7 +2,8 @@ import { connect } from 'react-redux'
 
 import { showModal } from '../actions/app'
 import { loadDatasets, setDatasetSearch, runDatasetSearch } from '../actions/dataset'
-import { selectDatasetSearchString, selectNoDatasets, selectDatasets, selectDatasetsPageCount, selectDatasetsFetchedAll, selectDatasetsIsFetching } from '../selectors/dataset'
+import { selectDatasetSearchString, selectNoDatasets, selectDatasets } from '../selectors/dataset'
+import { selectIsFetching, selectPageCount, selectFetchedAll } from '../selectors/pagination'
 
 import Datasets from '../components/Datasets'
 
@@ -10,14 +11,16 @@ const DatasetsContainer = connect(
   (state, ownProps) => {
     const pagination = state.pagination.popularDatasets
     const searchString = selectDatasetSearchString(state)
-    const paginationSection = searchString ? 'searchedDatasets' : ''
+    console.log(searchString)
+    const paginationSection = searchString ? 'searchedDatasets' : 'popularDatasets'
+    const paginationNode = searchString || 'popularDatasets'
     return Object.assign({
       searchString,
-      datasets: selectDatasets(state, paginationSection, searchString),
-      noDatasets: selectNoDatasets(state, paginationSection, searchString),
-      loading: selectDatasetsIsFetching(state, paginationSection, searchString),
-      nextPage: selectDatasetsPageCount(state, paginationSection, searchString),
-      fetchedAll: selectDatasetsFetchedAll(state, paginationSection, searchString),
+      datasets: selectDatasets(state, paginationSection, paginationNode),
+      noDatasets: selectNoDatasets(state, paginationSection, paginationNode),
+      loading: selectIsFetching(state, paginationSection, paginationNode),
+      nextPage: selectPageCount(state, paginationSection, paginationNode) + 1,
+      fetchedAll: selectFetchedAll(state, paginationSection, paginationNode),
       bounds: state.layout.main
     }, ownProps)
   }, {

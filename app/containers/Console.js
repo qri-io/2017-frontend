@@ -28,8 +28,6 @@ const ConsoleContainer = connect(
       overflow: 'auto'
     }
     const size = state.layout.size ? state.layout.size : ''
-    console.log(topBox)
-    console.log(bottomBox)
     return Object.assign({}, {
       loadingData: state.console.loadingData,
       loadingDataError: state.console.loadingDataError,

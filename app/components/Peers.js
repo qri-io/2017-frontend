@@ -10,7 +10,7 @@ export default class Peers extends Base {
   constructor (props) {
     super(props)
     // this.state = { loading: props.peers.length === 0 };
-    this.state = { loading: false }
+    this.state = { loading: true }
 
     this.debounceRunPeerSearch = debounce((searchString) => {
       this.setState({ loading: false })
@@ -20,18 +20,23 @@ export default class Peers extends Base {
 
     [
       'onSelectPeer',
-      'handlePeerSearch'
+      'handlePeerSearch',
+      'handleLoadNextPage'
     ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
   componentWillMount () {
     if (!this.props.skipLoad) {
-      this.props.loadPeers(this.props.nextPage)
+      this.props.loadPeers()
+    } else if (this.state.loading === true && this.props.peers.length > 0) {
+      console.log('in else if')
+      this.setState({loading: false})
     }
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.peers.length > 0 && this.props.peers.length === 0 || nextProps.noPeers) {
+    console.log(this.props.nextPage)
+    if (this.state.loading === true && nextProps.peers.length > 0 && this.props.peers.length === 0 || nextProps.noPeers) {
       this.setState({ loading: false })
     }
   }
@@ -85,7 +90,12 @@ export default class Peers extends Base {
           data={peers}
           component={PeerItem}
           onSelectItem={this.onSelectPeer}
-          emptyComponent={<p>No Peers</p>} />
+          emptyComponent={<p>No Peers</p>}
+          loading={this.props.loading}
+          fetchedAll={this.props.fetchedAll}
+          onClick={this.handleLoadNextPage}
+          type='peers'
+        />
       </div>
     )
   }

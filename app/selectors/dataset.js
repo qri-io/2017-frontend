@@ -189,7 +189,7 @@ export function selectNoDatasets (state, section, node) {
     section = usersDatasetsSection
     node = usersDatasetsNode
   }
-  return (state.pagination[section] && state.pagination[section][node] && selectDatasetsPageCount(state, section, node) === 1 && selectDatasetsFetchedAll(state, section, node) === true)
+  return (state.pagination[section] && state.pagination[section][node] && selectDatasetsPageCount(state, section, node) === 1 && selectDatasetsFetchedAll(state, section, node) === true && selectDatasetsIds(state, section, node).length === 0)
 }
 
 // Older version

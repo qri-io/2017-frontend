@@ -19,8 +19,8 @@ export default class Datasets extends Base {
     this.state = { loading: true, message: 'No Datasets', error: false }
 
     this.debounceRunDatasetSearch = debounce((searchString) => {
-      this.setState({ loading: false })
       searchString ? this.props.runDatasetSearch(searchString) : undefined
+      this.setState({ loading: false })
     }
     , 250);
 
@@ -28,7 +28,8 @@ export default class Datasets extends Base {
       'onSelectDataset',
       'handleDatasetSearch',
       'handleLoadDatasetsError',
-      'handleAddItem'
+      'handleAddItem',
+      'handleLoadNextPage'
     ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
@@ -37,7 +38,16 @@ export default class Datasets extends Base {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (this.state.loading && this.state.error || nextProps.datasets.length) {
+    console.log('in componentWillReceiveProps')
+    console.log(this.props.datasets)
+    console.log(nextProps.datasets)
+    console.log('loading')
+    console.log(this.props.loading)
+    console.log(nextProps.loading)
+    if (this.state.loading && this.state.error || nextProps.datasets.length || nextProps.noDatasets) {
+      console.log('setting state false')
+      console.log(this.props.datasets)
+      console.log(this.props.loading)
       this.setState({ loading: false })
     }
   }
@@ -125,6 +135,10 @@ export default class Datasets extends Base {
             onSelectItem={this.onSelectDataset}
             emptyComponent={<p>{message}</p>}
             palette={palette}
+            loading={this.props.loading}
+            fetchedAll={this.props.fetchedAll}
+            onClick={this.handleLoadNextPage}
+            type='datasets'
             />
         </div>
       </div>
