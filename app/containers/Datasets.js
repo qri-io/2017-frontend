@@ -11,7 +11,6 @@ const DatasetsContainer = connect(
   (state, ownProps) => {
     const pagination = state.pagination.popularDatasets
     const searchString = selectDatasetSearchString(state)
-    console.log(searchString)
     const paginationSection = searchString ? 'searchedDatasets' : 'popularDatasets'
     const paginationNode = searchString || 'popularDatasets'
     return Object.assign({
@@ -32,3 +31,5 @@ const DatasetsContainer = connect(
 )(Datasets, 'Datasets')
 
 export default DatasetsContainer
+
+// if there is a search string, turn false only if loading is false or noDatasets is true

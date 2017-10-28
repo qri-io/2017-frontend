@@ -7,21 +7,21 @@ export default class LoadMore extends Base {
   constructor (props) {
     super(props);
     [
-	    'renderLoadMore',
-	    'renderEnd'
+      'renderLoadMore',
+      'renderEnd'
     ].forEach((m) => this[m] = this[m].bind(this))
   }
 
   renderLoadMore (css, onClick) {
-  	return (
-    <button className={`btn btn-primary center ${css('button')}`} onClick={onClick}><label className={css('margin')}>load more</label></button>
-  		)
+    return (
+      <button className={`btn btn-primary center ${css('button')}`} onClick={onClick}><label className={css('margin')}>load more</label></button>
+    )
   }
 
   renderEnd (css, type) {
-  	return (
-    <div className={css('button')} ><label className={css('margin')}>{`end of ${type}`}</label></div>
-  		)
+    return (
+      <div className={css('end')} />
+    )
   }
 
   template (css) {
@@ -38,15 +38,18 @@ export default class LoadMore extends Base {
 
   styles () {
     return {
-    	wrap: {
-    		width: '100%'
-    	},
+      wrap: {
+        width: '100%'
+      },
       button: {
-      	display: 'black',
-      	marginLeft: '200px'
+        display: 'black',
+        marginLeft: '200px'
       },
       margin: {
-      	margin: 0
+        margin: 0
+      },
+      end: {
+        height: '80px'
       }
     }
   }

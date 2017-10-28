@@ -38,16 +38,7 @@ export default class Datasets extends Base {
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log('in componentWillReceiveProps')
-    console.log(this.props.datasets)
-    console.log(nextProps.datasets)
-    console.log('loading')
-    console.log(this.props.loading)
-    console.log(nextProps.loading)
     if (this.state.loading && this.state.error || nextProps.datasets.length || nextProps.noDatasets) {
-      console.log('setting state false')
-      console.log(this.props.datasets)
-      console.log(this.props.loading)
       this.setState({ loading: false })
     }
   }
