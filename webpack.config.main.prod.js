@@ -8,14 +8,13 @@ import BabiliPlugin from 'babili-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import baseConfig from './webpack.config.base'
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv'
+import path from 'path'
 
 CheckNodeEnv('production')
 
 export default merge.smart(baseConfig, {
   devtool: 'source-map',
-
   target: 'electron-main',
-
   entry: './app/main.dev',
 
   // 'main.js' in root
@@ -46,17 +45,12 @@ export default merge.smart(baseConfig, {
      */
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-      'process.env.DEBUG_PROD': JSON.stringify(process.env.DEBUG_PROD || 'false'),
-      __BUILD__: {
-        PRODUCTION: JSON.stringify(false),
-        DEVELOP: JSON.stringify(true),
-        STAGING: JSON.stringify(false),
 
-        BASE_URL: JSON.stringify('http://localhost:3000'),
-        API_URL: JSON.stringify('http://localhost:3000'),
-        STATIC_ASSETS_URL: JSON.stringify('http://localhost:3000')
-        // SEGMENT_KEY: JSON.stringify('not_a_key')
-      }
+      'process.env.QRI_BINARY_PATH': JSON.stringify(path.resolve(`${__dirname}/backend/bin/qri`)),
+      'process.env.QRI_PATH': JSON.stringify(path.resolve(`${__dirname}/../backend/qri`)),
+      'process.env.IPFS_PATH': JSON.stringify(path.resolve(`${__dirname}/../backend/ipfs`))
+
+      // TODO - this isn't where we're supposed to set these things:
     })
   ],
 
