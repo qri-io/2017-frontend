@@ -49,18 +49,20 @@ export default class Backend extends EventEmitter {
     let out = fs.openSync('/tmp/out.log', 'a')
     let err = fs.openSync('/tmp/out.log', 'a')
     let backendPath = path.resolve(`${__dirname}/../../backend`)
+    let qriBinaryPath = process.env.QRI_BINARY_PATH || (backendPath + '/bin/qri')
     let processEnv = {
-      PATH: '/usr/bin',
       IPFS_PATH: `${backendPath}/ipfs`,
       QRI_PATH: `${backendPath}/qri`
     }
+
+    fs.writeSync(out, 'process.env:\n')
+    fs.writeSync(out, JSON.stringify(process.env) + '\n')
 
     if (process.env.NODE_ENV === 'development') {
       // if we're in dev mode write to this process
       out = 'inherit'
       err = 'inherit'
       // write to project backend path
-      backendPath = path.resolve(`${__dirname}/../backend`)
       // overwrite processEnv to inherit settings from
       // executing shell
       processEnv = {}
@@ -68,7 +70,7 @@ export default class Backend extends EventEmitter {
 
     try {
       this.backend = spawn(
-        backendPath + '/bin/qri',
+        qriBinaryPath,
         ['server', '--init-ipfs'],
         {
           shell: false,
@@ -88,14 +90,15 @@ export default class Backend extends EventEmitter {
     this.backend.on('error', (err) => {
       // TODO - this might not work b/c not executing on
       // main process?
-      dialog.showErrorBox('qri process error', err)
-      crashReporter.start({
-        productName: 'qri',
-        companyName: 'qri.io',
-        submitURL: 'https://qri.io/url-to-submit',
-        uploadToServer: false,
-        extra: err
-      })
+      // dialog.showErrorBox('qri process error', err)
+      // crashReporter.start({
+      //   productName: 'qri',
+      //   companyName: 'qri.io',
+      //   submitURL: 'https://qri.io/url-to-submit',
+      //   uploadToServer: false,
+      //   extra: err
+      // })
+      console.log(err)
     })
   }
 

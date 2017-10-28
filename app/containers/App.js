@@ -17,6 +17,8 @@ const AppContainer = connect(
       user: selectSessionUser(state),
       showMenu: state.app.showMenu,
       layout: state.layout,
+      // https://reacttraining.com/react-router/web/guides/dealing-with-update-blocking
+      location: state.routing.location,
       modal: state.app.modal
     }
   }, {
