@@ -152,13 +152,13 @@ export default merge.smart(baseConfig, {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
       '__BUILD__': {
-        'PRODUCTION': JSON.stringify(true),
-        'DEVELOP': JSON.stringify(false),
-        'STAGING': JSON.stringify(false),
+        'MODE': JSON.stringify(process.env.NODE_ENV || 'production'),
+        'DEBUG_PROD': JSON.stringify(process.env.DEBUG_PROD || false),
 
         'BASE_URL': JSON.stringify('http://localhost:3000'),
         'API_URL': JSON.stringify('http://localhost:3000'),
         'STATIC_ASSETS_URL': JSON.stringify('http://localhost:3000'),
+
         'SEGMENT_KEY': JSON.stringify('--nope--')
       }
     }),

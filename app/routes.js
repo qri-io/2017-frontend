@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react'
-import { Switch, Route } from 'react-router';
+import { Switch, Route } from 'react-router-dom';
 
 import AppContainer from './containers/App'
 import ConsoleContainer from './containers/Console'
