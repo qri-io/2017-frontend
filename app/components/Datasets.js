@@ -63,7 +63,6 @@ export default class Datasets extends Base {
   }
 
   handleDatasetSearch (searchString) {
-    // console.log(searchString)
     this.props.setDatasetSearch(searchString)
     this.setState({ loading: true })
     this.debounceRunDatasetSearch(searchString)
@@ -138,9 +137,7 @@ export default class Datasets extends Base {
 
   styles (props) {
     const { palette, padding, bounds } = this.props
-    console.log('in styles datasets component')
     const height = bounds.height - 145
-    console.log(height)
     let paddingLeft, paddingRight = 0
     if (padding) {
       paddingLeft = 20

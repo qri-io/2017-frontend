@@ -14,7 +14,7 @@ export default class LoadMore extends Base {
 
   renderLoadMore (css, onClick) {
     return (
-      <button className={`btn btn-primary center ${css('button')}`} onClick={onClick}><label className={css('margin')}>load more</label></button>
+      <button className={`${css('button')}`} onClick={onClick}><label className={css('label')}>load more</label></button>
     )
   }
 
@@ -43,10 +43,33 @@ export default class LoadMore extends Base {
       },
       button: {
         display: 'black',
-        marginLeft: '200px'
+        backgroundColor: 'transparent',
+        boarderColor: 'transparent',
+        lineHeight: '1.25',
+        textAlign: 'center',
+        whiteSpace: 'nowrap',
+        display: 'inline-block',
+        'font-weight': 'normal',
+        'line-height': '1.25',
+        'text-align': 'center',
+        'white-space': 'nowrap',
+        'vertical-align': 'middle',
+        'cursor': 'pointer',
+        'user-select': 'none',
+        'border': '0.5px solid transparent',
+        'padding': '0.5rem 1rem',
+        'font-size': '1rem',
+        'border-radius': '0.25rem',
+        ':hover': {
+          backgroundColor: '#000000'
+        }
       },
-      margin: {
-        margin: 0
+      label: {
+        margin: 0,
+        color: '#50C9F4'
+      },
+      'button:hover': {
+        backgroundColor: 'pink'
       },
       end: {
         height: '80px'

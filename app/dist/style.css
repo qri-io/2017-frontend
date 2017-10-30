@@ -362,8 +362,8 @@ label {
   margin-bottom: .5rem; }
 
 button:focus {
-  outline: 1px dotted;
-  outline: 5px auto -webkit-focus-ring-color; }
+  outline: none; 
+}
 
 input,
 button,
@@ -999,9 +999,7 @@ select.form-control-lg:not([size]):not([multiple]) {
   font-size: 1rem;
   border-radius: 0.25rem; }
   .btn:focus, .btn.focus, .btn:active:focus, .btn:active.focus, .btn.active:focus, .btn.active.focus {
-    outline: thin dotted;
-    outline: 5px auto -webkit-focus-ring-color;
-    outline-offset: -2px; }
+    outline: none; }
   .btn:focus, .btn:hover {
     text-decoration: none; }
   .btn.focus {
