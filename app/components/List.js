@@ -1,4 +1,5 @@
 import React from 'react'
+import LoadMore from './LoadMore'
 
 function selectFunc (fn, data, i) {
   return () => {
@@ -9,7 +10,7 @@ function selectFunc (fn, data, i) {
 }
 
 const List = (props) => {
-  const { data, onSelectItem, className, emptyComponent, style } = props
+  const { data, onSelectItem, className, emptyComponent, style, fetchedAll, onClick, type, loading } = props
   if (!data || data.length === 0) {
     if (emptyComponent) {
       return (
@@ -23,6 +24,12 @@ const List = (props) => {
   return (
     <div className={className} style={style}>
       {data.map((d, i) => <props.component data={d} key={i} index={i} onSelect={selectFunc(onSelectItem, d, i)} link />)}
+      { type ? <LoadMore
+        fetchedAll={fetchedAll}
+        onClick={onClick}
+        type={type}
+        loading={loading}
+        /> : undefined}
     </div>
   )
 }

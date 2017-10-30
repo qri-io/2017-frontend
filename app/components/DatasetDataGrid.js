@@ -84,7 +84,7 @@ class DatasetDataGrid extends React.Component {
       )
     }
     const { dataset, data, bounds } = this.props
-    const height = bounds.height - 100
+    const height = bounds.height - 79
     const width = bounds.width - 50
     if (this.props.error) {
       return (

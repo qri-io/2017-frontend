@@ -142,7 +142,7 @@ export default class App extends Base {
         <div
           className='main'
           style={Object.assign({
-            position: 'absolute',
+            position: 'relative',
             overflow: 'auto'
           }, layout.main)}
         >

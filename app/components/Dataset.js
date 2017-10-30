@@ -119,16 +119,16 @@ export default class Dataset extends Base {
     this.setState({ loading: loading })
   }
 
-  renderFieldsList (dataset) {
+  renderFieldsList (css, bottomBox, dataset) {
     if (dataset.structure && dataset.structure.schema) {
-      return (<FieldsList fields={dataset.structure.schema.fields} />)
+      return (<div className={css('overflow')} style={{ height: `${bottomBox.height - 79}` }}><FieldsList fields={dataset.structure.schema.fields} /></div>)
     } else {
       return (<p>This dataset currently has no specified fields</p>)
     }
   }
 
-  renderReadme (readme, dataset) {
-    if (!readme) return this.renderDescription(dataset)
+  renderReadme (css, bottomBox, readme, dataset) {
+    if (!readme) return this.renderDescription(css, bottomBox, dataset)
     return (
       <div className='row'>
         <section className='col-md-12'>
@@ -138,7 +138,7 @@ export default class Dataset extends Base {
     )
   }
 
-  renderData () {
+  renderData (bottomBox) {
     const { data, datasetRef, bounds } = this.props
     const { loading, error } = this.state
     const { structure } = datasetRef.dataset
@@ -155,21 +155,21 @@ export default class Dataset extends Base {
         onSetLoadingData={this.handleSetLoadingData}
         loading={loading}
         error={error}
-        bounds={bounds}
+        bounds={bottomBox}
                 // bounds={bottomBox}
               />
     )
   }
 
-  renderDescription (dataset) {
+  renderDescription (css, bottomBox, dataset) {
     if (!dataset.description) { return <p>No description given for this dataset</p> }
     return (
-      <p>{ dataset.description }</p>
+      <div className={css('overflow')} style={{ height: `${bottomBox.height - 79}` }}><p>{ dataset.description }</p></div>
     )
   }
 
   template (css) {
-    const { datasetRef, readme } = this.props
+    const { datasetRef, readme, topBox, bottomBox } = this.props
     // const path = "/" + address.replace(".", "/", -1)
     // const hasData = (dataset && (dataset.url || dataset.file || dataset.data));
     // TODO hasData is assigned a value but never used, consider depreciation
@@ -186,15 +186,16 @@ export default class Dataset extends Base {
     const { tabIndex } = this.state
     return (
       <div className={css('wrap')} >
-        <DatasetHeader datasetRef={datasetRef} onClickDelete={this.handleDeleteDataset(path, peer)} onClickExport={this.handleDownloadDataset(path, peer)} onClickEdit={this.handleEditMetadata(path, peer)} onGoBack={this.handleGoBack} onClickAdd={this.handleAddDataset(path, name, peer)} peer={peer} />
+        <DatasetHeader datasetRef={datasetRef} onClickDelete={this.handleDeleteDataset(path, peer)} onClickExport={this.handleDownloadDataset(path, peer)} onClickEdit={this.handleEditMetadata(path, peer)} onGoBack={this.handleGoBack} onClickAdd={this.handleAddDataset(path, name, peer)} peer={peer} bounds={topBox} />
         <TabPanel
           index={tabIndex}
           labels={['Info', 'Fields', 'Data', 'Queries', 'History']}
           onSelectPanel={this.changeTabIndex}
+          bounds={bottomBox}
           components={[
-            this.renderReadme(readme, dataset),
-            this.renderFieldsList(dataset),
-            this.renderData()
+            this.renderReadme(css, bottomBox, readme, dataset),
+            this.renderFieldsList(css, bottomBox, dataset),
+            this.renderData(bottomBox)
           ]}
         />
       </div>
@@ -207,6 +208,9 @@ export default class Dataset extends Base {
       wrap: {
         paddingLeft: 20,
         paddingRight: 20
+      },
+      overflow: {
+        overflow: 'auto'
       }
     }
   }
@@ -228,6 +232,9 @@ Dataset.propTypes = {
   goBack: PropTypes.func.isRequired,
   runQuery: PropTypes.func.isRequired,
   downloadDataset: PropTypes.func.isRequired,
+  bounds: PropTypes.object.isRequired,
+  topBox: PropTypes.object.isRequired,
+  bottomBox: PropTypes.object.isRequired,
   palette: Palette
 }
 

@@ -19,8 +19,8 @@ export default class Datasets extends Base {
     this.state = { loading: true, message: 'No Datasets', error: false }
 
     this.debounceRunDatasetSearch = debounce((searchString) => {
-      this.setState({ loading: false })
       searchString ? this.props.runDatasetSearch(searchString) : undefined
+      this.setState({ loading: false })
     }
     , 250);
 
@@ -28,7 +28,8 @@ export default class Datasets extends Base {
       'onSelectDataset',
       'handleDatasetSearch',
       'handleLoadDatasetsError',
-      'handleAddItem'
+      'handleAddItem',
+      'handleLoadNextPage'
     ].forEach((m) => { this[m] = this[m].bind(this) })
   }
 
@@ -37,7 +38,7 @@ export default class Datasets extends Base {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (this.state.loading && this.state.error || nextProps.datasets.length) {
+    if (this.state.loading && this.state.error || nextProps.datasets.length || nextProps.noDatasets) {
       this.setState({ loading: false })
     }
   }
@@ -62,7 +63,6 @@ export default class Datasets extends Base {
   }
 
   handleDatasetSearch (searchString) {
-    // console.log(searchString)
     this.props.setDatasetSearch(searchString)
     this.setState({ loading: true })
     this.debounceRunDatasetSearch(searchString)
@@ -79,11 +79,12 @@ export default class Datasets extends Base {
 
   template (css) {
     const { loading, message } = this.state
-    const { datasets, searchString, palette } = this.props
+    const { datasets, searchString, palette, bounds, noHeader } = this.props
     if (loading) {
       return (
         <div className={css('wrap')}>
           <header>
+            { noHeader ? undefined : <div><h1>Datasets</h1><hr /></div>}
             <input
               id={'search'}
               name={'search'}
@@ -104,6 +105,7 @@ export default class Datasets extends Base {
     return (
       <div className={css('wrap')}>
         <header>
+          { noHeader ? undefined : <div><h1>Datasets</h1><hr className={css('marginTop')} /></div>}
           <input
             id='search'
             name='search'
@@ -116,19 +118,26 @@ export default class Datasets extends Base {
           <button onClick={this.handleAddItem} className='btn btn-primary right'>Add</button>
           <hr />
         </header>
-        <List
-          data={datasets}
-          component={DatasetItem}
-          onSelectItem={this.onSelectDataset}
-          emptyComponent={<p>{message}</p>}
-          palette={palette}
-          />
+        <div className={css('list')}>
+          <List
+            data={datasets}
+            component={DatasetItem}
+            onSelectItem={this.onSelectDataset}
+            emptyComponent={<p>{message}</p>}
+            palette={palette}
+            loading={this.props.loading}
+            fetchedAll={this.props.fetchedAll}
+            onClick={this.handleLoadNextPage}
+            type='datasets'
+            />
+        </div>
       </div>
     )
   }
 
   styles (props) {
-    const { palette, padding } = this.props
+    const { palette, padding, bounds } = this.props
+    const height = bounds.height - 145
     let paddingLeft, paddingRight = 0
     if (padding) {
       paddingLeft = 20
@@ -137,13 +146,14 @@ export default class Datasets extends Base {
     return {
       wrap: {
         paddingLeft: paddingRight,
-        paddingRight: paddingRight
+        paddingRight: paddingRight,
+        height: `${bounds.height - 59}px`
       },
       searchBox: {
         display: 'inline-block',
         width: '50%',
-        fontSize: '1rem',
-        lineHeight: '1.25',
+        fontSize: '.9rem',
+        lineHeight: '.9rem',
         color: '#55595c',
         backgroundColor: '#fff',
         border: '0.5px solid rgba(0, 0, 0, 0.15)',
@@ -151,6 +161,14 @@ export default class Datasets extends Base {
         borderRadius: '0.25rem',
         marginBottom: 10,
         paddingLeft: 8
+      },
+      list: {
+        position: 'relative',
+        overflow: 'auto',
+        height: `${height}px`
+      },
+      marginTop: {
+        marginTop: 0
       }
     }
   }

@@ -14,7 +14,7 @@ export default class QueryEditor extends Base {
           value={query.queryString}
           completers={[datasetCompleter]}
           width={`${bounds.width - 40}px`}
-          height={`${bounds.height - 95}px`}
+          height={`${bounds.height - 97}px`}
           onChange={value => onChange({ queryString: value, address: query.address })}
         // TODO - reenable when adding back completion
         // setOptions={{

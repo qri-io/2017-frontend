@@ -4,8 +4,7 @@ import { Palette, defaultPalette } from '../propTypes/palette'
 import DatasetRefProps from '../propTypes/datasetRefProps'
 import PeerProps from '../propTypes/peer'
 
-import PageHeader from './PageHeader'
-import PeerItem from './item/PeerItem'
+import PeerHeader from './PeerHeader'
 import TabPanel from './TabPanel'
 import List from './List'
 import DatasetItem from './item/DatasetItem'
@@ -59,37 +58,42 @@ export default class Peer extends Base {
     this.setState({tabIndex: index})
   }
 
-  renderPeerDatasets () {
+  renderPeerDatasets (css, bottomBox) {
     const { namespace, palette } = this.props
     const { loading, message } = this.state
     if (loading) {
       return <Spinner />
     } else {
       return (
-        <List
+        <div className={css('overflow')} style={{height: `${bottomBox.height - 79}px`}}><List
           data={namespace}
           component={DatasetItem}
           // onSelectItem={this.onSelectDataset}
           emptyComponent={<p>{message}</p>}
           palette={palette}
           />
+        </div>
       )
     }
   }
 
   template (css) {
-    const { peer } = this.props
+    const { peer, topBox, bottomBox } = this.props
     const { tabIndex } = this.state
     return (
       <div className={css('wrap')}>
-        <PageHeader onGoBack={this.handleGoBack} />
-        <PeerItem data={peer} />
+        <PeerHeader
+          onGoBack={this.handleGoBack}
+          bounds={topBox}
+          peer={peer}
+        />
         <TabPanel
           index={tabIndex}
           labels={['Datasets']}
           onSelectPanel={this.changeTabIndex}
+          bounds={bottomBox}
           components={[
-            this.renderPeerDatasets()
+            this.renderPeerDatasets(css, bottomBox)
           ]}
           />
       </div>
@@ -101,6 +105,9 @@ export default class Peer extends Base {
       wrap: {
         paddingLeft: 20,
         paddingRight: 20
+      },
+      overflow: {
+        overflow: 'auto'
       }
     }
   }

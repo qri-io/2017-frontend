@@ -1,4 +1,5 @@
 import { selectUserByUsername } from './user'
+import { selectIds } from './pagination'
 
 const usersQueriesSection = 'popularQueries'
 const usersQueriesNode = 'popularQueries'
@@ -63,37 +64,5 @@ export function selectQueries (state, section, node) {
     node = usersQueriesNode
   }
   const { queries } = state.entities
-  return selectQueriesIds(state, section, node).map(id => queries[id])
-}
-
-export function selectQueriesIsFetching (state, section, node) {
-  if (!section && !node) {
-    section = usersQueriesSection
-    node = usersQueriesNode
-  }
-  return (state.pagination[section] && state.pagination[section][node]) ? state.pagination[section][node].isFetching : false
-}
-
-export function selectQueriesPageCount (state, section, node) {
-  if (!section && !node) {
-    section = usersQueriesSection
-    node = usersQueriesNode
-  }
-  return (state.pagination[section] && state.pagination[section][node]) ? state.pagination[section][node].pageCount : 0
-}
-
-export function selectQueriesFetchedAll (state, section, node) {
-  if (!section && !node) {
-    section = usersQueriesSection
-    node = usersQueriesNode
-  }
-  return (state.pagination[section] && state.pagination[section][node]) ? state.pagination[section][node].fetchedAll : false
-}
-
-export function selectQueriesIds (state, section, node) {
-  if (!section && !node) {
-    section = usersQueriesSection
-    node = usersQueriesNode
-  }
-  return (state.pagination[section] && state.pagination[section][node]) ? state.pagination[section][node].ids : []
+  return selectIds(state, section, node).map(id => queries[id])
 }

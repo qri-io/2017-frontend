@@ -11,10 +11,10 @@ function panelTrigger (i, fn) {
 
 export default class TabPanel extends Base {
   template (css) {
-    const { index, labels = [], components, onSelectPanel } = this.props
+    const { index, labels = [], components, onSelectPanel, bounds } = this.props
     const component = components[index]
     return (
-      <div className='wrapper'>
+      <div className={css('wrapper')} style={{height: `${bounds.height}px`}}>
         <div className={`${css('header')}`}>
           {labels.map((label, i) => {
             return (
@@ -27,7 +27,7 @@ export default class TabPanel extends Base {
           )}
         </div>
         <hr className={css('black')} />
-        <div className='wrapper'>
+        <div className={css('componentWrapper')} style={{height: `${bounds.height - 59}px`}}>
           {component}
         </div>
       </div>
@@ -39,7 +39,8 @@ export default class TabPanel extends Base {
     return {
       header: {
         fontWeight: 'bold',
-        padding: '15px 20px 0px 0px'
+        padding: '15px 20px 0px 0px',
+        height: '42px'
       },
       tab: {
         //  textTransform: 'uppercase',
@@ -57,6 +58,9 @@ export default class TabPanel extends Base {
       black: {
         'border-top': `1px solid ${palette.overlay}`,
         'margin-top': 0
+      },
+      componentWrapper: {
+        overflow: 'auto'
       }
     }
   }
@@ -67,6 +71,7 @@ TabPanel.propTypes = {
   labels: PropTypes.array.isRequired,
   components: PropTypes.array.isRequired,
   onSelectPanel: PropTypes.func.isRequired,
+  bounds: PropTypes.object.isRequired,
   palette: Palette
 }
 

@@ -7,7 +7,7 @@ export default class PageHeader extends Base {
   template (css) {
     const { onGoBack } = this.props
     return (
-      <div className='wrapper'>
+      <div className='wrap'>
         <div className=''>
           <a className={`left ${css('link')}`} onClick={onGoBack}>◂ Back</a>
           {this.props.onClickAdd ? <a onClick={this.props.onClickAdd} className={`right ${css('link')}`}>Add </a> : undefined}

@@ -12,6 +12,21 @@ const ConsoleContainer = connect(
     if (datasetRef) {
       data = state.entities.data[datasetRef.path] && state.entities.data[datasetRef.path].data
     }
+    const main = state.layout.main
+    const topBox = {
+      top: main.top,
+      left: 0,
+      width: main.width,
+      height: main.height * 0.4,
+      overflow: 'auto'
+    }
+    const bottomBox = {
+      top: main.height * 0.4,
+      left: 0,
+      width: main.width,
+      height: main.height * 0.6,
+      overflow: 'auto'
+    }
     const size = state.layout.size ? state.layout.size : ''
     return Object.assign({}, {
       loadingData: state.console.loadingData,
@@ -19,7 +34,8 @@ const ConsoleContainer = connect(
       queries: Object.keys(state.entities.queries).map(key => state.entities.queries[key]),
       datasets: Object.keys(state.entities.namespace).map(key => state.entities.namespace[key]),
       queryHistory: state.session.history,
-      layout: state.layout,
+      topBox,
+      bottomBox,
       chartOptions: state.console.chartOptions,
       history: ownProps.history,
       goBack: ownProps.history.goBack,
