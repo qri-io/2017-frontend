@@ -1,17 +1,25 @@
 import { connect } from 'react-redux'
 
-// import { loadSettings } from '../actions/settings'
-// import { selectSettings } from '../selectors/settings'
+import { loadSettings, setPanelIndex, updateProfile, saveProfile } from '../actions/settings'
+import { selectProfile, selectPanelIndex, selectTheme, selectSettings, selectLocalProfile } from '../selectors/settings'
 
 import Settings from '../components/Settings'
 
 const SettingsContainer = connect(
   (state, ownProps) => {
     return Object.assign({
-      // TODO - stuff.
+    	// settings: selectSettings(state),
+    	profile: selectProfile(state),
+    	index: selectPanelIndex(state),
+    	theme: selectTheme(state),
+    	localProfile: selectLocalProfile(state),
+    	bounds: state.layout.main
     }, ownProps)
   }, {
-    // loadSettings
+    loadSettings,
+    setPanelIndex,
+    updateProfile,
+    saveProfile
   }
 )(Settings, 'Settings')
 
