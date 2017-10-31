@@ -11,7 +11,7 @@ import ValidSelect from './ValidSelect'
 import ValidLicenseInput from './ValidLicenseInput'
 import ValidDateTimeInput from './ValidDateTimeInput'
 
-import DatasetRefProps from '../../propTypes/datasetRefProps.js'
+import DatasetRefProps from '../../propTypes/datasetRefProps'
 
 // Required fields to pass POD spec:
 // √ title
@@ -140,8 +140,8 @@ const MetadataForm = ({ datasetRef, validation, onChange, onCancel, onSubmit, sh
         onChange={onChange}
       />
       <br />
-      <button className='btn' onClick={handleCancel}>Cancel</button>
       <input className='btn btn-primary' type='submit' value='Save' onClick={handleSubmit} />
+      <button className='btn' onClick={handleCancel}>Cancel</button>
     </div>
   )
 }

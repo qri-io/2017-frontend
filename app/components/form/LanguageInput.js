@@ -19,7 +19,7 @@ class LanguageInput extends React.Component {
     return (
       <div className={(error && showError) ? 'validFormField form-group has-error' : 'validFormField form-group'}>
         {label && <label className='control-label' htmlFor={name}>{label}</label>}
-        <select id={name} name={name} className='form-control' value={value} multiple onChange={(e) => this.handleOnChange(e)}>
+        <select id={name} name={name} className='form-control' style={{overflow: 'auto'}} value={value} multiple onChange={(e) => this.handleOnChange(e)}>
           <option value='arabic'>arabic</option>
           <option value='bengali'>bengali</option>
           <option value='chinese'>chinese</option>
