@@ -8,6 +8,7 @@ import { Palette, defaultPalette } from '../propTypes/palette'
 import Base from './Base'
 import Header from './Header'
 import Menu from './Menu'
+import AppLoading from './AppLoading'
 
 export default class App extends Base {
   constructor (props) {
@@ -26,6 +27,11 @@ export default class App extends Base {
 
   componentWillMount () {
     // this.props.loadSessionUser()
+    if (!this.props.loadedApi) {
+      this._pingTimer = setInterval(() => {
+        this.props.pingApi()
+      }, 850)
+    }
 
     this._oldResize = window.onresize
     // debounce device resizing to not be a jerk on resize
@@ -39,6 +45,12 @@ export default class App extends Base {
 
   componentWillUnmount () {
     window.onresize = this._oldResize
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (!this.props.loadedApi && nextProps.loadedApi) {
+      clearInterval(this._pingTimer)
+    }
   }
 
   handleChange (nextValue) {
@@ -131,7 +143,11 @@ export default class App extends Base {
   }
 
   template (css) {
-    const { children, layout, palette } = this.props
+    const { children, layout, palette, loadedApi } = this.props
+
+    if (!loadedApi) {
+      return <AppLoading />
+    }
 
     return (
       <div className={css('app')} onClick={this.handleStageClick}>
@@ -218,6 +234,7 @@ App.propTypes = {
   resetErrorMessage: PropTypes.func.isRequired,
   resetMessage: PropTypes.func.isRequired,
   hideMenu: PropTypes.func.isRequired,
+  loadedApi: PropTypes.bool.isRequired,
   palette: Palette
 }
 

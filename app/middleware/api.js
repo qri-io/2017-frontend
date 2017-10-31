@@ -79,6 +79,9 @@ export const CALL_API = Symbol('Call API')
 export default store => next => action => {
   const callAPI = action[CALL_API]
   if (typeof callAPI === 'undefined') {
+    if (action[PING_API] == true) {
+      return pingMiddleware(next)
+    }
     return next(action)
   }
 
@@ -135,4 +138,38 @@ export default store => next => action => {
       }))
     }
   )
+}
+
+export const PING_API = Symbol('Ping API')
+export const PING_API_REQUEST = 'PING_API_REQUEST'
+export const PING_API_SUCCESS = 'PING_API_SUCCESS'
+export const PING_API_FAILURE = 'PING_API_FAILURE'
+
+function pingMiddleware (next) {
+  next({ type: PING_API_REQUEST })
+  return pingApi().then(
+    res => next({
+      type: PING_API_SUCCESS
+    }),
+    err => next({
+      type: PING_API_FAILURE
+    })
+    )
+}
+
+function pingApi () {
+  return fetch(`${API_ROOT}/status`, {
+    method: 'GET',
+    credentials: 'include'
+  })
+    .then(response => {
+      return response.json().then(json => ({ json, response }))
+    }).then(({ json, response }) => {
+      if (!response.ok) {
+        return Promise.reject(json)
+      } else if (response.status === 204) {
+        return {}
+      }
+      return json
+    })
 }

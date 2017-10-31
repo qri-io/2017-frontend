@@ -1,7 +1,15 @@
-import { APP_TOGGLE_MENU, APP_HIDE_MENU, APP_SHOW_MODAL, APP_HIDE_MODAL, SET_SEARCH, SET_CHART_CONFIG,
-SET_MESSAGE } from '../constants/app'
+import { PING_API_SUCCESS } from '../middleware/api'
+import {
+  APP_TOGGLE_MENU,
+  APP_HIDE_MENU,
+  APP_SHOW_MODAL,
+  APP_HIDE_MODAL,
+  SET_SEARCH,
+  SET_CHART_CONFIG,
+  SET_MESSAGE } from '../constants/app'
 
 const initialState = {
+  loadedApi: false,
   showMenu: false,
   modal: undefined,
   search: {},
@@ -10,6 +18,8 @@ const initialState = {
 
 export default function appReducer (state = initialState, action) {
   switch (action.type) {
+    case PING_API_SUCCESS:
+      return Object.assign({}, state, { loadedApi: true })
     case APP_TOGGLE_MENU:
       return Object.assign({}, state, { showMenu: !state.showMenu })
     case APP_HIDE_MENU:

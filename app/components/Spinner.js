@@ -35,6 +35,7 @@ export default class Spinner extends Base {
         height: '100%',
         width: 6,
         marginRight: 2,
+        borderRadius: 6,
         display: 'inline-block',
         animationName: spinnerAnim,
         animationDuration: '1.2s',
