@@ -31,7 +31,7 @@ export default class Queries extends Base {
   componentWillReceiveProps (nextProps) {
     if (!this.props.queries) {
       this.props.loadQueries()
-    } else if (this.state.loading && nextProps.queries.length > 0 && this.props.queries.length === 0) {
+    } else if (this.state.loading && nextProps.queries.length > 0 && this.props.queries.length === 0 || nextProps.fetchedAll) {
       this.setState({ loading: false })
     }
   }
@@ -64,7 +64,7 @@ export default class Queries extends Base {
           data={queries}
           component={QueryItem}
           onSelectItem={this.onSelectQuery}
-          emptyComponent={<p>No Queries</p>}
+          emptyComponent={<label>No Queries</label>}
           palette={palette}
           style={bounds}
           loading={this.props.loading}

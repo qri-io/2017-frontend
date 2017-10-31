@@ -10,7 +10,9 @@ export default class Peers extends Base {
   constructor (props) {
     super(props)
     // this.state = { loading: props.peers.length === 0 };
-    this.state = { loading: true }
+    this.state = {
+      loading: !(props.fetchedAll || props.peers.length > 0)
+    }
 
     this.debounceRunPeerSearch = debounce((searchString) => {
       this.setState({ loading: false })
@@ -35,7 +37,6 @@ export default class Peers extends Base {
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log(this.props.nextPage)
     if (this.state.loading === true && nextProps.peers.length > 0 && this.props.peers.length === 0 || nextProps.noPeers) {
       this.setState({ loading: false })
     }
@@ -90,7 +91,7 @@ export default class Peers extends Base {
           data={peers}
           component={PeerItem}
           onSelectItem={this.onSelectPeer}
-          emptyComponent={<p>No Peers</p>}
+          emptyComponent={<label>No Peers</label>}
           loading={this.props.loading}
           fetchedAll={this.props.fetchedAll}
           onClick={this.handleLoadNextPage}
