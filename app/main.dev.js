@@ -67,13 +67,13 @@ app.on('ready', async () => {
   //   productName: 'qri',
   //   companyName: 'qri.io'
   // })
-
   // console.log('starting backend...')
   // startBackend().then(createMainWindow).catch((err) => {
   //   dialog.showErrorBox('error starting qri backend', err)
   // })
+  createMainWindow()
   backend = new Backend()
-  backend.on('connect', createMainWindow)
+  // backend.on('connect', createMainWindow)
 })
 
 app.on('quit', () => {
@@ -88,13 +88,15 @@ function createMainWindow () {
     show: false,
     width: 1500,
     height: 728,
-    titleBarStyle: 'hiddenInset'
+    titleBarStyle: 'hiddenInset',
+    backgroundColor: '#0e2630'
   })
 
   mainWindow.loadURL(`file://${__dirname}/app.html`)
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
+  // mainWindow.webContents.on('did-finish-load', () => {
   mainWindow.webContents.on('did-finish-load', () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined')
@@ -108,8 +110,8 @@ function createMainWindow () {
   })
   mainWindow.setTouchBar(touchbar)
 
-  const menuBuilder = new MenuBuilder(mainWindow)
-  menuBuilder.buildMenu()
+  // const menuBuilder = new MenuBuilder(mainWindow)
+  // menuBuilder.buildMenu()
 
   // mainWindow.webContents.session.on('will-download', (event, item, webContents) => {
   //   console.log(event)

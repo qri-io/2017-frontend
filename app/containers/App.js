@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux'
 
-import { hideMenu, resetMessage, resetErrorMessage, showModal, hideModal } from '../actions/app'
+import { hideMenu, resetMessage, resetErrorMessage, showModal, hideModal, pingApi } from '../actions/app'
 import { layoutResize } from '../actions/layout'
 import { loadSessionUser } from '../actions/session'
 
@@ -12,6 +12,7 @@ import App from '../components/App'
 const AppContainer = connect(
   (state, ownProps) => {
     return {
+      apiConnection: state.app.apiConnection,
       message: state.app.message,
       errorMessage: state.errorMessage,
       user: selectSessionUser(state),
@@ -28,7 +29,8 @@ const AppContainer = connect(
     layoutResize,
     hideMenu,
     showModal,
-    hideModal
+    hideModal,
+    pingApi
   }
 )(App, 'App')
 

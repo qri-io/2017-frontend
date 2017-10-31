@@ -1,3 +1,4 @@
+import { PING_API } from '../middleware/api'
 import {
   APP_TOGGLE_MENU,
   APP_HIDE_MENU,
@@ -19,6 +20,12 @@ export function toggleMenu () {
 export function hideMenu () {
   return {
     type: APP_HIDE_MENU
+  }
+}
+
+export function pingApi () {
+  return {
+    [PING_API]: true
   }
 }
 

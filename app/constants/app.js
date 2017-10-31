@@ -1,3 +1,4 @@
+export const APP_PING_API = 'APP_PING_API'
 export const APP_TOGGLE_MENU = 'APP_TOGGLE_MENU'
 export const APP_HIDE_MENU = 'APP_HIDE_MENU'
 export const APP_SHOW_MODAL = 'APP_SHOW_MODAL'
