@@ -25,6 +25,7 @@ const changeSchema = new Schema('changes')
 const inviteSchema = new Schema('invites')
 const roleSchema = new Schema('roles')
 const metadataSchema = new Schema('metadata', { idAttribute: 'path' })
+const profileSchema = new Schema('profile', { idAttribute: 'type' })
 
 peerSchema.define({
   owner: userSchema
@@ -95,6 +96,10 @@ metadataSchema.new = (attrs) => {
   return Object.assign({}, attrs)
 }
 
+profileSchema.new = (attrs) => {
+  return Object.assign({}, attrs)
+}
+
 // Schemas for Github API responses.
 const Schemas = {
   SESSION_USER: sessionUserSchema,
@@ -120,7 +125,8 @@ const Schemas = {
   ROLE_ARRAY: arrayOf(roleSchema),
   STRUCTURED_DATA: structuredDataSchema,
   METADATA: metadataSchema,
-  METADATA_ARRAY: arrayOf(metadataSchema)
+  METADATA_ARRAY: arrayOf(metadataSchema),
+  PROFILE: profileSchema
 }
 
 export default Schemas

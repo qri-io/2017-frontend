@@ -12,6 +12,7 @@ import consoleReducer from './console'
 import appReducer from './app'
 import resultsReducer from './results'
 import locals from './locals'
+import settingsReducer from './settings'
 
 const initialEntitiesState = {
   app: {},
@@ -87,6 +88,7 @@ const rootReducer = combineReducers({
   layout: layoutReducer,
   app: appReducer,
   results: resultsReducer,
+  settings: settingsReducer,
   routing
 })
 
