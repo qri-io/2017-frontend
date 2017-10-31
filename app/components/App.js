@@ -27,7 +27,7 @@ export default class App extends Base {
 
   componentWillMount () {
     // this.props.loadSessionUser()
-    if (!this.props.loadedApi) {
+    if (this.props.apiConnection === 0) {
       this._pingTimer = setInterval(() => {
         this.props.pingApi()
       }, 850)
@@ -48,7 +48,7 @@ export default class App extends Base {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (!this.props.loadedApi && nextProps.loadedApi) {
+    if (!this.props.apiConnection && nextProps.apiConnection) {
       clearInterval(this._pingTimer)
     }
   }
@@ -143,9 +143,9 @@ export default class App extends Base {
   }
 
   template (css) {
-    const { children, layout, palette, loadedApi } = this.props
+    const { children, layout, palette, apiConnection } = this.props
 
-    if (!loadedApi) {
+    if (!apiConnection) {
       return <AppLoading />
     }
 
@@ -234,7 +234,7 @@ App.propTypes = {
   resetErrorMessage: PropTypes.func.isRequired,
   resetMessage: PropTypes.func.isRequired,
   hideMenu: PropTypes.func.isRequired,
-  loadedApi: PropTypes.bool.isRequired,
+  apiConnection: PropTypes.bool.isRequired,
   palette: Palette
 }
 

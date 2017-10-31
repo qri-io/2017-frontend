@@ -12,7 +12,7 @@ import App from '../components/App'
 const AppContainer = connect(
   (state, ownProps) => {
     return {
-      loadedApi: state.app.loadedApi,
+      apiConnection: state.app.apiConnection,
       message: state.app.message,
       errorMessage: state.errorMessage,
       user: selectSessionUser(state),

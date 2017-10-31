@@ -9,7 +9,11 @@ import {
   SET_MESSAGE } from '../constants/app'
 
 const initialState = {
-  loadedApi: false,
+  // apiConnection:
+  // 0 = never connected
+  // 1 = successfully connected
+  // -1 = connection failed
+  apiConnection: 0,
   showMenu: false,
   modal: undefined,
   search: {},
@@ -19,7 +23,7 @@ const initialState = {
 export default function appReducer (state = initialState, action) {
   switch (action.type) {
     case PING_API_SUCCESS:
-      return Object.assign({}, state, { loadedApi: true })
+      return Object.assign({}, state, { apiConnection: 1 })
     case APP_TOGGLE_MENU:
       return Object.assign({}, state, { showMenu: !state.showMenu })
     case APP_HIDE_MENU:
