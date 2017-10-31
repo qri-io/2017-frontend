@@ -143,7 +143,7 @@ export default class App extends Base {
   }
 
   template (css) {
-    const { children, layout, palette, apiConnection } = this.props
+    const { children, layout, palette, apiConnection, location } = this.props
 
     if (!apiConnection) {
       return <AppLoading />
@@ -154,7 +154,7 @@ export default class App extends Base {
         {this.renderMessage(css)}
         {this.renderErrorMessage(css)}
         <Header palette={palette} style={layout.navbar} />
-        <Menu palette={palette} style={layout.sidebar} />
+        <Menu palette={palette} location={location} style={layout.sidebar} />
         <div
           className='main'
           style={Object.assign({
@@ -234,7 +234,7 @@ App.propTypes = {
   resetErrorMessage: PropTypes.func.isRequired,
   resetMessage: PropTypes.func.isRequired,
   hideMenu: PropTypes.func.isRequired,
-  apiConnection: PropTypes.bool.isRequired,
+  apiConnection: PropTypes.number.isRequired,
   palette: Palette
 }
 

@@ -15,8 +15,12 @@ const ADD_DATASET_MODAL = 'ADD_DATASET_MODAL'
 export default class Datasets extends Base {
   constructor (props) {
     super(props)
-    // this.state = { loading: props.datasets.length === 0 };
-    this.state = { loading: true, message: 'No Datasets', error: false }
+
+    this.state = {
+      loading: !(props.fetchedAll || props.datasets.length > 0),
+      message: 'No Datasets',
+      error: false
+    }
 
     this.debounceRunDatasetSearch = debounce((searchString) => {
       searchString ? this.props.runDatasetSearch(searchString) : undefined
@@ -38,7 +42,7 @@ export default class Datasets extends Base {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (this.state.loading && this.state.error || nextProps.datasets.length || nextProps.noDatasets) {
+    if (this.state.loading && this.state.error || nextProps.datasets.length || nextProps.fetchedAll || nextProps.noDatasets) {
       this.setState({ loading: false })
     }
   }
@@ -123,7 +127,7 @@ export default class Datasets extends Base {
             data={datasets}
             component={DatasetItem}
             onSelectItem={this.onSelectDataset}
-            emptyComponent={<p>{message}</p>}
+            emptyComponent={<label>{message}</label>}
             palette={palette}
             loading={this.props.loading}
             fetchedAll={this.props.fetchedAll}

@@ -1,21 +1,26 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Palette, defaultPalette } from '../propTypes/palette'
 import Base from './Base'
 
 export default class Menu extends Base {
+  checkActive (location) {
+    return (path) => (location.pathname === path) ? 'active' : 'inactive'
+  }
+
   template (css) {
-    const { style } = this.props
+    const { style, location } = this.props
+    const isActive = this.checkActive(location)
 
     return (
       <div className={css('menu')} style={style}>
         <div className={css('items')}>
-          <Link className={css('item')} to='/'>navigateright</Link>
-          <Link className={css('item')} to='/datasets'>layers</Link>
-          <Link className={css('item')} to='/peers'>usergroup</Link>
-          <Link className={css('item')} to='/settings'>settings</Link>
-          <Link className={css('item')} to='/stylesheet'>settingsfile</Link>
+          <Link className={css('item', isActive('/navigateright'))} to='/'>navigateright</Link>
+          <Link className={css('item', isActive('/datasets'))} to='/datasets'>layers</Link>
+          <Link className={css('item', isActive('/peers'))} to='/peers'>usergroup</Link>
+          <Link className={css('item', isActive('/settings'))} to='/settings'>settings</Link>
+          <Link className={css('item', isActive('/stylesheet'))} to='/stylesheet'>settingsfile</Link>
         </div>
       </div>
     )
@@ -33,20 +38,32 @@ export default class Menu extends Base {
       items: {
         marginTop: 50
       },
+      active: {
+        opacity: 1,
+        color: palette.a
+      },
+      inactive: {
+        opacity: 0.75
+      },
       item: {
         fontFamily: 'SSPika',
         display: 'block',
         textAlign: 'center',
+        textDecoration: 'none',
         fontSize: 20,
         marginTop: 10,
+        transition: 'all 0.25s',
         color: palette.text,
         ':active': {
           color: palette.a,
-          textDecoation: 'none'
+          textDecoration: 'none'
+        },
+        ':focus': {
+          textDecoration: 'none'
         },
         ':hover': {
-          color: palette.a,
-          textDecoation: 'none'
+          opacity: 1,
+          color: palette.a
         }
       }
     }
@@ -54,9 +71,11 @@ export default class Menu extends Base {
 }
 
 Menu.propTypes = {
-  palette: Palette
+  palette: Palette,
+  location: PropTypes.object
 }
 
 Menu.defaultProps = {
-  palette: defaultPalette
+  palette: defaultPalette,
+  location: {}
 }
