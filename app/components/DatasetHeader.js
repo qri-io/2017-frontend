@@ -43,7 +43,7 @@ DatasetHeader.propTypes = {
   // dataset data model
   datasetRef: DatasetRefProps,
   onGoBack: PropTypes.func,
-  // exportPath: PropTypes.string,
+  exportPath: PropTypes.string,
   onClickEdit: PropTypes.func,
   onClickDelete: PropTypes.func,
   onClickAdd: PropTypes.func,

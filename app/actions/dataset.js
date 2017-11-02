@@ -236,23 +236,23 @@ export function saveDataset (datasetRef) {
   }
 }
 
-export function deleteDataset (id, redirectUrl = '') {
+export function deleteDataset (name, path, redirectURL = '') {
   return (dispatch) => {
     return dispatch({
       [CALL_API]: {
         types: [DATASET_DELETE_REQUEST, DATASET_DELETE_SUCCESS, DATASET_DELETE_FAILURE],
-        endpoint: `/datasets/${id}`,
+        endpoint: `/datasets${path}`,
         method: 'DELETE',
         schema: Schemas.DATASET,
-        id
+        data: {name, path}
       }
     }).then((action) => {
       if (action.type === DATASET_DELETE_SUCCESS) {
         // remove the model locally
-        dispatch(removeModel(Schemas.DATASET, id))
+        dispatch(removeModel(Schemas.DATASET, path))
 
         // on successful delete, redirect
-        if (redirectUrl !== '') {
+        if (redirectURL !== '') {
           dispatch(push(redirectUrl))
         }
 
@@ -261,9 +261,10 @@ export function deleteDataset (id, redirectUrl = '') {
         setTimeout(() => {
           dispatch(resetMessage())
         }, 5000)
+      } else {
+        // dispatch(setMessage('Error deleting dataset'))
+        return null
       }
-
-      return null
     })
   }
 }
@@ -373,13 +374,13 @@ export function loadDatasetChanges (datasetId, page = 1, pageSize = 50) {
   }
 }
 
-export function downloadDataset (hash = '') {
+export function downloadDataset (path = '') {
   return {
     [CALL_API]: {
       types: [DATASET_DOWNLOAD_REQUEST, DATASET_DOWNLOAD_SUCCESS, DATASET_DOWNLOAD_FAIL],
-      endpoint: `/download${hash}`,
+      endpoint: `/download${path}`,
       schema: Schemas.DATASET
-      // data: { hash }
+      // data: { path }
     }
   }
 }

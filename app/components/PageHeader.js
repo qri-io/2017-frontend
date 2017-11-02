@@ -42,10 +42,10 @@ export default class PageHeader extends Base {
 }
 
 PageHeader.propTypes = {
+  name: PropTypes.string,
   onGoBack: PropTypes.func.isRequired,
   onClickAdd: PropTypes.func,
-  onClickDownload: PropTypes.func,
-  // exportPath: PropTypes.string,
+  exportPath: PropTypes.string,
   onClickDelete: PropTypes.func,
   onClickEdit: PropTypes.func,
   onClickShowHelp: PropTypes.func,

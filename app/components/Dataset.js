@@ -16,8 +16,6 @@ import FieldsList from './FieldsList'
 import QueryEditor from './QueryEditor'
 import DataTable from './DataTable'
 
-import { BrowserWindow } from 'electron'
-
 export default class Dataset extends Base {
   constructor (props) {
     super(props)
@@ -69,11 +67,11 @@ export default class Dataset extends Base {
     }
   }
 
-  handleDeleteDataset (path, peer) {
+  handleDeleteDataset (peer) {
     if (!peer) {
-      return (path) => {
+      return () => {
         if (confirm('are you sure you want to delete this dataset?')) {
-          this.props.deleteDataset(path, '/')
+          this.props.deleteDataset(this.props.datasetRef.name, this.props.path, '/')
         }
       }
     } else {
@@ -183,9 +181,12 @@ export default class Dataset extends Base {
 
     const { dataset, path, name, peer } = datasetRef
     const { tabIndex } = this.state
+    console.log('in dataset template')
+    console.log(path)
+    console.log(peer)
     return (
       <div className={css('wrap')} >
-        <DatasetHeader datasetRef={datasetRef} onClickDelete={this.handleDeleteDataset(path, peer)} exportPath={this.handleDownloadDataset(path, peer)} onClickEdit={this.handleEditMetadata(path, peer)} onGoBack={this.handleGoBack} onClickAdd={this.handleAddDataset(path, name, peer)} peer={peer} bounds={topBox} />
+        <DatasetHeader datasetRef={datasetRef} onClickDelete={this.handleDeleteDataset(peer)} exportPath={this.handleDownloadDataset(path, peer)} onClickEdit={this.handleEditMetadata(path, peer)} onGoBack={this.handleGoBack} onClickAdd={this.handleAddDataset(path, name, peer)} peer={peer} bounds={topBox} />
         <TabPanel
           index={tabIndex}
           labels={['Info', 'Fields', 'Data', 'Queries', 'History']}
@@ -230,7 +231,6 @@ Dataset.propTypes = {
   path: PropTypes.string,
   goBack: PropTypes.func.isRequired,
   runQuery: PropTypes.func.isRequired,
-  // downloadDataset: PropTypes.func.isRequired,
   bounds: PropTypes.object.isRequired,
   topBox: PropTypes.object.isRequired,
   bottomBox: PropTypes.object.isRequired,
