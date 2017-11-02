@@ -42,7 +42,7 @@ const DatasetContainer = connect(
     setQuery,
     runQuery,
     downloadQuery,
-    downloadDataset,
+    // downloadDataset,
     deleteDataset,
     addDataset,
     loadDatasetData,

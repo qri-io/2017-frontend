@@ -5,13 +5,13 @@ import Base from './Base'
 
 export default class PageHeader extends Base {
   template (css) {
-    const { onGoBack } = this.props
+    const { onGoBack, name } = this.props
     return (
       <div className='wrap'>
         <div className=''>
           <a className={`left ${css('link')}`} onClick={onGoBack}>◂ Back</a>
           {this.props.onClickAdd ? <a onClick={this.props.onClickAdd} className={`right ${css('link')}`}>Add </a> : undefined}
-          {this.props.onClickExport ? <a onClick={this.props.onClickExport} className={`right ${css('link')}`}>Export </a> : undefined}
+          {this.props.exportPath ? <a download={`${name}.zip`} href={`${this.props.exportPath}`} className={`right ${css('link')}`}>Export </a> : undefined}
           {this.props.onClickEdit ? <a onClick={this.props.onClickEdit} className={`right ${css('link')}`}>Edit </a> : undefined}
           {this.props.onClickDelete ? <a onClick={this.props.onClickDelete} className={`right ${css('link')}`}>Delete </a> : undefined}
           {this.props.onClickShowHelp ? <a onClick={this.props.onClickShowHelp} className={`right ${css('link')}`}>Show Help</a> : undefined}
@@ -45,7 +45,7 @@ PageHeader.propTypes = {
   onGoBack: PropTypes.func.isRequired,
   onClickAdd: PropTypes.func,
   onClickDownload: PropTypes.func,
-  onClickExport: PropTypes.func,
+  // exportPath: PropTypes.string,
   onClickDelete: PropTypes.func,
   onClickEdit: PropTypes.func,
   onClickShowHelp: PropTypes.func,

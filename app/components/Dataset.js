@@ -16,6 +16,8 @@ import FieldsList from './FieldsList'
 import QueryEditor from './QueryEditor'
 import DataTable from './DataTable'
 
+import { BrowserWindow } from 'electron'
+
 export default class Dataset extends Base {
   constructor (props) {
     super(props)
@@ -61,10 +63,7 @@ export default class Dataset extends Base {
 
   handleDownloadDataset (path, peer) {
     if (!peer) {
-      return (e) => {
-        e.preventDefault()
-        this.props.downloadDataset(path)
-      }
+      return `${__BUILD__.API_URL}/download${path}`
     } else {
       return undefined
     }
@@ -121,7 +120,7 @@ export default class Dataset extends Base {
 
   renderFieldsList (css, bottomBox, dataset) {
     if (dataset.structure && dataset.structure.schema) {
-      return (<div className={css('overflow')} style={{ height: `${bottomBox.height - 79}` }}><FieldsList fields={dataset.structure.schema.fields} /></div>)
+      return (<div className={css('overflow')} style={{ height: `${bottomBox.height - 79}px` }}><FieldsList fields={dataset.structure.schema.fields} /></div>)
     } else {
       return (<p>This dataset currently has no specified fields</p>)
     }
@@ -164,7 +163,7 @@ export default class Dataset extends Base {
   renderDescription (css, bottomBox, dataset) {
     if (!dataset.description) { return <p>No description given for this dataset</p> }
     return (
-      <div className={css('overflow')} style={{ height: `${bottomBox.height - 79}` }}><p>{ dataset.description }</p></div>
+      <div className={css('overflow')} style={{ height: `${bottomBox.height - 79}px` }}><p>{ dataset.description }</p></div>
     )
   }
 
@@ -186,7 +185,7 @@ export default class Dataset extends Base {
     const { tabIndex } = this.state
     return (
       <div className={css('wrap')} >
-        <DatasetHeader datasetRef={datasetRef} onClickDelete={this.handleDeleteDataset(path, peer)} onClickExport={this.handleDownloadDataset(path, peer)} onClickEdit={this.handleEditMetadata(path, peer)} onGoBack={this.handleGoBack} onClickAdd={this.handleAddDataset(path, name, peer)} peer={peer} bounds={topBox} />
+        <DatasetHeader datasetRef={datasetRef} onClickDelete={this.handleDeleteDataset(path, peer)} exportPath={this.handleDownloadDataset(path, peer)} onClickEdit={this.handleEditMetadata(path, peer)} onGoBack={this.handleGoBack} onClickAdd={this.handleAddDataset(path, name, peer)} peer={peer} bounds={topBox} />
         <TabPanel
           index={tabIndex}
           labels={['Info', 'Fields', 'Data', 'Queries', 'History']}
@@ -231,7 +230,7 @@ Dataset.propTypes = {
   path: PropTypes.string,
   goBack: PropTypes.func.isRequired,
   runQuery: PropTypes.func.isRequired,
-  downloadDataset: PropTypes.func.isRequired,
+  // downloadDataset: PropTypes.func.isRequired,
   bounds: PropTypes.object.isRequired,
   topBox: PropTypes.object.isRequired,
   bottomBox: PropTypes.object.isRequired,

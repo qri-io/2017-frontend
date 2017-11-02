@@ -374,7 +374,6 @@ export function loadDatasetChanges (datasetId, page = 1, pageSize = 50) {
 }
 
 export function downloadDataset (hash = '') {
-  console.log(hash)
   return {
     [CALL_API]: {
       types: [DATASET_DOWNLOAD_REQUEST, DATASET_DOWNLOAD_SUCCESS, DATASET_DOWNLOAD_FAIL],
