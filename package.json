@@ -136,6 +136,7 @@
     "lodash.debounce": "4.0.8",
     "node-fetch": "^1.7.3",
     "normalizr": "2.1.0",
+    "prop-types": "^15.6.0",
     "react": "15.6.1",
     "react-ace": "5.2.0",
     "react-addons-shallow-compare": "15.6.2",
