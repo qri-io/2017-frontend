@@ -261,10 +261,8 @@ export function deleteDataset (name, path, redirectURL = '') {
         setTimeout(() => {
           dispatch(resetMessage())
         }, 5000)
-      } else {
-        // dispatch(setMessage('Error deleting dataset'))
-        return null
       }
+      return null
     })
   }
 }
