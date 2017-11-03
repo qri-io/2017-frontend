@@ -9,7 +9,6 @@
   width: 100%;
   // // Make inputs at least the height of their button counterpart (base line-height + padding + border)
   // height: $input-height;
-  //padding: $input-padding-y $input-padding-x;
   padding-bottom: ($font-size-base * .5);
   font-size: ($font-size-base * 1.2);
   line-height: $input-line-height;
@@ -23,7 +22,6 @@
   border-bottom: $input-border-width solid $input-border-color;
   // overflow: auto;
   // Note: This has no effect on <select>s in some browsers, due to the limited stylability of `<select>`s in CSS.
-  // @include border-radius($input-border-radius);
   @include box-shadow($input-box-shadow);
   @include transition(border-color ease-in-out .15s, box-shadow ease-in-out .15s);
 
@@ -32,9 +30,6 @@
     background-color: transparent;
     border: 0;
   }
-  //&:hover {
-  //  background-color: rgba(0,0,0,.4);
-  //}
   &:focus {
     border-bottom-color: $input-border-focus;
     outline: none;
