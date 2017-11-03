@@ -20,7 +20,7 @@
   border: $input-btn-border-width solid $input-border-color;
   // overflow: auto;
   // Note: This has no effect on <select>s in some browsers, due to the limited stylability of `<select>`s in CSS.
-  @include border-radius($input-border-radius);
+  // @include border-radius($input-border-radius);
   @include box-shadow($input-box-shadow);
   @include transition(border-color ease-in-out .15s, box-shadow ease-in-out .15s);
 
@@ -28,6 +28,9 @@
   &::-ms-expand {
     background-color: transparent;
     border: 0;
+  }
+  &:hover {
+    background-color: rgba(0,0,0,.4);
   }
 
   // Customize the `:focus` state to imitate native WebKit styles.
@@ -70,6 +73,7 @@ select.form-control {
     // See https://github.com/twbs/bootstrap/issues/19398.
     color: $input-color;
     background-color: $input-bg;
+    outline: none;
   }
 }
 
