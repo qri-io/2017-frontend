@@ -9,18 +9,19 @@
   width: 100%;
   // // Make inputs at least the height of their button counterpart (base line-height + padding + border)
   // height: $input-height;
-  padding: $input-padding-y $input-padding-x;
-  font-size: $font-size-base;
+  padding-bottom: ($font-size-base * .5);
+  font-size: ($font-size-base * 1.2);
   line-height: $input-line-height;
   color: $input-color;
+  font-weight: 300;
   background-color: $input-bg;
   // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214.
   background-image: none;
   background-clip: padding-box;
-  border: $input-btn-border-width solid $input-border-color;
+  border: none;
+  border-bottom: $input-border-width solid $input-border-color;
   // overflow: auto;
   // Note: This has no effect on <select>s in some browsers, due to the limited stylability of `<select>`s in CSS.
-  @include border-radius($input-border-radius);
   @include box-shadow($input-box-shadow);
   @include transition(border-color ease-in-out .15s, box-shadow ease-in-out .15s);
 
@@ -28,6 +29,10 @@
   &::-ms-expand {
     background-color: transparent;
     border: 0;
+  }
+  &:focus {
+    border-bottom-color: $input-border-focus;
+    outline: none;
   }
 
   // Customize the `:focus` state to imitate native WebKit styles.
@@ -70,8 +75,10 @@ select.form-control {
     // See https://github.com/twbs/bootstrap/issues/19398.
     color: $input-color;
     background-color: $input-bg;
+    outline: none;
   }
 }
+
 
 // Make file inputs better match text inputs by forcing them to new lines.
 .form-control-file,
@@ -362,4 +369,15 @@ select.form-control-lg {
       top: 0;
     }
   }
+}
+
+
+// Help Hints
+//
+// Help Hints appear underneath an input and describe what is needed in that particular field
+//
+//
+.help_hint {
+  font-size: $font-size-sm;
+  color: $gray;
 }

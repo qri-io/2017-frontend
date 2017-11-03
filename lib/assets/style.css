@@ -759,22 +759,21 @@ dl.row > dd + dt {
   display: block;
   width: 100%;
   padding: 0.5rem 0.75rem;
-  font-size: 1rem;
-  line-height: 1.25;
-  color: #55595c;
-  background-color: #fff;
+  font-size: .9rem;
+  line-height: .9rem;
+  color: #FFFFFF;
+  background-color: #0b1d24;
   background-image: none;
   background-clip: padding-box;
   border: 0.5px solid rgba(0, 0, 0, 0.15);
-  overflow: auto;
-  border-radius: 0.25rem; }
+  overflow: auto; }
   .form-control::-ms-expand {
     background-color: transparent;
     border: 0; }
+  .form-control:hover {
+    background: rgba(0,0,0,.4); }
   .form-control:focus {
-    color: #55595c;
-    background-color: #fff;
-    border-color: #66afe9;
+    background: rgba(0,0,0,.4);
     outline: none; }
   .form-control::placeholder {
     color: #999;
