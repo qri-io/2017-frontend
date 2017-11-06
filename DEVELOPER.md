@@ -18,6 +18,17 @@ machine:
 * [Git](http://git-scm.com/): The [Github Guide to
   Installing Git][git-setup] is a good source of information.
 
+* [Node.js v8.6.X (LTS)](http://nodejs.org): 
+    * If you don't have node installed, we recommend using [homebrew][homebrew] to manage your package of node.
+
+    ```shell
+    # Install Homebrew by running this script and following the prompts (pulled straight from the homebrew homepage)
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+    # install node
+    brew install node 
+    ```
+
 * [Yarn](https://yarnpkg.com): We use Yarn to install our dependencies
   (rather than using npm). See the detailed [installation instructions][yarn-install].
 
@@ -50,6 +61,12 @@ yarn install
 
 # Run Qri in the developer environment:
 yarn dev
+
+# Use standard to lint the files:
+standard
+
+# Create a packaged version of Qri:
+yarn package
 ```
 
 **Note:** Qri is currently only tested for macOS.
@@ -58,11 +75,20 @@ The `yarn dev` command will launch a development version of the Qri electron app
 
 To get access to Chrome Developer Tools, use the keyboard shortcut Command-Shift-C.
 
+
+
 ## <a name="rules"></a> Coding Rules
 
 To ensure consistency throughout the source code, keep these rules in mind as you are working:
 
-* We use [standardJS](style) coding style
+* We use [standardJS](style) coding style, please use standard to lint any changes before committing:
+
+```shell
+# Use standard to lint files
+standard
+```
+
+The output will point you to which files/lines need to be changed in order to meet the standardJS formatting.
 
 ## <a name="commits"></a> Git Commit Guidelines
 

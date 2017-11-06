@@ -62,25 +62,16 @@ Before you submit your issue search the archive, maybe your question was already
 If your issue appears to be a bug, and hasn't been reported, open a new issue. Help us to maximize
 the effort we can spend fixing issues and adding new features, by not reporting duplicate issues.
 
-The "[new issue][github-new-issue]" form contains a number of prompts that you should fill out to
-make it easier to understand and categorize the issue.
-
-In general, providing the following information will increase the chances of your issue being dealt
-with quickly:
+Please use this form when filing a [new issue][github-new-issue]:
 
 * **Overview of the Issue** - if an error is being thrown a non-minified stack trace helps
 * **Motivation for or Use Case** - explain why this is a bug for you
 * **Qri Version(s)** - is it a regression?
 * **Operating System** - is this a problem with all browsers or only specific ones?
-* **Reproduce the Error** - provide a live example (using [Plunker][plunker] or
-  [JSFiddle][jsfiddle]) or an unambiguous set of steps.
+* **Reproduce the Error** - please provide an unambiguous set of steps we can use to reproduce the error.
 * **Related Issues** - has a similar issue been reported before?
 * **Suggest a Fix** - if you can't fix the bug yourself, perhaps you can point to what might be
   causing the problem (line of code or commit)
-
-Here is a great example of a well defined issue: https://github.com/angular/angular.js/issues/5069.
-
-**If you get help, help others. Good karma rulez!**
 
 ## <a name="submit-pr"></a> Pull Request Submission Guidelines
 Before you submit your pull request consider the following guidelines:
@@ -96,11 +87,6 @@ Before you submit your pull request consider the following guidelines:
 
 * Create your patch commit.
 * Follow our [Coding Rules][developers.rules].
-* If the changes affect public APIs, change or add relevant [documentation][developers.documentation].
-* Run the Qri [unit][developers.tests-unit] and [E2E test][developers.tests-e2e] suites, and ensure that all tests
-  pass. It is generally sufficient to run the tests only on Chrome, as our Travis integration will
-  run the tests on all supported browsers.
-* Run `grunt eslint` to check that you have followed the automatically enforced coding rules
 * Commit your changes using a descriptive commit message that follows our
   [commit message conventions][developers.commits]. Adherence to the
   [commit message conventions][developers.commits] is required, because release notes are
@@ -110,26 +96,14 @@ Before you submit your pull request consider the following guidelines:
     git commit -a
     ```
   Note: the optional commit `-a` command line option will automatically "add" and "rm" edited files.
-
-* Before creating the Pull Request, package and run all tests a last time:
-
-    ```shell
-    grunt test
-    ```
-
 * Push your branch to GitHub:
 
     ```shell
     git push origin my-fix-branch
     ```
 
-* In GitHub, send a pull request to `angular.js:master`. This will trigger the check of the
-[Contributor License Agreement](#cla) and the Travis integration.
-
-* If you find that the Travis integration has failed, look into the logs on Travis to find out
-if your changes caused test failures, the commit message was malformed etc. If you find that the
-tests failed or times out for unrelated reasons, you can ping a team member so that the build can be
-restarted.
+* In GitHub, send a pull request to `frontend:master`. This will trigger the check of the
+[Contributor License Agreement](#cla).
 
 * If we suggest changes, then:
 
@@ -195,11 +169,7 @@ It's a quick process, we promise!
 [corporate-cla]: http://code.google.com/legal/corporate-cla-v1.0.html
 [developers]: DEVELOPERS.md
 [developers.commits]: DEVELOPERS.md#commits
-[developers.documentation]: DEVELOPERS.md#documentation
 [developers.rules]: DEVELOPERS.md#rules
-[developers.setup]: DEVELOPERS.md#setup
-[developers.tests-e2e]: DEVELOPERS.md#e2e-tests
-[developers.tests-unit]: DEVELOPERS.md#unit-tests
 [github-issues]: https://github.com/qri-io/frontend/issues
 [github-new-issue]: https://github.com/qri-io/frontend/issues/new
 [github]: https://github.com/qri-io/frontend
