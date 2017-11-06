@@ -191,7 +191,7 @@ It's a quick process, we promise!
 
 
 
-[coc]: https://github.com/qri-io/docs/CODE_OF_CONDUCT.md
+[coc]: https://github.com/qri-io/frontend/CODE_OF_CONDUCT.md
 [corporate-cla]: http://code.google.com/legal/corporate-cla-v1.0.html
 [developers]: DEVELOPERS.md
 [developers.commits]: DEVELOPERS.md#commits
@@ -207,6 +207,5 @@ It's a quick process, we promise!
 [jsfiddle]: http://jsfiddle.net/
 [plunker]: http://plnkr.co/edit
 
-------
 
 ###### This documentation has been adapted from the [Data Together](https://github.com/datatogether/datatogether), [Hyper](https://github.com/zeit/hyper), and [AngularJS](https://github.com/angular/angularJS) documentation.

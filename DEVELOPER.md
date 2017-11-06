@@ -142,6 +142,5 @@ A detailed explanation can be found in this [document][commit-message-format].
 [style]: https://standardjs.com
 [yarn-install]: https://yarnpkg.com/en/docs/install
 
-------
 
 ###### This documentation has been adapted from the [Data Together](https://github.com/datatogether/datatogether), [Hyper](https://github.com/zeit/hyper), and [AngularJS](https://github.com/angular/angularJS) documentation.

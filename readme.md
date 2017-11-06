@@ -25,22 +25,6 @@ We've set up a separate document for our [contributor guildlines](https://github
 
 We've set up a separate document for [developer guildlines](https://github.com/qri-io/frontend/DEVELOPER.md)!
 
-If you are on macOS:
 
-1) You wil lneed to have Yarn installed. If you have never installed Yarn before, you can find out how at: https://yarnpkg.com/en/docs/install.
-2. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
-3. Install the dependencies: `yarn install`
-4. Build the code and watch for changes: `yarn dev`
-
-To make sure that your code works in the finished application, you can generate the binaries like this:
-
-**NOTE FROM KASEY: I FORGET HOW TO GENERATE THE ELECTRON APP**
-```bash
-yarn run dist
-```
-
-After that, you will see the binary in the `./dist` folder!
-
-------
 
 ###### This documentation has been adapted from the [Data Together](https://github.com/datatogether/datatogether), [Hyper](https://github.com/zeit/hyper), and [AngularJS](https://github.com/angular/angularJS) documentation.
