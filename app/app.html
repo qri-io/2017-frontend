@@ -13,10 +13,18 @@
           document.getElementsByTagName('head')[0].appendChild(link);
         }
       }());
+      document.addEventListener('dragover', function (event) {
+        event.preventDefault();
+        return false;
+      }, false);
+      document.addEventListener('drop', function (event) {
+        event.preventDefault();
+        return false;
+      }, false);
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root" ></div>
     <script>
       {
         const scripts = [];
