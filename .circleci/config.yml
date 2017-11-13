@@ -17,10 +17,10 @@ jobs:
             - ./node_modules
       - run:
           name: test
-          command: npm test
+          command: yarn test
       - run:
           name: upload to codecov
-          command: npm run codecov
+          command: yarn codecov
       - store_artifacts:
           path: test-results.xml
           prefix: tests
