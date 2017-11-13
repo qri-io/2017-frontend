@@ -11,7 +11,7 @@
     "url": "git+https://github.com/qri-io/frontend.git"
   },
   "author": {
-    "name": "Qri, Inc.",
+    "name": "qri, inc.",
     "email": "sparkle_pony_2000@qri.io",
     "url": "github.com/qri-io"
   },
@@ -25,7 +25,7 @@
     "build-main": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.main.prod.js --colors",
     "build-renderer": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.prod.js --colors",
     "dev": "cross-env START_HOT=1 npm run start-renderer-dev",
-    "lint": "eslint --cache --format=node_modules/eslint-formatter-pretty .",
+    "lint": "standard",
     "lint-fix": "npm run lint -- --fix",
     "lint-styles": "stylelint app/*.css app/components/*.css --syntax scss",
     "lint-styles-fix": "stylefmt -r app/*.css app/components/*.css",
@@ -33,7 +33,6 @@
     "package-all": "npm run build && build -mwl",
     "package-linux": "npm run build && build --linux",
     "package-win": "npm run build && build --win --x64",
-    "prestart": "npm run build",
     "start": "cross-env QRI_BINARY_PATH=backend/bin/qri NODE_ENV=production electron ./app/",
     "start-main-dev": "cross-env QRI_BINARY_PATH=backend/bin/qri HOT=1 NODE_ENV=development electron -r babel-register ./app/main.dev",
     "start-renderer-dev": "cross-env QRI_BINARY_PATH=backend/bin/qri NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js",
