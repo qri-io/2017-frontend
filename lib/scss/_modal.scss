@@ -12,7 +12,7 @@
 		background: $slate;
 		border-radius: 6px;
 		padding: 15px;
-		min-width: 280px;
+		min-width: 400px;
 		max-width: 600px;
 		position: absolute;
 		width: 35%;
@@ -29,5 +29,9 @@
 		width: 80%;
 		max-width: 80%;
 		height: 80%;
+	}
+
+	.modal.thin {
+		height: 300px;
 	}
 }
