@@ -18,6 +18,13 @@
         "transform-class-properties",
         "transform-es2015-classes"
       ]
+    },
+    "test": {
+      "plugins": [
+        "add-module-exports",
+        "dynamic-import-webpack",
+        "transform-es2015-modules-commonjs"
+      ]
     }
   }
 }

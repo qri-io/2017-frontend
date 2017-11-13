@@ -89,20 +89,10 @@
   },
   "standard": {
     "ignore": [
-      "/server.js",
-      "/app/js/routes.js",
-      "/webpack.config.dev.js",
-      "/webpack.config.prod.js",
-      "/css",
-      "/dist",
-      "/scripts",
-      "/app/scss/*",
-      "/app/js/ace",
-      "/app/js/__mocks__",
-      "/app/js/components/__tests__",
-      "/app/js/selectors/__tests__",
-      "/app/js/utils/__tests__",
-      "/app/js/utils/__mocks__"
+      "/app/",
+      "/internals/",
+      "/dist/",
+      "/lib/ace/"
     ]
   },
   "jest": {
@@ -159,6 +149,7 @@
     "babel-eslint": "8.0.0",
     "babel-jest": "20.0.3",
     "babel-loader": "7.1.0",
+    "babel-minify-webpack-plugin": "^0.2.0",
     "babel-plugin-add-module-exports": "0.2.1",
     "babel-plugin-dev-expression": "0.2.1",
     "babel-plugin-dynamic-import-webpack": "1.0.1",
