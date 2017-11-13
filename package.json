@@ -11,7 +11,7 @@
     "url": "git+https://github.com/qri-io/frontend.git"
   },
   "author": {
-    "name": "Brendan O'Brien",
+    "name": "Qri, Inc.",
     "email": "sparkle_pony_2000@qri.io",
     "url": "github.com/qri-io"
   },
@@ -147,7 +147,7 @@
   "devDependencies": {
     "babel-core": "6.24.1",
     "babel-eslint": "8.0.0",
-    "babel-jest": "20.0.3",
+    "babel-jest": "21.2.0",
     "babel-loader": "7.1.0",
     "babel-minify-webpack-plugin": "^0.2.0",
     "babel-plugin-add-module-exports": "0.2.1",
