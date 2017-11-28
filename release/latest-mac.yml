@@ -1,6 +1,10 @@
 version: 0.0.1
-releaseDate: '2017-11-10T18:01:25.096Z'
-githubArtifactName: qri-webapp-0.0.1-mac.zip
-path: qri-0.0.1-mac.zip
-sha512: >-
-  w8uNXNgi5ySTZursroyI5IDltxHZwTuVYbCHuPgFkyUI7Q6FCIBE+IP4EHUNk/WISF9A9ke7cNT5kGnkmxN+yA==
+files:
+  - url: qri-webapp-0.0.1-mac.zip
+    sha512: zf8SxqJ1n3bJe8zQjl3YbNi3zbUV88/5/n46DNJQu+VpYr1wT6/mEpfznS39At5japTdfa1aktzwd8Mla4ULww==
+  - url: qri-0.0.1.dmg
+    sha512: Bu9i5D7eZ1xDUuDjYwgmoYOOkMMVGjLLrHvoG35oM72cujwUc8PPkB3gyF1ZHsO/HKH21ewu9g+IetMxB0uC4w==
+    size: 58580525
+path: qri-webapp-0.0.1-mac.zip
+sha512: zf8SxqJ1n3bJe8zQjl3YbNi3zbUV88/5/n46DNJQu+VpYr1wT6/mEpfznS39At5japTdfa1aktzwd8Mla4ULww==
+releaseDate: '2017-11-28T19:13:56.625Z'
