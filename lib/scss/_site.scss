@@ -85,12 +85,13 @@ a:hover {
 ::-webkit-scrollbar-thumb {
   width: 8px;
   border-radius: 4px;
-  box-shadow: 0 0 0 12px rgb(49, 49, 49) inset;
+  background-color: rgba(0,0,0,0.4);
+  box-shadow: 0 0 0 12px rgba(49, 49, 49,0.2) inset;
 }
 ::-webkit-scrollbar-thumb:hover,
 ::-webkit-scrollbar-thumb:focus {
-  box-shadow: 0 0 0 12px rgb(89, 89, 89) inset;
+  box-shadow: 0 0 0 12px rgba(89, 89, 89, 0.5) inset;
 }
 ::-webkit-scrollbar-thumb:active {
-  box-shadow: 0 0 0 12px rgb(169, 169, 169) inset;
+  box-shadow: 0 0 0 12px rgba(169, 169, 169, 0.5) inset;
 }
