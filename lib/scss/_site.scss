@@ -77,3 +77,20 @@ a:hover {
 .left {
   float: left;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  width: 8px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 12px rgb(49, 49, 49) inset;
+}
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:focus {
+  box-shadow: 0 0 0 12px rgb(89, 89, 89) inset;
+}
+::-webkit-scrollbar-thumb:active {
+  box-shadow: 0 0 0 12px rgb(169, 169, 169) inset;
+}
