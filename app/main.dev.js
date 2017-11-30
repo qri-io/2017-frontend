@@ -15,6 +15,8 @@ import MenuBuilder from './menu'
 import Backend from './backend'
 import touchbar from './touchbar'
 
+const isDevelopment = (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD !== 'false')
+
 let mainWindow = null
 let backend = null
 
@@ -23,7 +25,7 @@ if (process.env.NODE_ENV === 'production') {
   sourceMapSupport.install()
 }
 
-if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
+if (isDevelopment) {
   console.log('debugger enabled')
   require('electron-debug')()
   const path = require('path')
@@ -44,6 +46,13 @@ const installExtensions = () => {
     .catch(console.log)
 }
 
+// crashReporter.start({
+//   productName: 'Qri',
+//   companyName: 'Qri, Inc.',
+//   submitURL: 'https://qri.io/crash-reports',
+//   uploadToServer: false
+// })
+
 /**
  * Add event listeners...
  */
@@ -59,18 +68,10 @@ app.on('window-all-closed', () => {
 app.on('ready', async () => {
   // app.setPath('temp', '/tmp')
 
-  if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
+  if (isDevelopment) {
     await installExtensions()
   }
 
-  // crashReporter.start({
-  //   productName: 'qri',
-  //   companyName: 'qri.io'
-  // })
-  // console.log('starting backend...')
-  // startBackend().then(createMainWindow).catch((err) => {
-  //   dialog.showErrorBox('error starting qri backend', err)
-  // })
   createMainWindow()
   backend = new Backend()
   // backend.on('connect', createMainWindow)
@@ -109,6 +110,21 @@ function createMainWindow () {
     mainWindow = null
   })
   mainWindow.setTouchBar(touchbar)
+
+  if (isDevelopment) {
+    // auto-open dev tools
+    // mainWindow.webContents.openDevTools()
+
+    // add inspect element on right click menu
+    // mainWindow.webContents.on('context-menu', (e, props) => {
+    //   Menu.buildFromTemplate([{
+    //     label: 'Inspect element',
+    //     click () {
+    //       mainWindow.inspectElement(props.x, props.y)
+    //     }
+    //   }]).popup(mainWindow)
+    // })
+  }
 
   // const menuBuilder = new MenuBuilder(mainWindow)
   // menuBuilder.buildMenu()

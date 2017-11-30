@@ -46,7 +46,7 @@ export default merge.smart(baseConfig, {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
 
-      'process.env.QRI_BINARY_PATH': JSON.stringify(path.resolve(`${__dirname}/backend/bin/qri`)),
+      // 'process.env.QRI_BINARY_PATH': JSON.stringify(path.resolve(`${__dirname}/backend/bin/qri`)),
       'process.env.QRI_PATH': JSON.stringify(path.resolve(`${__dirname}/../backend/qri`)),
       'process.env.IPFS_PATH': JSON.stringify(path.resolve(`${__dirname}/../backend/ipfs`))
 

@@ -48,8 +48,8 @@ export default class Backend extends EventEmitter {
 
     let out = fs.openSync('/tmp/out.log', 'a')
     let err = fs.openSync('/tmp/out.log', 'a')
-    let backendPath = path.resolve(`${__dirname}/../../backend`)
-    let qriBinaryPath = process.env.QRI_BINARY_PATH || (backendPath + '/bin/qri')
+    let backendPath = path.resolve(`${process.resourcesPath}/../backend`)
+    let qriBinaryPath = path.resolve(backendPath + '/bin/qri')
     let processEnv = {
       IPFS_PATH: `${backendPath}/ipfs`,
       QRI_PATH: `${backendPath}/qri`
@@ -57,6 +57,9 @@ export default class Backend extends EventEmitter {
 
     fs.writeSync(out, 'process.env:\n')
     fs.writeSync(out, JSON.stringify(process.env) + '\n')
+    fs.writeSync(out, `resourcesPath: ${process.resourcesPath}` + '\n')
+    fs.writeSync(out, `backendPath: ${backendPath}` + '\n')
+    fs.writeSync(out, `starting app at path: ${qriBinaryPath}` + '\n')
 
     if (process.env.NODE_ENV === 'development') {
       // if we're in dev mode write to this process
@@ -85,6 +88,7 @@ export default class Backend extends EventEmitter {
 
     this.backend.on('close', (code) => {
       // dialog.showErrorBox('qri process closed', `code: ${code}`)
+      fs.writeSync(out, 'closing app\n')
     })
 
     this.backend.on('error', (err) => {
