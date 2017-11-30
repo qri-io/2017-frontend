@@ -1,10 +1,10 @@
 version: 0.0.1
 files:
   - url: qri-webapp-0.0.1-mac.zip
-    sha512: zf8SxqJ1n3bJe8zQjl3YbNi3zbUV88/5/n46DNJQu+VpYr1wT6/mEpfznS39At5japTdfa1aktzwd8Mla4ULww==
+    sha512: EWTzY/9BuH7aqyAG0ztPdxhJUnkOV2IaiffnxY5UoCRymbXju8NZpwWEI6P1EwnDs1T3Ua7jsdoDlafeMkPsOQ==
   - url: qri-0.0.1.dmg
-    sha512: Bu9i5D7eZ1xDUuDjYwgmoYOOkMMVGjLLrHvoG35oM72cujwUc8PPkB3gyF1ZHsO/HKH21ewu9g+IetMxB0uC4w==
-    size: 58580525
+    sha512: ze4JYfpG7hM+5Edm6c9LiTzFRDQ6UExFiv8FjxRouwYU6RPtoNFfFq3hI1c4wMTecH6r7IvnoVn9Db6brjbvtQ==
+    size: 58480207
 path: qri-webapp-0.0.1-mac.zip
-sha512: zf8SxqJ1n3bJe8zQjl3YbNi3zbUV88/5/n46DNJQu+VpYr1wT6/mEpfznS39At5japTdfa1aktzwd8Mla4ULww==
-releaseDate: '2017-11-28T19:13:56.625Z'
+sha512: EWTzY/9BuH7aqyAG0ztPdxhJUnkOV2IaiffnxY5UoCRymbXju8NZpwWEI6P1EwnDs1T3Ua7jsdoDlafeMkPsOQ==
+releaseDate: '2017-11-28T22:34:10.294Z'

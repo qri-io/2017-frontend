@@ -113,17 +113,17 @@ function createMainWindow () {
 
   if (isDevelopment) {
     // auto-open dev tools
-    mainWindow.webContents.openDevTools()
+    // mainWindow.webContents.openDevTools()
 
     // add inspect element on right click menu
-    mainWindow.webContents.on('context-menu', (e, props) => {
-      Menu.buildFromTemplate([{
-        label: 'Inspect element',
-        click () {
-          mainWindow.inspectElement(props.x, props.y)
-        }
-      }]).popup(mainWindow)
-    })
+    // mainWindow.webContents.on('context-menu', (e, props) => {
+    //   Menu.buildFromTemplate([{
+    //     label: 'Inspect element',
+    //     click () {
+    //       mainWindow.inspectElement(props.x, props.y)
+    //     }
+    //   }]).popup(mainWindow)
+    // })
   }
 
   // const menuBuilder = new MenuBuilder(mainWindow)
