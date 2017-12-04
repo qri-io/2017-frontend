@@ -113,7 +113,7 @@ function createMainWindow () {
 
   if (isDevelopment) {
     // auto-open dev tools
-    // mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
 
     // add inspect element on right click menu
     // mainWindow.webContents.on('context-menu', (e, props) => {
