@@ -44,13 +44,13 @@ export default class MenuBuilder {
 
   buildDarwinTemplate() {
     const subMenuAbout = {
-      label: 'Electron',
+      label: 'qri',
       submenu: [
-        { label: 'About ElectronReact', selector: 'orderFrontStandardAboutPanel:' },
+        { label: 'About qri', selector: 'orderFrontStandardAboutPanel:' },
+        // { type: 'separator' },
+        // { label: 'Services', submenu: [] },
         { type: 'separator' },
-        { label: 'Services', submenu: [] },
-        { type: 'separator' },
-        { label: 'Hide ElectronReact', accelerator: 'Command+H', selector: 'hide:' },
+        { label: 'Hide qri', accelerator: 'Command+H', selector: 'hide:' },
         { label: 'Hide Others', accelerator: 'Command+Shift+H', selector: 'hideOtherApplications:' },
         { label: 'Show All', selector: 'unhideAllApplications:' },
         { type: 'separator' },
@@ -74,13 +74,14 @@ export default class MenuBuilder {
       submenu: [
         { label: 'Reload', accelerator: 'Command+R', click: () => { this.mainWindow.webContents.reload(); } },
         { label: 'Toggle Full Screen', accelerator: 'Ctrl+Command+F', click: () => { this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen()); } },
-        { label: 'Toggle Developer Tools', accelerator: 'Alt+Command+I', click: () => { this.mainWindow.toggleDevTools(); } }
+        { label: 'Toggle Developer Tools', accelerator: 'Command+Shift+C', click: () => { this.mainWindow.toggleDevTools(); } }
       ]
     };
     const subMenuViewProd = {
       label: 'View',
       submenu: [
-        { label: 'Toggle Full Screen', accelerator: 'Ctrl+Command+F', click: () => { this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen()); } }
+        { label: 'Toggle Full Screen', accelerator: 'Ctrl+Command+F', click: () => { this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen()); } },
+        { label: 'Toggle Developer Tools', accelerator: 'Command+Shift+C', click: () => { this.mainWindow.openDevTools(); } }
       ]
     };
     const subMenuWindow = {
@@ -95,16 +96,15 @@ export default class MenuBuilder {
     const subMenuHelp = {
       label: 'Help',
       submenu: [
-        { label: 'Learn More', click() { shell.openExternal('http://electron.atom.io'); } },
-        { label: 'Documentation', click() { shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme'); } },
-        { label: 'Community Discussions', click() { shell.openExternal('https://discuss.atom.io/c/electron'); } },
-        { label: 'Search Issues', click() { shell.openExternal('https://github.com/atom/electron/issues'); } }
+        { label: 'Learn More', click() { shell.openExternal('http://qri.io'); } },
+        { label: 'Documentation', click() { shell.openExternal('https://github.com/qri-io/frontend/blob/master/readme.md'); } },
+        // { label: 'Community Discussions', click() { shell.openExternal('https://discuss.atom.io/c/electron'); } },
+        { label: 'Search Issues', click() { shell.openExternal('https://github.com/qri-io/frontend/issues'); } }
       ]
     };
 
     const subMenuView = process.env.NODE_ENV === 'development'
-      ? subMenuViewDev
-      : subMenuViewProd;
+      ? subMenuViewDev : subMenuViewProd;
 
     return [
       subMenuAbout,
@@ -160,22 +160,22 @@ export default class MenuBuilder {
       submenu: [{
         label: 'Learn More',
         click() {
-          shell.openExternal('http://electron.atom.io');
+          shell.openExternal('http://qri.io');
         }
       }, {
         label: 'Documentation',
         click() {
-          shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme');
+          shell.openExternal('https://github.com/qri-io/frontend/blob/master/readme.md');
         }
-      }, {
-        label: 'Community Discussions',
-        click() {
-          shell.openExternal('https://discuss.atom.io/c/electron');
-        }
+      // }, {
+      //   label: 'Community Discussions',
+      //   click() {
+      //     shell.openExternal('https://discuss.atom.io/c/electron');
+      //   }
       }, {
         label: 'Search Issues',
         click() {
-          shell.openExternal('https://github.com/atom/electron/issues');
+          shell.openExternal('https://github.com/qri-io/frontend/issues');
         }
       }]
     }];

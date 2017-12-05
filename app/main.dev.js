@@ -126,8 +126,8 @@ function createMainWindow () {
     // })
   }
 
-  // const menuBuilder = new MenuBuilder(mainWindow)
-  // menuBuilder.buildMenu()
+  const menuBuilder = new MenuBuilder(mainWindow)
+  menuBuilder.buildMenu()
 
   // mainWindow.webContents.session.on('will-download', (event, item, webContents) => {
   //   console.log(event)
