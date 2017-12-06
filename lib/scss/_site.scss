@@ -82,6 +82,27 @@ b {
   float: left;
 }
 
+.icon {
+  font-family: 'SSPika';
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+  margin-top: 10px;
+  transition: all 0.25s;
+  // &:active {
+  //   color: palette.a;
+  //   textDecoration: 'none'
+  // },
+  // ':focus': {
+  //   textDecoration: 'none'
+  // },
+  // ':hover': {
+  //   opacity: 1,
+  //   color: palette.a
+  // }
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   background-color: transparent;
