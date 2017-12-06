@@ -70,12 +70,37 @@ a:hover {
   color: #9FFFF0;
 }
 
+b {
+  font-weight: bold;
+}
+
 .right {
   float: right;
 }
 
 .left {
   float: left;
+}
+
+.icon {
+  font-family: 'SSPika';
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+  margin-top: 10px;
+  transition: all 0.25s;
+  // &:active {
+  //   color: palette.a;
+  //   textDecoration: 'none'
+  // },
+  // ':focus': {
+  //   textDecoration: 'none'
+  // },
+  // ':hover': {
+  //   opacity: 1,
+  //   color: palette.a
+  // }
 }
 
 ::-webkit-scrollbar {

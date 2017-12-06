@@ -51,12 +51,40 @@ h1, h2, h3, h4, h5, h6,
   color: $headings-color;
 }
 
-h1, .h1 { font-size: $font-size-h1; }
-h2, .h2 { font-size: $font-size-h2; }
-h3, .h3 { font-size: $font-size-h3; }
-h4, .h4 { font-size: $font-size-h4; }
-h5, .h5 { font-size: $font-size-h5; }
-h6, .h6 { font-size: $font-size-h6; }
+h1, .h1 { 
+  font-size: $font-size-h1; 
+  font-weight: $font-weight-bold; 
+  // letter-spacing: 1.5px;
+  line-height: 57px;
+  }
+h2, .h2 { 
+  font-size: $font-size-h2; 
+  font-weight: $font-weight-bold;
+  // letter-spacing: 1.5px;
+  line-height: 44px;
+  }
+h3, .h3 { 
+  font-size: $font-size-h3; 
+  font-weight: $font-weight-bold;
+  // letter-spacing: 1.5px;
+  line-height: 38px;
+  }
+h4, .h4 { 
+  font-size: $font-size-h4; 
+  font-weight: $font-weight-bold;
+  // letter-spacing: 1.5px;
+  line-height: 33px;
+  }
+h5, .h5 { 
+  font-size: $font-size-h5; 
+  font-weight: $font-weight-regular;
+  line-height: 27px;
+  }
+h6, .h6 { 
+  font-size: $font-size-h6; 
+  font-weight: $font-weight-regular;
+  line-height: 27px;
+  }
 
 .lead {
   font-size: $lead-font-size;
@@ -118,10 +146,10 @@ mark,
 label {
   text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: 2px;
-  color: $background-text;
+  letter-spacing: 1px;
   margin: 0;
-  font-size: .9rem;
+  font-size: 16px;
+  line-height: 22px;
 }
 
 //
@@ -200,4 +228,26 @@ label {
     }
   }
   // scss-lint:enable QualifyingElement
+}
+
+.datasetName {
+  font-family: $font-family-monospace;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: $font-weight-medium;
+}
+.datasetName.large {
+  font-size: 28px;
+  line-height: 38px;
+}
+.code {
+  font-family: $font-family-monospace;
+  font-weight: $font-weight-regular;
+  line-height: 22px;
+}
+.stats {
+  font-family: $font-family-sans-serif;
+  font-weight: $font-weight-regular;
+  font-size: 14px;
+  line-height: 22px;
 }
