@@ -90,7 +90,7 @@ function createMainWindow () {
     width: 1500,
     height: 728,
     titleBarStyle: 'hiddenInset',
-    backgroundColor: '#0e2630'
+    backgroundColor: '#0E2630'
   })
 
   mainWindow.loadURL(`file://${__dirname}/app.html`)
