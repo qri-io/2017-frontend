@@ -10,16 +10,17 @@
   // // Make inputs at least the height of their button counterpart (base line-height + padding + border)
   // height: $input-height;
   padding-bottom: ($font-size-base * .5);
-  font-size: ($font-size-base * 1.2);
-  line-height: $input-line-height;
+  //font-size: ($font-size-base * 1.2);
+  //line-height: $input-line-height;
   color: $input-color;
   font-weight: 300;
-  background-color: $input-bg;
+  background-color: transparent;
   // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214.
   background-image: none;
   background-clip: padding-box;
   border: none;
-  border-bottom: $input-border-width solid $input-border-color;
+  border-bottom-width: $input-border-width;
+  border-bottom-style: solid;
   // overflow: auto;
   // Note: This has no effect on <select>s in some browsers, due to the limited stylability of `<select>`s in CSS.
   @include box-shadow($input-box-shadow);
@@ -31,7 +32,7 @@
     border: 0;
   }
   &:focus {
-    border-bottom-color: $input-border-focus;
+    //border-bottom-color: $input-border-focus;
     outline: none;
   }
 

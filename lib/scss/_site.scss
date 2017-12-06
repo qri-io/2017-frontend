@@ -103,6 +103,15 @@ b {
   // }
 }
 
+.iconInline {
+  font-family: 'SSPika';
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 10px;
+  transition: all 0.25s;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   background-color: transparent;

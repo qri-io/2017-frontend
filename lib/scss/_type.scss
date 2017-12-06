@@ -93,7 +93,6 @@ h6, .h6 {
 
 .inline-block {
   display: inline-block;
-  margin-right: 10px;
 }
 
 // Type display classes
@@ -246,7 +245,7 @@ label {
   line-height: 22px;
 }
 .stats {
-  font-family: $font-family-sans-serif;
+  font-family: $font-family-monospace;
   font-weight: $font-weight-regular;
   font-size: 14px;
   line-height: 22px;
