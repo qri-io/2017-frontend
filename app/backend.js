@@ -55,21 +55,24 @@ export default class Backend extends EventEmitter {
       QRI_PATH: `${backendPath}/qri`
     }
 
-    fs.writeSync(out, 'process.env:\n')
-    fs.writeSync(out, JSON.stringify(process.env) + '\n')
-    fs.writeSync(out, `resourcesPath: ${process.resourcesPath}` + '\n')
-    fs.writeSync(out, `backendPath: ${backendPath}` + '\n')
-    fs.writeSync(out, `starting app at path: ${qriBinaryPath}` + '\n')
-
     if (process.env.NODE_ENV === 'development') {
+      qriBinaryPath = path.resolve(__dirname + '/../backend/bin/qri')
       // if we're in dev mode write to this process
-      out = 'inherit'
-      err = 'inherit'
+      out = process.stdout
+      err = process.stderr
       // write to project backend path
       // overwrite processEnv to inherit settings from
       // executing shell
       processEnv = {}
     }
+
+    // fs.writeSync(out, 'process.env:\n')
+    // fs.writeSync(out, JSON.stringify(process.env) + '\n')
+    // fs.writeSync(out, `resourcesPath: ${process.resourcesPath}` + '\n')
+    // fs.writeSync(out, `backendPath: ${backendPath}` + '\n')
+    // fs.writeSync(out, `starting app at path: ${qriBinaryPath}` + '\n')
+
+    console.log(`starting app at path: ${qriBinaryPath}`)
 
     try {
       this.backend = spawn(
@@ -88,7 +91,9 @@ export default class Backend extends EventEmitter {
 
     this.backend.on('close', (code) => {
       // dialog.showErrorBox('qri process closed', `code: ${code}`)
-      fs.writeSync(out, 'closing app\n')
+      if (process.env.NODE_ENV !== 'development') {
+        fs.writeSync(out, 'closing app\n')
+      }
     })
 
     this.backend.on('error', (err) => {
