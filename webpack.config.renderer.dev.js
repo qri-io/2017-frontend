@@ -194,6 +194,34 @@ export default merge.smart(baseConfig, {
         test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
         use: 'url-loader'
       }
+      // {
+      //   test: require.resolve('numbro'),
+      //   use: [{
+      //     loader: 'expose-loader',
+      //     options: 'numbro'
+      //   }]
+      // },
+      // {
+      //   test: require.resolve('moment'),
+      //   use: [{
+      //     loader: 'expose-loader',
+      //     options: 'moment'
+      //   }]
+      // },
+      // {
+      //   test: require.resolve('pikaday'),
+      //   use: [{
+      //     loader: 'expose-loader',
+      //     options: 'Pikaday'
+      //   }]
+      // },
+      // {
+      //   test: require.resolve('zeroclipboard'),
+      //   use: [{
+      //     loader: 'expose-loader',
+      //     options: 'ZeroClipboard'
+      //   }]
+      // }
     ]
   },
 
@@ -236,7 +264,12 @@ export default merge.smart(baseConfig, {
         'STATIC_ASSETS_URL': JSON.stringify('http://localhost:3000'),
 
         'SEGMENT_KEY': JSON.stringify('not_a_key')
-      }
+      },
+
+      '__HOT_BUILD_DATE__': JSON.stringify(''),
+      '__HOT_PACKAGE_NAME__': JSON.stringify(''),
+      '__HOT_VERSION__': JSON.stringify(''),
+      '__HOT_BASE_VERSION__': JSON.stringify('')
     }),
 
     new webpack.LoaderOptionsPlugin({
