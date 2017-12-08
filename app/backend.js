@@ -1,3 +1,4 @@
+/* globals __BUILD__ */
 import { app } from 'electron'
 import { spawn } from 'child_process'
 import { EventEmitter } from 'events'
@@ -25,7 +26,7 @@ export default class Backend extends EventEmitter {
           reject('qri backend took too long to start 🙁')
         }
 
-        fetch('http://localhost:3000').then(res => {
+        fetch(__BUILD__.API_URL).then(res => {
           if (res.status === 200) {
             clearInterval(timer)
             resolve()
