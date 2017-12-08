@@ -116,6 +116,9 @@ b {
   width: 8px;
   background-color: transparent;
 }
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
 ::-webkit-scrollbar-thumb {
   width: 8px;
   border-radius: 4px;
@@ -129,3 +132,4 @@ b {
 ::-webkit-scrollbar-thumb:active {
   box-shadow: 0 0 0 12px rgba(169, 169, 169, 0.5) inset;
 }
+
