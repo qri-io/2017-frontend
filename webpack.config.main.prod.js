@@ -4,7 +4,7 @@
 
 import webpack from 'webpack'
 import merge from 'webpack-merge'
-import BabiliPlugin from 'babili-webpack-plugin'
+import MinifyPlugin from 'babel-minify-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import baseConfig from './webpack.config.base'
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv'
@@ -27,7 +27,12 @@ export default merge.smart(baseConfig, {
     /**
      * Babli is an ES6+ aware minifier based on the Babel toolchain (beta)
      */
-    new BabiliPlugin(),
+    new MinifyPlugin({}, {
+      sourceMap: null
+    }),
+
+    // https://github.com/bitinn/node-fetch/issues/41
+    // new webpack.IgnorePlugin(/\/iconv-loader$/),
 
     new BundleAnalyzerPlugin({
       analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
@@ -45,12 +50,8 @@ export default merge.smart(baseConfig, {
      */
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-
-      // 'process.env.QRI_BINARY_PATH': JSON.stringify(path.resolve(`${__dirname}/backend/bin/qri`)),
       'process.env.QRI_PATH': JSON.stringify(path.resolve(`${__dirname}/../backend/qri`)),
       'process.env.IPFS_PATH': JSON.stringify(path.resolve(`${__dirname}/../backend/ipfs`))
-
-      // TODO - this isn't where we're supposed to set these things:
     })
   ],
 
