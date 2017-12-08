@@ -155,9 +155,9 @@ export default merge.smart(baseConfig, {
         'MODE': JSON.stringify(process.env.NODE_ENV || 'production'),
         'DEBUG_PROD': JSON.stringify(process.env.DEBUG_PROD || false),
 
-        'BASE_URL': JSON.stringify('http://localhost:3000'),
-        'API_URL': JSON.stringify('http://localhost:3000'),
-        'STATIC_ASSETS_URL': JSON.stringify('http://localhost:3000'),
+        'BASE_URL': JSON.stringify('http://localhost:2503'),
+        'API_URL': JSON.stringify('http://localhost:2503'),
+        'STATIC_ASSETS_URL': JSON.stringify('http://localhost:2503'),
 
         'SEGMENT_KEY': JSON.stringify('--nope--')
       }
