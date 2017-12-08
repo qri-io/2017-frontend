@@ -108,12 +108,15 @@ b {
   display: inline-block;
   text-align: center;
   text-decoration: none;
-  margin-top: 10px;
   transition: all 0.25s;
+  font-size: 16px;
 }
 
 ::-webkit-scrollbar {
   width: 8px;
+  background-color: transparent;
+}
+::-webkit-scrollbar-corner {
   background-color: transparent;
 }
 ::-webkit-scrollbar-thumb {
@@ -129,3 +132,4 @@ b {
 ::-webkit-scrollbar-thumb:active {
   box-shadow: 0 0 0 12px rgba(169, 169, 169, 0.5) inset;
 }
+
