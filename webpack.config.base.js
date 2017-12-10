@@ -43,10 +43,6 @@ export default {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
-
-      // 'process.env.QRI_BINARY_PATH': JSON.stringify(process.env.QRI_BINARY_PATH || path.resolve(`${__dirname}/backend/bin/qri`)),
-      // 'process.env.QRI_PATH': JSON.stringify(process.env.QRI_PATH || path.resolve(`${__dirname}/backend/qri`)),
-      // 'process.env.IPFS_PATH': JSON.stringify(process.env.IPFS_PATH || path.resolve(`${__dirname}/backend/ipfs`))
     }),
 
     new webpack.NamedModulesPlugin()

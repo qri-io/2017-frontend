@@ -5,85 +5,124 @@ import { EventEmitter } from 'events'
 import path from 'path'
 import fetch from 'node-fetch'
 import fs from 'fs'
+import CompareVersions from 'compare-versions'
 
 export default class Backend extends EventEmitter {
-  constructor (props) {
+  constructor () {
     super()
-    this.init()
-  }
 
-  init () {
-   // continually hit server until it's ready
-    return new Promise((resolve, reject) => {
-      let timer
-      const start = new Date()
+    if (process.env.NODE_ENV === 'development') {
+      // if we're in dev mode write to this process
+      this.out = process.stdout
+      this.err = process.stderr
+    } else {
+      this.out = fs.openSync('/tmp/qri.log', 'a')
+      this.err = fs.openSync('/tmp/qri.log', 'a')
+    }
 
-      const check = () => {
-        const now = new Date()
+    let methods = [
+      'log',
+      'installScriptPath',
+      'resourcesPath',
+      'init',
+      'install',
+      'start',
+      'destroy'
+    ]
+    methods.forEach((m) => { this[m] = this[m].bind(this) })
 
-        if ((now.valueOf() - start.valueOf()) > 45000) {
-          clearInterval(timer)
-          reject('qri backend took too long to start 🙁')
-        }
-
-        fetch(__BUILD__.API_URL).then(res => {
-          if (res.status === 200) {
-            clearInterval(timer)
-            resolve()
-            this.emit('connect')
-          } else {
-            this.spawnProcess()
-          }
-        }).catch(err => {
-          this.spawnProcess()
-        })
-      }
-      check()
-      timer = setInterval(check, 2000)
+    this.init().catch((err) => {
+      this.log(`init error ${err}`)
     })
   }
 
-  spawnProcess () {
+  log (str) {
+    (process.env.NODE_ENV === 'development')
+      ? console.log(str)
+      : fs.write(this.out, str + '\n', () => { })
+  }
+
+  installScriptPath () {
+    return path.resolve(this.resourcesPath(), 'install.sh')
+  }
+
+  resourcesPath () {
+    return (process.env.NODE_ENV === 'development')
+      ? path.resolve(__dirname, '../resources/')
+      : process.resourcesPath
+  }
+
+  init () {
+    let timer, start = new Date()
+
+    return this
+    .install()
+    .then((qriPath) => {
+      // continually hit server until it's ready
+      return new Promise((resolve, reject) => {
+        const check = () => {
+          const now = new Date()
+
+          if ((now.valueOf() - start.valueOf()) > 45000) {
+            clearInterval(timer)
+            reject('qri backend took too long to start 🙁')
+          }
+
+          fetch(process.env.API_URL).then(res => {
+            if (res.status === 200) {
+              clearInterval(timer)
+              resolve()
+              this.emit('connect')
+            } else {
+              this.start(qriPath)
+            }
+          }).catch(err => {
+            this.start(qriPath)
+          })
+        }
+        check()
+        timer = setInterval(check, 2000)
+      })
+    })
+  }
+
+  // ensure updated qri backend exists
+  install () {
+    this.log('installing app')
+    return new Promise((resolve, reject) => {
+      let qriPath, proc
+      try {
+        proc = spawn(this.installScriptPath())
+      } catch (err) {
+        reject(err)
+      }
+
+      proc.stdout.on('data', (path) => {
+        this.log(`install data: ${path}`)
+        qriPath = new String(path).replace(/\n/, '')
+      })
+      proc.on('close', (code) => {
+        resolve(qriPath)
+      })
+      proc.on('error', (err) => {
+        this.log(`install: error: ${err}`)
+        reject(err)
+      })
+    })
+  }
+
+  start (qriPath) {
     if (this.backend) { return }
-    console.log('starting new qri server...')
-
-    let out = fs.openSync('/tmp/out.log', 'a')
-    let err = fs.openSync('/tmp/out.log', 'a')
-    let backendPath = path.resolve(`${process.resourcesPath}/../backend`)
-    let qriBinaryPath = path.resolve(backendPath + '/bin/qri')
-    let processEnv = {
-      IPFS_PATH: `${backendPath}/ipfs`,
-      QRI_PATH: `${backendPath}/qri`
-    }
-
-    if (process.env.NODE_ENV === 'development') {
-      qriBinaryPath = path.resolve(__dirname + '/../backend/bin/qri')
-      // if we're in dev mode write to this process
-      out = process.stdout
-      err = process.stderr
-      // write to project backend path
-      // overwrite processEnv to inherit settings from
-      // executing shell
-      processEnv = {}
-    }
-
-    // fs.writeSync(out, 'process.env:\n')
-    // fs.writeSync(out, JSON.stringify(process.env) + '\n')
-    // fs.writeSync(out, `resourcesPath: ${process.resourcesPath}` + '\n')
-    // fs.writeSync(out, `backendPath: ${backendPath}` + '\n')
-    // fs.writeSync(out, `starting app at path: ${qriBinaryPath}` + '\n')
-
-    console.log(`starting app at path: ${qriBinaryPath}`)
+    this.log(`starting qri from path ${qriPath}`)
 
     try {
       this.backend = spawn(
-        qriBinaryPath,
+        qriPath,
         ['server', '--init-ipfs'],
         {
-          shell: false,
-          env: Object.assign({}, process.env, processEnv),
-          // cwd: __dirname,
-          stdio: ['ignore', out, err]
+          shell: true,
+          env: Object.assign({}, process.env),
+          stdio: ['ignore', this.out, this.err]
         }
       )
     } catch (err) {
@@ -91,24 +130,10 @@ export default class Backend extends EventEmitter {
     }
 
     this.backend.on('close', (code) => {
-      // dialog.showErrorBox('qri process closed', `code: ${code}`)
-      if (process.env.NODE_ENV !== 'development') {
-        fs.writeSync(out, 'closing app\n')
-      }
+      this.log('closed backend process')
     })
-
     this.backend.on('error', (err) => {
-      // TODO - this might not work b/c not executing on
-      // main process?
-      // dialog.showErrorBox('qri process error', err)
-      // crashReporter.start({
-      //   productName: 'qri',
-      //   companyName: 'qri.io',
-      //   submitURL: 'https://qri.io/url-to-submit',
-      //   uploadToServer: false,
-      //   extra: err
-      // })
-      console.log(err)
+      this.log(`backend error: ${err}`)
     })
   }
 
