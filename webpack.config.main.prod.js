@@ -8,7 +8,6 @@ import MinifyPlugin from 'babel-minify-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import baseConfig from './webpack.config.base'
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv'
-import path from 'path'
 
 CheckNodeEnv('production')
 
