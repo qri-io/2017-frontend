@@ -8,7 +8,6 @@ import MinifyPlugin from 'babel-minify-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import baseConfig from './webpack.config.base'
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv'
-import path from 'path'
 
 CheckNodeEnv('production')
 
@@ -50,8 +49,11 @@ export default merge.smart(baseConfig, {
      */
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-      'process.env.QRI_PATH': JSON.stringify(path.resolve(`${__dirname}/../backend/qri`)),
-      'process.env.IPFS_PATH': JSON.stringify(path.resolve(`${__dirname}/../backend/ipfs`))
+      'process.env.DEBUG_PROD': JSON.stringify(process.env.DEBUG_PROD || false),
+      'process.env.BASE_URL': JSON.stringify('http://localhost:2503'),
+      'process.env.API_URL': JSON.stringify('http://localhost:2503'),
+      'process.env.STATIC_ASSETS_URL': JSON.stringify('http://localhost:2503'),
+      'process.env.SEGMENT_KEY': JSON.stringify('--nope--')
     })
   ],
 
