@@ -119,7 +119,16 @@
       "./internals/scripts/CheckBuiltsExist.js"
     ],
     "coverageDirectory": "./coverage/",
-    "collectCoverage": true
+    "collectCoverage": true,
+    "globals":{
+      "__BUILD__":{
+        "API_URL": "http://localhost:2503",
+        "BASE_URL": "http://localhost:2503",
+        "MODE": "development",
+        "SEGMENT_KEY": "not_a_key",
+        "STATIC_ASSETS_URL": "http://localhost:2503"
+      }
+    }
   },
   "dependencies": {
     "aphrodite-simple": "0.4.1",
