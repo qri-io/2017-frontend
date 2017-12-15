@@ -16,7 +16,7 @@ then
 else
   # echo "installing qri to /usr/local/bin/qri"
   path='/usr/local/bin/qri'
-  cp ./qri /usr/local/bin/qri
+  cp $BINARY_PATH /usr/local/bin/
 fi
 
 echo $path
