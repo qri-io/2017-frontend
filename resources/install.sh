@@ -10,11 +10,9 @@ then
   current=$(qri version -c)
   latest=$(./qri version -c)
   if version_gt $latest $current; then
-    # echo "updating qri at path ${path} from  ${current} to ${latest}"
     cp ./qri $path
   fi
 else
-  # echo "installing qri to /usr/local/bin/qri"
   path='/usr/local/bin/qri'
   cp $BINARY_PATH /usr/local/bin/
 fi

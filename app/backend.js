@@ -88,7 +88,7 @@ export default class Backend extends EventEmitter {
 
   // ensure updated qri backend exists
   install () {
-    this.log('installing app')
+    this.log('checking for updated install')
     return new Promise((resolve, reject) => {
       let qriPath, proc
 
@@ -109,7 +109,9 @@ export default class Backend extends EventEmitter {
 
       proc.stdout.on('data', (path) => {
         this.log(`install data: ${path}`)
-        qriPath = new String(path).replace(/\n/, '')
+        // qriPath = new String(path).replace(/\n/, '')
+        // TODO - silly hack for the moment
+        qriPath = '/usr/local/bin/qri'
       })
       proc.stderr.on('data', (err) => {
         this.log(`install error: ${err}`)
@@ -132,7 +134,7 @@ export default class Backend extends EventEmitter {
     try {
       this.backend = spawn(
         qriPath,
-        ['server', '--init-ipfs'],
+        ['server', '--init'],
         {
           shell: true,
           env: Object.assign({}, process.env),
