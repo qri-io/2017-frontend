@@ -117,6 +117,10 @@ export default class Backend extends EventEmitter {
         this.log(`install error: ${err}`)
         reject(err)
       })
+      proc.stderr.on('data', (err) => {
+        this.log(`install error: ${err}`)
+        reject(err)
+      })
       proc.on('close', (code) => {
         resolve(qriPath)
       })
