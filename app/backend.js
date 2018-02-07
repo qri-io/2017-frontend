@@ -63,7 +63,7 @@ export default class Backend extends EventEmitter {
         const check = () => {
           const now = new Date()
 
-          if ((now.valueOf() - start.valueOf()) > 45000) {
+          if ((now.valueOf() - start.valueOf()) > 30000) {
             clearInterval(timer)
             reject('qri backend took too long to start 🙁')
           }
@@ -88,18 +88,38 @@ export default class Backend extends EventEmitter {
 
   // ensure updated qri backend exists
   install () {
-    this.log('installing app')
+    this.log('checking for updated install')
     return new Promise((resolve, reject) => {
       let qriPath, proc
+
+      // don't install in dev mode
+      if (process.env.NODE_ENV === 'development') {
+        resolve(`${this.resourcesPath()}/qri`)
+      }
+
       try {
-        proc = spawn(this.installScriptPath())
+        proc = spawn(this.installScriptPath(), [], {
+          env: {
+            'BINARY_PATH': `${this.resourcesPath()}/qri`
+          }
+        })
       } catch (err) {
         reject(err)
       }
 
       proc.stdout.on('data', (path) => {
         this.log(`install data: ${path}`)
-        qriPath = new String(path).replace(/\n/, '')
+        // qriPath = new String(path).replace(/\n/, '')
+        // TODO - silly hack for the moment
+        qriPath = '/usr/local/bin/qri'
+      })
+      proc.stderr.on('data', (err) => {
+        this.log(`install error: ${err}`)
+        reject(err)
+      })
+      proc.stderr.on('data', (err) => {
+        this.log(`install error: ${err}`)
+        reject(err)
       })
       proc.on('close', (code) => {
         resolve(qriPath)
@@ -118,7 +138,7 @@ export default class Backend extends EventEmitter {
     try {
       this.backend = spawn(
         qriPath,
-        ['server', '--init-ipfs'],
+        ['server', '--init'],
         {
           shell: true,
           env: Object.assign({}, process.env),
