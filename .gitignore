@@ -51,10 +51,10 @@ release
 # app/renderer.prod.js.map
 app/style.css
 app/style.css.map
-dist
+# dist
 dll
-main.js
-main.js.map
+# main.js
+# main.js.map
 
 .idea
 npm-debug.log.*
