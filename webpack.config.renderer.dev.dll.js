@@ -194,6 +194,7 @@ export default merge.smart(baseConfig, {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       '__BUILD__': {
+        'ELECTRON': JSON.stringify('true'),
         'MODE': JSON.stringify(process.env.NODE_ENV || 'development'),
         'BASE_URL': JSON.stringify('http://localhost:3000'),
         'API_URL': JSON.stringify('http://localhost:3000'),

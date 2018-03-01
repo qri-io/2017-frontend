@@ -39,7 +39,7 @@
 // Grayscale and brand colors for use across Bootstrap.
 
 // background colors
-$appBackground: #0e2630;
+$appBackground: #c3c3c3;
 $overlay: rgba(0,0,0,.25);
 $darkOverlay: rgba(0,0,0,.5);
 $slate: #253238;
@@ -50,7 +50,7 @@ $dark-slate: #272727;
 // $med-blue-slate: #40515D;
 // $light-blue-slate: #A1B2BC;
 
-$text: #ABCAD6;
+$text: #243239;
 $background-text: #657780;
 
 // brand colors
@@ -127,7 +127,7 @@ $border-width: 0.5px !default;
 //
 // Settings for the `<body>` element.
 
-$body-bg:    $slate !default;
+$body-bg:    $appBackground !default;
 $body-color: $text !default;
 
 
