@@ -9,7 +9,7 @@ import CheckNodeEnv from './internals/scripts/CheckNodeEnv'
 
 CheckNodeEnv('development')
 
-const port = process.env.PORT || 1212
+const port = process.env.PORT || 2505
 const publicPath = `/`
 
 export default merge.smart(baseConfig, {
