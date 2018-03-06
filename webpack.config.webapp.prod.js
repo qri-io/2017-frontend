@@ -3,60 +3,31 @@
 import path from 'path'
 import webpack from 'webpack'
 import merge from 'webpack-merge'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
 import baseConfig from './webpack.config.base'
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv'
+import MinifyPlugin from 'babel-minify-webpack-plugin'
 
-CheckNodeEnv('development')
+CheckNodeEnv('production')
 
-const port = process.env.PORT || 2505
 const publicPath = `/`
 
 export default merge.smart(baseConfig, {
-  devtool: 'inline-source-map',
   target: 'web',
-  mode: 'development',
+  mode: 'production',
 
-  entry: [
-    `webpack-dev-server/client?http://localhost:${port}`,
-    'webpack/hot/only-dev-server',
-    'react-hot-loader/patch',
-    path.join(__dirname, 'lib/index.js')
-  ],
+  entry: path.join(__dirname, 'lib/index.js'),
 
   output: {
     publicPath,
-    path: path.join(__dirname, '/dist/'),
+    path: path.join(__dirname, '/dist/web'),
     filename: '[name].js',
     libraryTarget: 'umd'
   },
 
-  devServer: {
-    port,
-    publicPath,
-    compress: true,
-    noInfo: true,
-    stats: 'errors-only',
-    inline: true,
-    lazy: false,
-    hot: true,
-    headers: { 'Access-Control-Allow-Origin': '*' },
-    // historyApiFallback: true,
-    watchOptions: {
-      aggregateTimeout: 300,
-      ignored: /node_modules/,
-      poll: 100
-    }
-  },
-
   plugins: [
-    new HtmlWebpackPlugin({
-      template: 'resources/index.tpl.html',
-      inject: 'body',
-      filename: 'index.html'
+    new MinifyPlugin({}, {
+      sourceMap: null
     }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       '__BUILD__': {
@@ -119,13 +90,14 @@ export default merge.smart(baseConfig, {
       // WOFF Font
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            mimetype: 'application/font-woff'
-          }
-        }
+        // use: {
+        //   loader: 'url-loader',
+        //   options: {
+        //     limit: 10000,
+        //     mimetype: 'application/font-woff'
+        //   }
+        // }
+        use: 'file-loader'
       },
       // WOFF2 Font
       {
@@ -141,13 +113,14 @@ export default merge.smart(baseConfig, {
       // TTF Font
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            mimetype: 'application/octet-stream'
-          }
-        }
+        // use: {
+        //   loader: 'url-loader',
+        //   options: {
+        //     limit: 10000,
+        //     mimetype: 'application/octet-stream'
+        //   }
+        // }
+        use: 'file-loader'
       },
       // EOT Font
       {
@@ -157,13 +130,14 @@ export default merge.smart(baseConfig, {
       // SVG Font
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            mimetype: 'image/svg+xml'
-          }
-        }
+        // use: {
+        //   loader: 'url-loader',
+        //   options: {
+        //     limit: 10000,
+        //     mimetype: 'image/svg+xml'
+        //   }
+        // }
+        use: 'file-loader'
       },
       // Common Image Formats
       {

@@ -14,6 +14,7 @@ import CheckNodeEnv from './internals/scripts/CheckNodeEnv'
 CheckNodeEnv('production')
 
 export default merge.smart(baseConfig, {
+  mode: 'production',
   devtool: 'source-map',
   target: 'electron-renderer',
   entry: './lib/index',
