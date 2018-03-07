@@ -3,64 +3,31 @@
 import path from 'path'
 import webpack from 'webpack'
 import merge from 'webpack-merge'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
 import baseConfig from './webpack.config.base'
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv'
+import MinifyPlugin from 'babel-minify-webpack-plugin'
 
-CheckNodeEnv('development')
-
-const port = process.env.PORT || 2505
-const publicPath = `/`
+CheckNodeEnv('production')
 
 export default merge.smart(baseConfig, {
-  devtool: 'inline-source-map',
   target: 'web',
-  mode: 'development',
+  mode: 'production',
 
-  entry: [
-    `webpack-dev-server/client?http://localhost:${port}`,
-    'webpack/hot/only-dev-server',
-    'react-hot-loader/patch',
-    path.join(__dirname, 'lib/index.js')
-  ],
+  entry: path.join(__dirname, 'lib/index.js'),
 
   output: {
-    publicPath,
-    path: path.join(__dirname, '/dist/'),
+    publicPath: '/',
+    path: path.join(__dirname, '/dist/web'),
     filename: '[name].js',
     libraryTarget: 'umd'
   },
 
-  devServer: {
-    port,
-    publicPath,
-    compress: true,
-    noInfo: true,
-    stats: 'errors-only',
-    inline: true,
-    lazy: false,
-    hot: true,
-    headers: { 'Access-Control-Allow-Origin': '*' },
-    // historyApiFallback: true,
-    watchOptions: {
-      aggregateTimeout: 300,
-      ignored: /node_modules/,
-      poll: 100
-    }
-  },
-
   plugins: [
-    new HtmlWebpackPlugin({
-      template: 'resources/index.tpl.html',
-      inject: 'body',
-      filename: 'index.html'
-    }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
+    new MinifyPlugin({}, { sourceMap: null }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
       '__BUILD__': {
-        'MODE': JSON.stringify(process.env.NODE_ENV || 'development'),
+        'MODE': JSON.stringify(process.env.NODE_ENV || 'production'),
         'BASE_URL': JSON.stringify('http://localhost:2503'),
         'API_URL': JSON.stringify('http://localhost:2503'),
         'STATIC_ASSETS_URL': JSON.stringify('http://localhost:2503'),
@@ -122,7 +89,7 @@ export default merge.smart(baseConfig, {
         use: {
           loader: 'url-loader',
           options: {
-            limit: 10000,
+            limit: 100000,
             mimetype: 'application/font-woff'
           }
         }
@@ -133,7 +100,7 @@ export default merge.smart(baseConfig, {
         use: {
           loader: 'url-loader',
           options: {
-            limit: 10000,
+            limit: 100000,
             mimetype: 'application/font-woff'
           }
         }
@@ -144,7 +111,7 @@ export default merge.smart(baseConfig, {
         use: {
           loader: 'url-loader',
           options: {
-            limit: 10000,
+            limit: 500000,
             mimetype: 'application/octet-stream'
           }
         }
@@ -152,7 +119,13 @@ export default merge.smart(baseConfig, {
       // EOT Font
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        use: 'file-loader'
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 100000,
+            mimetype: 'application/vnd.ms-fontobject'
+          }
+        }
       },
       // SVG Font
       {
@@ -160,7 +133,7 @@ export default merge.smart(baseConfig, {
         use: {
           loader: 'url-loader',
           options: {
-            limit: 10000,
+            limit: 100000,
             mimetype: 'image/svg+xml'
           }
         }

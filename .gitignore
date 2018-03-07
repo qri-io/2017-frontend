@@ -6,6 +6,9 @@ $HOME
 node_modules
 npm-debug.log
 
+# ignore dist dir
+dist
+
 # Logs
 logs
 *.log
