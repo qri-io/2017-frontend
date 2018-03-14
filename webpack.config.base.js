@@ -43,7 +43,14 @@ export default {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-      'process.env.API_URL': JSON.stringify('http://localhost:2503')
+      'process.env.API_URL': JSON.stringify('http://localhost:2503'),
+      'READ_ONLY': false,
+      'READ_ONLY_LINKS': JSON.stringify([
+        {'name': 'download', 'link': 'https://github.com/qri-io/qri/releases'},
+        {'name': 'github', 'link': 'https://github.com/qri-io/qri'},
+        {'name': 'qri.io', 'link': 'http://qri.io'}
+      ]),
+      'READ_ONLY_TEXT': JSON.stringify('Download Qri to view the data from this dataset.')
     }),
 
     new webpack.NamedModulesPlugin()
