@@ -15,7 +15,55 @@
 For more details, head to: https://qri.io
 
 ## Usage
-[Download the latest release!](https://qri.io/#installation)
+
+### Installing Dependencies
+
+Before you can build the Qri frontend, you must install and configure the following dependencies on your machine:
+
+* [Qri](http://www.qri.io): The qri server and command line client.
+  If you didn't want a pretty webapp to interact with, you would only need to install Qri itself. Head over to the [Qri github page](https://www.github.com/qri-io/qri) and follow the instructions under 'Building From Source' to download and install Qri.
+
+* [Git](http://git-scm.com/): The [Github Guide to
+  Installing Git][git-setup] is a good source of information.
+
+* [Node.js v8.6.X (LTS)](http://nodejs.org): 
+    * If you don't have node installed, we recommend using [homebrew](https://brew.sh/) to manage your package of node.
+
+    ```shell
+    # Install Homebrew by running this script and following the prompts (pulled straight from the homebrew homepage)
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+    # install node
+    brew install node 
+    ```
+
+* [Yarn](https://yarnpkg.com): We use Yarn to install our dependencies
+  (rather than using npm). See the detailed [installation instructions](https://yarnpkg.com/en/docs/install). Yarn is also installed using [homebrew](https://brew.sh/).
+
+#### Installing the Qri webapp
+Open up your terminal, naviagate into the folder that you want the frontend code to live and enter these commands:
+``` shell
+# Use git to clone the repository:
+$ git clone https://github.com/qri-io/frontend.git
+
+# Navigate into that directory:
+$ cd frontend
+
+# Install the dependencies:
+$ yarn install
+
+# Run the code!
+$ yarn dev
+
+# open a new window to your terminal:
+$ qri connect --webapp-port=""
+```
+
+Head over to your favorite web browser and type `localhost:2505/` in to the url bar
+
+And you should see the Qri webapp in action!
+
+To stop the webapp from running, head over to the terminal window that is currently running the webapp and type `ctrl-c`
 
 ## Contribute
 
