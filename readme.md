@@ -21,7 +21,7 @@ For more details, head to: https://qri.io
 Before you can build the Qri frontend, you must install and configure the following dependencies on your machine:
 
 * [Qri](http://www.qri.io): The qri server and command line client.
-  If you didn't want a pretty webapp to interact with, you would only need to install Qri itself. Head over to the [ri github page](https://www.github.com/qri-io/qri) and follow the instructions under 'Building From Source' to download and install Qri.
+  If you didn't want a pretty webapp to interact with, you would only need to install Qri itself. Head over to the [Qri github page](https://www.github.com/qri-io/qri) and follow the instructions under 'Building From Source' to download and install Qri.
 
 * [Git](http://git-scm.com/): The [Github Guide to
   Installing Git][git-setup] is a good source of information.
