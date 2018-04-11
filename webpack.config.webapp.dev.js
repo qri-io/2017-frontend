@@ -41,7 +41,7 @@ export default merge.smart(baseConfig, {
     lazy: false,
     hot: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
-    // historyApiFallback: true,
+    historyApiFallback: true,
     watchOptions: {
       aggregateTimeout: 300,
       ignored: /node_modules/,
