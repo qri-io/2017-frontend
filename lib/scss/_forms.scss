@@ -345,7 +345,7 @@ select.form-control-lg {
     }
 
     .form-control-label {
-      color: $gray;
+      color: $neutral;
       margin-bottom: 0;
       vertical-align: middle;
     }
@@ -381,5 +381,5 @@ select.form-control-lg {
 //
 .help_hint {
   font-size: $font-size-sm;
-  color: $gray;
+  color: $neutral;
 }

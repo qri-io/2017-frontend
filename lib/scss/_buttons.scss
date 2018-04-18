@@ -16,7 +16,9 @@
   border: $input-btn-border-width solid transparent;
   @include button-size($btn-padding-y, $btn-padding-x, $font-size-base, $btn-border-radius);
   @include transition(all .2s ease-in-out);
-  margin-right: 10px
+  margin-right: 10px;
+  min-width: $btn-min-width;
+  height: $btn-height;
 
   &,
   &:active,
@@ -60,43 +62,67 @@ fieldset[disabled] a.btn {
 // Alternate buttons
 //
 
-.btn-primary {
-  @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+.btn-a {
+  @include button-variant($btn-a-color, $btn-a-bg, $btn-a-border);
 }
-.btn-secondary {
-  @include button-variant($btn-secondary-color, $btn-secondary-bg, $btn-secondary-border);
+.btn-b {
+  @include button-variant($btn-b-color, $btn-b-bg, $btn-b-border);
 }
-.btn-info {
-  @include button-variant($btn-info-color, $btn-info-bg, $btn-info-border);
+.btn-c {
+  @include button-variant($btn-c-color, $btn-c-bg, $btn-c-border);
 }
-.btn-success {
-  @include button-variant($btn-success-color, $btn-success-bg, $btn-success-border);
+.btn-d {
+  @include button-variant($btn-d-color, $btn-d-bg, $btn-d-border);
 }
-.btn-warning {
-  @include button-variant($btn-warning-color, $btn-warning-bg, $btn-warning-border);
+.btn-e {
+  @include button-variant($btn-e-color, $btn-e-bg, $btn-e-border);
 }
-.btn-danger {
-  @include button-variant($btn-danger-color, $btn-danger-bg, $btn-danger-border);
+.btn-f {
+  @include button-variant($btn-f-color, $btn-f-bg, $btn-f-border);
+}
+.btn-neutral-bold {
+  @include button-variant($btn-neutral-bold-color, $btn-neutral-bold-bg, $btn-neutral-bold-border);
+}
+.btn-neutral {
+  @include button-variant($btn-neutral-color, $btn-neutral-bg, $btn-neutral-border);
+}
+.btn-neutral-muted {
+  @include button-variant($btn-neutral-muted-color, $btn-neutral-muted-bg, $btn-neutral-muted-border);
+}
+.btn-dark {
+  @include button-variant($btn-dark-color, $btn-dark-bg, $btn-dark-border);
 }
 
 // Remove all backgrounds
-.btn-outline-primary {
-  @include button-outline-variant($btn-primary-bg);
+.btn-outline-a {
+  @include button-outline-variant($btn-a-bg);
 }
-.btn-outline-secondary {
-  @include button-outline-variant($btn-secondary-border);
+.btn-outline-b {
+  @include button-outline-variant($btn-b-border);
 }
-.btn-outline-info {
-  @include button-outline-variant($btn-info-bg);
+.btn-outline-c {
+  @include button-outline-variant($btn-c-bg);
 }
-.btn-outline-success {
-  @include button-outline-variant($btn-success-bg);
+.btn-outline-d {
+  @include button-outline-variant($btn-d-bg);
 }
-.btn-outline-warning {
-  @include button-outline-variant($btn-warning-bg);
+.btn-outline-e {
+  @include button-outline-variant($btn-e-bg);
 }
-.btn-outline-danger {
-  @include button-outline-variant($btn-danger-bg);
+.btn-outline-f {
+  @include button-outline-variant($btn-f-bg);
+}
+.btn-outline-neutral-bold {
+  @include button-outline-variant($btn-neutral-bold-bg);
+}
+.btn-outline-neutral {
+  @include button-outline-variant($btn-neutral-bg);
+}
+.btn-outline-neutral-mute {
+  @include button-outline-variant($btn-neutral-muted-bg);
+}
+.btn-outline-dark {
+  @include button-outline-variant($btn-dark-bg);
 }
 
 

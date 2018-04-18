@@ -2,12 +2,16 @@ html, body, #root, #app {
   height: 100%;
 }
 
-.bg-c { background: $c; }
 .bg-a { background: $a; }
-.bg-e { background: $e; }
-.bg-d { background: $d; }
 .bg-b { background: $b; }
+.bg-c { background: $c; }
+.bg-d { background: $d; }
+.bg-e { background: $e; }
 .bg-f { background: $f; }
+.bg-appBackground { background: $appBackground }
+.bg-sidebar { background: $sidebar }
+.bg-text { background: $text }
+.bg-sink { background: $sink }
 
 .a { color: $a; }
 .b { color: $b; }
@@ -15,6 +19,9 @@ html, body, #root, #app {
 .d { color: $d; }
 .e { color: $e; }
 .f { color: $f; }
+.neutral-bold { color: $neutral-bold; }
+.neutral { color: $neutral; }
+.neutral-muted { color: $neutral-muted; }
 
 hr.a { border-top: 1px solid $a; }
 hr.b { border-top: 1px solid $b; }
@@ -22,6 +29,9 @@ hr.c { border-top: 1px solid $c; }
 hr.d { border-top: 1px solid $d; }
 hr.e { border-top: 1px solid $e; }
 hr.f { border-top: 1px solid $f; }
+hr.neutral-bold { border-top: 1px solid $neutral-bold; }
+hr.neutral { border-top: 1px solid $neutral; }
+hr.neutral-muted { border-top: 1px solid $neutral-muted; }
 
 .dt-any { color: $text; }
 .dt-string { color: $text; }
