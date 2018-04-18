@@ -287,9 +287,9 @@ $btn-primary-color:              #fff !default;
 $btn-primary-bg:                 #192327 !default;
 $btn-primary-border:             $btn-primary-bg !default;
 
-$btn-secondary-color:            $gray-dark !default;
-$btn-secondary-bg:               #fff !default;
-$btn-secondary-border:           #ccc !default;
+$btn-secondary-color:            #fff !default;
+$btn-secondary-bg:               $gray-light !default;
+$btn-secondary-border:           $gray-light !default;
 
 $btn-info-color:                 #fff !default;
 $btn-info-bg:                    $d !default;
