@@ -106,7 +106,7 @@ $spacers: (
   )
 ) !default;
 
-$border-width: 0.5px !default;
+$border-width: 1px !default;
 
 
 // Body
@@ -182,7 +182,7 @@ $font-size-xs:   .75rem !default;
 
 $line-height-base: 1.375 !default;
 
-$font-size-h1: 42px !default;
+$font-size-h1: 48px !default;
 $font-size-h2: 32px !default;
 $font-size-h3: 28px !default;
 $font-size-h4: 24px !default;
@@ -210,7 +210,7 @@ $headings-margin-bottom: 10px !default;
 $headings-font-family:   $font-family-sans-serif !default;
 $headings-font-weight:   1000 !default;
 $headings-line-height:   1.1 !default;
-$headings-color:         inherit !default;
+$headings-color:         $text !default;
 
 $bold-heading-font-family: 'Helvetica Neue', Helvetica, sans-serif !default;
 
@@ -281,50 +281,50 @@ $table-border-color:            $neutral !default;
 
 $btn-padding-x:                  1rem !default;
 $btn-padding-y:                  .5rem !default;
-$btn-line-height:                1.25 !default;
+$btn-line-height:                1.45 !default;
 $btn-font-weight:                bold !default;
 $btn-box-shadow:                 inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075) !default;
 $btn-active-box-shadow:          inset 0 3px 5px rgba(0,0,0,.125) !default;
 
 $btn-a-color:              #fff !default;
 $btn-a-bg:                 $a !default;
-$btn-a-border:             darken($a, 10%) !default;
+$btn-a-border:             darken($a, 15%) !default;
 
 $btn-b-color:            #fff !default;
 $btn-b-bg:               $b !default;
-$btn-b-border:           darken($b, 10%) !default;
+$btn-b-border:           darken($b, 15%) !default;
 
 $btn-c-color:            #fff !default;
 $btn-c-bg:               $c !default;
-$btn-c-border:           darken($c, 10%) !default;
+$btn-c-border:           darken($c, 15%) !default;
 
 $btn-d-color:            #fff !default;
 $btn-d-bg:               $d !default;
-$btn-d-border:           darken($d, 10%) !default;
+$btn-d-border:           darken($d, 15%) !default;
 
 $btn-e-color:            #fff !default;
 $btn-e-bg:               $e !default;
-$btn-e-border:           darken($e, 10%) !default;
+$btn-e-border:           darken($e, 15%) !default;
 
 $btn-f-color:            #fff !default;
 $btn-f-bg:               $f !default;
-$btn-f-border:           darken($f, 10%) !default;
+$btn-f-border:           darken($f, 15%) !default;
 
 $btn-neutral-bold-color:            #fff !default;
 $btn-neutral-bold-bg:               $neutral-bold !default;
-$btn-neutral-bold-border:           darken($neutral-bold, 10%) !default;
+$btn-neutral-bold-border:           darken($neutral-bold, 15%) !default;
 
 $btn-neutral-color:            #fff !default;
 $btn-neutral-bg:               $neutral !default;
-$btn-neutral-border:           darken($neutral, 10%) !default;
+$btn-neutral-border:           darken($neutral, 15%) !default;
 
 $btn-neutral-muted-color:            #fff !default;
 $btn-neutral-muted-bg:               $neutral-muted !default;
-$btn-neutral-muted-border:           darken($neutral-muted, 10%) !default;
+$btn-neutral-muted-border:           darken($neutral-muted, 15%) !default;
 
 $btn-dark-color:            $a !default;
 $btn-dark-bg:               #000000 !default;
-$btn-dark-border:           darken(#000000, 10%) !default;
+$btn-dark-border:           darken(#000000, 15%) !default;
 
 $btn-link-disabled-color:        $neutral-muted !default;
 
