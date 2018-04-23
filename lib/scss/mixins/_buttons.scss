@@ -35,13 +35,13 @@
     background-image: none;
     @include box-shadow($btn-active-box-shadow);
 
-    &:hover,
-    &:focus,
-    &.focus {
-      color: $color;
-      background-color: darken($background, 17%);
-          border-color: darken($border, 25%);
-    }
+    // &:hover,
+    // &:focus,
+    // &.focus {
+    //   color: $color;
+    //   background-color: darken($background, 17%);
+    //       border-color: darken($border, 25%);
+    // }
   }
 
   &.disabled,

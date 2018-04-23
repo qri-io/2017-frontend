@@ -19,11 +19,12 @@
 @import "mixins/hover";
 @import "mixins/tab-focus";
 
-// // Components
+// Components
 @import "mixins/buttons";
 @import "mixins/lists";
 @import "mixins/forms";
+@import "mixins/nav-divider";
 
-// // Skins
+// Skins
 @import "mixins/border-radius";
-
+@import "mixins/gradients";
