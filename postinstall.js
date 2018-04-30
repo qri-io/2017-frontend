@@ -2,11 +2,11 @@
 (function () {
   'use strict'
 
-// node
+  // node
   var fs = require('fs')
   var path = require('path');
 
-// Patch encoding module due to iconv issues -> make it use iconv-lite
+  // Patch encoding module due to iconv issues -> make it use iconv-lite
   (function () {
     var PATCH_VERSION = '0.1.12'
     var PATCH_MODULE = 'encoding'
@@ -19,10 +19,10 @@
     var moduleInfo = require(pathToModulePackage)
     if (moduleInfo.version !== PATCH_VERSION) {
       console.error(
-      'patching `encoding` failed - expected `%s` but detected `%s`',
-      PATCH_VERSION,
-      moduleInfo.version
-    )
+        'patching `encoding` failed - expected `%s` but detected `%s`',
+        PATCH_VERSION,
+        moduleInfo.version
+      )
       process.exit(1)
     }
     var contents
