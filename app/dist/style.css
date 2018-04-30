@@ -1486,7 +1486,6 @@ input[type="button"].btn-block {
   position: relative; }
 
 .dropdown-menu {
-  position: absolute;
   top: 100%;
   left: 0;
   z-index: 2000;
