@@ -94,6 +94,7 @@ function createMainWindow () {
   })
 
   mainWindow.loadURL(`file://${__dirname}/app.html`)
+  // mainWindow.loadURL(`http://google.com`)
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
@@ -111,19 +112,19 @@ function createMainWindow () {
   })
   mainWindow.setTouchBar(touchbar)
 
-  if (isDevelopment) {
+  if (isDevelopment && !isDevelopment) {
     // auto-open dev tools
-    // mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
 
     // add inspect element on right click menu
-    // mainWindow.webContents.on('context-menu', (e, props) => {
-    //   Menu.buildFromTemplate([{
-    //     label: 'Inspect element',
-    //     click () {
-    //       mainWindow.inspectElement(props.x, props.y)
-    //     }
-    //   }]).popup(mainWindow)
-    // })
+    mainWindow.webContents.on('context-menu', (e, props) => {
+      Menu.buildFromTemplate([{
+        label: 'Inspect element',
+        click () {
+          mainWindow.inspectElement(props.x, props.y)
+        }
+      }]).popup(mainWindow)
+    })
   }
 
   const menuBuilder = new MenuBuilder(mainWindow)
