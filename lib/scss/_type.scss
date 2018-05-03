@@ -119,10 +119,11 @@ h6, .h6 {
 //
 
 hr {
-  margin-top: $spacer-y;
+  margin-top: 0;
   margin-bottom: $spacer-y;
   border: 0;
   border-top: $hr-border-width solid $hr-border-color;
+  width: 100%;
 }
 
 

@@ -106,7 +106,7 @@ $spacers: (
   )
 ) !default;
 
-$border-width: 1px !default;
+$border-width: .5px !default;
 
 
 // Body
@@ -228,7 +228,7 @@ $blockquote-font-size:    ($font-size-base * 1.25) !default;
 $blockquote-border-color: $neutral-muted !default;
 $blockquote-border-width: .25rem !default;
 
-$hr-border-color: rgba(0,0,0,.1) !default;
+$hr-border-color: rgba(0,0,0,.5) !default;
 $hr-border-width: $border-width !default;
 
 $mark-padding: .2em !default;
