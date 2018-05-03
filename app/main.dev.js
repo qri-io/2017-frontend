@@ -10,7 +10,7 @@
  *
  * @flow
  */
-import { app, BrowserWindow, crashReporter, dialog } from 'electron'
+import electron, { app, BrowserWindow, crashReporter, dialog } from 'electron'
 import MenuBuilder from './menu'
 import Backend from './backend'
 import touchbar from './touchbar'
@@ -65,15 +65,21 @@ app.on('window-all-closed', () => {
   }
 })
 
+// app.on('will-finish-launching', async () => {})
+
 app.on('ready', async () => {
   // app.setPath('temp', '/tmp')
+  electron.session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+    details.requestHeaders['Origin'] = 'electron://local.qri.io'
+    callback({ cancel: false, requestHeaders: details.requestHeaders })
+  })
 
   if (isDevelopment) {
     await installExtensions()
   }
 
-  createMainWindow()
   backend = new Backend()
+  createMainWindow()
   // backend.on('connect', createMainWindow)
 })
 
@@ -90,7 +96,7 @@ function createMainWindow () {
     width: 1500,
     height: 728,
     titleBarStyle: 'hiddenInset',
-    backgroundColor: '#0E2630'
+    backgroundColor: '#E6E6E6'
   })
 
   mainWindow.loadURL(`file://${__dirname}/app.html`)
