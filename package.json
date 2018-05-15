@@ -20,40 +20,48 @@
     "url": "https://github.com/qri-io/frontend/issues"
   },
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=\"--max_old_space_size=10000\" NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.webapp.prod.js --colors",
-    "build:electron": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
-    "build-debug": "concurrently \"npm run build-main\" \"npm run build-renderer-debug\"",
-    "build-dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
-    "build-main": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.main.prod.js --colors",
-    "build-renderer": "cross-env NODE_OPTIONS=\"--max_old_space_size=10000\" NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.prod.js --colors",
-    "build-renderer-debug": "cross-env DEBUG_PROD=true NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.prod.js --colors",
-    "dev": "cross-env START_HOT=1 npm run start-webapp-dev",
-    "dev:web": "npm run dev",
-    "dev:electron": "cross-env START_HOT=1 npm run start-renderer-dev",
     "lint": "standard",
-    "lint-fix": "npm run lint -- --fix",
-    "lint-styles": "stylelint app/*.css app/components/*.css --syntax scss",
-    "lint-styles-fix": "stylefmt -r app/*.css app/components/*.css",
-    "package": "npm run build && build --publish never",
-    "package-debug": "npm run build-debug && build --publish never",
-    "package-all": "npm run build && build -mwl",
-    "package-linux": "npm run build && build --linux",
-    "package-win": "npm run build && build --win --x64",
-    "start": "cross-env NODE_ENV=production electron ./app/",
-    "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron -r babel-register ./app/main.dev",
-    "start-renderer-dev": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js",
-    "start-webapp-dev": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.webapp.dev.js",
-    "test": "jest",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:styles": "stylelint app/*.css app/components/*.css --syntax scss",
+    "lint:styles-fix": "stylefmt -r app/*.css app/components/*.css",
+
     "codecov": "codecov",
-    "test-all": "npm run lint && npm run build && npm run test && npm run test-e2e",
-    "test-e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js e2e",
-    "test-watch": "npm test -- --watch",
-    "postinstall": "node postinstall.js"
+    "test": "jest",
+    "test:watch": "npm test -- --watch",
+    "postinstall": "electron-builder install-app-deps",
+
+    "web:dev": "cross-env START_HOT=1 npm run web:start:dev",
+    "web:build": "cross-env NODE_OPTIONS=\"--max_old_space_size=10000\" NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.webapp.prod.js --colors",
+    "web:start:dev": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.webapp.dev.js",
+    
+    "electron:start": "cross-env NODE_ENV=production electron ./app/",
+    "electron:start:dev": "cross-env START_HOT=1 npm run electron:start:dev:renderer",
+    "electron:start:dev:main": "cross-env HOT=1 NODE_ENV=development electron -r babel-register ./app/main.dev",
+    "electron:start:dev:renderer": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js",
+    
+    "electron:build": "concurrently \"npm run electron:build:main\" \"npm run electron:build:renderer\"",
+    "electron:build:main": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.main.prod.js --colors",
+    "electron:build:renderer": "cross-env NODE_OPTIONS=\"--max_old_space_size=10000\" NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.prod.js --colors",
+    "electron:build:debug": "concurrently \"npm run electron:build:main\" \"npm run electron:build:renderer:debug\"",
+    "electron:build:dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
+    "electron:build:renderer:debug": "cross-env DEBUG_PROD=true NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.prod.js --colors",
+
+    "electron:package": "run-s electron:build && electron:build --publish never",
+    "electron:package:debug": "run-s electron:build:debug && electron:build --publish never",
+    "electron:package:all": "run-s electron:build && electron:build -mwl",
+    "electron:package:linux": "run-s electron:build && electron:build --linux",
+    "electron:package:win": "run-s electron:build && electron:build --win --x64",
+    "electron:clean" : "rimraf build",
+
+    "pack": "electron-builder",
+
+    "electron:test:all": "npm run lint && npm run electron:build && npm run test && npm run electron:test:e2e",
+    "electron:test:e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js e2e"
   },
   "browserslist": "electron 1.6",
   "build": {
     "productName": "qri",
-    "appId": "io.qri.qri",
+    "appId": "io.qri.electron",
     "files": [
       "dist/",
       "node_modules/",
@@ -77,6 +85,13 @@
           "type": "link",
           "path": "/Applications"
         }
+      ]
+    },
+    "mac" : {
+      "category" : "public.app-category.reference",
+      "target": [
+        "zip",
+        "dmg"
       ]
     },
     "win": {
@@ -160,6 +175,8 @@
     "css-loader": "0.28.11",
     "devtron": "1.4.0",
     "electron": "2.0.0",
+    "electron-log": "^1.3.0",
+    "electron-updater": "^2.21.4",
     "electron-builder": "20.11.1",
     "electron-debug": "1.5.0",
     "electron-devtools-installer": "2.2.4",
@@ -229,6 +246,7 @@
   },
   "devDependencies": {
     "fetch-mock": "6.3.0",
-    "redux-mock-store": "1.5.1"
+    "redux-mock-store": "1.5.1",
+    "rimraf": "2.5.4"
   }
 }

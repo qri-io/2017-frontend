@@ -13,7 +13,7 @@ export default merge.smart(baseConfig, {
   target: 'web',
   mode: 'production',
 
-  entry: path.join(__dirname, 'lib/index.js'),
+  entry: path.join(__dirname, '/../lib/index.js'),
 
   output: {
     publicPath: '/',
