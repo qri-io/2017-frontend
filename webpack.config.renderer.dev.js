@@ -312,7 +312,7 @@ export default merge.smart(baseConfig, {
         console.log('Starting Main Process...')
         spawn(
           'npm',
-          ['run', 'start-main-dev'],
+          ['run', 'electron:start:dev:main'],
           { shell: true, env: process.env, stdio: 'inherit' }
         )
           .on('close', code => process.exit(code))

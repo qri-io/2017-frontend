@@ -26,7 +26,7 @@ export default merge.smart(baseConfig, {
 
   output: {
     publicPath,
-    path: path.join(__dirname, '/dist/'),
+    path: path.join(__dirname, 'dist/'),
     filename: '[name].js',
     libraryTarget: 'umd'
   },
