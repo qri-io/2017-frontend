@@ -14,7 +14,7 @@ import electron, { app, BrowserWindow, crashReporter, dialog } from 'electron'
 import MenuBuilder from './menu'
 import Backend from './backend'
 import touchbar from './touchbar'
-import { autoUpdater } from 'electron-updater'
+// import { autoUpdater } from 'electron-updater'
 
 const isDevelopment = (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD !== 'false')
 
@@ -69,7 +69,7 @@ app.on('window-all-closed', () => {
 // app.on('will-finish-launching', async () => {})
 
 app.on('ready', async () => {
-  autoUpdater.checkForUpdatesAndNotify()
+  // autoUpdater.checkForUpdatesAndNotify()
   // app.setPath('temp', '/tmp')
   electron.session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
     details.requestHeaders['Origin'] = 'electron://local.qri.io'
