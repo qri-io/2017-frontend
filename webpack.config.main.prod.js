@@ -56,6 +56,10 @@ export default merge.smart(baseConfig, {
       'process.env.API_URL': JSON.stringify('http://localhost:2503'),
       'process.env.STATIC_ASSETS_URL': JSON.stringify('http://localhost:2503'),
       'process.env.SEGMENT_KEY': JSON.stringify('--nope--')
+    }),
+
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1 // disable creating additional chunks
     })
   ],
 
