@@ -24,34 +24,28 @@
     "lint:fix": "npm run lint -- --fix",
     "lint:styles": "stylelint app/*.css app/components/*.css --syntax scss",
     "lint:styles-fix": "stylefmt -r app/*.css app/components/*.css",
-
     "codecov": "codecov",
     "test": "jest",
     "test:watch": "npm test -- --watch",
     "postinstall": "electron-builder install-app-deps",
-
     "web:dev": "cross-env START_HOT=1 npm run web:start:dev",
     "web:build": "cross-env NODE_OPTIONS=\"--max_old_space_size=10000\" NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.webapp.prod.js --colors",
     "web:start:dev": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.webapp.dev.js",
-    
     "electron:start": "cross-env NODE_ENV=production electron ./app/",
     "electron:start:dev": "cross-env START_HOT=1 npm run electron:start:dev:renderer",
     "electron:start:dev:main": "cross-env HOT=1 NODE_ENV=development electron -r babel-register ./app/main.dev",
     "electron:start:dev:renderer": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js",
-    
     "electron:build": "concurrently \"npm run electron:build:main\" \"npm run electron:build:renderer\"",
     "electron:build:main": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.main.prod.js --colors",
     "electron:build:renderer": "cross-env NODE_OPTIONS=\"--max_old_space_size=10000\" NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.prod.js --colors",
     "electron:build:debug": "concurrently \"npm run electron:build:main\" \"npm run electron:build:renderer:debug\"",
     "electron:build:dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
     "electron:build:renderer:debug": "cross-env DEBUG_PROD=true NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.prod.js --colors",
-
     "electron:package": "npm run electron:build && build --publish never",
     "electron:package:debug": "npm run electron:build:debug && electron:build --publish never",
     "electron:package:all": "npm run electron:build && electron:build -mwl",
     "electron:package:linux": "npm run electron:build && electron:build --linux",
     "electron:package:win": "npm run electron:build && electron:build --win --x64",
-
     "electron:test:all": "npm run lint && npm run electron:build && npm run test && npm run electron:test:e2e",
     "electron:test:e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js e2e"
   },
@@ -84,10 +78,15 @@
         }
       ]
     },
-    "mac" : {
-      "category" : "public.app-category.reference",
-      "target": ["zip", "dmg" ],
-      "publish" : ["github"]
+    "mac": {
+      "category": "public.app-category.reference",
+      "target": [
+        "zip",
+        "dmg"
+      ],
+      "publish": [
+        "github"
+      ]
     },
     "win": {
       "target": [
@@ -166,11 +165,11 @@
     "css-loader": "0.28.11",
     "devtron": "1.4.0",
     "electron": "2.0.0",
-    "electron-log": "^1.3.0",
-    "electron-updater": "^2.21.4",
     "electron-builder": "20.13.4",
     "electron-debug": "1.5.0",
     "electron-devtools-installer": "2.2.4",
+    "electron-log": "^1.3.0",
+    "electron-updater": "^2.21.4",
     "encoding": "0.1.12",
     "enzyme": "3.3.0",
     "enzyme-to-json": "3.3.3",
@@ -180,7 +179,7 @@
     "file-loader": "1.1.11",
     "file-saver": "1.3.8",
     "global": "4.3.2",
-    "handsontable": "2.0.0",
+    "handsontable": "^4.0.0",
     "history": "4.7.2",
     "html-webpack-plugin": "3.2.0",
     "identity-obj-proxy": "3.0.0",
@@ -199,7 +198,7 @@
     "react-ace": "6.1.0",
     "react-addons-shallow-compare": "15.6.2",
     "react-dom": "16.3.2",
-    "react-handsontable": "0.3.1",
+    "react-handsontable": "^0.3.1",
     "react-hot-loader": "4.1.2",
     "react-markdown": "3.3.2",
     "react-redux": "5.0.7",
