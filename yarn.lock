@@ -1953,6 +1953,10 @@ big.js@^3.1.3:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-3.2.0.tgz#a5fc298b81b9e0dca2e458824784b65c52ba588e"
 
+bignumber.js@^4.0.4:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-4.1.0.tgz#db6f14067c140bd46624815a7916c92d9b6c24b1"
+
 bin-links@^1.1.0, bin-links@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/bin-links/-/bin-links-1.1.2.tgz#fb74bd54bae6b7befc6c6221f25322ac830d9757"
@@ -5473,20 +5477,20 @@ handlebars@^4.0.3:
   optionalDependencies:
     uglify-js "^2.6"
 
-handsontable@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/handsontable/-/handsontable-2.0.0.tgz#b22fbd61d3193eb63b9c798e73843f55856ef022"
-  dependencies:
-    moment "2.20.1"
-    numbro "1.11.0"
-    pikaday "1.5.1"
-
 handsontable@^0.33.0:
   version "0.33.0"
   resolved "https://registry.yarnpkg.com/handsontable/-/handsontable-0.33.0.tgz#3df41804fd00a878b3904a478bf7ef54f2bc6d95"
   dependencies:
     moment "2.18.1"
     numbro "1.11.0"
+    pikaday "1.5.1"
+
+handsontable@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/handsontable/-/handsontable-4.0.0.tgz#1a9591a3f6c2fe13564955d945ea91d20b6c4cf1"
+  dependencies:
+    moment "2.20.1"
+    numbro "^2.0.6"
     pikaday "1.5.1"
 
 har-schema@^1.0.5:
@@ -8635,6 +8639,12 @@ numbro@^1.9.3:
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/numbro/-/numbro-1.11.1.tgz#e0d9ba0ddfc3ad5ac01d9558a49383db214f04be"
 
+numbro@^2.0.6:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/numbro/-/numbro-2.1.0.tgz#618ac6e4b2f32f2e623190ce4b05f4c8b09c3207"
+  dependencies:
+    bignumber.js "^4.0.4"
+
 nwmatcher@^1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/nwmatcher/-/nwmatcher-1.4.3.tgz#64348e3b3d80f035b40ac11563d278f8b72db89c"
@@ -9983,7 +9993,7 @@ react-dom@16.3.2:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-handsontable@0.3.1:
+react-handsontable@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/react-handsontable/-/react-handsontable-0.3.1.tgz#503220ec5bd3b98a99b9a6a5b2e188b90d47ce6e"
   dependencies:
