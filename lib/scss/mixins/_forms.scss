@@ -100,10 +100,10 @@
   background: $background-color;
   transition: 0.2s all linear;
   outline: none;
-  margin-right: 5px;
+  margin-right: 10px;
 
   position: relative;
-  top: 4px;
+  top: 2px;
   &:checked {
     background: $checked-color;
   }
