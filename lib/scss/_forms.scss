@@ -374,6 +374,41 @@ select.form-control-lg {
 }
 
 
+//
+// Radio button Variants:
+//
+
+.radio-a {
+  @include radio-variant($a, $neutral)
+}
+.radio-b {
+  @include radio-variant($b, $neutral)
+}
+.radio-c {
+  @include radio-variant($c, $neutral)
+}
+.radio-d {
+  @include radio-variant($d, $neutral)
+}
+.radio-e {
+  @include radio-variant($e, $neutral)
+}
+.radio-f {
+  @include radio-variant($f, $neutral)
+}
+.radio-neutral-bold {
+  @include radio-variant($neutral-bold, $neutral)
+}
+.radio-neutral {
+  @include radio-variant($white, $neutral)
+}
+.radio-neutral-muted {
+  @include radio-variant($neutral-muted, $neutral)
+}
+.radio-dark {
+  @include radio-variant($a, $black)
+}
+
 // Help Hints
 //
 // Help Hints appear underneath an input and describe what is needed in that particular field
