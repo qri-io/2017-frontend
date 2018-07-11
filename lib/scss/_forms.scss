@@ -21,6 +21,7 @@
   border: none;
   border-bottom-width: $input-border-width;
   border-bottom-style: solid;
+  border-bottom-color: $input-border-color;
   // overflow: auto;
   // Note: This has no effect on <select>s in some browsers, due to the limited stylability of `<select>`s in CSS.
   @include box-shadow($input-box-shadow);
@@ -32,8 +33,12 @@
     border: 0;
   }
   &:focus {
-    //border-bottom-color: $input-border-focus;
+    border-bottom-color: $input-border-focus;
     outline: none;
+    & + .input-label {
+      color: $input-border-focus;
+      @include transition(border-color ease-in-out .15s, box-shadow ease-in-out .15s);
+    }
   }
 
   // Customize the `:focus` state to imitate native WebKit styles.
@@ -87,10 +92,55 @@ select.form-control {
   display: block;
 }
 
+// 
+// error
+// 
+.has-error {
+  border-bottom-color: $input-border-color;
+  &:focus {
+    border-bottom-color: $input-border-color;
+  }
+}
 
 //
 // Labels
 //
+.input-label {
+  color: $input-color-placeholder
+}
+
+
+// in order for the label to change color when the input is selected,
+// the label must come after the input in the DOM
+// however, we may want the label to come before the input
+// to achieve this, we set either the input or label to have class
+// form-control-top and the other to have form-control-bottom
+// both must exist in a div with the styles position: 'relative',
+// and a set height
+.form-control-top {
+  top: 0;
+  position: absolute;
+}
+
+.form-control-bottom {
+  bottom: 0;
+  position: absolute
+}
+
+.form-control-wrap-sm {
+  position: relative;
+  height: 60px
+}
+
+.form-control-wrap-md {
+  position: relative;
+  height: 90px
+}
+
+.form-control-wrap-lg {
+  position: relative;
+  height: 120px
+}
 
 // For use with horizontal and inline forms, when you need the label text to
 // align with the form controls.
