@@ -83,3 +83,28 @@
     height: auto;
   }
 }
+
+// Radio variant
+// 
+// Used in _forms to create the different colors that the radio button can have
+@mixin radio-variant($checked-color, $background-color) {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+
+  border: 2px solid $background-color;
+  background: $background-color;
+  transition: 0.2s all linear;
+  outline: none;
+  margin-right: 10px;
+
+  position: relative;
+  top: 2px;
+  &:checked {
+    background: $checked-color;
+  }
+}
