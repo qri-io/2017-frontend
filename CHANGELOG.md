@@ -1,3 +1,34 @@
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/qri-io/frontend/compare/v0.1.0...v0.2.0) (2018-07-19)
+
+
+### Bug Fixes
+
+* **dataset:** need to ensure that a dataset has a structure.schema brefore attempting to load the data ([d9ceaf6](https://github.com/qri-io/frontend/commit/d9ceaf6))
+* **error display:** reposition error display, remove old log calls ([f4e8f35](https://github.com/qri-io/frontend/commit/f4e8f35))
+* **extractSchema:** adjust extractSchema to work with non-tabular data ([ecaa3f4](https://github.com/qri-io/frontend/commit/ecaa3f4))
+* **HandsonTable:** adjust styling ([38a884b](https://github.com/qri-io/frontend/commit/38a884b))
+* **Json:** change `data` to `body` ([caaef05](https://github.com/qri-io/frontend/commit/caaef05))
+* **searchBar, TopBar:** only pull searchBar text from app.search ([054f877](https://github.com/qri-io/frontend/commit/054f877))
+
+
+### Features
+
+* **AddDataset:** adding choice between url add dropfile in addDataset ([143acc7](https://github.com/qri-io/frontend/commit/143acc7))
+* **electron, styling:** updates for electron toolbar, re-styled type ([8bb4fdd](https://github.com/qri-io/frontend/commit/8bb4fdd))
+* **HandsonTable:** first pass at adding back table viewer :) ([6d9c33b](https://github.com/qri-io/frontend/commit/6d9c33b))
+* **nav:** added nav buttons to topbar ([4c32296](https://github.com/qri-io/frontend/commit/4c32296))
+* **RadioInput:** add component for radio input, add styling to match sketch file ([dca6b06](https://github.com/qri-io/frontend/commit/dca6b06))
+* **search:** add searchItem, searchResults, and selectors/search ([b5095aa](https://github.com/qri-io/frontend/commit/b5095aa))
+* **searchBar:** can now handle search in the search bar ([64bdb24](https://github.com/qri-io/frontend/commit/64bdb24))
+* **searchBar:** creating initial search page and adding selectors for state.app.search ([4fe85cc](https://github.com/qri-io/frontend/commit/4fe85cc))
+* **selector/layout:** adding layout selector to containers and components ([4f46f91](https://github.com/qri-io/frontend/commit/4f46f91))
+* **selectors/layout:** adding selectors for layout ([83e990d](https://github.com/qri-io/frontend/commit/83e990d))
+* **topbar:** introduce TopBar component for navigation ([17deeae](https://github.com/qri-io/frontend/commit/17deeae))
+* **viz:** add viz tab to dataset components list ([66cffba](https://github.com/qri-io/frontend/commit/66cffba))
+
+
+
 <a name="0.0.2"></a>
 ## [0.0.2](https://github.com/qri-io/frontend/compare/v0.0.1...v0.0.2) (2018-05-15)
 
