@@ -281,7 +281,9 @@ $table-border-color:            $neutral !default;
 
 $btn-padding-x:                  1rem !default;
 $btn-padding-y:                  .5rem !default;
-$btn-line-height:                1.45 !default;
+$btn-line-height:                .9rem !default;
+$btn-font-size:                  $font-size-base * .75;
+
 $btn-font-weight:                bold !default;
 $btn-box-shadow:                 inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075) !default;
 $btn-active-box-shadow:          inset 0 3px 5px rgba(0,0,0,.125) !default;
@@ -328,8 +330,8 @@ $btn-dark-border:           darken(#000000, 15%) !default;
 
 $btn-link-disabled-color:        $neutral-muted !default;
 
-$btn-min-width:                  100px !default;
-$btn-height:                     40px !default;
+$btn-min-width:                  80px !default;
+$btn-height:                     30px !default;
 
 $btn-padding-x-sm:               .5rem !default;
 $btn-padding-y-sm:               .25rem !default;
