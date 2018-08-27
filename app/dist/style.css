@@ -1013,7 +1013,7 @@ select.form-control-lg:not([size]):not([multiple]) {
 .btn {
   display: inline-block;
   font-weight: bold;
-  line-height: 1.45;
+  line-height: 0.9rem;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
@@ -1021,10 +1021,10 @@ select.form-control-lg:not([size]):not([multiple]) {
   user-select: none;
   border: 0.5px solid transparent;
   padding: 0.5rem 1rem;
-  font-size: 1rem;
+  font-size: 0.75rem;
   border-radius: 0.25rem;
-  min-width: 100px;
-  height: 40px; }
+  min-width: 80px;
+  height: 30px; }
   .btn:focus, .btn.focus, .btn:active:focus, .btn:active.focus, .btn.active:focus, .btn.active.focus {
     outline: none; }
   .btn:focus, .btn:hover {
