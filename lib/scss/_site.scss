@@ -168,3 +168,14 @@ b {
   color: $nav-font-color-sm;
 }
 
+// layout of dataset
+
+.datasetContent {
+  max-width: 960px;
+  min-width: 600px;
+  width: 70%;
+  height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
