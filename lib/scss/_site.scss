@@ -143,3 +143,28 @@ b {
   box-shadow: 0 0 0 12px rgba(169, 169, 169, 0.5) inset;
 }
 
+// dataset nav links
+.navLink, .navLink:focus {
+  font-size: $nav-font-size;
+  color: $nav-font-color;
+  transition: none;
+}
+
+.navLinkSm, .navLinkSm:focus {
+  font-size: $nav-font-size-sm;
+  color: $nav-font-color-sm;
+  transition: none;
+}
+
+.navLink:hover, .navLinkActive {
+  font-weight: $font-weight-bold;
+  text-decoration: underline;
+  color: $nav-font-color;
+}
+
+.navLinkSm:hover, .navLinkSmActive {
+  font-weight: $font-weight-bold;
+  text-decoration: underline;
+  color: $nav-font-color-sm;
+}
+
