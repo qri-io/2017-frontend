@@ -510,7 +510,7 @@ $alert-danger-border:         $state-danger-border !default;
 // 
 // Define standards for the nav links on the dataset page
 // 
-$nav-font-size: $font-size-base !default;
+$nav-font-size: $font-size-lg !default;
 $nav-font-color: $white !default;
-$nav-font-size-sm: $font-size-sm !default;
+$nav-font-size-sm: $font-size-base * 1.15 !default;
 $nav-font-color-sm: $a !default;
