@@ -4,6 +4,7 @@
 * [Coding Rules](#rules)
 * [Commit Message Guidelines](#commits)
 * [Writing Documentation](#documentation)
+* [Common Pitfalls](/docs/COMMON_PITFALLS.md)
 
 ## <a name="setup"> Development Setup
 
