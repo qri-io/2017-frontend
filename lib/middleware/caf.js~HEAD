@@ -5,8 +5,8 @@ export const API_ROOT = `${__BUILD__.API_URL}`
 
 // Fetches a content addressed response off the distributed web
 // returns an ArrayBuffer that can be added to the state tree
-function getCAD (method, hash) {
-  let fullUrl = (hash.indexOf(API_ROOT) === -1) ? API_ROOT + hash : hash
+function getCAF (method, key) {
+  let fullUrl = (key.indexOf(API_ROOT) === -1) ? API_ROOT + key : key
 
   return fetch(fullUrl, {
     method: method,
@@ -25,25 +25,25 @@ function getCAD (method, hash) {
 }
 
 // Action key that carries API call info interpreted by this Redux middleware.
-export const GET_CAD = Symbol('Get Content Addressed Data')
+export const GET_CAF = Symbol('Get Content Addressed Data')
 
-// A Redux middleware that interprets actions with GET_CAD info specified.
+// A Redux middleware that interprets actions with GET_CAF info specified.
 // Performs the call and promises when such actions are dispatched.
 export default store => next => action => {
-  const cad = action[GET_CAD]
-  if (typeof cad === 'undefined') {
+  const caf = action[GET_CAF]
+  if (typeof caf === 'undefined') {
     return next(action)
   }
 
-  let { hash } = cad
-  const { types, method = 'GET', silentError = false } = cad
+  let { key } = caf
+  const { types, method = 'GET', silentError = false } = caf
 
-  if (typeof hash === 'function') {
-    hash = hash(store.getState())
+  if (typeof key === 'function') {
+    key = key(store.getState())
   }
 
-  if (typeof hash !== 'string') {
-    throw new Error('Specify a string hash URL.')
+  if (typeof key !== 'string') {
+    throw new Error('Specify a string key URL.')
   }
 
   if (!Array.isArray(types) || types.length !== 3) {
@@ -54,8 +54,8 @@ export default store => next => action => {
   }
 
   function actionWith (data) {
-    const finalAction = Object.assign({}, action, data, { hash })
-    delete finalAction[GET_CAD]
+    const finalAction = Object.assign({}, action, data, { key })
+    delete finalAction[GET_CAF]
     return finalAction
   }
 
@@ -65,7 +65,7 @@ export default store => next => action => {
   next(actionWith({ type: requestType }))
 
   // make the request
-  return getCAD(method, hash)
+  return getCAF(method, key)
     .then(
       data => next(actionWith({
         type: successType,
