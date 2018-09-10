@@ -122,26 +122,30 @@ b {
   font-size: 16px;
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  background-color: transparent;
-}
-::-webkit-scrollbar-corner {
-  background-color: transparent;
-}
-::-webkit-scrollbar-thumb {
-  width: 8px;
-  border-radius: 4px;
-  background-color: rgba(0,0,0,0.4);
-  box-shadow: 0 0 0 12px rgba(49, 49, 49,0.2) inset;
-}
-::-webkit-scrollbar-thumb:hover,
-::-webkit-scrollbar-thumb:focus {
-  box-shadow: 0 0 0 12px rgba(89, 89, 89, 0.5) inset;
-}
-::-webkit-scrollbar-thumb:active {
-  box-shadow: 0 0 0 12px rgba(169, 169, 169, 0.5) inset;
-}
+// these overrides cause scrolling of the data body page to get messed up
+// if we need to add them it won't be the worst, but until I hear that we
+// need these overrides back, I'm going to keep them commented out.
+
+// ::-webkit-scrollbar {
+//   width: 8px;
+//   background-color: transparent;
+// }
+// ::-webkit-scrollbar-corner {
+//   background-color: transparent;
+// }
+// ::-webkit-scrollbar-thumb {
+//   width: 8px;
+//   border-radius: 4px;
+//   background-color: rgba(0,0,0,0.4);
+//   box-shadow: 0 0 0 12px rgba(49, 49, 49,0.2) inset;
+// }
+// ::-webkit-scrollbar-thumb:hover,
+// ::-webkit-scrollbar-thumb:focus {
+//   box-shadow: 0 0 0 12px rgba(89, 89, 89, 0.5) inset;
+// }
+// ::-webkit-scrollbar-thumb:active {
+//   box-shadow: 0 0 0 12px rgba(169, 169, 169, 0.5) inset;
+// }
 
 // dataset nav links
 .navLink, .navLink:focus {
