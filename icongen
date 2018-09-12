@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# small script to generate icons for electron app
+# usage:
+# ./icongen /path/to/image
+
+# get filepath from arguments
+filepath=$1
+
+# color:
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+GREEN='\033[0;32m'
+
+# run scripts
+err=$(sips -s format ico -z 256 256 $filepath --out ./build/icon.ico 2>&1 >/dev/null)
+
+if [[ $err ]]; then
+  echo -e "${RED}${err}${NC}"
+else
+  echo -e "${GREEN}Created icon.ico${NC}"
+fi
+
+err=$(sips -s format png -z 256 256 $filepath --out ./build/icon.png 2>&1 >/dev/null)
+
+if [[ $err ]]; then
+ echo -e "${RED}${err}${NC}"
+else
+ echo -e "${GREEN}Created icon.png${NC}"
+fi
+
+err=$(sips -s format icns -z 512 512 $filepath --out ./build/icon.icns 2>&1 >/dev/null)
+
+if [[ $err ]]; then
+ echo -e "${RED}${err}${NC}"
+else
+ echo -e "${GREEN}Created icon.icns${NC}"
+fi
