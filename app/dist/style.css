@@ -1954,24 +1954,33 @@ b {
   transition: all 0.25s;
   font-size: 16px; }
 
-::-webkit-scrollbar {
-  width: 8px;
-  background-color: transparent; }
+.navLink, .navLink:focus {
+  font-size: 1.25rem;
+  color: #FFF;
+  transition: none; }
 
-::-webkit-scrollbar-corner {
-  background-color: transparent; }
+.navLinkSm, .navLinkSm:focus {
+  font-size: 1.15rem;
+  color: #50C9F4;
+  transition: none; }
 
-::-webkit-scrollbar-thumb {
-  width: 8px;
-  border-radius: 4px;
-  background-color: rgba(0, 0, 0, 0.4);
-  box-shadow: 0 0 0 12px rgba(49, 49, 49, 0.2) inset; }
+.navLink:hover, .navLinkActive {
+  font-weight: 600;
+  text-decoration: underline;
+  color: #FFF; }
 
-::-webkit-scrollbar-thumb:hover,
-::-webkit-scrollbar-thumb:focus {
-  box-shadow: 0 0 0 12px rgba(89, 89, 89, 0.5) inset; }
+.navLinkSm:hover, .navLinkSmActive {
+  font-weight: 600;
+  text-decoration: underline;
+  color: #50C9F4; }
 
-::-webkit-scrollbar-thumb:active {
-  box-shadow: 0 0 0 12px rgba(169, 169, 169, 0.5) inset; }
+.datasetContent {
+  max-width: 960px;
+  min-width: 600px;
+  width: 70%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  word-wrap: break-word; }
 
 /*# sourceMappingURL=style.css.map*/
