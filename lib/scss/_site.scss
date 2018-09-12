@@ -160,15 +160,23 @@ b {
   transition: none;
 }
 
-.navLink:hover, .navLinkActive {
-  font-weight: $font-weight-bold;
+.navLink:hover, {
   text-decoration: underline;
   color: $nav-font-color;
 }
 
-.navLinkSm:hover, .navLinkSmActive {
+.navLinkActive {
   font-weight: $font-weight-bold;
+  color: $nav-font-color;
+}
+
+.navLinkSm:hover {
   text-decoration: underline;
+  color: $nav-font-color-sm;
+}
+
+.navLinkSmActive {
+  font-weight: $font-weight-bold;
   color: $nav-font-color-sm;
 }
 
