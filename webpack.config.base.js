@@ -43,7 +43,10 @@ export default {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-      'process.env.API_URL': JSON.stringify('http://localhost:2503')
+      'process.env.API_URL': JSON.stringify('http://localhost:2503'),
+      '__BUILD__': {
+        'VERSION': JSON.stringify('0.3.0')
+      }
     }),
 
     new webpack.NamedModulesPlugin()
