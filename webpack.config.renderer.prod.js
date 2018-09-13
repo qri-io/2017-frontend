@@ -158,6 +158,7 @@ export default merge.smart(baseConfig, {
         'API_URL': JSON.stringify('http://localhost:2503'),
         'STATIC_ASSETS_URL': JSON.stringify('http://localhost:2503'),
         'ELECTRON': JSON.stringify('true'),
+        'VERSION': JSON.stringify('0.3.0'),
 
         'SEGMENT_KEY': JSON.stringify('--nope--')
       }
