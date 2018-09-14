@@ -1964,14 +1964,20 @@ b {
   color: #50C9F4;
   transition: none; }
 
-.navLink:hover, .navLinkActive {
-  font-weight: 600;
+.navLink:hover {
   text-decoration: underline;
   color: #FFF; }
 
-.navLinkSm:hover, .navLinkSmActive {
+.navLinkActive {
   font-weight: 600;
+  color: #FFF; }
+
+.navLinkSm:hover {
   text-decoration: underline;
+  color: #50C9F4; }
+
+.navLinkSmActive {
+  font-weight: 600;
   color: #50C9F4; }
 
 .datasetContent {
