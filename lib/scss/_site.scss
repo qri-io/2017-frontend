@@ -152,6 +152,8 @@ b {
   font-size: $nav-font-size;
   color: $nav-font-color;
   transition: none;
+  font-weight: bold;
+  // text-transform: uppercase;
 }
 
 .navLinkSm, .navLinkSm:focus {
@@ -162,12 +164,12 @@ b {
 
 .navLink:hover, {
   text-decoration: underline;
-  color: $nav-font-color;
+  color: $white;
 }
 
 .navLinkActive {
   font-weight: $font-weight-bold;
-  color: $nav-font-color;
+  color: $white;
 }
 
 .navLinkSm:hover {
@@ -177,7 +179,7 @@ b {
 
 .navLinkSmActive {
   font-weight: $font-weight-bold;
-  color: $nav-font-color-sm;
+  color: $white;
 }
 
 // layout of dataset
