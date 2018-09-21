@@ -202,7 +202,7 @@ export default merge.smart(baseConfig, {
         'API_URL': JSON.stringify('http://localhost:3000'),
         'STATIC_ASSETS_URL': JSON.stringify('http://localhost:3000'),
         'SEGMENT_KEY': JSON.stringify('not_a_key'),
-        'VERSION': JSON.stringify('0.3.0')
+        'VERSION': JSON.stringify('0.4.0-dev')
       }
     }),
 

@@ -265,7 +265,7 @@ export default merge.smart(baseConfig, {
         'STATIC_ASSETS_URL': JSON.stringify('http://localhost:2503'),
         'ELECTRON': JSON.stringify('true'),
         'SEGMENT_KEY': JSON.stringify('not_a_key'),
-        'VERSION': JSON.stringify('0.3.0')
+        'VERSION': JSON.stringify('0.4.0-dev')
       },
 
       '__HOT_BUILD_DATE__': JSON.stringify(''),
