@@ -229,3 +229,9 @@ input[type="button"] {
     width: 100%;
   }
 }
+
+.btn-large {
+  @include button-size($btn-padding-y * 2, $btn-padding-x * 2, $btn-font-size * 1.50, $btn-border-radius);
+  height: 100%;
+  font-weight: normal;
+}
