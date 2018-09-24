@@ -148,7 +148,7 @@ b {
 // }
 
 // dataset nav links
-.navLink, .navLink:focus {
+.navLink {
   font-size: $nav-font-size;
   color: $nav-font-color;
   transition: none;
@@ -156,30 +156,28 @@ b {
   // text-transform: uppercase;
 }
 
-.navLinkSm, .navLinkSm:focus {
+.navLinkSm {
   font-size: $nav-font-size-sm;
   color: $nav-font-color-sm;
   transition: none;
 }
 
 .navLink:hover, {
-  text-decoration: underline;
-  // color: $white;
+  color: $a;
 }
 
-.navLinkActive {
-  font-weight: $font-weight-bold;
-  color: $sidebar;
+.navLinkActive, .navLink:focus {
+  font-weight: bold;
+  color: $white
 }
 
 .navLinkSm:hover {
-  text-decoration: underline;
-  color: $nav-font-color-sm;
+  color: $a;
 }
 
-.navLinkSmActive {
+.navLinkSmActive, .navLinkSm:focus {
   font-weight: $font-weight-bold;
-  // color: $white;
+  color: $a;
 }
 
 // layout of dataset
