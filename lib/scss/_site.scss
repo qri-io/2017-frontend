@@ -22,6 +22,7 @@ html, body, #root, #app {
 .neutral-bold { color: $neutral-bold; }
 .neutral { color: $neutral; }
 .neutral-muted { color: $neutral-muted; }
+.white { color: $white }
 
 hr.a { border-top: 1px solid $a; }
 hr.b { border-top: 1px solid $b; }
@@ -32,6 +33,7 @@ hr.f { border-top: 1px solid $f; }
 hr.neutral-bold { border-top: 1px solid $neutral-bold; }
 hr.neutral { border-top: 1px solid $neutral; }
 hr.neutral-muted { border-top: 1px solid $neutral-muted; }
+hr.white { border-top: 1px solid $white; }
 
 .dt-any { color: $text; }
 .dt-string { color: $text; }
