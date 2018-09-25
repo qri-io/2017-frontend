@@ -26,6 +26,7 @@ export default merge.smart(baseConfig, {
   ],
 
   output: {
+    globalObject: 'self',
     publicPath,
     path: path.join(__dirname, 'dist/web_dev'),
     filename: '[name].js',

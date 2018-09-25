@@ -542,6 +542,15 @@ dl.row > dd + dt {
   font-size: 14px;
   line-height: 22px; }
 
+.stats-line-large {
+  font-family: "Avenir Next", "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 22px; }
+
+strong {
+  font-weight: bold; }
+
 .form-control {
   display: block;
   width: 100%;
@@ -1655,6 +1664,13 @@ input[type="reset"].btn-block,
 input[type="button"].btn-block {
   width: 100%; }
 
+.btn-large {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  border-radius: 0.25rem;
+  height: 100%;
+  font-weight: normal; }
+
 #modal-wrap {
   background: rgba(0, 0, 0, 0.45);
   width: 100%;
@@ -1695,10 +1711,10 @@ input[type="button"].btn-block {
 
 .dropdown-menu {
   top: 100%;
-  left: 0;
+  right: 0;
   z-index: 2000;
   display: none;
-  float: left;
+  position: absolute;
   min-width: 10rem;
   padding: 0.5rem 0;
   margin: 0.125rem 0 0;
@@ -1844,6 +1860,9 @@ html, body, #root, #app {
 .neutral-muted {
   color: #C3C3C3; }
 
+.white {
+  color: #FFF; }
+
 hr.a {
   border-top: 1px solid #50C9F4; }
 
@@ -1870,6 +1889,9 @@ hr.neutral {
 
 hr.neutral-muted {
   border-top: 1px solid #C3C3C3; }
+
+hr.white {
+  border-top: 1px solid #FFF; }
 
 .dt-any {
   color: #243239; }
@@ -1954,29 +1976,28 @@ b {
   transition: all 0.25s;
   font-size: 16px; }
 
-.navLink, .navLink:focus {
-  font-size: 1.25rem;
-  color: #FFF;
-  transition: none; }
+.navLink {
+  font-size: 1rem;
+  color: #9B9B9B;
+  transition: none;
+  font-weight: bold; }
 
-.navLinkSm, .navLinkSm:focus {
+.navLinkSm {
   font-size: 1.15rem;
-  color: #50C9F4;
+  color: #000;
   transition: none; }
 
 .navLink:hover {
-  text-decoration: underline;
-  color: #FFF; }
+  color: #50C9F4; }
 
-.navLinkActive {
-  font-weight: 600;
+.navLinkActive, .navLink:focus {
+  font-weight: bold;
   color: #FFF; }
 
 .navLinkSm:hover {
-  text-decoration: underline;
   color: #50C9F4; }
 
-.navLinkSmActive {
+.navLinkSmActive, .navLinkSm:focus {
   font-weight: 600;
   color: #50C9F4; }
 
@@ -1988,5 +2009,11 @@ b {
   display: flex;
   flex-direction: column;
   word-wrap: break-word; }
+
+.editor {
+  color: #FFF; }
+
+.editor .form-control {
+  color: white; }
 
 /*# sourceMappingURL=style.css.map*/

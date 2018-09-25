@@ -10,6 +10,7 @@ import merge from 'webpack-merge'
 import MinifyPlugin from 'babel-minify-webpack-plugin'
 import baseConfig from './webpack.config.base'
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv'
+import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin'
 
 CheckNodeEnv('production')
 
@@ -17,38 +18,52 @@ export default merge.smart(baseConfig, {
   mode: 'production',
   devtool: 'source-map',
   target: 'electron-renderer',
-  entry: './lib/index',
+  entry: {
+    'renderer': './lib/index.js',
+
+    'editor.worker': 'monaco-editor/esm/vs/editor/editor.worker.js',
+    'json.worker': 'monaco-editor/esm/vs/language/json/json.worker',
+    'css.worker': 'monaco-editor/esm/vs/language/css/css.worker',
+    'html.worker': 'monaco-editor/esm/vs/language/html/html.worker',
+    'ts.worker': 'monaco-editor/esm/vs/language/typescript/ts.worker'
+  },
 
   output: {
+    // monaco needs a "self" object:
+    globalObject: 'self',
     path: path.join(__dirname, 'app/dist'),
     publicPath: './',
-    filename: 'renderer.prod.js'
+    filename: '[name].prod.js'
   },
 
   module: {
     rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
       // Extract all .global.css to style.css as is
-      {
-        test: /\.global\.css$/,
-        use: ExtractTextPlugin.extract({
-          use: 'css-loader',
-          fallback: 'style-loader'
-        })
-      },
+      // {
+      //   test: /\.global\.css$/,
+      //   use: ExtractTextPlugin.extract({
+      //     use: 'css-loader',
+      //     fallback: 'style-loader'
+      //   })
+      // },
       // Pipe other styles through css modules and append to style.css
-      {
-        test: /^((?!\.global).)*\.css$/,
-        use: ExtractTextPlugin.extract({
-          use: {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              importLoaders: 1,
-              localIdentName: '[name]__[local]__[hash:base64:5]'
-            }
-          }
-        })
-      },
+      // {
+      //   test: /^((?!\.global).)*\.css$/,
+      //   use: ExtractTextPlugin.extract({
+      //     use: {
+      //       loader: 'css-loader',
+      //       options: {
+      //         modules: true,
+      //         importLoaders: 1,
+      //         localIdentName: '[name]__[local]__[hash:base64:5]'
+      //       }
+      //     }
+      //   })
+      // },
       // Add SASS support  - compile all .global.scss files and pipe it to style.css
       {
         test: /\.global\.scss$/,
@@ -164,18 +179,20 @@ export default merge.smart(baseConfig, {
       }
     }),
 
-    new MinifyPlugin({}, {
-      sourceMap: null
-    }),
+    new MonacoWebpackPlugin(),
+
+    // new MinifyPlugin({}, {
+    //   sourceMap: null
+    // }),
 
     // https://github.com/bitinn/node-fetch/issues/41
     // new webpack.IgnorePlugin(/\/iconv-loader$/),
 
     new ExtractTextPlugin('style.css'),
 
-    new BundleAnalyzerPlugin({
-      analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
-      openAnalyzer: process.env.OPEN_ANALYZER === 'true'
-    })
+    // new BundleAnalyzerPlugin({
+    //   analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
+    //   openAnalyzer: process.env.OPEN_ANALYZER === 'true'
+    // })
   ]
 })
