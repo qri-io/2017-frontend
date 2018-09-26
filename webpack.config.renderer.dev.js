@@ -16,6 +16,7 @@ import { spawn, execSync } from 'child_process'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import baseConfig from './webpack.config.base'
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv'
+import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin'
 
 CheckNodeEnv('development')
 
@@ -40,14 +41,21 @@ export default merge.smart(baseConfig, {
   devtool: 'inline-source-map',
   target: 'electron-renderer',
 
-  entry: [
-    'react-hot-loader/patch',
-    `webpack-dev-server/client?http://localhost:${port}/`,
-    'webpack/hot/only-dev-server',
-    path.join(__dirname, 'lib/index.js')
-  ],
+  entry: {
+    'react-hot-loader/patch': 'react-hot-loader/patch',
+    'webpack-dev-server/client': `webpack-dev-server/client?http://localhost:${port}/`,
+    'webpack/hot/only-dev-server': 'webpack/hot/only-dev-server',
+    'lib/index.js': path.join(__dirname, 'lib/index.js'),
+
+    'editor.worker': 'monaco-editor/esm/vs/editor/editor.worker.js',
+    'json.worker': 'monaco-editor/esm/vs/language/json/json.worker',
+    'css.worker': 'monaco-editor/esm/vs/language/css/css.worker',
+    'html.worker': 'monaco-editor/esm/vs/language/html/html.worker',
+    'ts.worker': 'monaco-editor/esm/vs/language/typescript/ts.worker'
+  },
 
   output: {
+    globalObject: 'self',
     publicPath: `http://localhost:${port}/dist/`
   },
 
@@ -72,36 +80,40 @@ export default merge.smart(baseConfig, {
         }
       },
       {
-        test: /\.global\.css$/,
-        use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
-          }
-        ]
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
       },
-      {
-        test: /^((?!\.global).)*\.css$/,
-        use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              sourceMap: true,
-              importLoaders: 1,
-              localIdentName: '[name]__[local]__[hash:base64:5]'
-            }
-          }
-        ]
-      },
+      // {
+      //   test: /\.global\.css$/,
+      //   use: [
+      //     {
+      //       loader: 'style-loader'
+      //     },
+      //     {
+      //       loader: 'css-loader',
+      //       options: {
+      //         sourceMap: true
+      //       }
+      //     }
+      //   ]
+      // },
+      // {
+      //   test: /^((?!\.global).)*\.css$/,
+      //   use: [
+      //     {
+      //       loader: 'style-loader'
+      //     },
+      //     {
+      //       loader: 'css-loader',
+      //       options: {
+      //         modules: true,
+      //         sourceMap: true,
+      //         importLoaders: 1,
+      //         localIdentName: '[name]__[local]__[hash:base64:5]'
+      //       }
+      //     }
+      //   ]
+      // },
       // Add SASS support  - compile all .global.scss files and pipe it to style.css
       {
         test: /\.global\.scss$/,
@@ -240,6 +252,8 @@ export default merge.smart(baseConfig, {
       // @TODO: Waiting on https://github.com/jantimon/html-webpack-plugin/issues/533
       // multiStep: true
     }),
+
+    new MonacoWebpackPlugin(),
 
     new webpack.NoEmitOnErrorsPlugin(),
 

@@ -27,7 +27,7 @@
     <div id="root"></div>
     <script>
       {
-        const scripts = [];
+        let scripts = [];
 
         // Dynamically insert the DLL script in development env in the
         // renderer process
@@ -42,6 +42,17 @@
             ? 'http://localhost:' + port + '/dist/renderer.dev.js'
             : './dist/renderer.prod.js'
         );
+
+        if (!process.env.HOT) {
+          // insert all required monaco scripts, this was hacked together by
+          // watching which files the app calls out to when monaco loads
+          scripts = scripts.concat([
+            './dist/editor.worker.prod.js',
+            './dist/36.prod.js',
+            './dist/19.prod.js',
+            './dist/56.prod.js'
+          ])
+        }
 
         document.write(
           scripts

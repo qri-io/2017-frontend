@@ -7,6 +7,8 @@ import baseConfig from './webpack.config.base'
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv'
 import MinifyPlugin from 'babel-minify-webpack-plugin'
 
+import version from './version'
+
 CheckNodeEnv('production')
 
 export default merge.smart(baseConfig, {
@@ -16,6 +18,7 @@ export default merge.smart(baseConfig, {
   entry: path.join(__dirname, 'lib/index.js'),
 
   output: {
+    globalObject: 'self',
     publicPath: '/',
     path: path.join(__dirname, '/dist/web'),
     filename: '[name].js',
@@ -32,7 +35,7 @@ export default merge.smart(baseConfig, {
         'API_URL': JSON.stringify('http://localhost:2503'),
         'STATIC_ASSETS_URL': JSON.stringify('http://localhost:2503'),
         'SEGMENT_KEY': JSON.stringify('not_a_key'),
-        'VERSION': JSON.stringify('0.3.0')
+        'VERSION': JSON.stringify(version)
       }
     })
   ],
