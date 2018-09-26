@@ -5,12 +5,14 @@
 import path from 'path'
 import webpack from 'webpack'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+// import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import merge from 'webpack-merge'
 import MinifyPlugin from 'babel-minify-webpack-plugin'
 import baseConfig from './webpack.config.base'
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv'
 import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin'
+
+import version from './version'
 
 CheckNodeEnv('production')
 
@@ -173,7 +175,7 @@ export default merge.smart(baseConfig, {
         'API_URL': JSON.stringify('http://localhost:2503'),
         'STATIC_ASSETS_URL': JSON.stringify('http://localhost:2503'),
         'ELECTRON': JSON.stringify('true'),
-        'VERSION': JSON.stringify('0.3.0'),
+        'VERSION': JSON.stringify(version),
 
         'SEGMENT_KEY': JSON.stringify('--nope--')
       }
@@ -181,14 +183,14 @@ export default merge.smart(baseConfig, {
 
     new MonacoWebpackPlugin(),
 
-    // new MinifyPlugin({}, {
-    //   sourceMap: null
-    // }),
+    new MinifyPlugin({}, {
+      sourceMap: null
+    }),
 
     // https://github.com/bitinn/node-fetch/issues/41
     // new webpack.IgnorePlugin(/\/iconv-loader$/),
 
-    new ExtractTextPlugin('style.css'),
+    new ExtractTextPlugin('style.css')
 
     // new BundleAnalyzerPlugin({
     //   analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',

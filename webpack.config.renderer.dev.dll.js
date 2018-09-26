@@ -9,6 +9,8 @@ import baseConfig from './webpack.config.base'
 import { dependencies } from './package.json'
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv'
 
+import version from './version'
+
 CheckNodeEnv('development')
 
 const dist = path.resolve(process.cwd(), 'dll')
@@ -202,7 +204,7 @@ export default merge.smart(baseConfig, {
         'API_URL': JSON.stringify('http://localhost:3000'),
         'STATIC_ASSETS_URL': JSON.stringify('http://localhost:3000'),
         'SEGMENT_KEY': JSON.stringify('not_a_key'),
-        'VERSION': JSON.stringify('0.4.0-dev')
+        'VERSION': JSON.stringify(version)
       }
     }),
 
