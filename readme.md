@@ -1,3 +1,5 @@
+[![Qri](https://img.shields.io/badge/made%20by-qri-magenta.svg?style=flat-square)](https://qri.io) [![License](https://img.shields.io/github/license/qri-io/frontend.svg?style=flat-square)](./LICENSE) [![Standard JS code style](https://img.shields.io/badge/code%20style-standardJS-green.svg?style=flat-square)](https://standardjs.com/) [![CI](https://img.shields.io/circleci/project/github/qri-io/frontend.svg?style=flat-square)](https://circleci.com/gh/qri-io/frontend)
+
 <h1 align="center">Qri Webapp</h1>
 
 <div align="center">
@@ -34,13 +36,6 @@
     </a>
   </h3>
 </div>
-
-
-[![Qri](https://img.shields.io/badge/made%20by-qri-magenta.svg?style=flat-square)](https://qri.io)
-[![License](https://img.shields.io/github/license/qri-io/frontend.svg?style=flat-square)](./LICENSE)
-[![Standard JS code style](https://img.shields.io/badge/code%20style-standardJS-green.svg?style=flat-square)](https://standardjs.com/)
-[![CI](https://img.shields.io/circleci/project/github/qri-io/frontend.svg?style=flat-square)](https://circleci.com/gh/qri-io/frontend)
-
 
 ## Welcome
 
