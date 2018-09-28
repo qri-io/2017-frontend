@@ -49,7 +49,7 @@ To build Qri, you clone the source code repository and use Yarn to run the elect
 
 ```shell
 # Clone your Github repository:
-git clone https://github.com/<github username>/frontend.git
+git clone https://github.com/qri-io/frontend.git
 
 # Go to the Qri directory:
 cd frontend
@@ -61,18 +61,22 @@ git remote add upstream "https://github.com/qri-io/frontend.git"
 yarn install
 
 # Run Qri in the developer environment:
-yarn dev
+yarn web:dev
 
 # Use standard to lint the files:
-standard
+yarn lint
+
+# open a new window to your terminal, and connect the qri backend to the network:
+$ qri connect --webapp-port=""
 
 # Create a packaged version of Qri:
-yarn package
+yarn electron:build
+yarn electron:package
 ```
 
 **Note:** Qri is currently only tested for macOS.
 
-The `yarn dev` command will launch a development version of the Qri electron app.
+The `yarn web:dev` command will launch a development version of the Qri electron app.
 
 To get access to Chrome Developer Tools, use the keyboard shortcut Command-Shift-C.
 
@@ -86,7 +90,7 @@ To ensure consistency throughout the source code, keep these rules in mind as yo
 
 ```shell
 # Use standard to lint files
-standard
+yarn lint
 ```
 
 The output will point you to which files/lines need to be changed in order to meet the standardJS formatting.
