@@ -35,15 +35,15 @@ hr.neutral { border-top: 1px solid $neutral; }
 hr.neutral-muted { border-top: 1px solid $neutral-muted; }
 hr.white { border-top: 1px solid $white; }
 
-.dt-any { color: $text; }
+.dt-any { color: $f; }
 .dt-string { color: $text; }
 .dt-integer { color: $a; }
 .dt-float { color: $a; }
 .dt-boolean { color: $d; }
 .dt-date { color: $f; }
 .dt-url { color: $c; }
-.dt-object { color: $text; }
-.dt-array { color: $text; }
+.dt-object { color: $b; }
+.dt-array { color: $e; }
 
 header > hr {
   margin-top: 0;
