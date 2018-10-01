@@ -15,8 +15,8 @@
       Website
     </a>
     <span> | </span>
-    <a href="#packages">
-      Packages
+    <a href="#dependencies">
+      Dependencies
     </a>
     <span> | </span>
     <a href="https://github.com/qri-io/frontend/CONTRIBUTOR.md">
@@ -46,6 +46,7 @@
 | "I found a bug" | [Create an issue](https://github.com/qri-io/frontend/issues) and use the label 'bug' |
 | "I want to help build the Qri webapp" | [Read the Contributing guides](https://github.com/qri-io/frontend/CONTRIBUTOR.md) |
 
+<a id="dependencies"></a>
 ## Main Dependencies
 
 | Dependency | Website | Github |
