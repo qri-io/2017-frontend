@@ -4,6 +4,12 @@
 // Textual form controls
 //
 
+// TODO - this is a hack for now to ensure we always have enough height on editors to see the content
+// should find a more robust fix
+.react-monaco-editor-container {
+  min-height: 350px;
+}
+
 .form-control {
   display: block;
   width: 100%;
