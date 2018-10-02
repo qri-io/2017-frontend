@@ -551,6 +551,9 @@ dl.row > dd + dt {
 strong {
   font-weight: bold; }
 
+.react-monaco-editor-container {
+  min-height: 350px; }
+
 .form-control {
   display: block;
   width: 100%;
@@ -1800,6 +1803,30 @@ input[type="button"].btn-block {
   padding: 0.25rem 1.5rem;
   color: #405966; }
 
+.editBody .handsontable {
+  color: white; }
+  .editBody .handsontable th {
+    background: #000;
+    border-right: 1px solid #1e1e1e;
+    border-bottom: 1px solid #1e1e1e; }
+  .editBody .handsontable tr {
+    background: #111; }
+  .editBody .handsontable td {
+    background: #111;
+    border-right: 1px solid #1e1e1e;
+    border-bottom: 1px solid #1e1e1e; }
+  .editBody .handsontable tr:first-child th,
+  .editBody .handsontable tr:first-child td {
+    border-top: 1px solid #1e1e1e; }
+  .editBody .handsontable th:first-child,
+  .editBody .handsontable th:nth-child(2),
+  .editBody .handsontable td:first-of-type,
+  .editBody .handsontable .htNoFrame + th,
+  .editBody .handsontable .htNoFrame + td {
+    border-left: 1px solid #1e1e1e; }
+  .editBody .handsontable .ht__highlight {
+    background: #333; }
+
 html, body, #root, #app {
   height: 100%; }
 
@@ -1894,7 +1921,7 @@ hr.white {
   border-top: 1px solid #FFF; }
 
 .dt-any {
-  color: #243239; }
+  color: #F05631; }
 
 .dt-string {
   color: #243239; }
@@ -1915,10 +1942,10 @@ hr.white {
   color: #B0D248; }
 
 .dt-object {
-  color: #243239; }
+  color: #F8AC31; }
 
 .dt-array {
-  color: #243239; }
+  color: #964C9D; }
 
 header > hr {
   margin-top: 0; }
