@@ -3,8 +3,9 @@ import { app, Menu, shell, BrowserWindow } from 'electron';
 export default class MenuBuilder {
   mainWindow: BrowserWindow;
 
-  constructor(mainWindow: BrowserWindow) {
+  constructor(mainWindow: BrowserWindow, createWindow) {
     this.mainWindow = mainWindow;
+    this.createWindow = createWindow;
   }
 
   buildMenu() {
@@ -44,19 +45,23 @@ export default class MenuBuilder {
 
   buildDarwinTemplate() {
     const subMenuAbout = {
-      label: 'qri',
+      label: 'Qri',
       submenu: [
-        { label: 'About qri', selector: 'orderFrontStandardAboutPanel:' },
-        // { type: 'separator' },
-        // { label: 'Services', submenu: [] },
+        { label: 'About Qri', selector: 'orderFrontStandardAboutPanel:' },
         { type: 'separator' },
-        { label: 'Hide qri', accelerator: 'Command+H', selector: 'hide:' },
+        { label: 'Hide Qri', accelerator: 'Command+H', selector: 'hide:' },
         { label: 'Hide Others', accelerator: 'Command+Shift+H', selector: 'hideOtherApplications:' },
         { label: 'Show All', selector: 'unhideAllApplications:' },
         { type: 'separator' },
         { label: 'Quit', accelerator: 'Command+Q', click: () => { app.quit(); } }
       ]
     };
+    const subMenuFile = {
+      label: 'File',
+      submenu: [
+        { label: 'New Window', accelerator: 'Command+N', click: () => { this.createWindow() }}
+      ]
+    }
     const subMenuEdit = {
       label: 'Edit',
       submenu: [
@@ -69,19 +74,12 @@ export default class MenuBuilder {
         { label: 'Select All', accelerator: 'Command+A', selector: 'selectAll:' }
       ]
     };
-    const subMenuViewDev = {
+    const subMenuView = {
       label: 'View',
       submenu: [
         { label: 'Reload', accelerator: 'Command+R', click: () => { this.mainWindow.webContents.reload(); } },
         { label: 'Toggle Full Screen', accelerator: 'Ctrl+Command+F', click: () => { this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen()); } },
         { label: 'Toggle Developer Tools', accelerator: 'Command+Shift+C', click: () => { this.mainWindow.toggleDevTools(); } }
-      ]
-    };
-    const subMenuViewProd = {
-      label: 'View',
-      submenu: [
-        { label: 'Toggle Full Screen', accelerator: 'Ctrl+Command+F', click: () => { this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen()); } },
-        { label: 'Toggle Developer Tools', accelerator: 'Command+Shift+C', click: () => { this.mainWindow.openDevTools(); } }
       ]
     };
     const subMenuWindow = {
@@ -96,18 +94,17 @@ export default class MenuBuilder {
     const subMenuHelp = {
       label: 'Help',
       submenu: [
-        { label: 'Learn More', click() { shell.openExternal('http://qri.io'); } },
-        { label: 'Documentation', click() { shell.openExternal('https://github.com/qri-io/frontend/blob/master/readme.md'); } },
-        // { label: 'Community Discussions', click() { shell.openExternal('https://discuss.atom.io/c/electron'); } },
-        { label: 'Search Issues', click() { shell.openExternal('https://github.com/qri-io/frontend/issues'); } }
+        { label: 'Qri Site', click() { shell.openExternal('http://qri.io'); } },
+        { label: 'Discord Chat', click() { shell.openExternal('https://discord.gg/etap8Gb'); } },
+        { label: 'Docs', click() { shell.openExternal('https://qri.io/docs'); } },
+        { label: 'App Github', click() { shell.openExternal('https://github.com/qri-io/frontend/blob/master/readme.md'); } },
+        { label: 'App Github Issues', click() { shell.openExternal('https://github.com/qri-io/frontend/issues'); } }
       ]
     };
 
-    const subMenuView = process.env.NODE_ENV === 'development'
-      ? subMenuViewDev : subMenuViewProd;
-
     return [
       subMenuAbout,
+      subMenuFile,
       subMenuEdit,
       subMenuView,
       subMenuWindow,
