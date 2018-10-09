@@ -240,8 +240,8 @@ export default merge.smart(baseConfig, {
   },
 
   plugins: [
-    new webpack.NormalModuleReplacementPlugin(/(.*)\.APP_TARGET(\.*)/, function(resource) {
-      resource.request = resource.request.replace(/\.APP_TARGET/, `.${appTarget}`);
+    new webpack.NormalModuleReplacementPlugin(/(.*)\.APP_TARGET(\.*)/, function (resource) {
+      resource.request = resource.request.replace(/\.APP_TARGET/, `.${appTarget}`)
     }),
 
     new webpack.DllReferencePlugin({

@@ -1,5 +1,6 @@
 /* globals __BUILD__ */
-import { app } from 'electron'
+// import {chunksToLinesAsync, chomp} from '@rauschma/stringio'
+import { app, dialog } from 'electron'
 import { spawn } from 'child_process'
 import { EventEmitter } from 'events'
 import path from 'path'
@@ -151,9 +152,15 @@ export default class Backend extends EventEmitter {
     }
 
     this.backend.on('close', (code) => {
+      if (process.env.NODE_ENV !== 'development') {
+        dialog.showErrorBox("Qri Backend Closed", "For some unexpected reason the Qri backend process has closed. Things aren't going to work well. Mind restarting?")
+      }
       this.log('closed backend process')
     })
     this.backend.on('error', (err) => {
+      if (process.env.NODE_ENV !== 'development') {
+        dialog.showErrorBox("Qri Backend Error", err)
+      }
       this.log(`backend error: ${err}`)
     })
   }
