@@ -24,6 +24,7 @@ const port = process.env.PORT || 1212
 const publicPath = `http://localhost:${port}/dist`
 const dll = path.resolve(process.cwd(), 'dll')
 const manifest = path.resolve(dll, 'renderer.json')
+const appTarget = process.env.APP_TARGET || 'electron'
 
 /**
  * Warn if the DLL is not built
@@ -239,6 +240,10 @@ export default merge.smart(baseConfig, {
   },
 
   plugins: [
+    new webpack.NormalModuleReplacementPlugin(/(.*)\.APP_TARGET(\.*)/, function (resource) {
+      resource.request = resource.request.replace(/\.APP_TARGET/, `.${appTarget}`)
+    }),
+
     new webpack.DllReferencePlugin({
       context: process.cwd(),
       manifest: require(manifest),

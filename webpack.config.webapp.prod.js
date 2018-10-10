@@ -8,6 +8,7 @@ import CheckNodeEnv from './internals/scripts/CheckNodeEnv'
 import MinifyPlugin from 'babel-minify-webpack-plugin'
 
 import version from './version'
+const appTarget = process.env.APP_TARGET || 'web'
 
 CheckNodeEnv('production')
 
@@ -26,6 +27,9 @@ export default merge.smart(baseConfig, {
   },
 
   plugins: [
+    new webpack.NormalModuleReplacementPlugin(/(.*)\.APP_TARGET(\.*)/, function (resource) {
+      resource.request = resource.request.replace(/\.APP_TARGET/, `.${appTarget}`)
+    }),
     new MinifyPlugin({}, { sourceMap: null }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),

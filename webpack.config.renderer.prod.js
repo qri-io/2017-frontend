@@ -16,6 +16,8 @@ import version from './version'
 
 CheckNodeEnv('production')
 
+const appTarget = process.env.APP_TARGET || 'electron'
+
 export default merge.smart(baseConfig, {
   mode: 'production',
   devtool: 'source-map',
@@ -156,6 +158,9 @@ export default merge.smart(baseConfig, {
   },
 
   plugins: [
+    new webpack.NormalModuleReplacementPlugin(/(.*)\.APP_TARGET(\.*)/, function (resource) {
+      resource.request = resource.request.replace(/\.APP_TARGET/, `.${appTarget}`)
+    }),
     /**
      * Create global constants which can be configured at compile time.
      *

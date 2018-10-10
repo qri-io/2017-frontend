@@ -14,6 +14,7 @@ CheckNodeEnv('development')
 
 const port = process.env.PORT || 2505
 const publicPath = `/`
+const appTarget = process.env.APP_TARGET || 'web'
 
 export default merge.smart(baseConfig, {
   devtool: 'inline-source-map',
@@ -54,6 +55,9 @@ export default merge.smart(baseConfig, {
   },
 
   plugins: [
+    new webpack.NormalModuleReplacementPlugin(/(.*)\.APP_TARGET(\.*)/, function (resource) {
+      resource.request = resource.request.replace(/\.APP_TARGET/, `.${appTarget}`)
+    }),
     new HtmlWebpackPlugin({
       template: 'resources/index.tpl.html',
       inject: 'body',
