@@ -210,9 +210,10 @@ label {
 
 .hash {
   font-family: $font-family-monospace;
-  font-size: 16px;
-  line-height: 18px;
-  font-weight: $font-weight-regular
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: $font-weight-light;
+  font-color: $text-muted
 }
 
 .statsLine {
@@ -220,6 +221,12 @@ label {
   font-size: 14px;
   line-height: 16px;
   font-weight: $font-weight-light;
+}
+
+.linkXLarge {
+  font-weight: $font-weight-medium;
+  font-size: 26px;
+  color: $primary;
 }
 
 .linkLarge {
@@ -282,16 +289,24 @@ label {
   line-height: 22px;
 }
 
-.stats {
+// TODO: combine with `.hash`, and replace in Hash component
+.stats-small {
   font-family: $font-family-monospace;
   font-weight: $font-weight-regular;
   font-size: 14px;
   line-height: 22px;
 }
 
-.stats-line-large {
-  font-family: $headings-font-family;
-  font-weight: $font-weight-regular;
+.stats-medium {
+  font-family: $font-family-sans-serif;
+  font-weight: $font-weight-bold;
+  font-size: 20px;
+  line-height: 22px;
+}
+
+.stats-large {
+  font-family: $font-family-sans-serif;
+  font-weight: $font-weight-bold;
   font-size: 14px;
   line-height: 22px;
 }
