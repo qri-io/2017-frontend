@@ -61,69 +61,9 @@ fieldset[disabled] a.btn {
 // Alternate buttons
 //
 
-.btn-a {
-  @include button-variant($btn-a-color, $btn-a-bg, $btn-a-border);
+.btn-primary {
+  @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
 }
-.btn-b {
-  @include button-variant($btn-b-color, $btn-b-bg, $btn-b-border);
-}
-.btn-c {
-  @include button-variant($btn-c-color, $btn-c-bg, $btn-c-border);
-}
-.btn-d {
-  @include button-variant($btn-d-color, $btn-d-bg, $btn-d-border);
-}
-.btn-e {
-  @include button-variant($btn-e-color, $btn-e-bg, $btn-e-border);
-}
-.btn-f {
-  @include button-variant($btn-f-color, $btn-f-bg, $btn-f-border);
-}
-.btn-neutral-bold {
-  @include button-variant($btn-neutral-bold-color, $btn-neutral-bold-bg, $btn-neutral-bold-border);
-}
-.btn-neutral {
-  @include button-variant($btn-neutral-color, $btn-neutral-bg, $btn-neutral-border);
-}
-.btn-neutral-muted {
-  @include button-variant($btn-neutral-muted-color, $btn-neutral-muted-bg, $btn-neutral-muted-border);
-}
-.btn-dark {
-  @include button-variant($btn-dark-color, $btn-dark-bg, $btn-dark-border);
-}
-
-// Remove all backgrounds
-.btn-outline-a {
-  @include button-outline-variant($btn-a-bg);
-}
-.btn-outline-b {
-  @include button-outline-variant($btn-b-border);
-}
-.btn-outline-c {
-  @include button-outline-variant($btn-c-bg);
-}
-.btn-outline-d {
-  @include button-outline-variant($btn-d-bg);
-}
-.btn-outline-e {
-  @include button-outline-variant($btn-e-bg);
-}
-.btn-outline-f {
-  @include button-outline-variant($btn-f-bg);
-}
-.btn-outline-neutral-bold {
-  @include button-outline-variant($btn-neutral-bold-bg);
-}
-.btn-outline-neutral {
-  @include button-outline-variant($btn-neutral-bg);
-}
-.btn-outline-neutral-mute {
-  @include button-outline-variant($btn-neutral-muted-bg);
-}
-.btn-outline-dark {
-  @include button-outline-variant($btn-dark-bg);
-}
-
 
 //
 // Link buttons
@@ -168,44 +108,10 @@ fieldset[disabled] a.btn {
 // Button Sizes
 //
 
-.btn-lg {
-  // line-height: ensure even-numbered height of button next to large input
-  @include button-size($btn-padding-y-lg, $btn-padding-x-lg, $font-size-lg, $btn-border-radius-lg);
-}
 .btn-sm {
   // line-height: ensure proper height of button next to small input
   @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $font-size-sm, $btn-border-radius-sm);
 }
-
-//
-// Circle Buttons
-//
-
-.btn-circle {
-  width: 3.0rem;
-  height: 3.0rem;
-  text-align: center;
-  padding: 6px 0;
-  font-size: 12px;
-  line-height: 1.428571429;
-  border-radius: 100%;
-}
-.btn-circle.btn-lg {
-  width: 5.0rem;
-  height: 5.0rem;
-  padding: 10px 16px;
-  font-size: 18px;
-  line-height: 1.33;
-}
-
-.btn-circle.btn-xl {
-  width: 7.0rem;
-  height: 7.0rem;
-  padding: 10px 16px;
-  font-size: 24px;
-  line-height: 1.33;
-}
-
 
 //
 // Block button

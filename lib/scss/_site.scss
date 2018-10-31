@@ -2,49 +2,6 @@ html, body, #root, #app {
   height: 100%;
 }
 
-.bg-a { background: $a; }
-.bg-b { background: $b; }
-.bg-c { background: $c; }
-.bg-d { background: $d; }
-.bg-e { background: $e; }
-.bg-f { background: $f; }
-.bg-appBackground { background: $appBackground }
-.bg-sidebar { background: $sidebar }
-.bg-text { background: $text }
-.bg-sink { background: $sink }
-
-.a { color: $a; }
-.b { color: $b; }
-.c { color: $c; }
-.d { color: $d; }
-.e { color: $e; }
-.f { color: $f; }
-.neutral-bold { color: $neutral-bold; }
-.neutral { color: $neutral; }
-.neutral-muted { color: $neutral-muted; }
-.white { color: $white }
-
-hr.a { border-top: 1px solid $a; }
-hr.b { border-top: 1px solid $b; }
-hr.c { border-top: 1px solid $c; }
-hr.d { border-top: 1px solid $d; }
-hr.e { border-top: 1px solid $e; }
-hr.f { border-top: 1px solid $f; }
-hr.neutral-bold { border-top: 1px solid $neutral-bold; }
-hr.neutral { border-top: 1px solid $neutral; }
-hr.neutral-muted { border-top: 1px solid $neutral-muted; }
-hr.white { border-top: 1px solid $white; }
-
-.dt-any { color: $f; }
-.dt-string { color: $text; }
-.dt-integer { color: $a; }
-.dt-float { color: $a; }
-.dt-boolean { color: $d; }
-.dt-date { color: $f; }
-.dt-url { color: $c; }
-.dt-object { color: $b; }
-.dt-array { color: $e; }
-
 header > hr {
   margin-top: 0;
 }
@@ -75,11 +32,27 @@ a {
   text-decoration: none;
   transition: color 0.5s;
   cursor: pointer;
+  color: $primary;
 }
 
 a:hover {
   text-decoration: none;
-  color: #9FFFF0;
+  color: $primary-dark;
+}
+
+a.l {
+  font-weight: $font-weight-medium;
+  font-size: 20px;
+}
+
+a.m {
+  font-weight: $font-weight-medium;
+  font-size: 15px;
+}
+
+a.s {
+  font-weight: $font-weight-light;
+  font-size: 16px;
 }
 
 b {
@@ -103,7 +76,7 @@ b {
   margin-top: 10px;
   transition: all 0.25s;
   // &:active {
-  //   color: palette.a;
+  //   color: palette.primary;
   //   textDecoration: 'none'
   // },
   // ':focus': {
@@ -111,7 +84,7 @@ b {
   // },
   // ':hover': {
   //   opacity: 1,
-  //   color: palette.a
+  //   color: palette.primary
   // }
 }
 
@@ -140,7 +113,7 @@ b {
 }
 
 .navLink:hover, {
-  color: $a;
+  color: $primary;
 }
 
 .navLinkActive, .navLink:focus {
@@ -149,12 +122,12 @@ b {
 }
 
 .navLinkSm:hover {
-  color: $a;
+  color: $primary;
 }
 
 .navLinkSmActive, .navLinkSm:focus {
   font-weight: $font-weight-bold;
-  color: $a;
+  color: $primary;
 }
 
 // layout of dataset

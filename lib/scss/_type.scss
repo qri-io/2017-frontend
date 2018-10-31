@@ -59,57 +59,37 @@ h1, .h1 {
   }
 h2, .h2 { 
   font-size: $font-size-h2; 
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-medium;
   line-height: 40px;
   }
 h3, .h3 { 
   font-size: $font-size-h3; 
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-regular;
   line-height: 34px;
   }
 h4, .h4 { 
   font-size: $font-size-h4; 
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-regular;
   line-height: 29px;
   }
 h5, .h5 { 
   font-size: $font-size-h5; 
-  font-weight: $font-weight-bold;
-  line-height: 20px;
-  }
-h6, .h6 { 
-  font-size: $font-size-h6; 
   font-weight: $font-weight-regular;
-  line-height: 16px;
+  line-height: 20px;
+  color: $primary;
   }
 
-.lead {
-  font-size: $lead-font-size;
-  font-weight: $lead-font-weight;
+h6, .h6 {
+  font-size: $font-size-h6; 
+  font-weight: $font-weight-light;
+  font-style: italic;
+  line-height: 16px;
+  color: $text;
 }
 
 .inline-block {
   display: inline-block;
 }
-
-// Type display classes
-.display-1 {
-  font-size: $display1-size;
-  font-weight: $display1-weight;
-}
-.display-2 {
-  font-size: $display2-size;
-  font-weight: $display2-weight;
-}
-.display-3 {
-  font-size: $display3-size;
-  font-weight: $display3-weight;
-}
-.display-4 {
-  font-size: $display4-size;
-  font-weight: $display4-weight;
-}
-
 
 //
 // Horizontal rules
@@ -141,12 +121,9 @@ mark,
 }
 
 label {
-  text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 1px;
-  margin: 0;
-  font-size: 16px;
-  line-height: 22px;
+  font-weight: $font-weight-regular;
+  font-size: 14px;
+  line-height: 17px;
 }
 
 //
@@ -225,6 +202,13 @@ label {
     }
   }
   // scss-lint:enable QualifyingElement
+}
+
+.hash {
+  font-family: $font-family-monospace;
+  font-size: 16px;
+  line-height: 18px;
+  font-weight: $font-weight-regular
 }
 
 .datasetName {
