@@ -204,6 +204,10 @@ label {
   // scss-lint:enable QualifyingElement
 }
 
+.primary {
+  font-color: $primary;
+}
+
 .hash {
   font-family: $font-family-monospace;
   font-size: 16px;
@@ -234,6 +238,42 @@ label {
   font-weight: $font-weight-light;
   font-size: 16px;
   color: $primary;
+}
+
+.linkLargeMuted {
+  font-weight: $font-weight-medium;
+  font-size: 20px;
+  color: $primary-muted;
+  &:hover {
+    color: $primary-dark;
+  };
+  &:focus {
+    color: $primary;
+  }
+}
+
+.linkMediumMuted {
+  font-weight: $font-weight-medium;
+  font-size: 15px;
+  color: $primary-muted;
+  &:hover {
+    color: $primary-dark;
+  };
+  &:focus {
+    color: $primary;
+  }
+}
+
+.linkSmallMuted {
+  font-weight: $font-weight-light;
+  font-size: 16px;
+  color: $primary-muted;
+  &:hover {
+    color: $primary-dark;
+  };
+  &:focus {
+    color: $primary;
+  }
 }
 
 .code {
