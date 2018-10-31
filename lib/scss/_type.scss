@@ -65,12 +65,12 @@ h2, .h2 {
 h3, .h3 { 
   font-size: $font-size-h3; 
   font-weight: $font-weight-regular;
-  line-height: 34px;
+  line-height: 32px;
   }
 h4, .h4 { 
   font-size: $font-size-h4; 
   font-weight: $font-weight-regular;
-  line-height: 29px;
+  line-height: 30px;
   }
 h5, .h5 { 
   font-size: $font-size-h5; 
@@ -211,21 +211,37 @@ label {
   font-weight: $font-weight-regular
 }
 
-.datasetName {
+.statsLine {
   font-family: $font-family-monospace;
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: $font-weight-light;
+}
+
+.linkLarge {
   font-weight: $font-weight-medium;
-}
-.datasetName.large {
   font-size: 20px;
-  line-height: 25px;
+  color: $primary;
 }
+
+.linkMedium {
+  font-weight: $font-weight-medium;
+  font-size: 15px;
+  color: $primary;
+}
+
+.linkSmall {
+  font-weight: $font-weight-light;
+  font-size: 16px;
+  color: $primary;
+}
+
 .code {
   font-family: $font-family-monospace;
   font-weight: $font-weight-regular;
   line-height: 22px;
 }
+
 .stats {
   font-family: $font-family-monospace;
   font-weight: $font-weight-regular;

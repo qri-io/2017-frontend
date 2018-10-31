@@ -10,6 +10,15 @@ header > hr {
   min-height: 100%
 }
 
+.sectionWidth {
+  max-width: 360;
+  width: 100%;
+}
+
+.headerHeight {
+  height: 135px;
+}
+
 .logotype {
   background: url('/svg/logotype.svg') center left no-repeat;
   display: block;
@@ -38,21 +47,6 @@ a {
 a:hover {
   text-decoration: none;
   color: $primary-dark;
-}
-
-a.l {
-  font-weight: $font-weight-medium;
-  font-size: 20px;
-}
-
-a.m {
-  font-weight: $font-weight-medium;
-  font-size: 15px;
-}
-
-a.s {
-  font-weight: $font-weight-light;
-  font-size: 16px;
 }
 
 b {
