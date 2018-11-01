@@ -283,6 +283,30 @@ label {
   }
 }
 
+.errLinkXLarge {
+  font-weight: $font-weight-medium;
+  font-size: 26px;
+  color: $error;
+}
+
+.errLinkLarge {
+  font-weight: $font-weight-medium;
+  font-size: 20px;
+  color: $error;
+}
+
+.errLinkMedium {
+  font-weight: $font-weight-medium;
+  font-size: 15px;
+  color: $error;
+}
+
+.errLinkSmall {
+  font-weight: $font-weight-light;
+  font-size: 16px;
+  color: $error;
+}
+
 .code {
   font-family: $font-family-monospace;
   font-weight: $font-weight-regular;

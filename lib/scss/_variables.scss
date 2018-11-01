@@ -46,6 +46,7 @@ $primary: #0061A6;
 $primary-dark: #004E86;
 $primary-muted: #B3CFE4;
 $primary-light: #F6F6F8;
+$button: #5383A6;
 $text: #303030;
 $text-muted: #646464;
 $text-light: #C9C9C9;
@@ -264,19 +265,19 @@ $table-border-color:            $primary-light !default;
 $btn-padding-x:                  1rem !default;
 $btn-padding-y:                  .5rem !default;
 $btn-line-height:                .9rem !default;
-$btn-font-size:                  $font-size-base * .75;
+$btn-font-size:                  $font-size-base;
 
 $btn-font-weight:                bold !default;
 $btn-box-shadow:                 inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075) !default;
 $btn-active-box-shadow:          inset 0 3px 5px rgba(0,0,0,.125) !default;
 
 $btn-primary-color:              #fff !default;
-$btn-primary-bg:                 $primary !default;
-$btn-primary-border:             $primary-dark !default;
+$btn-primary-bg:                 $button !default;
+$btn-primary-border:             $button !default;
 
 $btn-link-disabled-color:        $primary-muted!default;
 
-$btn-min-width:                  80px !default;
+$btn-min-width:                  100px !default;
 $btn-height:                     30px !default;
 
 $btn-padding-x-sm:               .5rem !default;
