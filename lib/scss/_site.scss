@@ -11,8 +11,9 @@ header > hr {
 }
 
 .sectionWidth {
-  max-width: 360;
+  max-width: 360px;
   width: 100%;
+  word-wrap: break-word;
 }
 
 .headerHeight {
@@ -146,21 +147,21 @@ b {
 
 // borders
 .border-left {
-  border-left: $border-color solid 1px;
+  border-left: $border-color solid 2px;
 }
 
 .border-right {
-  border-right: $border-color solid 1px;
+  border-right: $border-color solid 2px;
 }
 
 .border-top {
-  border-top: $border-color solid 1px;
+  border-top: $border-color solid 2px;
 }
 
 .border-bottom {
-  border-bottom: $border-color solid 1px;
+  border-bottom: $border-color solid 2px;
 }
 
 .border {
-  border: $border-color solid 1px;
+  border: $border-color solid 2px;
 }
