@@ -143,3 +143,24 @@ b {
 .editor .form-control {
   color: white;
 }
+
+// borders
+.border-left {
+  border-left: $border-color solid 1px;
+}
+
+.border-right {
+  border-right: $border-color solid 1px;
+}
+
+.border-top {
+  border-top: $border-color solid 1px;
+}
+
+.border-bottom {
+  border-bottom: $border-color solid 1px;
+}
+
+.border {
+  border: $border-color solid 1px;
+}
