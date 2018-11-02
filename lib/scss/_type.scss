@@ -216,6 +216,14 @@ label {
   color: $connected;
 }
 
+.error {
+  color: $error
+}
+
+.textMuted {
+  color: $text-muted
+}
+
 .hash {
   font-family: $font-family-monospace;
   font-size: 14px;

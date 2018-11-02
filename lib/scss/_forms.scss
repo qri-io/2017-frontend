@@ -455,3 +455,15 @@ select.form-control-lg {
   font-size: $font-size-sm;
   color: $primary-light;
 }
+
+// custom input styles
+.text-input {
+  display: inline-block;
+  border: $primary-light solid 1px;
+  margin-left: 5px;
+}
+
+.text-input:active, .text-input:focus {
+  background: $primary-light;
+  outline: none;
+}
