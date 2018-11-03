@@ -128,13 +128,10 @@ b {
 // layout of dataset
 
 .datasetContent {
-  max-width: 960px;
-  min-width: 600px;
-  width: 70%;
   height: 100%;
   display: flex;
-  flex-direction: column;
   word-wrap: break-word;
+  justify-content: space-between;
 }
 
 .editor {
