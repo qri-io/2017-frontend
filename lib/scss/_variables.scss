@@ -39,30 +39,29 @@
 // Grayscale and brand colors for use across Qri.
 
 // background colors
-$appBackground: #E6E6E6;
-$sidebar: #9B9B9B;
-$text: #243239;
-$sink: #FFFFFF;
+
+$white: #FFFFFF;
+$black: #000000;
+$primary: #0061A6;
+$primary-dark: #004E86;
+$primary-muted: #B3CFE4;
+$primary-light: #F6F6F8;
+$button: #5383A6;
+$text: #303030;
+$text-muted: #646464;
+$text-light: #C9C9C9;
+$error: #EB0000;
+$connected: #F8CD1C;
 
 
-$success: #7ED321;
+$appBackground: $white;
+$topbar: $primary-light;
+$sink: $primary-light;
+$border-color: $primary-light;
+
+
+$success: $primary-muted;
 $error: #D00218;
-
-
-// brand colors
-$a: #50C9F4; // blue
-$b: #F8AC31; // yellow
-$c: #B0D248; // green
-$d: #ED3259; // red
-$e: #964C9D; // purple
-$f: #F05631; // orange
-
-$neutral-bold:                 #405966 !default;
-$neutral:                      #9B9B9B !default;
-$neutral-muted:                #C3C3C3 !default;
-$white:                        #FFF !default;
-$black:                        #000 !default;
-
 
 // Options
 //
@@ -121,9 +120,9 @@ $body-color: $text !default;
 //
 // Style anchor elements.
 
-$link-color:            $a !default;
+$link-color:            $primary !default;
 $link-decoration:       none !default;
-$link-hover-color:      darken($link-color, 15%) !default;
+$link-hover-color:      $primary-dark !default;
 $link-hover-decoration: none !default;
 
 
@@ -167,7 +166,7 @@ $grid-gutter-width: 30px !default;
 //
 // Font, line-height, and color for body text, headings, and more.
 
-$font-family-sans-serif: "Avenir Next", "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif !default;
+$font-family-sans-serif: "Rubik", "Avenir Next", "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif !default;
 $font-family-serif:      Georgia, "Times New Roman", Times, serif !default;
 $font-family-monospace:  "Source Code Pro", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
 $font-family-base:       $font-family-sans-serif !default;
@@ -182,28 +181,18 @@ $font-size-xs:   .75rem !default;
 
 $line-height-base: 1.375 !default;
 
-$font-size-h1: 36px !default;
-$font-size-h2: 32px !default;
+$font-size-h1: 40px !default;
+$font-size-h2: 36px !default;
 $font-size-h3: 24px !default;
-$font-size-h4: 20px !default;
+$font-size-h4: 18px !default;
 $font-size-h5: 16px !default;
 $font-size-h6: 14px !default;
 
-$display1-size: 6rem !default;
-$display2-size: 5.5rem !default;
-$display3-size: 4.5rem !default;
-$display4-size: 3.5rem !default;
-
-$display1-weight: 300 !default;
-$display2-weight: 300 !default;
-$display3-weight: 300 !default;
-$display4-weight: 300 !default;
-
 $font-weight-heavy: 900;
-$font-weight-bold: 600;
-$font-weight-medium: 400;
-$font-weight-regular : 300;
-
+$font-weight-bold: 700;
+$font-weight-medium: 500;
+$font-weight-regular : 400;
+$font-weight-light: 300;
 
 $headings-margin-bottom: 10px !default;
 // $headings-font-family:   inherit !default;
@@ -214,18 +203,13 @@ $headings-color:         $text !default;
 
 $bold-heading-font-family: 'Helvetica Neue', Helvetica, sans-serif !default;
 
-$lead-font-size:   1.25rem !default;
-$lead-font-weight: 300 !default;
-
 $small-font-size: 80% !default;
 
-$text-muted: $neutral-muted !default;
+$abbr-border-color: $primary-light !default;
 
-$abbr-border-color: $neutral-muted !default;
-
-$blockquote-small-color:  $neutral-muted !default;
+$blockquote-small-color:  $text-muted !default;
 $blockquote-font-size:    ($font-size-base * 1.25) !default;
-$blockquote-border-color: $neutral-muted !default;
+$blockquote-border-color: $primary-light !default;
 $blockquote-border-width: .25rem !default;
 
 $hr-border-color: rgba(0,0,0,.5) !default;
@@ -252,8 +236,8 @@ $border-radius:          .25rem !default;
 $border-radius-lg:       .3rem !default;
 $border-radius-sm:       .2rem !default;
 
-$component-active-color: #fff !default;
-$component-active-bg:    $a !default;
+$component-active-color: $white !default;
+$component-active-bg:    $primary !default;
 
 $caret-width:            .3em !default;
 $caret-width-lg:         $caret-width !default;
@@ -272,7 +256,7 @@ $table-bg-hover:                rgba(0,0,0,.075) !default;
 $table-bg-active:               $table-bg-hover !default;
 
 $table-border-width:            $border-width !default;
-$table-border-color:            $neutral !default;
+$table-border-color:            $primary-light !default;
 
 
 // Buttons
@@ -282,55 +266,19 @@ $table-border-color:            $neutral !default;
 $btn-padding-x:                  1rem !default;
 $btn-padding-y:                  .5rem !default;
 $btn-line-height:                .9rem !default;
-$btn-font-size:                  $font-size-base * .75;
+$btn-font-size:                  $font-size-base;
 
 $btn-font-weight:                bold !default;
 $btn-box-shadow:                 inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075) !default;
 $btn-active-box-shadow:          inset 0 3px 5px rgba(0,0,0,.125) !default;
 
-$btn-a-color:              #fff !default;
-$btn-a-bg:                 $a !default;
-$btn-a-border:             darken($a, 15%) !default;
+$btn-primary-color:              #fff !default;
+$btn-primary-bg:                 $button !default;
+$btn-primary-border:             $button !default;
 
-$btn-b-color:            #fff !default;
-$btn-b-bg:               $b !default;
-$btn-b-border:           darken($b, 15%) !default;
+$btn-link-disabled-color:        $primary-muted!default;
 
-$btn-c-color:            #fff !default;
-$btn-c-bg:               $c !default;
-$btn-c-border:           darken($c, 15%) !default;
-
-$btn-d-color:            #fff !default;
-$btn-d-bg:               $d !default;
-$btn-d-border:           darken($d, 15%) !default;
-
-$btn-e-color:            #fff !default;
-$btn-e-bg:               $e !default;
-$btn-e-border:           darken($e, 15%) !default;
-
-$btn-f-color:            #fff !default;
-$btn-f-bg:               $f !default;
-$btn-f-border:           darken($f, 15%) !default;
-
-$btn-neutral-bold-color:            #fff !default;
-$btn-neutral-bold-bg:               $neutral-bold !default;
-$btn-neutral-bold-border:           darken($neutral-bold, 15%) !default;
-
-$btn-neutral-color:            #fff !default;
-$btn-neutral-bg:               $neutral !default;
-$btn-neutral-border:           darken($neutral, 15%) !default;
-
-$btn-neutral-muted-color:            #fff !default;
-$btn-neutral-muted-bg:               $neutral-muted !default;
-$btn-neutral-muted-border:           darken($neutral-muted, 15%) !default;
-
-$btn-dark-color:            $a !default;
-$btn-dark-bg:               #000000 !default;
-$btn-dark-border:           darken(#000000, 15%) !default;
-
-$btn-link-disabled-color:        $neutral-muted !default;
-
-$btn-min-width:                  80px !default;
+$btn-min-width:                  100px !default;
 $btn-height:                     30px !default;
 
 $btn-padding-x-sm:               .5rem !default;
@@ -358,7 +306,7 @@ $input-bg:                       transparent !default;
 $input-bg-disabled:              transparent !default;
 
 $input-color:                    $text !default;
-$input-border-color:             $neutral !default;
+$input-border-color:             $primary-light !default;
 $input-btn-border-width:         $border-width !default; // For form controls and buttons
 $input-box-shadow:               inset 0 1px 1px rgba(0,0,0,.075) !default;
 
@@ -368,7 +316,7 @@ $input-border-radius-sm:         $border-radius-sm !default;
 $input-border-width:             2px;
 
 $input-bg-focus:                 transparent !default;
-$input-border-focus:             $a !default;
+$input-border-focus:             $primary !default;
 $input-box-shadow-focus:         rgba(102,175,233,.6) !default;
 $input-color-focus:              $input-color;
 
@@ -383,7 +331,7 @@ $input-padding-y-lg:             .75rem !default;
 $input-height:                   (($font-size-base * $line-height-base) + ($input-padding-y * 2)) !default;
 $input-height-lg:                (($font-size-lg * $line-height-lg) + ($input-padding-y-lg * 2)) !default;
 $input-height-sm:                (($font-size-sm * $line-height-sm) + ($input-padding-y-sm * 2)) !default;
-$input-border-error:             $d !default;
+$input-border-error:             $error !default;
 
 $form-group-margin-bottom:       $spacer-y !default;
 
@@ -402,24 +350,24 @@ $dropdown-bg:                       $white !default;
 $dropdown-border-color:             rgba($black, .15) !default;
 $dropdown-border-radius:            $border-radius !default;
 $dropdown-border-width:             $border-width !default;
-$dropdown-divider-bg:               $neutral !default;
+$dropdown-divider-bg:               $primary-light !default;
 $dropdown-box-shadow:               0 .5rem 1rem rgba($black, .175) !default;
 
-$dropdown-link-color:               $neutral-bold !default;
-$dropdown-link-hover-color:         darken($neutral-bold, 5%) !default;
-$dropdown-link-hover-bg:            $neutral-muted !default;
+$dropdown-link-color:               $primary !default;
+$dropdown-link-hover-color:         $primary-dark !default;
+$dropdown-link-hover-bg:            $primary-light !default;
 
 $dropdown-link-active-color:        $component-active-color !default;
 $dropdown-link-active-bg:           $component-active-bg !default;
 
-$dropdown-link-disabled-color:      $neutral !default;
+$dropdown-link-disabled-color:      $primary-muted !default;
 
 $dropdown-item-padding-y:           .25rem !default;
 $dropdown-item-padding-x:           1.5rem !default;
 
-$dropdown-header-color:             $neutral !default;
+$dropdown-header-color:             $primary-light !default;
 
-$nav-divider-color:                 $neutral-muted !default;
+$nav-divider-color:                 $primary-muted !default;
 $nav-divider-margin-y:              ($spacer / 2) !default;
 
 // Z-index master list
@@ -511,6 +459,6 @@ $alert-danger-border:         $state-danger-border !default;
 // Define standards for the nav links on the dataset page
 // 
 $nav-font-size: $font-size-base !default;
-$nav-font-color: $sidebar !default;
+$nav-font-color: $topbar !default;
 $nav-font-size-sm: $font-size-base * 1.15 !default;
 $nav-font-color-sm: $black !default;
