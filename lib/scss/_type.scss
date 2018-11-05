@@ -217,11 +217,15 @@ label {
 }
 
 .error {
-  color: $error
+  color: $error;
 }
 
 .textMuted {
-  color: $text-muted
+  color: $text-muted;
+}
+
+.white {
+  color: $white;
 }
 
 .hash {
