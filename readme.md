@@ -67,7 +67,6 @@ We've set up a separate document for our [contributor guildlines](https://github
 
 ## Develop
 
-We've set up a separate document for [developer guildlines](https://github.com/qri-io/frontend/DEVELOPER.md)!
-
+We've set up a separate document for [developer guildlines](https://github.com/qri-io/frontend/blob/master/DEVELOPER.md)!
 
 ###### This documentation has been adapted from the [Data Together](https://github.com/datatogether/datatogether), [Hyper](https://github.com/zeit/hyper), [AngularJS](https://github.com/angular/angularJS), and [Cycle.js](https://github.com/cyclejs/cyclejs) documentation.
