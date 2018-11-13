@@ -146,6 +146,26 @@ label {
   }
 }
 
+// JSON styles
+.obj-light {
+  color: $primary-light;
+}
+
+.obj-dark {
+  color: $text;
+}
+
+.arr {
+  color: $text-muted;
+}
+
+.json-light {
+  color: $primary-muted;
+}
+
+.json-dark {
+  color: $primary;
+}
 
 //
 // Misc
