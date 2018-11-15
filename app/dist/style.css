@@ -469,6 +469,21 @@ label {
   .list-inline-item:not(:last-child) {
     margin-right: 5px; }
 
+.obj-light {
+  color: #F6F6F8; }
+
+.obj-dark {
+  color: #303030; }
+
+.arr {
+  color: #646464; }
+
+.json-light {
+  color: #B3CFE4; }
+
+.json-dark {
+  color: #0061A6; }
+
 .initialism {
   font-size: 90%;
   text-transform: uppercase; }
