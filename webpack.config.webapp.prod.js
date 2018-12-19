@@ -34,7 +34,7 @@ export default merge.smart(baseConfig, {
       resource.request = resource.request.replace(/\.APP_TARGET/, `.${appTarget}`)
     }),
     new MonacoWebpackPlugin(),
-    // new MinifyPlugin({}, { sourceMap: null }),
+    new MinifyPlugin({}, { sourceMap: null }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
       '__BUILD__': {
