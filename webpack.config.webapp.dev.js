@@ -15,6 +15,7 @@ CheckNodeEnv('development')
 const port = process.env.PORT || 2505
 const publicPath = `/`
 const appTarget = process.env.APP_TARGET || 'web'
+const apiUrl = process.env.QRI_FRONTEND_BUILD_API_URL || 'http://localhost:2503'
 
 export default merge.smart(baseConfig, {
   devtool: 'inline-source-map',
@@ -70,9 +71,9 @@ export default merge.smart(baseConfig, {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       '__BUILD__': {
         'MODE': JSON.stringify(process.env.NODE_ENV || 'development'),
-        'BASE_URL': JSON.stringify('http://localhost:2503'),
-        'API_URL': JSON.stringify('http://localhost:2503'),
-        'STATIC_ASSETS_URL': JSON.stringify('http://localhost:2503'),
+        'BASE_URL': JSON.stringify(apiUrl),
+        'API_URL': JSON.stringify(apiUrl),
+        'STATIC_ASSETS_URL': JSON.stringify(apiUrl),
         'SEGMENT_KEY': JSON.stringify('not_a_key'),
         'VERSION': JSON.stringify(version)
       }
