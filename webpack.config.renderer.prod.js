@@ -188,9 +188,9 @@ export default merge.smart(baseConfig, {
 
     new MonacoWebpackPlugin(),
 
-    new MinifyPlugin({}, {
-      sourceMap: null
-    }),
+    // new MinifyPlugin({}, {
+    //   sourceMap: null
+    // }),
 
     // https://github.com/bitinn/node-fetch/issues/41
     // new webpack.IgnorePlugin(/\/iconv-loader$/),
