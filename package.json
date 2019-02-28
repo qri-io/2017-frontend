@@ -218,7 +218,7 @@
     "react-dom": "16.8.3",
     "react-handsontable": "0.3.2",
     "react-hot-loader": "4.7.1",
-    "react-monaco-editor": "0.18.0",
+    "react-monaco-editor": "0.24.0",
     "react-redux": "6.0.1",
     "react-router": "4.3.1",
     "react-router-dom": "4.3.1",
