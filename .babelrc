@@ -10,8 +10,10 @@
   "plugins": ["add-module-exports", "dynamic-import-webpack"],
   "env": {
     "production": {
-      "presets": ["react-optimize"],
-      "plugins": ["babel-plugin-dev-expression"]
+      "plugins": [
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-transform-classes"
+      ]
     },
     "development": {
       "plugins": [
