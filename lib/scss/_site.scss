@@ -1,3 +1,113 @@
+//
+// SCSS for general sitewide styling & specific components listed here:
+// 
+// App
+// AppDrag
+// AppLoading
+// AppUnavail
+// Base
+// ChoosePeername
+// CodeViewer
+// Collection
+// DatasetName
+// Datasets
+// DateStamp
+// ExternalLink.electron.
+// ExternalLink.web
+// HandsonTable
+// Hash
+// Header
+// Json
+// List
+// Menu
+// Network
+// Online
+// PageTitle
+// QuitApp.electron
+// QuitApp.web
+// ReadOnly
+// SearchResults
+// StatsBar
+// StatsLine
+// StatsSection
+// TabPanel
+// TagList
+// Welcome
+
+////////////////////////////
+//          APP           //
+////////////////////////////
+
+.app {
+  background: $appBackground;
+  min-height: 100%;
+  color: $text;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+.alert {
+  color: $white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  margin: 20px;
+  overflow: auto;
+  z-index: 10;
+  min-width: 200px;
+  max-width: 40%;
+  padding: 10px 15px 10px 15px;
+  border-radius: 3px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.5);
+}
+
+.danger {
+  background: $error;
+}
+
+.success {
+  background: $primary;
+}
+
+.message {
+  overflow: auto;
+}
+
+.dismiss {
+  padding-left: 20px;
+}
+
+.modal {
+  z-index: 5;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  background: $appBackground;
+  border-radius: 6px;
+  padding: 15px;
+  min-width: 400px;
+  max-width: 600px;
+  position: absolute;
+  width: 35%;
+  max-height: 50%;
+  overflow-y: auto;
+  margin: 4.5rem auto auto auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0 ;
+}
+
+.large {
+  max-height: 80%;
+  width: auto;
+}
+
+.thin {
+  max-height: 80%;
+}
+
 html, body, #root, #app {
   height: 100%;
 }
