@@ -11,8 +11,6 @@
 // DatasetName
 // Datasets
 // DateStamp
-// ExternalLink.electron.
-// ExternalLink.web
 // HandsonTable
 // Hash
 // Header
@@ -281,6 +279,15 @@
 
 .datastamp-muted {
   color: $primary-dark;
+}
+
+////////////////////////////
+//          Hash          //
+////////////////////////////
+.hash-old {
+  color: $primary;
+  font-weight: 600px;
+  margin-left: 20px;
 }
 
 html, body, #root, #app {
