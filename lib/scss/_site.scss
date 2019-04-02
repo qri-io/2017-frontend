@@ -249,6 +249,23 @@
   display: flex;
 }
 
+////////////////////////////
+//       DatasetName      //
+////////////////////////////
+
+.dataset-name-slash {
+  color: $black;
+}
+
+.dataset-name-edit {
+  margin-left: 8px;
+  cursor: pointer;
+  color: $primary-muted;
+}
+
+.dataset-name-edit:hover {
+  color: $primary;
+}
 
 html, body, #root, #app {
   height: 100%;
