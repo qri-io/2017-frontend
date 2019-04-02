@@ -275,6 +275,14 @@
   padding: 20px;
 }
 
+////////////////////////////
+//        Datestamp       //
+////////////////////////////
+
+.datastamp-muted {
+  color: $primary-dark;
+}
+
 html, body, #root, #app {
   height: 100%;
 }
