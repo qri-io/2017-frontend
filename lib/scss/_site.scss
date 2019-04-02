@@ -290,6 +290,35 @@
   margin-left: 20px;
 }
 
+////////////////////////////
+//         Header         //
+////////////////////////////
+.header-wrap {
+  width: 100%;
+  height: 140px;
+  display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  justify-content: center;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.header-spinner-wrap {
+  height: 30px;
+}
+
+.header-spinner {
+  margin-top: 10px;
+  margin-left: -5px;
+  display: block;
+  transition: all 1s ease-in-out;
+}
+
 html, body, #root, #app {
   height: 100%;
 }
