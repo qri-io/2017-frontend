@@ -108,6 +108,18 @@
   max-height: 80%;
 }
 
+////////////////////////////
+//        APPDRAG         //
+////////////////////////////
+
+.appdrag-header {
+  position: absolute;
+  overflow: auto;
+  -webkit-app-region: drag;
+  height: 40px;
+  width: 100%;
+}
+
 html, body, #root, #app {
   height: 100%;
 }
