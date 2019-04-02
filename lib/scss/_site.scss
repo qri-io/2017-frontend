@@ -375,6 +375,26 @@
   padding: 20px;
 }
 
+////////////////////////////
+//         Online         //
+////////////////////////////
+.online-text {
+  margin-left: 5px;
+  position: relative;
+  top: -2;
+}
+
+.online-small {
+  font-size: 14px;
+  margin: 0;
+}
+
+.online-regular {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
 html, body, #root, #app {
   height: 100%;
 }
