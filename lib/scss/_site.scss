@@ -267,6 +267,14 @@
   color: $primary;
 }
 
+////////////////////////////
+//        Datasets        //
+////////////////////////////
+
+.datasets-empty {
+  padding: 20px;
+}
+
 html, body, #root, #app {
   height: 100%;
 }
