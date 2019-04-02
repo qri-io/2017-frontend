@@ -241,6 +241,15 @@
   overflow: auto;
 }
 
+////////////////////////////
+//       Collection       //
+////////////////////////////
+
+.collection-wrap {
+  display: flex;
+}
+
+
 html, body, #root, #app {
   height: 100%;
 }
