@@ -13,7 +13,6 @@
 // DateStamp
 // Hash
 // Header
-// List
 // Menu
 // Network
 // Online
@@ -315,6 +314,54 @@
   margin-left: -5px;
   display: block;
   transition: all 1s ease-in-out;
+}
+
+////////////////////////////
+//          Menu          //
+////////////////////////////
+.menu-menu {
+  position: absolute;
+  overflow: hidden;
+  background: $primary-muted;
+  box-shadow: inset -2px 0px 4px -2px rgba(0, 0, 0, 0.5);
+}
+
+.menu-items {
+  margin-top: 50px;
+}
+
+.menu-active {
+  opacity: 1;
+  color: $primary;
+}
+
+.menu-inactive {
+  opacity: .75;
+}
+
+.menu-item {
+  font-family: SSPika;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+  margin-top: 10px;
+  transition: all 0.25s;
+  color: palette.text;
+}
+
+.menu-item:active {
+  color: $primary;
+  text-decoration: none;
+}
+
+.menu-item:focus {
+  text-decoration: none;
+}
+
+.menu-item:hover {
+  opacity: 1;
+  color: $primary;
 }
 
 html, body, #root, #app {
