@@ -364,6 +364,17 @@
   color: $primary;
 }
 
+////////////////////////////
+//        Network         //
+////////////////////////////
+.network-wrap {
+  display: flex;
+}
+
+.network-empty {
+  padding: 20px;
+}
+
 html, body, #root, #app {
   height: 100%;
 }
