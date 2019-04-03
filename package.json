@@ -62,9 +62,6 @@
       "main.prod.js.map",
       "package.json"
     ],
-    "extraFiles": [
-      "resources/qri"
-    ],
     "dmg": {
       "contents": [
         {
@@ -87,17 +84,26 @@
       ],
       "publish": [
         "github"
+      ],
+      "extraFiles": [
+        "resources/mac/qri"
       ]
     },
     "win": {
       "target": [
         "nsis"
+      ],
+      "extraFiles": [
+        "resources/win/qri"
       ]
     },
     "linux": {
       "target": [
         "deb",
         "AppImage"
+      ],
+      "extraFiles": [
+        "resources/linux/qri"
       ]
     }
   },

@@ -61,3 +61,8 @@ main.js.map
 
 .idea
 npm-debug.log.*
+
+resources/qri
+resources/mac/
+resources/win/
+resources/linux/
