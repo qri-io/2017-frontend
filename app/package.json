@@ -1,7 +1,7 @@
 {
   "name": "qri-webapp",
   "productName": "qri",
-  "version": "0.7.0",
+  "version": "0.7.2",
   "description": "qri (\"query\") frontend application",
   "main": "./main.prod.js",
   "author": {

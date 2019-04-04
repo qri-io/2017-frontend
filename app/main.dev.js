@@ -11,6 +11,7 @@
  * @flow
  */
 import electron, { app, BrowserWindow, crashReporter, dialog } from 'electron'
+import { autoUpdater } from "electron-updater"
 import MenuBuilder from './menu'
 import Backend from './backend'
 import touchbar from './touchbar'
@@ -26,7 +27,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 if (isDevelopment) {
-  console.log('debugger enabled')
   require('electron-debug')()
   const path = require('path')
   const p = path.join(__dirname, '..', 'src', 'node_modules')
@@ -68,12 +68,7 @@ app.on('window-all-closed', () => {
 // app.on('will-finish-launching', async () => {})
 
 app.on('ready', async () => {
-  import('electron-updater')
-  .then(({autoUpdater}) => {
-    autoUpdater.checkForUpdatesAndNotify()
-  }).catch((err) => {
-    console.log(`autoUpdater didn't load: ${err}`)
-  })
+  autoUpdater.checkForUpdatesAndNotify()
   
   // app.setPath('temp', '/tmp')
   electron.session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {

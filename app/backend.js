@@ -89,47 +89,11 @@ export default class Backend extends EventEmitter {
       })
   }
 
-  // ensure updated qri backend exists
+  // ensure updated qri backend exists, resolve with path to binary
   install () {
     // this.log('checking for updated install')
     return new Promise((resolve, reject) => {
-      let qriPath, proc
-
-      // if (process.env.NODE_ENV === 'development') {
-      resolve(`${this.resourcesPath()}/qri`)
-      // }
-
-      // try {
-      //   proc = spawn(this.installScriptPath(), [], {
-      //     env: {
-      //       'BINARY_PATH': `${this.resourcesPath()}/qri`
-      //     }
-      //   })
-      // } catch (err) {
-      //   reject(err)
-      // }
-
-      // proc.stdout.on('data', (path) => {
-      //   this.log(`install data: ${path}`)
-      //   // qriPath = new String(path).replace(/\n/, '')
-      //   // TODO - silly hack for the moment
-      //   qriPath = '/usr/local/bin/qri'
-      // })
-      // proc.stderr.on('data', (err) => {
-      //   this.log(`install error: ${err}`)
-      //   reject(err)
-      // })
-      // proc.stderr.on('data', (err) => {
-      //   this.log(`install error: ${err}`)
-      //   reject(err)
-      // })
-      // proc.on('close', (code) => {
-      //   resolve(qriPath)
-      // })
-      // proc.on('error', (err) => {
-      //   this.log(`install: error: ${err}`)
-      //   reject(err)
-      // })
+      resolve(`${this.resourcesPath()}/${platformName()}/qri`)
     })
   }
 
@@ -176,4 +140,18 @@ export default class Backend extends EventEmitter {
       console.error('exit backend error', err.stack)
     }
   }
+}
+
+// return a conventional name for the current platform OS
+function platformName() {
+  switch (process.platform) {
+    case 'darwin':
+    return 'mac'
+  case 'win32':
+    return 'win'
+  case 'linux':
+    return 'linux'
+  }
+  // unsupported: 'aix' 'freebsd' 'openbsd' 'sunos'
+  return ''
 }
