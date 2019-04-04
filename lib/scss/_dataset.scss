@@ -141,4 +141,77 @@
   margin-top: 40px
 }
 
+////////////////////////////
+//     MetadataViewer     //
+////////////////////////////
+.metadata-viewer-wrap {
+  padding: 20px;
+}
+
+.metadata-viewer-title {
+  margin-top: 30px;
+}
+
+.metadata-viewer-table-wrap {
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 3px;
+  border: 1px solid #eee;
+  overflow: hidden;
+}
+
+.metadata-viewer-table {
+  width: 100%;
+}
+
+.metadata-viewer-row {
+  border-bottom: 1px solid #eee;
+}
+
+.metadata-viewer-key {
+  padding: 8px 5px;
+}
+
+.metadata-viewer-link {
+  font-size: 17px;
+}
+
+.metadata-viewer-info {
+  color: $primary-light;
+}
+
+.metadata-viewer-data {
+  text-align: right;
+  color: $primary-light;
+  padding-right: 15px;
+}
+
+////////////////////////////
+//       MetaSummary      //
+////////////////////////////
+.meta-summary-wrap {
+  display: flex;
+  flex-direction: column;
+  margin: 20px; 
+}
+
+.meta-summary-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.meta-summary-description {
+  margin-right: 20px;
+  padding-right: 20px;
+  max-width: 560px;
+}
+
+.meta-summary-tags {
+  flex: 0 0;
+}
+
+.meta-summary-theme {
+  display: inline-block;
+  margin-right: 20px;
+}
 
