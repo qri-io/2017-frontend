@@ -44,3 +44,58 @@
 .commits-note-wrap {
   margin: 40px 20px;
 }
+
+////////////////////////////
+//         Dataset        //
+////////////////////////////
+.dataset-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.dataset-center {
+  width: 300px;
+  height: 300px;
+  margin: 10em auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+}
+
+////////////////////////////
+//   DatasetButtonGroup   //
+////////////////////////////
+.dataset-button-group-wrap {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 300px;
+}
+
+.dataset-button-group-buttons {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+}
+
+.dataset-button-group-button {
+  margin-bottom: 20px;
+}
+
+////////////////////////////
+//      DatasetHeader     //
+////////////////////////////
+.dataset-header-wrap {
+  padding: 20px;
+}
+
+.dataset-header-links {
+  margin-top: 30px;
+}
+
+
+
+
