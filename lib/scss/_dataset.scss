@@ -290,4 +290,48 @@
   justify-content: space-between;
 }
 
+////////////////////////////
+//     StructureViewer    //
+////////////////////////////
+.structure-viewer-wrap {
+  margin-bottom: 40px;
+  padding: 20px;
+}
 
+.structure-viewer-title {
+  margin-top: 30px;
+}
+
+.structure-viewer-table-wrap {
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 3px;
+  border: 1px solid #eee;
+  overflow: hidden;
+}
+
+.structure-viewer-table {
+  width: 100%;
+}
+
+.structure-viewer-row {
+  border-bottom: 1px solid #eee;
+}
+
+.structure-viewer-key {
+  padding: 8px 5px;
+}
+
+////////////////////////////
+//        Transform       //
+////////////////////////////
+.transform-wrap {
+  height: 100%;
+}
+
+////////////////////////////
+//           Viz          //
+////////////////////////////
+.viz-wrap {
+  height: 100%;
+}
