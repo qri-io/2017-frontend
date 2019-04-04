@@ -1,0 +1,46 @@
+//
+// SCSS for Dataset components
+// 
+// BodyReadOnly
+// Commits
+// Dataset
+// DatasetButtonGroup
+// DatasetHeader
+// DatasetRouter
+// DeleteDataset
+// Export
+// Meta
+// MetadataViewer
+// MetaSummary
+// Overview
+// RenameDataset
+// Render
+// Structure
+// StructureViewer
+// Transform
+// Viz
+
+////////////////////////////
+//       BodyReadOnly     //
+////////////////////////////
+.body-read-only-wrap {
+  margin: auto;
+  margin-top: 40px;
+  width: 600px;
+  text-align: center;
+}
+
+.body-read-only-margin-top {
+  margin-top: 20px;
+}
+
+////////////////////////////
+//         Commits        //
+////////////////////////////
+.commits-wrap {
+  margin-top: 40px;
+}
+
+.commits-note-wrap {
+  margin: 40px 20px;
+}
