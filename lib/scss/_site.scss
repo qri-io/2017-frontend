@@ -466,6 +466,25 @@
   text-align: center;
 }
 
+////////////////////////////
+//        StatsLine       //
+////////////////////////////
+.stats-line-wrap-stats {
+  display: flex;
+  align-items: center;
+}
+
+.stats-line-separated {
+  margin: 0 5px;
+}
+
+.stats-line-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
 html, body, #root, #app {
   height: 100%;
 }
