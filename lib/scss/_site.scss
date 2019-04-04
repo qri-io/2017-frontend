@@ -347,7 +347,7 @@
   font-size: 20px;
   margin-top: 10px;
   transition: all 0.25s;
-  color: palette.text;
+  color: $text;
 }
 
 .menu-item:active {
@@ -421,14 +421,14 @@
 }
 
 .read-only-center {
-  width: 600,
-  height: 300,
-  margin: '10em auto',
-  top: 0,
-  left: 0,
-  bottom: 0,
-  right: 0,
-  textAlign: 'center',
+  width: 600px;
+  height: 300px;
+  margin: 10em auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center;
 }
 
 ////////////////////////////
@@ -446,6 +446,24 @@
 .search-results-text {
   max-width: 300px;
   margin: 20px;
+}
+
+////////////////////////////
+//        StatsBar        //
+////////////////////////////
+.stats-bar-wrap {
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+  padding-top: 12px;
+  padding-bottom: 10px;
+  border-radius: 3px;
+}
+
+.stats-bar-space {
+  margin-right: 15px;
+  flex: 2 1 80px;
+  text-align: center;
 }
 
 html, body, #root, #app {
