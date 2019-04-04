@@ -1,0 +1,38 @@
+//
+// SCSS for Chrome components
+// 
+// Button
+// Dropdown
+// DropdownMenu
+// LoadMore
+// NavLinks
+// Spinner
+// TopBar
+
+////////////////////////////
+//         Button         //
+////////////////////////////
+.button-full {
+  width: 100%;
+}
+.button-attached {
+  border-radius: 3px 0 0 3px;
+}
+
+////////////////////////////
+//        Dropdown        //
+////////////////////////////
+.dropdown-wrap {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-caret {
+  border-radius: 0 3px 3px 0;
+  min-width: 30px;
+  width: 30px;
+  padding-top: 9px;
+  padding-left: 7px;
+  font-size: 14px; 
+}
