@@ -431,6 +431,23 @@
   textAlign: 'center',
 }
 
+////////////////////////////
+//      SearchResults     //
+////////////////////////////
+.search-results-wrap {
+  height: 100%;
+  display: flex;
+}
+
+.search-results-strong {
+  font-weight: 500px;
+}
+
+.search-results-text {
+  max-width: 300px;
+  margin: 20px;
+}
+
 html, body, #root, #app {
   height: 100%;
 }
