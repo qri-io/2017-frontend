@@ -15,7 +15,6 @@
 // Overview
 // RenameDataset
 // Render
-// Structure
 // StructureViewer
 // Transform
 // Viz
@@ -214,4 +213,81 @@
   display: inline-block;
   margin-right: 20px;
 }
+
+////////////////////////////
+//        Overview        //
+////////////////////////////
+.overview-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.overview-fields {
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.overview-value {
+  margin-left: 5px;
+}
+
+.overview-key {
+  color: $primary-muted;
+}
+
+.overview-open {
+  display: inline-block;
+  background: $primary;
+  color: rgba(0,0,0,0.6);
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 20px;
+  padding: 4px 8px;
+  font-size: 12px;
+  margin-left: 20px;
+}
+
+.overview-title-wrap {
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.overview-name {
+  margin: 0px;
+}
+
+.overview-flex {
+  margin-top: 40px;
+  display: flex;
+  align-items: baseline;
+}
+
+.overview-nav {
+  margin-left: 5px;
+  font-size: 14px;
+}
+
+.overview-schema-wrap {
+  padding: 20px;
+}
+
+////////////////////////////
+//      RenameDataset     //
+////////////////////////////
+.rename-dataset-wrap {
+  padding: 20px;
+}
+
+.rename-dataset-form-wrap {
+  margin-top: 40px;
+  color: $white;
+}
+
+.rename-dataset-buttons {
+  display: flex;
+  margin: 40px 0;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
 
