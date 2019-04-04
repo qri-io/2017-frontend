@@ -252,4 +252,72 @@
   height: 100%;
 }
 
+////////////////////////////
+//         EditViz        //
+////////////////////////////
+.edit-viz-wrap {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.edit-viz-center {
+  width: 200px;
+  margin: 150px auto;
+}
+
+.edit-viz-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 4px 2px 10px;
+}
+
+.edit-viz-content {
+  margin-top: 10px;
+}
+
+////////////////////////////
+//     Editor Overview    //
+////////////////////////////
+.editor-overview-page {
+  color: white;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  overflow: auto;
+}
+
+////////////////////////////
+//         Results        //
+////////////////////////////
+.results-page {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  background: #111;
+  overflow: auto;  
+}
+
+////////////////////////////
+//      SectionPicker     //
+////////////////////////////
+.section-picker-wrap {
+  width: 100%;
+  height: 30px;
+  padding: 10px;
+}
+
+.section-picker-link {
+  color: $white;
+  margin-right: 16px;
+  font-size: 14px;
+  font-weight: 500px;
+  text-transform: uppercase;  
+}
+
+.section-picker-current {
+  color: $primary;
+}
 
