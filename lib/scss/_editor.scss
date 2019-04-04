@@ -1,0 +1,180 @@
+//
+// SCSS for Editor components
+// 
+// EditBody
+// EditMeta
+// Editor
+// EditStructure
+// EditTransform
+// Overview
+// Results
+// SectionPicture
+
+////////////////////////////
+//        EditBody        //
+////////////////////////////
+.edit-body-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-body-center {
+  width: 200px;
+  margin: 150px auto;
+}
+.edit-body-header {
+  flex: 1 1 30px;
+  padding: 10px 4px 2px 10px;
+}
+.edit-body-body {
+  color: $black;
+  flex: 2 1 95%;
+  width: 100%;
+  overflow: auto;
+}
+.edit-body-select {
+  width: 100px;
+  display: inline-block;
+}
+.edit-body-column-headers {
+  width: 200px;
+  display: inline-block;
+  margin-left: 20px;
+}
+.edit-body-error {
+  margin: 30px;
+  color: $white;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5;
+}
+.edit-body-display-none {
+  display: none;
+}
+.edit-body-file-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-dontent: center;
+  align-items: center;
+}
+.edit-body-file-name {
+  background: rgba(0, 0, 0, .25);
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, .50);
+  color: white;
+  border-radius: 8;
+  padding: 10px 20px;
+}
+.edit-body-remove {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  cursor: pointer;
+  background: rgba(0, 0, 0, .50);
+  border-radius: 8px;
+  padding-right: 4px;
+  padding-left: 4px;
+  color: $white;
+  font-size: .7rem;
+}
+.edit-body-remove:hover {
+  color: #808080
+}
+.edit-body-drag-over {
+  background: rgba(255,255,255,0.3);
+}
+
+////////////////////////////
+//        EditMeta        //
+////////////////////////////
+.edit-meta-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-meta-center {
+  width: 200px;
+  margin: 150px auto;
+}
+
+.edit-meta-header {
+  flex: 1 1 30px;
+  padding: 10px 4px 2px 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.edit-meta-content {
+  flex: 2 1 95%;
+  padding: 20px;
+  width: 100%;
+  overflow: auto;
+}
+
+////////////////////////////
+//         Editor         //
+////////////////////////////
+.editor-wrap {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.editor-header {
+  flex: 1 1 90px;
+}
+
+.editor-switcher {
+  flex: 1 1 40px;
+  background: #262626;
+  display: flex;
+  justify-content: space-between;
+}
+
+.editor-sections {
+  padding: 15px 20px;
+  flex: 1 1 50%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.editor-actions {
+  flex: 1 1 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.editor-contents {
+  flex: 2 2 90%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  background: #1e1e1e;
+}
+
+.editor-switch {
+  overflow: hidden;
+  flex: 2 1 60%;
+}
+
+.editor-results {
+  flex: 1 1 40%;
+  overflow: auto;
+}
+
+.editor-opts {
+  margin: 10px;
+}
+
+
+
