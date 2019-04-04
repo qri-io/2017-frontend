@@ -484,6 +484,20 @@
   justify-content: space-between;
 }
 
+////////////////////////////
+//      StatsSection      //
+////////////////////////////
+.stats-section-wrap {
+  padding: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.stats-section-stat-wrap {
+  margin-left: 40px;
+  text-align: right;
+}
+
 
 html, body, #root, #app {
   height: 100%;
