@@ -176,5 +176,80 @@
   margin: 10px;
 }
 
+////////////////////////////
+//      EditStructure     //
+////////////////////////////
+.edit-structure-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-structure-center {
+  width: 200px;
+  margin: 150px auto;
+}
+
+.edit-structure-header {
+  flex: 1 1 30px;
+  padding: 10px 4px 2px 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.edit-structure-content {
+  flex: 2 1 95%;
+  padding: 20px;
+  width: 100%;
+  overflow: auto;
+}
+
+////////////////////////////
+//      EditTransform     //
+////////////////////////////
+.edit-transform-wrap {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-transform-config {
+  padding: 20px;
+}
+
+.edit-transform-center {
+  width: 200px;
+  margin: 150px auto;
+}
+
+.edit-transform-panels {
+  margin: 5px 0 5px 10px;
+}
+
+.edit-transform-panel-item {
+  margin-right: 10px;
+  font-weight: normal;
+  color: $primary-muted;
+}
+
+.edit-transform-active {
+  color: $primary;
+}
+
+.edit-transform-header {
+  padding: 10px 4px 2px 10px;
+  flex: 1 1 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-transform-content {
+  flex: 2 1 100%;
+  margin-top: 0;
+  height: 100%;
+}
 
 
