@@ -36,3 +36,50 @@
   padding-left: 7px;
   font-size: 14px; 
 }
+
+////////////////////////////
+//      DropdownMenu      //
+////////////////////////////
+.dropdown-menu-block {
+  display: block;
+}
+
+////////////////////////////
+//        LoadMore        //
+////////////////////////////
+.load-more-wrap {
+  width: 100%;
+}
+
+.load-more-button {
+  background-color: transparent;
+  border-color: transparent;
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
+  display: inline-block;
+  font-weight: normal;
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  border: 0.5px solid transparent;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+}
+
+.load-more-button:hover {
+  background-color: $black;
+}
+
+.load-more-label {
+  margin: 0;
+  color: #50C9F4;
+}
+
+.load-more-end {
+  height: 80px;
+}
