@@ -96,6 +96,49 @@
   margin-top: 30px;
 }
 
+////////////////////////////
+//      DatasetRouter     //
+////////////////////////////
+.dataset-router-contents {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+}
 
+.dataset-router-info {
+  flex: 1 1 960px;
+  max-width: 900px;
+}
+
+.dataset-router-buttons {
+  flex: 1 1 300px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+////////////////////////////
+//      DeleteDataset     //
+////////////////////////////
+.delete-dataset-wrap {
+  margin-top: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.delete-dataset-buttons {
+  float: right;
+}
+
+.delete-dataset-cancel {
+  margin-left: 10px;
+  display: inline-block;
+}
+
+////////////////////////////
+//         Export         //
+////////////////////////////
+.export-wrap {
+  margin-top: 40px
+}
 
 
