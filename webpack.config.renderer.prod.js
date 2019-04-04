@@ -36,7 +36,7 @@ export default merge.smart(baseConfig, {
     // monaco needs a "self" object:
     globalObject: 'self',
     path: path.join(__dirname, 'app/dist'),
-    publicPath: './',
+    publicPath: './dist/',
     filename: '[name].prod.js'
   },
 
