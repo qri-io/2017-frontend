@@ -498,6 +498,55 @@
   text-align: right;
 }
 
+////////////////////////////
+//        TabPanel        //
+////////////////////////////
+.tab-panel-background {
+  background: $sink;
+  padding: 15px;
+}
+
+.tab-panel-wrap {
+  height: 100%;
+  overflow: hidden;
+  border-radius: 3px;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.tab-panel-search {
+  height: 45px;
+  padding-left: 12px;
+}
+
+.tab-panel-tab {
+  display: inline-block;
+  transition: all 0.25s;
+  margin-right: 40px;
+}
+
+.tab-panel-expand {
+  float: right;
+  cursor: pointer;
+  max-height: 100%;
+  color: $primary-muted;
+  margin-right: 5px;
+  margin-top: 3px;
+}
+
+.tab-panel-current-tab {
+  color: $primary;
+}
+
+.tab-panel-header {
+  font-weight: bold;
+  background: $appBackground;
+}
+
+.tab-panel-content {
+  display: flex;
+  height: 100%;
+}
 
 html, body, #root, #app {
   height: 100%;
