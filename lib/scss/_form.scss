@@ -13,9 +13,6 @@
 // ValidContributorsInput
 // ValidDateTimeInput
 // ValidInput
-// ValidLicenseInput
-// ValidPeriodicityInput
-// ValidSelect
 // ValidTextarea
 // ViewModeButton
 
@@ -298,4 +295,59 @@
   margin-top: 10px;
 }
 
+////////////////////////////
+//        ValidInput      //
+////////////////////////////
+.valid-input-inline {
+  display: inline-block;
+}
 
+.valid-input-margin {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+////////////////////////////
+//      ValidTextarea     //
+////////////////////////////
+.valid-textarea {
+  border: 1px solid $primary-muted;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.valid-textarea:focus {
+  border: 1px solid $primary-light;
+}
+
+.valid-textarea-small {
+  height: 120px;
+}
+
+////////////////////////////
+//     ViewModeButton     //
+////////////////////////////
+.view-mode-button-nav-button {
+  cursor: pointer;
+  font-family: SSPika;
+  display: inline-block;
+  text-align: center;
+  width: 34px;
+  height: 30px;
+  margin: 8px auto;
+  padding: 4px 0;
+  color: $primary-muted;
+  border-radius: 3px;
+  border: 2px solid $primary-muted;
+}
+
+.view-mode-button-active {
+  background: $primary;
+  box-shadow: 0 0 3px rgba(0,0,0,0.15);
+  border: 2px solid $primary;
+  color: $text;
+}
+
+.view-mode-button-inactive {
+  background: transparent;
+}
