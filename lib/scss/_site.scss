@@ -13,6 +13,7 @@
 // DateStamp
 // Hash
 // Header
+// Json
 // Menu
 // Network
 // Online
@@ -314,6 +315,22 @@
   margin-left: -5px;
   display: block;
   transition: all 1s ease-in-out;
+}
+
+////////////////////////////
+//          Json          //
+////////////////////////////
+.json-text {
+  font-family: 'monospace';
+  font-size: 14px;
+}
+
+.json-handle {
+  cursor: pointer;
+}
+
+.json-key-wrap {
+  padding-left: 9px;
 }
 
 ////////////////////////////
