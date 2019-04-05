@@ -6,16 +6,9 @@
 // KeyValueInput
 // LanguageInput
 // MonthCalendar
-// ProfileForm
-// RadioInput
 // SaveMetadataForm
 // SearchBar
-// StructureForm
-// StructureFormatConfig
-// TagInput
-// TextInput
 // UrlInput
-// ValidCheck
 // ValidCitationInput
 // ValidContributorsInput
 // ValidDateTimeInput
@@ -221,4 +214,88 @@
 .month-calendar-dates .selected {
   color: rgb(200,0,0);
 }
+
+////////////////////////////
+//    SaveMetadataForm    //
+////////////////////////////
+.save-metadata-form-wrap {
+  padding: 20px;
+  color: $primary-muted;
+}
+
+.save-metadata-form-form-wrap {
+  margin: 40px;
+}
+
+.save-metadata-form-cancel-button {
+  margin-left: 10px;
+  display: inline-block;
+}
+
+.save-metadata-form-float-right {
+  float: right;
+}
+
+////////////////////////////
+//        SearchBar       //
+////////////////////////////
+.search-bar-input {
+  width: 700px;
+  border: $text-light solid 1px;
+  border-radius: 10px;
+  padding: 4px 10px;
+  flex: 1 4;
+  height: 35px;
+}
+
+.search-bar-input:focus {
+  outline: none;
+}
+
+////////////////////////////
+//         UrlInput       //
+////////////////////////////
+.url-input-error {
+  height: 20px;
+  margin: 10px;
+  color: $error;
+  font-weight: 300;  
+}
+
+////////////////////////////
+//   ValidCitationInput   //
+////////////////////////////
+.valid-citation-input-label {
+  color: $primary-muted;
+}
+
+.valid-citation-input-flex {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.valid-citation-input-add {
+  align-self: flex-end;
+  margin-top: 10px;
+}
+
+////////////////////////////
+//  ValidContributorInput //
+////////////////////////////
+.valid-contributor-input-label {
+  color: $primary-muted;
+}
+
+.valid-contributor-input-flex {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.valid-contributor-input-add {
+  align-self: flex-end;
+  margin-top: 10px;
+}
+
 
