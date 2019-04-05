@@ -1,0 +1,177 @@
+//
+// SCSS for Form components
+// 
+// DateInput
+// DropFile
+// KeyValueInput
+// LanguageInput
+// MetadataForm
+// MonthCalendar
+// ProfileForm
+// RadioInput
+// SaveMetadataForm
+// SearchBar
+// StructureForm
+// StructureFormatConfig
+// TagInput
+// TextInput
+// UrlInput
+// ValidCheck
+// ValidCitationInput
+// ValidContributorsInput
+// ValidDateTimeInput
+// ValidInput
+// ValidLicenseInput
+// ValidPeriodicityInput
+// ValidSelect
+// ValidTextarea
+// ViewModeButton
+
+////////////////////////////
+//        DateInput       //
+////////////////////////////
+.date-input {
+  position: relative;
+}
+
+.date-input-calendar {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  z-index: 2;
+  padding: 4px 8px;
+  box-shadow: 0 0 4px rgba(0,0,0,0.45);
+  border-radius: 3px;
+}
+
+.date-input-border {
+  border-color: $primary-muted;
+}
+
+.date-input-border:focus {
+  border-color: $primary;
+}
+
+////////////////////////////
+//        DropFile        //
+////////////////////////////
+.drop-file-drop-zone {
+  border-radius: 5px;
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.drop-file-reset {
+  border: 2px dashed $primary-muted;
+}
+
+.drop-file-drag-over {
+  border: 2px dashed $primary;
+}
+
+.drop-file-dropped {
+  border: 2px solid $primary;
+}
+
+.drop-file-wrap {
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+}
+
+.drop-file-uploader {
+  margin-bottom: 20px;
+}
+
+.drop-file-drop-text {
+  font-weight: 300;
+  display: block;
+}
+
+.drop-file-display-none {
+  display: none;
+}
+
+.drop-file-display-flex {
+  display: flex;
+}
+
+.drop-file-select-file {
+  color: $primary;
+  cursor: 'pointer';
+  text-transform: none;
+  margin: auto;
+  width: 100px;
+  display: block;
+}
+
+.drop-file-select-file:hover {
+  text-decoration: underline;
+}
+
+.drop-file-select-file-disabled {
+  color: $primary-muted;
+  text-transform: none;
+  margin: auto;
+  width: 100px;
+  display: block;
+}
+
+.drop-file-error {
+  height: 40px;
+  margin: 10px;
+  color: $error;
+  text-weight: 300;
+}
+
+.drop-file-file-name {
+  position: relative;
+  border: 1px solid $primary-muted;
+  border-radius: 8px;
+  padding: 10px 20px;
+}
+
+.drop-file-remove {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  cursor: pointer;
+  background: $primary-light;
+  border-radius: 8px;
+  padding-right: 4px;
+  padding-left: 4px;
+  font-size: .7rem;
+}
+
+.drop-file-remove:hover {
+  color: $primary;
+}
+
+.drop-file-label {
+  color: $primary-muted;
+}
+
+////////////////////////////
+//      KeyValueInput     //
+////////////////////////////
+.key-value-input-flex {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.key-value-input-add {
+  align-self: flex-end;
+  margin-top: 10px;
+}
+
+////////////////////////////
+//      LanguageInput     //
+////////////////////////////
+.language-input-width {
+  max-width: 600px;
+}
