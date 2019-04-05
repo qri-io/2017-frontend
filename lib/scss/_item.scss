@@ -8,7 +8,6 @@
 // FieldItem
 // KeyValueItem
 // ProfileItem
-// SearchItem
 // StatItem
 // TagItem
 
@@ -100,4 +99,128 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
+}
+
+////////////////////////////
+//        FieldItem       //
+////////////////////////////
+.field-item-wrap {
+  margin: 2px;
+  padding: 5px;
+  flex: 1 1 230px;
+  min-height: 120px;
+  border-radius: 3px;
+  background: $appBackground;
+}
+
+.field-item-datatype {
+  margin: 0;
+}
+
+.field-item-index {
+  color: $primary-dark;
+}
+
+.field-item-title {
+  cursor: pointer;
+  color: $text;
+  margin: 0;
+}
+
+.field-item-description {
+  margin-top: 4px;
+  color: $primary-dark;
+}
+
+.field-item-save {
+  margin-left: 30px;
+  margin-top: 20px;
+  float: right;
+}
+
+////////////////////////////
+//       KeyValueItem     //
+////////////////////////////
+.key-value-item-flex {
+  width: 100%;
+  display: flex;
+}
+
+.key-value-item-inputs {
+  margin-right: 10px;
+}
+
+.key-value-item-delete {
+  padding-top: 23px;
+  padding-left: 10px;
+}
+
+////////////////////////////
+//       ProfileItem      //
+////////////////////////////
+.profile-item-wrap {
+  padding: 20px;
+}
+
+.profile-item-photo {
+  float: left;
+}
+
+.profile-item-info {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.profile-item-title {
+  color: $text;
+  margin-bottom: -1px;
+  margin-top: -5px;
+}
+
+.profile-item-muted {
+  color: $primary-dark;
+}
+
+.profile-item-name {
+  color: $primary-dark;
+  margin-bottom: -1px;
+  margin-top: -3px;
+}
+
+.profile-item-path {
+  color: $primary-muted;
+}
+
+////////////////////////////
+//        StatItem        //
+////////////////////////////
+.stat-item-wrap {
+  margin-bottom: 15px;
+}
+
+.stat-item-icon-wrap {
+  display: inline-block;
+  margin-top: 4px;
+  float: left;
+}
+
+.stat-item-text-wrap {
+  margin-left: 5px;
+  display: inline-block;
+}
+
+.stat-item-no-margin {
+  margin: 0;
+}
+
+////////////////////////////
+//         TagItem        //
+////////////////////////////
+.tag-item-pill {
+  // border: 1px solid $primary;
+  border-radius: 3px;
+  background: $sink;
+  margin: 0 0 5px 0;
+  padding: 2px 5px;
+  display: inline-block;
 }
