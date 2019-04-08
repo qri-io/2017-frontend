@@ -166,7 +166,6 @@
     "@babel/preset-env": "7.4.2",
     "@babel/preset-react": "7.0.0",
     "@babel/register": "7.4.0",
-    "aphrodite-simple": "0.4.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "24.5.0",
     "babel-loader": "8.0.5",
