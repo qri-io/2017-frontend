@@ -29,6 +29,12 @@ export default merge.smart(baseConfig, {
     libraryTarget: 'umd'
   },
 
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
+  },
+
   plugins: [
     new webpack.NormalModuleReplacementPlugin(/(.*)\.APP_TARGET(\.*)/, function (resource) {
       resource.request = resource.request.replace(/\.APP_TARGET/, `.${appTarget}`)
