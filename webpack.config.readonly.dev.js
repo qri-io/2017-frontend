@@ -6,7 +6,6 @@ import merge from 'webpack-merge'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import baseConfig from './webpack.config.base'
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv'
-import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin'
 
 import version from './version'
 
@@ -64,7 +63,6 @@ export default merge.smart(baseConfig, {
       inject: 'body',
       filename: 'index.html'
     }),
-    // new MonacoWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
