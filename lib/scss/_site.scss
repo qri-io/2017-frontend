@@ -3,7 +3,6 @@
 // 
 // App
 // AppDrag
-// AppLoading
 // AppUnavail
 // ChoosePeername
 // CodeViewer
@@ -21,6 +20,7 @@
 // QuitApp.electron
 // QuitApp.web
 // ReadOnly
+// Routes
 // SearchResults
 // StatsBar
 // StatsLine
@@ -113,30 +113,6 @@
   -webkit-app-region: drag;
   height: 40px;
   width: 100%;
-}
-
-////////////////////////////
-//       AppLoading       //
-////////////////////////////
-
-.app-loading-page {
-  background: $appBackground;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-}
-
-.app-loading-center {
-  width: 300px;
-  height: 300px;
-  margin: 10em auto;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  text-align: center;
 }
 
 ////////////////////////////
@@ -446,6 +422,16 @@
   bottom: 0;
   right: 0;
   text-align: center;
+}
+
+////////////////////////////
+//         Routes         //
+////////////////////////////
+.routes-spinner {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 ////////////////////////////

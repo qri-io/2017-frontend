@@ -3,51 +3,74 @@
 import path from 'path'
 import webpack from 'webpack'
 import merge from 'webpack-merge'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 import baseConfig from './webpack.config.base'
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv'
-import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin'
-import MinifyPlugin from 'babel-minify-webpack-plugin'
 
 import version from './version'
+
+CheckNodeEnv('development')
+
+const port = process.env.PORT || 2505
+const publicPath = `/`
 const appTarget = process.env.APP_TARGET || 'web'
 const apiUrl = process.env.QRI_FRONTEND_BUILD_API_URL || 'http://localhost:2503'
-console.log(apiUrl)
-
-CheckNodeEnv('production')
 
 export default merge.smart(baseConfig, {
+  devtool: 'inline-source-map',
   target: 'web',
-  mode: 'production',
+  mode: 'development',
 
-  entry: path.join(__dirname, 'lib/index.js'),
+  entry: [
+    `webpack-dev-server/client?http://localhost:${port}`,
+    'webpack/hot/only-dev-server',
+    'react-hot-loader/patch',
+    path.join(__dirname, 'lib/index.js')
+  ],
 
   output: {
     globalObject: 'self',
-    publicPath: '/webapp/',
-    path: path.join(__dirname, '/dist/web'),
+    publicPath,
+    path: path.join(__dirname, 'dist/web_dev'),
     filename: '[name].js',
     libraryTarget: 'umd'
   },
 
-  // TODO (ramfox): uncomment to allow bundle splitting, our code will end up in `main` and the rest
-  // in a vender bundle (`vendors~main.js`)
-  // optimization: {
-  //   splitChunks: {
-  //     chunks: 'all'
-  //   }
-  // },
+  devServer: {
+    port,
+    publicPath,
+    compress: true,
+    noInfo: true,
+    stats: 'errors-only',
+    inline: true,
+    lazy: false,
+    hot: true,
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    historyApiFallback: true,
+    watchOptions: {
+      aggregateTimeout: 300,
+      ignored: /node_modules/,
+      poll: 100
+    }
+  },
 
   plugins: [
     new webpack.NormalModuleReplacementPlugin(/(.*)\.APP_TARGET(\.*)/, function (resource) {
       resource.request = resource.request.replace(/\.APP_TARGET/, `.${appTarget}`)
     }),
-    new MonacoWebpackPlugin(),
-    new MinifyPlugin({}, { sourceMap: null }),
+    new HtmlWebpackPlugin({
+      template: 'resources/index.tpl.html',
+      inject: 'body',
+      filename: 'index.html'
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       '__BUILD__': {
-        'MODE': JSON.stringify(process.env.NODE_ENV || 'production'),
-        // 'BASE_URL': JSON.stringify(apiUrl),
+        'MODE': JSON.stringify(process.env.NODE_ENV || 'development'),
+        'READONLY': true,
+        'BASE_URL': JSON.stringify(apiUrl),
         'API_URL': JSON.stringify(apiUrl),
         'STATIC_ASSETS_URL': JSON.stringify(apiUrl),
         'SEGMENT_KEY': JSON.stringify('not_a_key'),
@@ -82,7 +105,7 @@ export default merge.smart(baseConfig, {
         use: {
           loader: 'url-loader',
           options: {
-            limit: 100000,
+            limit: 10000,
             mimetype: 'application/font-woff'
           }
         }
@@ -93,7 +116,7 @@ export default merge.smart(baseConfig, {
         use: {
           loader: 'url-loader',
           options: {
-            limit: 100000,
+            limit: 10000,
             mimetype: 'application/font-woff'
           }
         }
@@ -104,7 +127,7 @@ export default merge.smart(baseConfig, {
         use: {
           loader: 'url-loader',
           options: {
-            limit: 500000,
+            limit: 10000,
             mimetype: 'application/octet-stream'
           }
         }
@@ -112,13 +135,7 @@ export default merge.smart(baseConfig, {
       // EOT Font
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 100000,
-            mimetype: 'application/vnd.ms-fontobject'
-          }
-        }
+        use: 'file-loader'
       },
       // SVG Font
       {
@@ -126,7 +143,7 @@ export default merge.smart(baseConfig, {
         use: {
           loader: 'url-loader',
           options: {
-            limit: 100000,
+            limit: 10000,
             mimetype: 'image/svg+xml'
           }
         }

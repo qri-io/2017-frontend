@@ -9,7 +9,8 @@
   ],
   "plugins": [
     "add-module-exports", 
-    "dynamic-import-webpack"
+    "dynamic-import-webpack",
+    "@babel/plugin-syntax-dynamic-import"
   ],
   "env": {
     "production": {

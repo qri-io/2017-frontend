@@ -5,7 +5,6 @@ import webpack from 'webpack'
 import merge from 'webpack-merge'
 import baseConfig from './webpack.config.base'
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv'
-import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin'
 import MinifyPlugin from 'babel-minify-webpack-plugin'
 
 import version from './version'
@@ -24,7 +23,7 @@ export default merge.smart(baseConfig, {
   output: {
     globalObject: 'self',
     publicPath: '/webapp/',
-    path: path.join(__dirname, '/dist/web'),
+    path: path.join(__dirname, '/dist/readonly'),
     filename: '[name].js',
     libraryTarget: 'umd'
   },
@@ -41,13 +40,12 @@ export default merge.smart(baseConfig, {
     new webpack.NormalModuleReplacementPlugin(/(.*)\.APP_TARGET(\.*)/, function (resource) {
       resource.request = resource.request.replace(/\.APP_TARGET/, `.${appTarget}`)
     }),
-    new MonacoWebpackPlugin(),
     new MinifyPlugin({}, { sourceMap: null }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
       '__BUILD__': {
         'MODE': JSON.stringify(process.env.NODE_ENV || 'production'),
-        // 'BASE_URL': JSON.stringify(apiUrl),
+        'READONLY': true,
         'API_URL': JSON.stringify(apiUrl),
         'STATIC_ASSETS_URL': JSON.stringify(apiUrl),
         'SEGMENT_KEY': JSON.stringify('not_a_key'),

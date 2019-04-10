@@ -183,7 +183,7 @@
   position: absolute;
   overflow: hidden;
   background: $sink;
-  z-index: 1px;
+  z-index: 1;
   box-shadow: 0 0px 4px rgba(0, 0, 0, 0.35);
   -webkit-app-region: drag;
   display: flex;
