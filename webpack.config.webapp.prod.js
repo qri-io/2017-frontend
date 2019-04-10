@@ -29,11 +29,13 @@ export default merge.smart(baseConfig, {
     libraryTarget: 'umd'
   },
 
-  optimization: {
-    splitChunks: {
-      chunks: 'all'
-    }
-  },
+  // TODO (ramfox): uncomment to allow bundle splitting, our code will end up in `main` and the rest
+  // in a vender bundle (`vendors~main.js`)
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: 'all'
+  //   }
+  // },
 
   plugins: [
     new webpack.NormalModuleReplacementPlugin(/(.*)\.APP_TARGET(\.*)/, function (resource) {
