@@ -1,3 +1,28 @@
+## [0.7.1](https://github.com/qri-io/frontend/compare/v0.7.0...v0.7.1) (2019-04-16)
+
+
+### Bug Fixes
+
+* **build:** restore electron compilation ([1fd0d96](https://github.com/qri-io/frontend/commit/1fd0d96))
+* **Button:** fix incorrect `Button` component import in `ReadOnly` component ([27eae33](https://github.com/qri-io/frontend/commit/27eae33))
+* **EditBody:** fix bug that wasn't passing height to editor body ([a811d87](https://github.com/qri-io/frontend/commit/a811d87))
+* **Overview:** adjust style for better `Overview` layout ([0f9c4e3](https://github.com/qri-io/frontend/commit/0f9c4e3))
+* various cleanup & fixes ([dc84e56](https://github.com/qri-io/frontend/commit/dc84e56))
+* **dataset:** add logic to dataset page to show correct error messaging ([c40b1d4](https://github.com/qri-io/frontend/commit/c40b1d4))
+* **dataset:** add silent error to dataset and registry load dataset actions ([89e146f](https://github.com/qri-io/frontend/commit/89e146f))
+* **Dataset:** Improvements to viewing a dataset ([611c6d1](https://github.com/qri-io/frontend/commit/611c6d1))
+* **editor:** Dataset name improvements after clicking 'Edit' ([b7ecacf](https://github.com/qri-io/frontend/commit/b7ecacf))
+* **Transform:** change case on import ([2b44223](https://github.com/qri-io/frontend/commit/2b44223))
+* **ValidInput:** adding `me/` prefix to `ValidInput` now optional ([84c7ac1](https://github.com/qri-io/frontend/commit/84c7ac1))
+* **webapp:** fix webapp prod compilation ([95b6f58](https://github.com/qri-io/frontend/commit/95b6f58))
+
+
+### Features
+
+* **webpack:** add readonly dev and prod configs ([3b6671a](https://github.com/qri-io/frontend/commit/3b6671a))
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/qri-io/frontend/compare/v0.1.0...v0.2.0) (2018-07-19)
 
