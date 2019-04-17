@@ -1,3 +1,45 @@
+## [0.7.1](https://github.com/qri-io/frontend/compare/v0.7.0...v0.7.1) (2019-04-16)
+
+As a growing open source project, we are always looking for ways to connect to our community. One way that we have yet to take advantage of (on the webapp side of our project), is using the release notes to be more explicit about our choices and goals. We want you to get two major things out of our release notes: 
+1) for you to understand, without having to view the code, what has changed, and 
+2) for you to understand our reasons for making those changes.
+
+As you can perhaps tell, many discussions have centered around how we can be more welcoming as a project. 
+
+### Moving towards modern React
+
+We want our codebase to be more accessible to folks who are viewing it for the first time. The first major change we have made is to refactor our components so they look more like vanilla React. We had also allowed a bit of tech debt to pile up that was preventing us from moving forward; there are many interesting features coming out of the React project that we would like to experiment with, but couldn't because our codebase was out of date.
+
+The parts of React we focused on were:
+- upgrading React, Webpack, Babel, and Electron, making any changes to code that we need to allow those upgrades to function
+- refactoring the codebase to look more like plain ol' React by removing inheritance from a `Base` class that was giving us a couple of neat tricks that we have outgrown. This refactor moves all of our css styling from each component page to our scss folder.
+- fixing a few bugs that are listed in the changelog, the most visible is a height bug that made any component using Monaco Editor unusable.
+
+Except for fixing a few bugs, this version of the webapp has almost no changes to functionality. So, even though it changes thousands of lines of code, we are calling this release a patch.
+
+
+### Bug Fixes
+
+* **build:** restore electron compilation ([1fd0d96](https://github.com/qri-io/frontend/commit/1fd0d96))
+* **Button:** fix incorrect `Button` component import in `ReadOnly` component ([27eae33](https://github.com/qri-io/frontend/commit/27eae33))
+* **EditBody:** fix bug that wasn't passing height to editor body ([a811d87](https://github.com/qri-io/frontend/commit/a811d87))
+* **Overview:** adjust style for better `Overview` layout ([0f9c4e3](https://github.com/qri-io/frontend/commit/0f9c4e3))
+* various cleanup & fixes ([dc84e56](https://github.com/qri-io/frontend/commit/dc84e56))
+* **dataset:** add logic to dataset page to show correct error messaging ([c40b1d4](https://github.com/qri-io/frontend/commit/c40b1d4))
+* **dataset:** add silent error to dataset and registry load dataset actions ([89e146f](https://github.com/qri-io/frontend/commit/89e146f))
+* **Dataset:** Improvements to viewing a dataset ([611c6d1](https://github.com/qri-io/frontend/commit/611c6d1))
+* **editor:** Dataset name improvements after clicking 'Edit' ([b7ecacf](https://github.com/qri-io/frontend/commit/b7ecacf))
+* **Transform:** change case on import ([2b44223](https://github.com/qri-io/frontend/commit/2b44223))
+* **ValidInput:** adding `me/` prefix to `ValidInput` now optional ([84c7ac1](https://github.com/qri-io/frontend/commit/84c7ac1))
+* **webapp:** fix webapp prod compilation ([95b6f58](https://github.com/qri-io/frontend/commit/95b6f58))
+
+
+### Features
+
+* **webpack:** add readonly dev and prod configs ([3b6671a](https://github.com/qri-io/frontend/commit/3b6671a))
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/qri-io/frontend/compare/v0.1.0...v0.2.0) (2018-07-19)
 
