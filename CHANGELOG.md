@@ -1,5 +1,22 @@
 ## [0.7.1](https://github.com/qri-io/frontend/compare/v0.7.0...v0.7.1) (2019-04-16)
 
+As a growing open source project, we are always looking for ways to connect to our community. One way that we have yet to take advantage of (on the webapp side of our project), is using the release notes to be more explicit about our choices and goals. We want you to get two major things out of our release notes: 
+1) for you to understand, without having to view the code, what has changed, and 
+2) for you to understand our reasons for making those changes.
+
+As you can perhaps tell, many discussions have centered around how we can be more welcoming as a project. 
+
+### Moving towards modern React
+
+We want our codebase to be more accessible to folks who are viewing it for the first time. The first major change we have made is to refactor our components so they look more like vanilla React. We had also allowed a bit of tech debt to pile up that was preventing us from moving forward; there are many interesting features coming out of the React project that we would like to experiment with, but couldn't because our codebase was out of date.
+
+The parts of React we focused on were:
+- upgrading React, Webpack, Babel, and Electron, making any changes to code that we need to allow those upgrades to function
+- refactoring the codebase to look more like plain ol' React by removing inheritance from a `Base` class that was giving us a couple of neat tricks that we have outgrown. This refactor moves all of our css styling from each component page to our scss folder.
+- fixing a few bugs that are listed in the changelog, the most visible is a height bug that made any component using Monaco Editor unusable.
+
+Except for fixing a few bugs, this version of the webapp has almost no changes to functionality. So, even though it changes thousands of lines of code, we are calling this release a patch.
+
 
 ### Bug Fixes
 
