@@ -2,7 +2,7 @@
   "name": "qri",
   "private": true,
   "productName": "qri",
-  "version": "0.7.1",
+  "version": "0.7.2-dev",
   "description": "qri (\"query\") frontend application",
   "keywords": [],
   "homepage": "https://qri.io",
