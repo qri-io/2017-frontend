@@ -134,10 +134,23 @@
 }
 
 ////////////////////////////
-//         Export         //
+//      ExportDataset     //
 ////////////////////////////
-.export-wrap {
-  margin-top: 40px
+.export-dataset-radio {
+  margin-top: 20px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: space-between;
+}
+
+.export-dataset-buttons {
+  position: 0;
+  display: flex;
+  margin: 40px 0;
+  align-items: baseline;
+  justify-content: space-between;
 }
 
 ////////////////////////////
@@ -335,3 +348,5 @@
 .viz-wrap {
   height: 100%;
 }
+
+
