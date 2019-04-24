@@ -440,6 +440,10 @@ select.form-control-lg {
   @include radio-variant($primary, $primary-light)
 }
 
+.radio-primary-muted {
+  @include radio-variant($button, $primary-light)
+}
+
 // Help Hints
 //
 // Help Hints appear underneath an input and describe what is needed in that particular field
