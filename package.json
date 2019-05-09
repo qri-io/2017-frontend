@@ -188,7 +188,7 @@
     "compare-versions": "3.4.0",
     "concurrently": "4.1.0",
     "connected-react-router": "6.3.2",
-    "core-js": "3",
+    "core-js": "2",
     "cross-env": "5.2.0",
     "cross-spawn": "6.0.5",
     "css-loader": "2.1.1",
