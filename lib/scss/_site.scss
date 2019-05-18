@@ -297,7 +297,7 @@
 //          Json          //
 ////////////////////////////
 .json-text {
-  font-family: monospace;
+  font-family: $font-family-monospace;
   font-size: 14px;
 }
 
@@ -307,6 +307,38 @@
 
 .json-key-wrap {
   padding-left: 9px;
+}
+
+.obj-light {
+  color: $primary-light;
+}
+
+.obj-dark {
+  color: $text;
+}
+
+.arr {
+  color: $text-muted;
+}
+
+.json-light {
+  color: $primary-muted;
+}
+
+.json-dark {
+  color: $primary;
+}
+
+.update {
+  background: rgb(24,159,255);
+}
+
+.delete {
+  background: rgb(242,75,86);
+}
+
+.insert {
+  background: rgb(110,196,0);
 }
 
 ////////////////////////////
