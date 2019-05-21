@@ -2547,7 +2547,7 @@ ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-ansi-to-react@^5.0.0:
+ansi-to-react@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/ansi-to-react/-/ansi-to-react-5.0.0.tgz#0bff17327478e6df2c754892dd5fcfe841ff7b5a"
   integrity sha512-eG0e1PjxtdjH/YqmNWK7/7fbA++q7FamY/Fsv3yE3CV/v7RQmUACXneNrnezl5tpsii2BcfH9wri7s5tp40gVA==
