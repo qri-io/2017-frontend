@@ -12,3 +12,7 @@
   border-left-style: solid;
   border-left-color: rgb(30, 30, 30);
 }
+
+.editBody .handsontable th:first-child {
+  border: 1px solid #1e1e1e;
+}

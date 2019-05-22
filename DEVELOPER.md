@@ -38,9 +38,9 @@ machine:
 To contribute code to Qri, you must have a GitHub account so you can push code to your own
 fork of Qri and open Pull Requests in the [GitHub Repository][github].
 
-To create a Github account, follow the instructions [here](https://github.com/signup/free).
-Afterwards, go ahead and [fork](http://help.github.com/forking) the
-[Qri frontend repository][github].
+First, [create a Github account](https://github.com/signup/free).
+Afterwards, go ahead and
+[fork the Qri frontend repository](https://github.com/qri-io/frontend/fork) ([Learn more about forking](http://help.github.com/forking)).
 
 
 ### Building Qri
