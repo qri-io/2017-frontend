@@ -69,6 +69,10 @@ fieldset[disabled] a.btn {
   @include button-variant($white, $primary-dark, $primary-dark)
 }
 
+.btn-danger {
+  @include button-variant($white, $error, $error)
+}
+
 //
 // Link buttons
 //
