@@ -69,4 +69,13 @@ We've set up a separate document for our [contributor guidelines](https://github
 
 We've set up a separate document for [developer guidelines](https://github.com/qri-io/frontend/blob/master/DEVELOPER.md)!
 
+## Qri Storybook
+
+Using [React Storybook](https://storybook.js.org/docs/guides/guide-react)!
+
+```shell
+yarn run storybook
+```
+
+
 ###### This documentation has been adapted from the [Data Together](https://github.com/datatogether/datatogether), [Hyper](https://github.com/zeit/hyper), [AngularJS](https://github.com/angular/angularJS), and [Cycle.js](https://github.com/cyclejs/cyclejs) documentation.
