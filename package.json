@@ -51,7 +51,8 @@
     "electron:package:linux": "npm run electron:build && electron:build --linux",
     "electron:package:win": "npm run electron:build && electron:build --win --x64",
     "electron:test:all": "npm run lint && npm run electron:build && npm run test && npm run electron:test:e2e",
-    "electron:test:e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js e2e"
+    "electron:test:e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js e2e",
+    "storybook": "start-storybook"
   },
   "browserslist": "electron 1.6",
   "build": {
@@ -170,6 +171,7 @@
     "@babel/preset-env": "7.4.4",
     "@babel/preset-react": "7.0.0",
     "@babel/register": "7.4.4",
+    "@storybook/addon-actions": "5.0.11",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "10.0.1",
     "babel-jest": "24.8.0",
@@ -260,6 +262,7 @@
   },
   "devDependencies": {
     "fetch-mock": "7.3.3",
+    "@storybook/react": "5.0.11",
     "redux-mock-store": "1.5.3"
   }
 }

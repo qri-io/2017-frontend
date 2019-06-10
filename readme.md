@@ -69,4 +69,16 @@ We've set up a separate document for our [contributor guidelines](https://github
 
 We've set up a separate document for [developer guidelines](https://github.com/qri-io/frontend/blob/master/DEVELOPER.md)!
 
+## Qri Storybook
+
+Using [React Storybook](https://storybook.js.org/docs/guides/guide-react)!
+
+```shell
+yarn run storybook
+```
+We're adopting react storybook for testing & debugging components. Over time we're hoping to add stories that depict common state components for testing & refinement purposes.
+
+If while working on Qri you find a composition of components or state that could be refined, consider writing it as a react story so we can debug it over time!
+
+
 ###### This documentation has been adapted from the [Data Together](https://github.com/datatogether/datatogether), [Hyper](https://github.com/zeit/hyper), [AngularJS](https://github.com/angular/angularJS), and [Cycle.js](https://github.com/cyclejs/cyclejs) documentation.
