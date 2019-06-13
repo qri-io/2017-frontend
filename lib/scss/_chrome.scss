@@ -2,6 +2,7 @@
 // SCSS for Chrome components
 // 
 // Button
+// DownloadBar
 // Dropdown
 // DropdownMenu
 // LoadMore
@@ -18,6 +19,93 @@
 .button-attached {
   border-radius: 3px 0 0 3px;
 }
+
+////////////////////////////
+//       DownloadBar      //
+////////////////////////////
+.download-bar-wrap {
+  position: absolute;
+  overflow: hidden;
+  background: $primary-dark;
+  z-index: 1;
+  box-shadow: 0 0px 4px rgba(0, 0, 0, 0.35);
+  -webkit-app-region: drag;
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.download-bar-text {
+  color: $sink;
+  margin: 3px 5px 0 5px;
+  display: flex;
+}
+
+.download-bar-dataset {
+  color: $white;
+  margin-top: 12px;
+  font-weight: $font-weight-medium;
+  // margin: 0 5px;
+}
+
+.download-bar-link {
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.download-bar-link > a {
+  color: $white;
+  &:hover {
+    color: $primary;
+  }
+}
+
+// .top-bar-title-bar {
+//   flex: 1 0 100%;
+//   width: 100%;
+//   height: 20px;
+//   text-align: center;
+// }
+
+// .top-bar-first-item {
+//   margin-right: 10;
+//   margin-left: 0;
+// }
+
+// .top-bar-item-spacing {
+//   margin-right: 30px;
+//   display: inline-block;
+// }
+
+// .top-bar-no-shrink {
+//   flex: 1 0;
+//   align-items: baseline;
+//   padding: 11px 0 0 20px;
+// }
+
+// .top-bar-help {
+//   display: flex;
+//   justify-content: flex-end;
+//   align-items: baseline;
+//   flex: 1 1;
+// }
+
+// .top-bar-current {
+//   color: $primary;
+// }
+
+// .top-bar-nav-button {
+//   font-family: SSPika;
+//   display: inline-block;
+//   text-align: center;
+//   width: 22px;
+//   height: 30px;
+//   font-size: 19px;
+//   color: $text;
+// }
+
 
 ////////////////////////////
 //        Dropdown        //
