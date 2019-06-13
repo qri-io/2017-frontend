@@ -24,7 +24,6 @@
 //       DownloadBar      //
 ////////////////////////////
 .download-bar-wrap {
-  position: absolute;
   overflow: hidden;
   background: $primary-dark;
   z-index: 1;
@@ -35,10 +34,16 @@
   flex-wrap: wrap;
   align-items: center;
   padding-left: 10px;
+  justify-content: center;
+}
+
+.download-bar-text-wrap > a {
+  display: flex;
+  align-items: center;
 }
 
 .download-bar-text {
-  color: $sink;
+  color: $white;
   margin: 3px 5px 0 5px;
   display: flex;
 }
@@ -47,12 +52,11 @@
   color: $white;
   margin-top: 12px;
   font-weight: $font-weight-medium;
-  // margin: 0 5px;
 }
 
 .download-bar-link {
-  margin-left: auto;
-  margin-right: 10px;
+  position: absolute;
+  right: 10px;
 }
 
 .download-bar-link > a {
