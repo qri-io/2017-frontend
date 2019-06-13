@@ -1,5 +1,5 @@
 // adapted from https://storybook.js.org/docs/configurations/custom-webpack-config/
-
+const webpack = require('webpack')
 const path = require('path')
 
 //  Export a function. Accept the base config as the only param.
@@ -88,6 +88,11 @@ module.exports = async ({ config, mode }) => {
       test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
       use: 'url-loader'
     })
+
+  config.plugins.push(
+    new webpack.NormalModuleReplacementPlugin(/(.*)\.APP_TARGET(\.*)/, function (resource) {
+      resource.request = resource.request.replace(/\.APP_TARGET/, '.web')
+    }))
 
   // Return the altered config
   return config
