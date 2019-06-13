@@ -9,9 +9,9 @@ assignees: ''
 
 **Platform**
 How were you accessing the qri frontend?
-[ ] app.qri.io
-[ ] electron app
-[ ] dev webapp
+* [ ] app.qri.io
+* [ ] electron app
+* [ ] dev webapp
 
 **Version**
 What version of the Qri frontend are you using?
