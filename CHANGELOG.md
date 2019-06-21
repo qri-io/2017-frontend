@@ -1,3 +1,26 @@
+## [0.7.2](https://github.com/qri-io/frontend/compare/v0.7.1...v0.7.2) (2019-06-19)
+
+This release contains two major updates. First, we have fixed pagination throughout the app! Not only do our dataset lists paginate correctly, but we have added preliminary pagination to the dataset body. Second, we have added [storybook](https://storybook.js.org/) to our app for help with development and design. So far there is a short list of components that you can view on storybook, but we plan on continuing to add components as we work on them. We used storybook to iterate on the new `DownloadBar` component, which features in the readonly version of the webapp, and it allowed for quicker iteration. We are pumped to continue to use it in the future.
+
+### Bug Fixes
+
+* **Button:** fix logic in download button! ([27594d4](https://github.com/qri-io/frontend/commit/27594d4))
+* **pagination:** fixes pagination on datasets, registry datasets, profiles, search results, and history ([2633d76](https://github.com/qri-io/frontend/commit/2633d76))
+* **scss:** Use valid monospace font name ([#494](https://github.com/qri-io/frontend/issues/494)) ([f5b2d6c](https://github.com/qri-io/frontend/commit/f5b2d6c))
+* **StructureForm:** make json-schema link an ExternalLink ([#496](https://github.com/qri-io/frontend/issues/496)) ([7ba8a42](https://github.com/qri-io/frontend/commit/7ba8a42)), closes [#495](https://github.com/qri-io/frontend/issues/495)
+* **storybook:** add custom webpack file to storybook config to load scss ([5edae8d](https://github.com/qri-io/frontend/commit/5edae8d))
+
+
+### Features
+
+* add pagination to the body ([33c0412](https://github.com/qri-io/frontend/commit/33c0412))
+* **DatasetButtonGroup:** add dummy update button ([8fc1d73](https://github.com/qri-io/frontend/commit/8fc1d73))
+* **DownloadBar:** add `DownloadBar` component ([20c8fec](https://github.com/qri-io/frontend/commit/20c8fec))
+* **storybook:** add isolated Button.js ([6d0673d](https://github.com/qri-io/frontend/commit/6d0673d))
+* **storybook:** add plugin to deal with `APP_TARGET` ([decd87c](https://github.com/qri-io/frontend/commit/decd87c))
+
+
+
 ## [0.7.1](https://github.com/qri-io/frontend/compare/v0.7.0...v0.7.1) (2019-04-16)
 
 As a growing open source project, we are always looking for ways to connect to our community. One way that we have yet to take advantage of (on the webapp side of our project), is using the release notes to be more explicit about our choices and goals. We want you to get two major things out of our release notes: 

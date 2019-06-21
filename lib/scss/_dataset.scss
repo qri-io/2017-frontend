@@ -137,13 +137,26 @@
 }
 
 .delete-dataset-buttons {
-  float: right;
+  display: flex;
+  justify-content: space-between;
 }
 
 .delete-dataset-cancel {
+  color: #fff;
+  margin-top: 5px;
   margin-left: 10px;
-  display: inline-block;
 }
+
+.delete-entire-dataset {
+  padding-right: 20px;
+  position: absolute;
+  bottom: 10px;
+}
+
+.delete-entire-dataset-button {
+  margin-right: 20px;
+}
+
 
 ////////////////////////////
 //      ExportDataset     //
