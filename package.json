@@ -186,7 +186,7 @@
     "babel-preset-react-optimize": "1.0.1",
     "chalk": "2.4.2",
     "clone-deep": "4.0.1",
-    "codecov": "3.5.0",
+    "codecov": "3.6.5",
     "compare-versions": "3.4.0",
     "concurrently": "4.1.0",
     "connected-react-router": "6.4.0",
