@@ -218,7 +218,7 @@
     "lodash.debounce": "4.0.8",
     "merge": "1.2.1",
     "mini-css-extract-plugin": "0.6.0",
-    "minimist": "1.2.0",
+    "minimist": "1.2.2",
     "monaco-editor": "0.16.2",
     "monaco-editor-webpack-plugin": "1.7.0",
     "node-fetch": "2.6.0",
