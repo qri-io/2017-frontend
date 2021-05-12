@@ -216,7 +216,7 @@
     "jest": "24.8.0",
     "jsdom": "15.1.0",
     "lodash.debounce": "4.0.8",
-    "merge": "1.2.1",
+    "merge": "2.1.1",
     "mini-css-extract-plugin": "0.6.0",
     "minimist": "1.2.0",
     "monaco-editor": "0.16.2",
